@@ -1,5 +1,3 @@
-import csv
-
 from otree.api import *
 import numpy as np
 

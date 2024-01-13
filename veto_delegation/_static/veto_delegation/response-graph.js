@@ -1,5 +1,6 @@
 const canvasPayoff = document.getElementById("payoffCanvas");
 const response = document.getElementById('response')
+let resp = 0
 // Real time acceptance for response
 
 function updateDescription(input) {
@@ -8,8 +9,8 @@ function updateDescription(input) {
 }
 
 response.addEventListener('input', function() {
-    const value = parseInt(this.value);
-    drawPayoffs(vetoerBias,minSlider.value,maxSlider.value,value);
+    resp = parseInt(response.value);
+    drawPayoffs(vetoerBias,minSlider,maxSlider,resp);
 });
 
 
@@ -78,9 +79,15 @@ function drawTicks(ctx,yTicks,gs,xOff){
 
 // DRAW THE PAYOFF GRAPH
 function drawPayoffs(theta,minC,maxC,selection){
+
     const ctx = canvasPayoff.getContext("2d");
     const gs= {'ch':canvasPayoff.height,'cw':canvasPayoff.width,'bw':60,'xMin':0,'xMax':25,'yMin':0,'yMax':30 };
     const xTextoffset = 30;
+
+        // Clear the canvas before drawing
+    ctx.clearRect(0, 0, canvasPayoff.width, canvasPayoff.height);
+
+
     ctx.strokeStyle = "black";
     drawLine(ctx,0,0,25,0,gs);
     // Draw the yTicks
@@ -100,24 +107,18 @@ function drawPayoffs(theta,minC,maxC,selection){
     // Plot each point for the showPlot layer
     for (let xi = 0; xi < 26; xi++) {
         const payoffP= 30-Math.abs(25-xi);
-        let alpha = 1;
-                if(xi != selection) {
-            alpha = 0.1;
-        }
+        let alpha = xi === selection ? 1 : 0.3;
         ctx.strokeStyle = "gray";
         ctx.fillStyle = "blue";
         ctx.globalAlpha = alpha;
-        if(xi==0 || ( xi >= minC && xi<=maxC)){
-        drawLine(ctx,xi,0,xi,payoffP, gs);
-        drawPoint(ctx,xi,payoffP,7, gs);
+        if(xi===0 || ( xi >= minC && xi<=maxC)){
+            drawLine(ctx,xi,0,xi,payoffP, gs);
+            drawPoint(ctx,xi,payoffP,7, gs);
         };
     };
     for (let xi = 0; xi < 26; xi++) {
         const payoffP= 25-Math.abs(theta-xi);
-                let alpha = 1;
-                if(xi!=0 && xi < minC || xi > maxC) {
-            alpha = 0.1;
-        }
+        let alpha = xi === selection ? 1 : 0.3
         ctx.strokeStyle = "gray";
         ctx.fillStyle = "red";
         ctx.globalAlpha = alpha;
@@ -128,10 +129,12 @@ function drawPayoffs(theta,minC,maxC,selection){
     };
 };
 
+// pulls the variables from init.py
+
 const vetoerBias =  js_vars.vetoer_bias;
 const minSlider = js_vars.lower_interval;
 const maxSlider = js_vars.upper_interval;
 
 
-drawPayoffs(vetoerBias,minSlider, maxSlider,0);
+drawPayoffs(vetoerBias,minSlider, maxSlider,resp);
 

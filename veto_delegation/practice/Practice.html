@@ -1,0 +1,70 @@
+{{ block title }}
+
+{{ endblock }}
+
+
+
+{{ block content }}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+</head>
+Player A will make an offer first. Player B will receive this offer.
+
+Each Player will have a point that gives them the highest possible payoff. For Player A, this value is always 25.
+Player B will have an optimal point between one and twenty. This is the result of the roll of three twenty-sided dice.
+
+Their value will be determined by one of three possibilities:
+ <ol>
+  <li>The minimum of the three dice rolls</li>
+  <li>The median of the three dice rolls</li>
+  <li>The maximum of the three dice rolls</li>
+</ol>
+Each of three possibilities gives a different probability that each optimal point is achieved.
+Below you can choose which of the three types that Player B will draw from, and then move the slider to see the probability that they will have that optimal point.
+
+<br>
+During the real experiment after the practice rounds, the distribution will be determined for you, but you can choose it here for illustrative purposes.
+<br>
+<p>Choose the which dice of three will be used:
+    <select id='dist'>
+        <option value=1> Minimum </option>
+        <option value=2> Median </option>
+        <option value=3> Maximum </option>
+    </select>
+</p>
+You can then change the slider to see the probability of Player B having a certain optimal value:
+<div class="slidecontainer">
+        <input type="range" min="1" max="20" value="1" class="slider" id="thetaRange">Optimal value: <span id="thetaOut"></span>
+    </div>
+
+
+    <canvas id="probCanvas" width="700" height="400"></canvas>
+<br>
+Below you can see the payoffs for each player across all possible values between 0 and 25. Player A's payoff in blue is always highest at 25.
+
+Player B's payoff (in red) will change based on the dice roll. You can continue manipulating the slider above to see how Player B's payoffs change as you change the optimal point:
+
+    <canvas id="payoffCanvas" width="700" height="600"></canvas>
+
+<br>
+Player A will choose what choices to offer to Player B. This can be a range, the top slider chooses the lower value and the bottom slider chooses the higher value.
+
+It can also be a single value, which happens if the top and the bottom values have the same value.
+
+
+     <div class="slidecontainer">
+        <input type="range" name="minSlider" id="minSlider" min="0" max="25" value="0" class="slider" oninput="updateMinSlider(this)"><span id="minDesc">0</span>
+     </div>
+     <div class="slidecontainer">
+        <input type="range" name="maxSlider" id="maxSlider" min="0" max="25" value="25" class="slider" oninput="updateMaxSlider(this)"><span id="maxDesc">25</span>
+     </div>
+
+Player B can always choose to reject the offer made by Player A. That means they will choose value 0, which will give Player A the payoff of 5, and Player B a different payoff depending on their optimal point, as illustrated above.
+
+    <script src="{{ static 'veto_delegation/script-graph.js' }}"></script>
+
+
+
+{{ next_button }}
+{{ endblock }}
