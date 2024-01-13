@@ -1,0 +1,43 @@
+{{ block title }}
+
+{{ endblock }}
+
+
+
+{{ block content }}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+</head>
+
+    <select id='dist'>
+        <option value=1> Minimum </option>
+        <option value=2> Median </option>
+        <option value=3> Maximum </option>
+    </select>
+
+<div class="slidecontainer">
+        <input type="range" min="1" max="20" value="1" class="slider" id="thetaRange"><span id="thetaOut"></span>
+    </div>
+
+
+
+    <canvas id="probCanvas" width="500" height="400"></canvas><canvas id="payoffCanvas" width="500" height="400"></canvas>
+
+     <div class="slidecontainer">
+        <input type="range" name="minSlider" id="minSlider" min="0" max="25" value="0" class="slider" oninput="updateMinSlider(this)"><span id="minDesc">0</span>
+     </div>
+     <div class="slidecontainer">
+        <input type="range" name="maxSlider" id="maxSlider" min="0" max="25" value="25" class="slider" oninput="updateMaxSlider(this)"><span id="maxDesc">25</span>
+     </div>
+
+    <script src="{{ static 'veto_delegation/script-graph.js' }}"></script>
+
+
+
+
+{{ formfield_errors 'minSlider' }}
+{{ formfield_errors 'maxSlider' }}
+
+{{ next_button }}
+{{ endblock }}

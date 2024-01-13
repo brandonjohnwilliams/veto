@@ -1,0 +1,39 @@
+{{ block title }}
+    Results
+{{ endblock }}
+
+
+{{ block content }}
+{{ if player.id_in_group == 1}}
+{{ if group.veto == True }}
+<p>
+    You offered a range of {{ group.minSlider }} and {{group.maxSlider}}.
+    Player B chose to veto.
+    Your payoff is {{ player.payoff }}.
+</p>
+{{else}}
+<p>
+    You offered a range of {{ group.minSlider }} and {{group.maxSlider}}.
+    Player B chose {{ group.response}}.
+    Your payoff is {{ player.payoff }}.
+</p>
+{{endif}}
+{{ else }}
+{{ if group.veto == True }}
+<p>
+    Player A offered a range of {{ group.minSlider }} and {{group.maxSlider}}.
+    You chose to veto.
+    Your payoff is {{ player.payoff }}.
+</p>
+{{else}}
+<p>
+    Player A offered a range of {{ group.minSlider }} and {{group.maxSlider}}.
+    You chose {{ group.response}}.
+    Your payoff is {{ player.payoff }}.
+</p>
+{{endif}}
+{{endif}}
+    {{ next_button }}
+{{ endblock }}
+
+

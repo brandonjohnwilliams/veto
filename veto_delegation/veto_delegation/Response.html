@@ -1,0 +1,34 @@
+{% block content %}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+</head>
+
+<p>
+Participant A offered you the following range:
+
+Minimum amount: {{ group.minSlider }}
+Maximum amount: {{ group.maxSlider }}
+</p>
+
+<p>
+    Your optimal point is {{ group.vetoer_bias }}. You can reject the offer or accept:
+</p>
+
+<canvas id="payoffCanvas" width="500" height="400"></canvas>
+
+
+<div class="slidecontainer">{{ group.minSlider }}<input type="range" name="response" id="response" class="slider" min="{{ group.minSlider}}" max="{{ group.maxSlider }}"  oninput="updateDescription(this)" >{{ group.maxSlider }} <b>OR</b> <button class="btn btn-primary" name="veto" value="True">Veto</button></div>
+<span id="description"></span>
+
+
+
+
+<script src="{{ static 'veto_delegation/response-graph.js' }}"></script>
+
+
+{{ formfield_errors 'veto' }}
+
+{% next_button %}
+
+{% endblock %}
