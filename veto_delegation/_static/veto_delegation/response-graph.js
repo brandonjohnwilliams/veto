@@ -1,12 +1,23 @@
 const canvasPayoff = document.getElementById("payoffCanvas");
 const response = document.getElementById('response')
 let resp = 0
+
+// pulls the variables from init.py
+
+const vetoerBias =  js_vars.vetoer_bias;
+const minSlider = js_vars.lower_interval;
+const maxSlider = js_vars.upper_interval;
+
+
 // Real time acceptance for response
 
 function updateDescription(input) {
     let response = parseInt(input.value);
-    description.innerText = `Accept ${response}.`;
+    let p2payoff = 25 - Math.abs(parseInt(input.value) - vetoerBias);
+    description.innerText = `Accept ${response} `;
+    payoff.innerText = `for a payoff of ${p2payoff}.`
 }
+
 
 response.addEventListener('input', function() {
     resp = parseInt(response.value);
@@ -89,6 +100,7 @@ function drawPayoffs(theta,minC,maxC,selection){
 
 
     ctx.strokeStyle = "black";
+    ctx.strokeStyle = "black";
     drawLine(ctx,0,0,25,0,gs);
     // Draw the yTicks
     ctx.setLineDash([1, 3]);
@@ -129,12 +141,19 @@ function drawPayoffs(theta,minC,maxC,selection){
     };
 };
 
-// pulls the variables from init.py
-
-const vetoerBias =  js_vars.vetoer_bias;
-const minSlider = js_vars.lower_interval;
-const maxSlider = js_vars.upper_interval;
 
 
 drawPayoffs(vetoerBias,minSlider, maxSlider,resp);
+
+// confirms choice before advancing
+
+        function checkSubmit() {
+            confirm(`Confirm your selection: Accept offer of ${resp}.`)
+            form.submit();
+        }
+        function checkReject() {
+            confirm(`Confirm your selection: Reject the offer.`)
+            form.submit();
+        }
+
 

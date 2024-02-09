@@ -9,7 +9,7 @@ Veto Delegation
 
 
 class C(BaseConstants):
-    NAME_IN_URL = 'veto_delegation'
+    NAME_IN_URL = 'veto_delegation_single'
     PLAYERS_PER_GROUP = 2
     NUM_ROUNDS = 3
 
@@ -17,9 +17,7 @@ class C(BaseConstants):
     veto_amount = 0
     guarantee = 5
 
-    single = 0
-
-
+    single = 13
 class Subsession(BaseSubsession):
     pass
 
@@ -33,7 +31,6 @@ class Group(BaseGroup):
 
     vetoer_bias = models.IntegerField()
     round_type = models.IntegerField()
-
 
 class Player(BasePlayer):
     pass

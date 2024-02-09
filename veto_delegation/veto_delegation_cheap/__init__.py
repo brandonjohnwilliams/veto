@@ -9,7 +9,7 @@ Veto Delegation
 
 
 class C(BaseConstants):
-    NAME_IN_URL = 'veto_delegation'
+    NAME_IN_URL = 'veto_delegation_cheap'
     PLAYERS_PER_GROUP = 2
     NUM_ROUNDS = 3
 
@@ -17,8 +17,8 @@ class C(BaseConstants):
     veto_amount = 0
     guarantee = 5
 
-    single = 0
-
+    PLAYERA_ROLE = 'Player A'
+    PLAYERB_ROLE = "Player B"
 
 class Subsession(BaseSubsession):
     pass
@@ -34,9 +34,17 @@ class Group(BaseGroup):
     vetoer_bias = models.IntegerField()
     round_type = models.IntegerField()
 
-
 class Player(BasePlayer):
     pass
+
+class Message(ExtraModel):
+    group = models.Link(Group)
+    sender = models.Link(Player)
+    text = models.StringField()
+
+
+def to_dict(msg: Message):
+    return dict(sender=msg.sender.id_in_group, text=msg.text)
 
 # FUNCTIONS
 def set_payoffs(group):
@@ -80,6 +88,12 @@ def creating_session(subsession):
 # Use to check if bias draws are being pulled correctly:
     # print(group.vetoer_bias)
 # PAGES
+
+
+class Talk(Page):
+    timeout_seconds = 90
+    timer_text = 'Time left to chat:'
+
 class Proposal(Page):
     form_model = 'group'
     form_fields = ['minSlider','maxSlider']
@@ -92,7 +106,6 @@ class Proposal(Page):
     def js_vars(player):
         return dict(
             round_type=player.group.round_type,
-            single_treat=C.single,
         )
 
 class WaitForP1(WaitPage):
@@ -121,4 +134,4 @@ class WaitForP2(WaitPage):
 class Results(Page):
     pass
 
-page_sequence = [Proposal, WaitForP1, Response, WaitForP2, Results]
+page_sequence = [Talk, Proposal, WaitForP1, Response, WaitForP2, Results]

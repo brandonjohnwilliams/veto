@@ -1,5 +1,5 @@
 {{ block title }}
-
+Quiz
 {{ endblock }}
 
 
@@ -10,9 +10,7 @@
     <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
 </head>
 
-<p>Welcome to the Experiment!</p>
+    {{ formfields }}
 
-<p> The experimenter will advance you when everyone is ready. </p>
-
-
+{{ next_button }}
 {{ endblock }}

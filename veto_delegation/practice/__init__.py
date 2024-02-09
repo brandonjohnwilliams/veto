@@ -31,14 +31,28 @@ class Group(BaseGroup):
     vetoer_bias = models.IntegerField()
 
 class Player(BasePlayer):
-    pass
+    quiz3 = models.BooleanField(label="Is 9 a prime number?")
 
 # FUNCTIONS
 # PAGES
 class Introduction(Page):
     pass
 
+class Instructions(Page):
+    pass
+
 class Practice(Page):
     pass
 
-page_sequence = [Introduction, Practice]
+class Quiz(Page):
+    form_model = 'player'
+    form_fields = ['quiz3']
+
+    @staticmethod
+    def error_message(player: Player, values):
+        solutions = dict(quiz3=False)
+
+        if values != solutions:
+            return "One or more answers were incorrect."
+
+page_sequence = [Introduction, Instructions, Practice, Quiz]

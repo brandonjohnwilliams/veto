@@ -1,0 +1,34 @@
+{{ block title }}
+Chat
+{{ endblock }}
+
+{{ block content }}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+</head>
+
+<p>
+{{ if player.id_in_group == 1}}
+Your optimal value is 25. Player B's optimal point is unknown. They can accept your offer or reject it. If they reject it you will receive a payoff of 5.
+
+{{ else }}
+
+Your optimal value is {{ group.vetoer_bias }}. Player A's optimal value is 25. You can accept their offer or reject it.
+
+{{ endif }}
+</p>
+<p>
+    You may choose to chat with the opposing player.
+</p>
+
+<p>
+    <b>
+Chat box:
+    </b>
+</p>
+
+
+{{ chat nickname=player.role }}
+
+{{ endblock }}

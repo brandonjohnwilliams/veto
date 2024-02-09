@@ -17,14 +17,16 @@
 
 
 
-    <canvas id="probCanvas" width="700" height="400"></canvas><canvas id="payoffCanvas" width="700" height="600"></canvas>
+    <canvas id="probCanvas" width="700" height="400"></canvas>
+    <canvas id="payoffCanvas" width="700" height="600"></canvas>
 
      <div class="slidecontainer">
         <input type="range" name="minSlider" id="minSlider" min="0" max="25" value="0" class="slider" oninput="updateMinSlider(this)"><span id="minDesc">0</span>
      </div>
-     <div class="slidecontainer">
-        <input type="range" name="maxSlider" id="maxSlider" min="0" max="25" value="25" class="slider" oninput="updateMaxSlider(this)"><span id="maxDesc">25</span>
-     </div>
+        <input id="maxSlider" value="25" type="hidden">
+        <input id="maxDesc" value="25" type="hidden">
+
+
 
     <script src="{{ static 'veto_delegation/offer-graph.js' }}"></script>
 
