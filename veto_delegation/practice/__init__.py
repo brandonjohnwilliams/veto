@@ -17,6 +17,9 @@ class C(BaseConstants):
     veto_amount = 0
     guarantee = 5
 
+    single = 0
+    round_type = 2 # defined only explicitly for the practice round
+
 class Subsession(BaseSubsession):
     pass
 
@@ -30,6 +33,7 @@ class Group(BaseGroup):
 
     vetoer_bias = models.IntegerField()
 
+
 class Player(BasePlayer):
     quiz3 = models.BooleanField(label="Is 9 a prime number?")
 
@@ -38,8 +42,38 @@ class Player(BasePlayer):
 class Introduction(Page):
     pass
 
-class Instructions(Page):
+class PartOne(Page):
     pass
+
+class Payoffs(Page):
+    @staticmethod
+    def js_vars(player):
+        return dict(
+            selectedX=0, # Selecting 0 removes the column
+        )
+
+class DeterminingX(Page):
+    pass
+
+class SellersChoice(Page):
+    pass
+
+class SellerView(Page):
+    @staticmethod
+    def js_vars(player):
+        return dict(
+            round_type=C.round_type,
+        )
+
+class BuyersChoice(Page):
+    pass
+
+class BuyersView(Page):
+    @staticmethod
+    def js_vars(player):
+        return dict(
+            selectedX=0, # Selecting 0 removes the column
+        )
 
 class Practice(Page):
     pass
@@ -55,4 +89,4 @@ class Quiz(Page):
         if values != solutions:
             return "One or more answers were incorrect."
 
-page_sequence = [Introduction, Instructions, Practice, Quiz]
+page_sequence = [Introduction, PartOne, Payoffs, DeterminingX, SellersChoice, SellerView, BuyersChoice, BuyersView]

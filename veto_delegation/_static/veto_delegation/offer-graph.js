@@ -1,6 +1,8 @@
-// this just updates the value next to the slider
+
 let minDesc = document.getElementById('minDesc');
 let radioX = js_vars.round_type;
+
+// this just updates the value next to the slider
 
 function updateMinSlider(input) {
     let minSlider = parseInt(input.value)
@@ -46,7 +48,12 @@ maxSlider.addEventListener('input', function() {
 });
 
 // These are the probabilities for each Ideal point
-const pointsx = {1:[{ x: 1, y: 0.14262} ,{ x: 2, y: 0.12837} ,{ x: 3, y: 0.11488} ,{ x: 4, y: 0.10212} ,{ x: 5, y: 0.09012} , { x: 6, y: 0.07887} ,{ x: 7, y: 0.06838} ,{ x: 8, y: 0.05862} ,{ x: 9, y: 0.04962} ,{ x: 10, y: 0.04138} , { x: 11, y: 0.03388} ,{ x: 12, y: 0.02712} ,{ x: 13, y: 0.02112} ,{ x: 14, y: 0.01588} ,{ x: 15, y: 0.01137} ,{ x: 16, y: 0.00762} ,{ x: 17, y: 0.00462} ,{ x: 18, y: 0.00237} ,{ x: 19, y: 0.00088} ,{ x: 20, y: 0.00012} ], 2:[ { x: 1, y: 0.00725} ,{ x: 2, y: 0.02075} ,{ x: 3, y: 0.03275} ,{ x: 4, y: 0.04325} ,{ x: 5, y: 0.05225} ,{ x: 6, y: 0.05975} ,{ x: 7, y: 0.06575} ,{ x: 8, y: 0.07025} ,{ x: 9, y: 0.07325} ,{ x: 10, y: 0.07475} ,{ x: 11, y: 0.07475} ,{ x: 12, y: 0.07325} ,{ x: 13, y: 0.07025} ,{ x: 14, y: 0.06575} ,{ x: 15, y: 0.05975} ,{ x: 16, y: 0.05225} ,{ x: 17, y: 0.04325} ,{ x: 18, y: 0.03275} ,{ x: 19, y: 0.02075} ,{ x: 20, y: 0.00725} ], 3:[{ x: 1, y: 0.00012} ,{ x: 2, y: 0.00088} ,{ x: 3, y: 0.00237} ,{ x: 4, y: 0.00462} ,{ x: 5, y: 0.00762} ,{ x: 6, y: 0.01137} ,{ x: 7, y: 0.01588} ,{ x: 8, y: 0.02112} ,{ x: 9, y: 0.02712} ,{ x: 10, y: 0.03388} ,{ x: 11, y: 0.04138} ,{ x: 12, y: 0.04962} ,{ x: 13, y: 0.05862} ,{ x: 14, y: 0.06838} ,{ x: 15, y: 0.07887} ,{ x: 16, y: 0.09012} ,{ x: 17, y: 0.10212} ,{ x: 18, y: 0.11488} ,{ x: 19, y: 0.12837} ,{ x: 20, y: 0.14262} ]};
+const pointsx = {
+        1: [{ x: 1, y: 0.4213, yCDF: "0%", yPT: "42.13%", yADJ: "57.87%" }, { x: 2, y: 0.28241, yCDF: "42.16%", yPT: "28.24%", yADJ: "29.6%" }, { x: 3, y: 0.1713, yCDF: "70.37%", yPT: "17.13%", yADJ: "12.5%" }, { x: 4, y: 0.08796, yCDF: "87.5%", yPT: "8.8%", yADJ: "3.7%" }, { x: 5, y: 0.03241, yCDF: "96.26%", yPT: "3.24%", yADJ: "0.5%" }, { x: 6, y: 0.00463, yCDF: "99.54%", yPT: "0.46%", yADJ: "0.0%" }],
+        2: [{ x: 1, y: 0.07407, yCDF: "0%", yPT: "7.41%", yADJ: "92.59%" }, { x: 2, y: 0.18519, yCDF: "7.38%", yPT: "18.52%", yADJ: "74.1%" }, { x: 3, y: 0.24074, yCDF: "25.93%", yPT: "24.07%", yADJ: "50.0%" }, { x: 4, y: 0.24074, yCDF: "50.03%", yPT: "24.07%", yADJ: "25.9%" }, { x: 5, y: 0.18519, yCDF: "74.08%", yPT: "18.52%", yADJ: "7.4%" }, { x: 6, y: 0.07407, yCDF: "92.59%", yPT: "7.41%", yADJ: "0.0%" }],
+        3: [{ x: 1, y: 0.00463, yCDF: "0%", yPT: "0.46%", yADJ: "99.54%" }, { x: 2, y: 0.03241, yCDF: "0.46%", yPT: "3.24%", yADJ: "96.3%" }, { x: 3, y: 0.08796, yCDF: "3.7%", yPT: "8.8%", yADJ: "87.5%" }, { x: 4, y: 0.1713, yCDF: "12.47%", yPT: "17.13%", yADJ: "70.4%" }, { x: 5, y: 0.28241, yCDF: "29.66%", yPT: "28.24%", yADJ: "42.1%" }, { x: 6, y: 0.4213, yCDF: "57.87%", yPT: "42.13%", yADJ: "0.0%" }]
+};
+
 
 // Places cross lines
 const yticksProb = [
@@ -101,6 +108,30 @@ function drawPoint(ctx,x1,y1,r,graphsettings){
     ctx.stroke();
 };
 
+
+function drawArrow(ctx, x1, y1, x2, y2,arrowText,xOff, graphsettings) {
+    const pt0=xyTranslate(x1,y1,graphsettings);
+    const pt1=xyTranslate(x2,y2,graphsettings);
+    var headlen = 10; // length of head in pixels
+    var dx = pt1.cx - pt0.cx;
+    var dy = pt1.cy - pt0.cy;
+    var angle = Math.atan2(dy, dx);
+    ctx.save();
+    ctx.moveTo(pt0.cx, pt0.cy);
+    ctx.lineTo(pt1.cx, pt1.cy);
+    ctx.lineTo(pt1.cx - headlen * Math.cos(angle - Math.PI / 6), pt1.cy - headlen * Math.sin(angle - Math.PI / 6));
+    ctx.moveTo(pt1.cx, pt1.cy);
+    ctx.lineTo(pt1.cx - headlen * Math.cos(angle + Math.PI / 6), pt1.cy - headlen * Math.sin(angle + Math.PI / 6));
+    ctx.moveTo(pt0.cx - headlen * Math.sin(angle ), pt0.cy- headlen * Math.cos(angle ));
+    ctx.lineTo(pt0.cx + headlen * Math.sin(angle ), pt0.cy + headlen * Math.cos(angle ));
+    ctx.stroke();
+    ctx.fillStyle = "black";
+    ctx.font = axisTextSize;
+    ctx.textAlign = "left" ;
+    ctx.fillText("Probability at or below "+ x1 +" is "+arrowText, (pt1.cx+pt0.cx)/2, (pt1.cy+pt0.cy)/2-xOff);
+    ctx.restore()
+};
+
 function drawTicks(ctx,yTicks,gs,xOff){
     // Function to draw an (x,y) point
     yTicks.forEach(tick => {
@@ -123,7 +154,7 @@ function drawTicks(ctx,yTicks,gs,xOff){
 function drawProbs(showPlot,points,yticks,redPoint){
     // Function to draw the probability graph
     const ctx = canvasProb.getContext("2d");
-    const gs={'ch':canvasProb.height,'cw':canvasProb.width,'bw':60,'xMin':1,'xMax':20,'yMin':0,'yMax':0.16 };
+    const gs={'ch':canvasProb.height,'cw':canvasProb.width,'bw':60,'xMin':1,'xMax':6,'yMin':0,'yMax':0.16 };
     const xTextoffset = 30;
     ctx.strokeStyle = "black";
     drawLine(ctx,1,0,20,0,gs);
@@ -146,12 +177,12 @@ function drawProbs(showPlot,points,yticks,redPoint){
         // Draw circle for the point
         if (point.x == redPoint){ // If the highlighted point
             ctx.strokeStyle = "black";
+            drawArrow(ctx,redPoint,0.16,0.9,0.16,point.yCDF,xTextoffset,gs);
             ctx.shadowColor = "gray";
             ctx.fillStyle = "red";
             ctx.shadowOffsetX = 5;
             ctx.shadowOffsetY = 5;
             ctx.shadowBlur = 4;
-
             }
         else{ //otherwise no special styling
             ctx.strokeStyle = "gray";

@@ -1,0 +1,219 @@
+{{ block title }}
+Buyer's Choice
+{{ endblock }}
+
+{{ block content }}
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+    </head>
+
+<!-- Text -->
+    <p> The Buyer will see their ideal value along with what the Seller has made available to them. In this example, the Buyer has offered to the range from M=3 to M=8.
+        The Buyer may always walk away and choose M=0 as well.
+
+<br><br>
+
+        You have <b>ideal value X=1</b> which came from the <b>middle</b> of three dice rolls.
+<div style="width: 300px; margin: 0 auto;">
+<table class="tg">
+    <colgroup>
+        <col style="width: 251.2px">
+    </colgroup>
+    <thead>
+        <tr>
+            <th class="tg-7fle"><span style="font-weight:bold">Ideal Value, X</span></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="tg-baqh"><span class="die-number" id="die1">1</span> ≤ <span class="die-number-red" id="die2">1</span> ≤ <span class="die-number" id="die3">3</span></td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+
+
+<br><br>
+
+ <div class="sub-container">
+<div class="choices-container">
+    <div class="choice" data-value="0">M=0</div>
+    <div class="choice" data-value="1">M=1</div>
+    <div class="choice" data-value="2">M=2</div>
+    <div class="choice" data-value="3">M=3</div>
+    <div class="choice" data-value="4">M=4</div>
+    <div class="choice" data-value="5">M=5</div>
+    <div class="choice" data-value="6">M=6</div>
+    <div class="choice" data-value="7">M=7</div>
+    <div class="choice" data-value="8">M=8</div>
+</div>
+<!-- Payoffs Table -->
+<table class="tg" id="payoffTable">
+  <colgroup>
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+      <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+      <col style="width: 190.2px">
+  </colgroup>
+  <thead>
+    <tr>
+      <th class="tg-c3ow" rowspan="2">Widgets <br>Purchased, M</th>
+      <th class="tg-c3ow" rowspan="2">Your Payoff <br> (X=<span id="selectedX">-</span>)</th>
+      <th class="tg-c3ow" rowspan="2">Seller <br> Payoff</th>
+      <th class="tg-c3ow" colspan="6">Buyer Payoff (by ideal quantity X)</th>
+    </tr>
+    <tr>
+      <th class="tg-0lax">X=1</th>
+      <th class="tg-0lax">X=2</th>
+      <th class="tg-0lax">X=3</th>
+      <th class="tg-0lax">X=4</th>
+      <th class="tg-0lax">X=5</th>
+      <th class="tg-0lax">X=6</th>
+    </tr>
+  </thead>
+  <tbody id="tableBody">
+    <!-- Table body will be populated dynamically -->
+  </tbody>
+</table>
+
+ </div>
+<!-- Include JavaScript file -->
+    <script>
+
+
+    // Section to dynamically create the table
+
+  // Define your JavaScript dictionary with table values
+  var tableData = {
+    "M=0": ["$4", "$25", "$20", "$15", "$10", "$5", "$4"],
+    "M=1": ["$8", "$30", "$25", "$20", "$15", "$10", "$5"],
+    "M=2": ["$12", "$25", "$30", "$25", "$20", "$15", "$10"],
+    "M=3": ["$16", "$20", "$25", "$30", "$25", "$20", "$15"],
+    "M=4": ["$20", "$15", "$20", "$25", "$30", "$25", "$20"],
+    "M=5": ["$24", "$10", "$15", "$20", "$25", "$30", "$25"],
+    "M=6": ["$28", "$5", "$10", "$15", "$20", "$25", "$30"],
+    "M=7": ["$32", "$4", "$5", "$10", "$15", "$20", "$25"],
+    "M=8": ["$36", "$3", "$4", "$5", "$10", "$15", "$20"]
+  };
+
+  // Function to update the Your Payoff column based on selectedX
+function updateYourPayoffColumn(selectedX) {
+    var yourPayoffColumnHeader = document.querySelector("#payoffTable th:nth-child(2)");
+
+    // Check if selectedX is a valid number
+    if (typeof selectedX === 'number' && selectedX >= 1 && selectedX <= 6) {
+        var yourPayoffColumn = document.getElementById("selectedX");
+        yourPayoffColumn.textContent = selectedX;
+
+        // Copy the corresponding Buyer Payoff column
+        var buyerPayoffColumnIndex = selectedX + 1; // Buyer Payoff columns start from index 2
+        var tableRows = document.querySelectorAll("#tableBody tr");
+        tableRows.forEach(function(row, index) {
+            var cell = row.children[buyerPayoffColumnIndex].cloneNode(true);
+            row.insertBefore(cell, row.children[1]); // Insert before the 2nd cell
+        });
+
+        // Show the Your Payoff column and header
+        yourPayoffColumnHeader.style.display = '';
+        var tableRows = document.querySelectorAll("#tableBody tr");
+        tableRows.forEach(function(row, index) {
+            row.children[1].style.display = ''; // Show the 2nd cell (Your Payoff column)
+        });
+    } else {
+        // Populate the "Your Payoff" column with all 0 values
+        var tableRows = document.querySelectorAll("#tableBody tr");
+        tableRows.forEach(function(row, index) {
+            var cell = document.createElement("td");
+            cell.className = "tg-0pky";
+            cell.textContent = "$0"; // Populate with 0 value
+            row.insertBefore(cell, row.children[1]); // Insert before the 2nd cell
+        });
+
+        // Hide the Your Payoff column and header
+        yourPayoffColumnHeader.style.display = 'none';
+        var tableRows = document.querySelectorAll("#tableBody tr");
+        tableRows.forEach(function(row, index) {
+            row.children[1].style.display = 'none'; // Hide the 2nd cell (Your Payoff column)
+        });
+    }
+}
+
+
+
+
+  // Get the table body element
+  var tbody = document.getElementById("tableBody");
+
+  // Loop through the dictionary and populate the table
+  Object.keys(tableData).forEach(function(key) {
+    var row = document.createElement("tr");
+    var rowData = tableData[key];
+    var cellM = document.createElement("td");
+    cellM.className = "tg-0pky";
+    cellM.textContent = key;
+    row.appendChild(cellM);
+    rowData.forEach(function(value) {
+      var cell = document.createElement("td");
+      cell.className = "tg-0pky";
+      cell.textContent = value;
+      row.appendChild(cell);
+    });
+    tbody.appendChild(row);
+  });
+
+const selectedX = 1;
+
+  updateYourPayoffColumn(selectedX); // Initial update
+
+
+var columnToHighlight = 4; // Adding 2 because indexing starts from 0 and the table starts from the third column
+
+            // Reset previous highlights
+            var highlightedCells = document.querySelectorAll(".highlight");
+            highlightedCells.forEach(function(cell) {
+                cell.classList.remove("highlight");
+            });
+                        // Highlight cells in the selected column
+            var cellsToHighlight = document.querySelectorAll("tbody td:nth-child(" + columnToHighlight + ")");
+            cellsToHighlight.forEach(function(cell) {
+                cell.classList.add("highlight");
+                });
+
+        const from = 3
+        // Component to control visibility of table rows
+        var rows = document.getElementById("payoffTable").rows;
+        for (var i = 1; i <= rows.length - 1; i++) {
+            if (i >= from+2 && i <= 10 || i===1 || i === 2) {
+                rows[i].classList.remove("hidden-text");
+            } else {
+                rows[i].classList.add("hidden-text");
+            }
+        }
+
+    const choices = document.querySelectorAll('.choices-container .choice');
+
+    // Function to hide or show radio buttons based on the value of `from`
+    function toggleRadioButtons() {
+        choices.forEach(function(choice) {
+            const value = parseInt(choice.getAttribute('data-value'));
+            if (value === 0 || value >= from) {
+                choice.style.visibility = 'visible'; // Show radio button
+            } else {
+                choice.style.visibility = 'hidden'; // Hide radio button
+            }
+        });
+    }
+
+    // Initially toggle the radio buttons
+    toggleRadioButtons();
+
+    </script>
+{{ endblock }}

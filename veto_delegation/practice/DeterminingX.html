@@ -1,0 +1,113 @@
+
+{{ block title }}
+    Determining <em>X</em>
+{{ endblock }}
+
+
+{{ block content }}
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+    </head>
+
+    <!-- Text -->
+    <p>The Buyer’s ideal quantity X is chosen as follows:</p>
+    <ol>
+        <li>
+            The computer will roll three six-sided dies, and order the rolls from smallest to largest.
+            <ul>
+                <li>Rolls of 5, 1, and 3 would be ordered as <span class="die-number-white">1</span> ≤ <span class="die-number-white">3</span> ≤ <span class="die-number-white">5</span>.</li>
+                <li>Rolls of 2, 6, and 2 would be ordered as <span class="die-number-white">2</span> ≤ <span class="die-number-white">2</span> ≤ <span class="die-number-white">6</span>.</li>
+            </ul>
+        </li>
+        <li>One of the three rolls is selected randomly and fairly to be the Buyer’s ideal quantity X.</li>
+        <li>The Seller will not know the selected ideal quantity X; however, the Seller will observe where the selected die roll outcome was in the roll ordering.
+            <ul>
+                <li>The smallest of the three <span class="die-number-red"></span> ≤ <span class="die-number-white"></span> ≤ <span class="die-number-white"></span></li>
+                <li>The middle of the three <span class="die-number-white"></span> ≤ <span class="die-number-red"></span> ≤ <span class="die-number-white"></span></li>
+                <li>The largest of the three <span class="die-number-white"></span> ≤ <span class="die-number-white"></span> ≤ <span class="die-number-red"></span></li>
+            </ul>
+        </li>
+        <li>
+            The Seller then chooses
+            {% if C.single == 0 %}
+                a minimum and maximum quantity
+            {% else %}
+                a quantity
+            {% endif %}
+            to offer to the Buyer.
+        </li>
+        <li>
+            The Buyer then makes a quantity choice M, either walking away (purchasing M=0 widgets), or choosing to purchase
+            {% if C.single == 0 %}
+                any amount between the seller’s chosen minimum and maximum.
+            {% else %}
+                the seller’s chosen quantity.
+            {% endif %}
+        </li>
+        <li>Payoffs for the round are determined according to the table for the given quantity choice M and the ideal quantity X.</li>
+    </ol>
+
+    <p>You can play with this here. Each time you click the re-roll button, the computer will re-roll three dice, order them, and select one of them at random.</p>
+
+    <!-- Dice Roll Table -->
+    <table class="tg" style="border-collapse: separate; border-spacing: 0; width: auto; margin: 0 auto;">
+        <colgroup>
+            <col style="width: 251.2px">
+            <col style="width: 251.2px">
+        </colgroup>
+        <thead>
+            <tr>
+                <th class="tg-7fle" style="font-weight: bold; padding: 8px; border: 1px solid #ddd;">Buyer Sees</th>
+                <th class="tg-7fle" style="font-weight: bold; padding: 8px; border: 1px solid #ddd;">Seller Sees</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="tg-baqh" style="padding: 8px; border: 1px solid #ddd;"><span class="die-number" id="die1"></span> ≤ <span class="die-number" id="die2"></span> ≤ <span class="die-number" id="die3"></span></td>
+                <td class="tg-baqh" style="padding: 8px; border: 1px solid #ddd;"><span class="die-number-white" id="dieColor1"></span> ≤ <span class="die-number-white" id="dieColor2"></span> ≤ <span class="die-number-white" id="dieColor3"></span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Roll Dice Button -->
+    <button type="button" id="roll-button">Roll Dice</button>
+
+    <!-- JavaScript -->
+    <script>
+        document.getElementById("roll-button").addEventListener("click", rollDice);
+
+        function rollDice() {
+            // Roll three 6-sided dice
+            let die1 = Math.floor(Math.random() * 6) + 1;
+            let die2 = Math.floor(Math.random() * 6) + 1;
+            let die3 = Math.floor(Math.random() * 6) + 1;
+
+            // Sort the dice from lowest to highest
+            let dice = [die1, die2, die3];
+            dice.sort((a, b) => a - b);
+
+            // Update the table with the results
+            let dieNumbers = document.querySelectorAll(".die-number");
+            for (let i = 0; i < dice.length; i++) {
+                dieNumbers[i].textContent = dice[i]; // Use textContent to set the text
+            }
+
+            // Remove the "selected" class from all die elements
+            document.querySelectorAll('.die-number').forEach(element => {
+                element.classList.remove('selected');
+            });
+            document.querySelectorAll('.die-number-white').forEach(element => {
+                element.classList.remove('selected');
+            });
+
+            // Randomly select a value between 1 and 3
+            let selectedDieIndex = Math.floor(Math.random() * 3); // 0, 1, or 2
+
+            // Based on the selected value, change the color of the corresponding die
+            let selectedDieId = "die" + (selectedDieIndex + 1);
+            document.getElementById(selectedDieId).classList.add("selected");
+            let selectedColorId = "dieColor" + (selectedDieIndex + 1);
+            document.getElementById(selectedColorId).classList.add("selected");
+        }
+    </script>
+{{ endblock }}

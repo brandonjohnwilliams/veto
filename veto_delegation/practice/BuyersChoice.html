@@ -1,0 +1,245 @@
+{{ block title }}
+Buyer's Choice
+{{ endblock }}
+
+{{ block content }}
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+    </head>
+
+<!-- Text -->
+    <p> The Seller will know their randomly determined ideal location:
+
+<br>
+
+<div style="width: 300px; margin: 0 auto;">
+<table class="tg">
+    <colgroup>
+        <col style="width: 251.2px">
+    </colgroup>
+    <thead>
+        <tr>
+            <th class="tg-7fle"><span style="font-weight:bold">Buyer Sees</span></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="tg-baqh"><span class="die-number" id="die1"></span> ≤ <span class="die-number" id="die2"></span> ≤ <span class="die-number" id="die3"></span></td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+<button type="button" id="roll-button">Roll Dice</button>
+
+Given the Seller's choice, the Buyer will have to select a quantity:
+
+    <ul>
+        <li>   Either walking away (0 widgets purchased). </li>
+        <li> Or
+
+        <!--   This determines which text to show based on the treatment, change this if the method of selecting treatment changes    -->
+            {{ if C.single == 0 }}
+                an amount between the minimum and maximum quantity.
+            {{else}}
+                the offered quantity.
+            {{endif}}
+    </li>
+    </ul>
+
+To help you in this decision, for each of the possible quantity choices, the interface will display the payoffs to the Buyer and Seller.
+When you click the button to roll dice above, one die will be highlighted in red. This is the Buyer's ideal value, which is then highlighed in blue in the table below.
+If you are able to choose the number to purchase, M, that matches your ideal value, X, you will receive the highest possible payoff.
+
+<br><br>
+
+<!-- Payoffs Table -->
+<table class="tg" id="payoffTable">
+<colgroup>
+<col style="width: 97.2px">
+<col style="width: 90.2px">
+<col style="width: 61.2px">
+<col style="width: 61.2px">
+<col style="width: 61.2px">
+<col style="width: 61.2px">
+<col style="width: 61.2px">
+<col style="width: 61.2px">
+</colgroup>
+<thead>
+  <tr>
+    <th class="tg-c3ow" rowspan="2">Widgets <br>Purchased, M</th>
+    <th class="tg-c3ow" rowspan="2">Seller <br> Payoff</th>
+    <th class="tg-c3ow" colspan="6">Buyer Payoff (by ideal quantity X)</th>
+  </tr>
+  <tr>
+    <th class="tg-0lax">X=1</th>
+    <th class="tg-0lax">X=2</th>
+    <th class="tg-0lax">X=3</th>
+    <th class="tg-0lax">X=4</th>
+    <th class="tg-0lax">X=5</th>
+    <th class="tg-0lax">X=6</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-0pky">M=0</td>
+    <td class="tg-0pky">$4</td>
+    <td class="tg-0pky">$25</td>
+    <td class="tg-0pky">$20</td>
+    <td class="tg-0pky">$15</td>
+    <td class="tg-0pky">$10</td>
+    <td class="tg-0pky">$5</td>
+    <td class="tg-0pky">$4</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">M=1</td>
+    <td class="tg-0pky">$8</td>
+    <td class="tg-0pky">$30</td>
+    <td class="tg-0pky">$25</td>
+    <td class="tg-0pky">$20</td>
+    <td class="tg-0pky">$15</td>
+    <td class="tg-0pky">$10</td>
+    <td class="tg-0pky">$5</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">M=2</td>
+    <td class="tg-0pky">$12</td>
+    <td class="tg-0pky">$25</td>
+    <td class="tg-0pky">$30</td>
+    <td class="tg-0pky">$25</td>
+    <td class="tg-0pky">$20</td>
+    <td class="tg-0pky">$15</td>
+    <td class="tg-0pky">$10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">M=3</td>
+    <td class="tg-0pky">$16</td>
+    <td class="tg-0pky">$20</td>
+    <td class="tg-0pky">$25</td>
+    <td class="tg-0pky">$30</td>
+    <td class="tg-0pky">$25</td>
+    <td class="tg-0pky">$20</td>
+    <td class="tg-0pky">$15</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">M=4</td>
+    <td class="tg-0pky">$20</td>
+    <td class="tg-0pky">$15</td>
+    <td class="tg-0pky">$20</td>
+    <td class="tg-0pky">$25</td>
+    <td class="tg-0pky">$30</td>
+    <td class="tg-0pky">$25</td>
+    <td class="tg-0pky">$20</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">M=5</td>
+    <td class="tg-0pky">$24</td>
+    <td class="tg-0pky">$10</td>
+    <td class="tg-0pky">$15</td>
+    <td class="tg-0pky">$20</td>
+    <td class="tg-0pky">$25</td>
+    <td class="tg-0pky">$30</td>
+    <td class="tg-0pky">$25</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">M=6</td>
+    <td class="tg-0pky">$28</td>
+    <td class="tg-0pky">$5</td>
+    <td class="tg-0pky">$10</td>
+    <td class="tg-0pky">$15</td>
+    <td class="tg-0pky">$20</td>
+    <td class="tg-0pky">$25</td>
+    <td class="tg-0pky">$30</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">M=7</td>
+    <td class="tg-0pky">$32</td>
+    <td class="tg-0pky">$4</td>
+    <td class="tg-0pky">$5</td>
+    <td class="tg-0pky">$10</td>
+    <td class="tg-0pky">$15</td>
+    <td class="tg-0pky">$20</td>
+    <td class="tg-0pky">$25</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">M=8</td>
+    <td class="tg-0pky">$36</td>
+    <td class="tg-0pky">$3</td>
+    <td class="tg-0pky">$4</td>
+    <td class="tg-0pky">$5</td>
+    <td class="tg-0pky">$10</td>
+    <td class="tg-0pky">$15</td>
+    <td class="tg-0pky">$20</td>
+  </tr>
+  </tbody>
+</table>
+
+Note that the precise payoffs will depend on your ideal quantity, X. While X will be fixed in each round in the experiment, you can see how this will affect payoffs by clicking the Re-roll button above.
+    <!-- Include JavaScript file -->
+    <script>
+        // Dice Roll Section (for Practice Rounds)
+
+document.getElementById("roll-button").addEventListener("click", rollDice);
+
+function rollDice() {
+    // Roll three 6-sided dice
+    let die1 = Math.floor(Math.random() * 6) + 1;
+    let die2 = Math.floor(Math.random() * 6) + 1;
+    let die3 = Math.floor(Math.random() * 6) + 1;
+
+    // Sort the dice from lowest to highest
+    let dice = [die1, die2, die3];
+    dice.sort((a, b) => a - b);
+
+// Update the table with the results
+let dieNumbers = document.querySelectorAll(".die-number");
+for (let i = 0; i < dice.length; i++) {
+    dieNumbers[i].textContent = dice[i]; // Use textContent to set the text
+}
+    // Construct the return string
+    // let returnString = "Die Numbers: " + dice.join(", ");
+
+    // Print the return string
+    // console.log(returnString); // Prints to the console
+
+        // Remove the "selected" class from all die elements
+    document.querySelectorAll('.die-number').forEach(element => {
+        element.classList.remove('selected');
+    });
+        document.querySelectorAll('.die-number-white').forEach(element => {
+        element.classList.remove('selected');
+    });
+
+        // Randomly select a value between 1 and 3
+    let selectedDieIndex = Math.floor(Math.random() * 3); // 0, 1, or 2
+
+    // // Based on the selected value, change the color of the corresponding die
+    let selectedDieId = "die" + (selectedDieIndex + 1);
+    document.getElementById(selectedDieId).classList.add("selected");
+    // let selectedColorId = "dieColor" + (selectedDieIndex + 1);
+    // document.getElementById(selectedColorId).classList.add("selected");
+
+    // Retrieve the selected die number from the dice array
+    let selectedDieNumber = dice[selectedDieIndex];
+
+    // Print the selected die number to the log
+    console.log("Selected Die Number:", selectedDieNumber);
+
+            var columnToHighlight = selectedDieNumber + 2; // Adding 2 because indexing starts from 0 and the table starts from the third column
+
+            // Reset previous highlights
+            var highlightedCells = document.querySelectorAll(".highlight");
+            highlightedCells.forEach(function(cell) {
+                cell.classList.remove("highlight");
+            });
+
+            // Highlight cells in the selected column
+            var cellsToHighlight = document.querySelectorAll("tbody td:nth-child(" + columnToHighlight + ")");
+            cellsToHighlight.forEach(function(cell) {
+                cell.classList.add("highlight");
+                });
+
+}
+
+    </script>
+{{ endblock }}
