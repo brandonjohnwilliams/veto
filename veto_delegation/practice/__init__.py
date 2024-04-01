@@ -20,6 +20,8 @@ class C(BaseConstants):
     single = 0
     round_type = 2 # defined only explicitly for the practice round
 
+    setZero = 0  # define as such to remove buyer payoff column
+
 class Subsession(BaseSubsession):
     pass
 
@@ -32,6 +34,8 @@ class Group(BaseGroup):
     veto = models.BooleanField(blank=True, initial=False) # True if vetoed
 
     vetoer_bias = models.IntegerField()
+
+    selectedX = models.IntegerField()
 
 
 class Player(BasePlayer):
@@ -49,7 +53,7 @@ class Payoffs(Page):
     @staticmethod
     def js_vars(player):
         return dict(
-            selectedX=0, # Selecting 0 removes the column
+            selectedX=C.setZero,  # Selecting 0 removes the column
         )
 
 class DeterminingX(Page):
@@ -72,7 +76,9 @@ class BuyersView(Page):
     @staticmethod
     def js_vars(player):
         return dict(
-            selectedX=0, # Selecting 0 removes the column
+            selectedX=2, # Selecting 0 removes the column
+            fromM=3,
+            toM=6,
         )
 
 class Practice(Page):

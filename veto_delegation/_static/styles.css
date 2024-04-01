@@ -11,6 +11,14 @@
     gap: 0px; /* Adjust gap between columns as needed */
 }
 
+.sub-container3 {
+    display: grid;
+    grid-template-columns: 1fr 7fr; /* Adjust column widths as needed */
+    max-width: 900px; /* Adjust this value as needed */
+    gap: 0px; /* Adjust gap between columns as needed */
+    margin-left: 0px;
+}
+
 #payoffTable {
     transform: translateX(25px); /* Adjust the translation amount as needed */
 }
@@ -88,6 +96,10 @@ p {
 
 }
 
+.small-table {
+    max-width: 700px; /* Adjust this value as needed */
+}
+
 .sliders_control {
     writing-mode: bt-lr; /* Bottom to top, left to right */
     -webkit-appearance: slider-vertical; /* For WebKit/Blink */
@@ -125,7 +137,7 @@ p {
         justify-content: center;
         align-items: center;
         height: 460px;
-        margin-top: 100px;
+        margin-top: 110px;
         /*border: 1px solid #ff0000;*/
     }
 

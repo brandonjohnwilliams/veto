@@ -1,7 +1,28 @@
-// Define the distribution from oTree
+// Pull variables from oTree
 
 let radioX = js_vars.round_type;
 let selectedX = js_vars.selectedX;
+let from = Number(js_vars.fromM);
+let to = Number(js_vars.toM)
+
+
+// Function to hide or show radio buttons based on the value of `from`
+
+const choices = document.querySelectorAll('.choices-container .choice');
+
+function toggleRadioButtons() {
+    choices.forEach(function(choice) {
+        const value = parseInt(choice.getAttribute('data-value'));
+        if (value === 0 || value >= from && value <= to) {
+            choice.style.visibility = 'visible'; // Show radio button
+        } else {
+            choice.style.visibility = 'hidden'; // Hide radio button
+        }
+    });
+}
+
+// Initially toggle the radio buttons
+toggleRadioButtons();
 
 // Section to dynamically create the table
 
@@ -84,6 +105,7 @@ function updateYourPayoffColumn(selectedX) {
   });
 
   updateYourPayoffColumn(selectedX); // Initial update
+updateTableOpacity(from,to)
 
 
 
@@ -368,6 +390,7 @@ function drawPoint(ctx,x1,y1,r,graphsettings){
 };
 
 function drawTicks(ctx,yTicks,gs,xOff){
+
     // Function to draw an (x,y) point
     yTicks.forEach(tick => {
         // Draw ytick
@@ -425,8 +448,6 @@ function drawProbs(showPlot, points, yticks, redPoint) {
     // Remove dashing
     ctx.setLineDash([]);
 
-    var theta = redPoint;
-
     // Plot each point for the showPlot layer
     points[showPlot].forEach(point => {
         pt = xyTranslate(point.x, point.y, gs);
@@ -437,9 +458,9 @@ function drawProbs(showPlot, points, yticks, redPoint) {
 
             // Draw arrows for the highlighted point
             let yArrow = yRange + .01;
-            if (theta == 1) {
+            if (redPoint == 1) {
                 drawRArrow(ctx, parseInt(redPoint) + 1, yArrow, xRange, yArrow, point.yADJ, xTextoffset, gs);
-            } else if (theta == 6) {
+            } else if (redPoint == 6) {
                 drawLArrow(ctx, parseInt(redPoint) - 1, yArrow, 0.9, yArrow, point.yCDF, xTextoffset, gs);
             } else {
                 drawLArrow(ctx, parseInt(redPoint) - 1, yArrow, 0.9, yArrow, point.yCDF, xTextoffset, gs);
@@ -518,3 +539,27 @@ drawProbs(radioX,pointsx,yticksProb,0);
 
 
 
+
+
+
+
+function updateTableOpacity(from,to) {
+    // Select the table
+    var table = document.getElementById('payoffTable'); // Replace 'your_table_id' with the actual ID of your table
+
+    // Get all rows in the table
+    var rows = table.getElementsByTagName('tr');
+
+    // Loop through each row
+    for (var i = 0; i < rows.length; i++) {
+        var fromADJ = from + 2;
+        var toADJ = to + 4;
+        var rowNumber = i + 1; // Row number starts from 1
+
+        // Check if the row number is greater than the input "from"
+        if (rowNumber >= 4 && rowNumber <= fromADJ || rowNumber >= toADJ) {
+            // Set opacity to 0.15 for rows greater than "from"
+            rows[i].style.opacity = 0.15;
+        }
+    }
+}
