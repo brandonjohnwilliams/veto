@@ -19,6 +19,8 @@ class C(BaseConstants):
 
     single = 0
 
+    setZero = 0  # define as such to remove buyer payoff column
+
 
 class Subsession(BaseSubsession):
     pass
@@ -32,6 +34,9 @@ class Group(BaseGroup):
     veto = models.BooleanField(blank=True, initial=False) # True if vetoed
 
     vetoer_bias = models.IntegerField()
+
+    selectedX = models.IntegerField()
+
     round_type = models.IntegerField()
 
 
@@ -92,7 +97,6 @@ class Proposal(Page):
     def js_vars(player):
         return dict(
             round_type=player.group.round_type,
-            single_treat=C.single,
         )
 
 class WaitForP1(WaitPage):
@@ -110,9 +114,9 @@ class Response(Page):
     @staticmethod
     def js_vars(player):
         return dict(
-            vetoer_bias=str(player.group.vetoer_bias),
-            lower_interval=str(player.group.minSlider),
-            upper_interval=str(player.group.maxSlider),
+            selectedX=2, # Selecting 0 removes the column
+            fromM=3,
+            toM=6,
         )
 
 class WaitForP2(WaitPage):

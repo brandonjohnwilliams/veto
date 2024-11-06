@@ -81,18 +81,6 @@ class BuyersView(Page):
             toM=6,
         )
 
-class Practice(Page):
-    pass
 
-class Quiz(Page):
-    form_model = 'player'
-    form_fields = ['quiz3']
-
-    @staticmethod
-    def error_message(player: Player, values):
-        solutions = dict(quiz3=False)
-
-        if values != solutions:
-            return "One or more answers were incorrect."
 
 page_sequence = [Introduction, PartOne, Payoffs, DeterminingX, SellersChoice, SellerView, BuyersChoice, BuyersView]

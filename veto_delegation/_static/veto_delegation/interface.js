@@ -563,3 +563,17 @@ function updateTableOpacity(from,to) {
         }
     }
 }
+
+        // var columnToHighlight = 4; // Adding 2 because indexing starts from 0 and the table starts from the third column
+        //
+        // // Reset previous highlights
+        // var highlightedCells = document.querySelectorAll(".highlight");
+        // highlightedCells.forEach(function(cell) {
+        //     cell.classList.remove("highlight");
+        // });
+        //
+        // // Highlight cells in the selected column
+        // var cellsToHighlight = document.querySelectorAll("tbody td:nth-child(" + columnToHighlight + ")");
+        // cellsToHighlight.forEach(function(cell) {
+        //     cell.classList.add("highlight");
+        // });
