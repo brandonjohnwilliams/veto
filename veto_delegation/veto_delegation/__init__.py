@@ -115,8 +115,8 @@ class Response(Page):
     def js_vars(player):
         return dict(
             selectedX=2, # Selecting 0 removes the column
-            fromM=3,
-            toM=6,
+            fromM=player.group.minSlider,
+            toM=player.group.maxSlider,
         )
 
 class WaitForP2(WaitPage):
