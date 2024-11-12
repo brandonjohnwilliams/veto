@@ -513,26 +513,55 @@ sliderTheta.oninput = function() {
 };
 
 document.addEventListener("DOMContentLoaded", function() {
-        var thetaRange = document.getElementById("thetaRange");
+    var thetaRange = document.getElementById("thetaRange");
+
+    thetaRange.addEventListener("input", function() {
+        var thetaValue = parseInt(thetaRange.value);
+        var columnToHighlight = thetaValue + 3; // Adjust for your table's column indexing
+
+        // Debugging statement to check column
+        console.log("Highlighting column:", columnToHighlight);
+
+        // Remove existing borders from previous selections
         var table = document.getElementById("payoffTable");
+        var rows = table.getElementsByTagName("tr");
 
-        thetaRange.addEventListener("input", function() {
-            var thetaValue = parseInt(thetaRange.value);
-            var columnToHighlight = thetaValue + 3; // Adding 2 because indexing starts from 0 and the table starts from the third column
+        for (var i = 0; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName("td"); // Target only <td> cells for reset
+            for (var j = 0; j < cells.length; j++) {
+                cells[j].style.border = ""; // Reset all <td> cell borders
+            }
+        }
 
-            // Reset previous highlights
-            var highlightedCells = document.querySelectorAll(".highlight");
-            highlightedCells.forEach(function(cell) {
-                cell.classList.remove("highlight");
-            });
-
-            // Highlight cells in the selected column
-            var cellsToHighlight = document.querySelectorAll("tbody td:nth-child(" + columnToHighlight + ")");
-            cellsToHighlight.forEach(function(cell) {
-                cell.classList.add("highlight");
-            });
-        });
+        // Apply border to wrap only the exterior of the selected column, starting from data rows
+        for (var i = 1; i < rows.length; i++) { // Start from 1 to skip the header row
+            var cells = rows[i].getElementsByTagName("td"); // Ensure only <td> cells are targeted
+            var cell = cells[columnToHighlight - 1];
+            if (cell) {
+                if (i === 1) {
+                    // Top cell in the selected column: add top, left, and right borders
+                    cell.style.borderTop = "2px solid red";
+                    cell.style.borderLeft = "2px solid red";
+                    cell.style.borderRight = "2px solid red";
+                } else if (i === rows.length - 1) {
+                    // Bottom cell in the selected column: add bottom, left, and right borders
+                    cell.style.borderBottom = "2px solid red";
+                    cell.style.borderLeft = "2px solid red";
+                    cell.style.borderRight = "2px solid red";
+                } else {
+                    // Middle cells in the column: add left and right borders only
+                    cell.style.borderLeft = "2px solid red";
+                    cell.style.borderRight = "2px solid red";
+                }
+            } else {
+                console.log(`Cell not found in row ${i} for column ${columnToHighlight}`);
+            }
+        }
     });
+});
+
+
+
 
 //Initial call
 drawProbs(radioX,pointsx,yticksProb,0);

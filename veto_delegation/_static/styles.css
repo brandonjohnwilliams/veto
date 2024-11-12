@@ -165,9 +165,10 @@ p {
     margin-left: -35px;
 }
 
-.highlight {
-            background-color: #99ccff;
-}
+/*.highlight {*/
+/*    !*border: 2px solid red;*!*/
+/*    background-color: red;*/
+/*}*/
 
     .slider_value {
         font-size: 18px;
