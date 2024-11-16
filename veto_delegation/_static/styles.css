@@ -165,10 +165,12 @@ p {
     margin-left: -35px;
 }
 
-/*.highlight {*/
-/*    !*border: 2px solid red;*!*/
-/*    background-color: red;*/
-/*}*/
+.highlight {
+    font-weight: bold; /* Keeps the bold font */
+    color: darkred; /* Sets the font color to red */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Adds a shadow effect */
+}
+
 
     .slider_value {
         font-size: 18px;

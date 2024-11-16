@@ -49,32 +49,28 @@ function updateYourPayoffColumn(selectedX) {
         yourPayoffColumn.textContent = selectedX;
 
         // Copy the corresponding Buyer Payoff column
-        var buyerPayoffColumnIndex = selectedX + 1; // Buyer Payoff columns start from index 2
+        var buyerPayoffColumnIndex = selectedX + 2; // Adjusted index
         var tableRows = document.querySelectorAll("#tableBody tr");
         tableRows.forEach(function(row, index) {
             var cell = row.children[buyerPayoffColumnIndex].cloneNode(true);
-            row.insertBefore(cell, row.children[1]); // Insert before the 2nd cell
+            row.replaceChild(cell, row.children[1]); // Replace the "Your Payoff" cell
         });
 
         // Show the Your Payoff column and header
         yourPayoffColumnHeader.style.display = '';
-        var tableRows = document.querySelectorAll("#tableBody tr");
         tableRows.forEach(function(row, index) {
             row.children[1].style.display = ''; // Show the 2nd cell (Your Payoff column)
         });
     } else {
-        // Populate the "Your Payoff" column with all 0 values, this allows for the spacing to remain constant
+        // Update the "Your Payoff" column with $0 values
         var tableRows = document.querySelectorAll("#tableBody tr");
         tableRows.forEach(function(row, index) {
-            var cell = document.createElement("td");
-            cell.className = "tg-0pky";
+            var cell = row.children[1];
             cell.textContent = "$0"; // Populate with 0 value
-            row.insertBefore(cell, row.children[1]); // Insert before the 2nd cell
         });
 
-        // Hide the Your Payoff column and header so that the table can be used in all pages
+        // Hide the Your Payoff column and header
         yourPayoffColumnHeader.style.display = 'none';
-        var tableRows = document.querySelectorAll("#tableBody tr");
         tableRows.forEach(function(row, index) {
             row.children[1].style.display = 'none'; // Hide the 2nd cell (Your Payoff column)
         });
@@ -84,28 +80,9 @@ function updateYourPayoffColumn(selectedX) {
 
 
 
+
   // Get the table body element
   var tbody = document.getElementById("tableBody");
-
-  // Loop through the dictionary and populate the table
-  Object.keys(tableData).forEach(function(key) {
-    var row = document.createElement("tr");
-    var rowData = tableData[key];
-    var cellM = document.createElement("td");
-    cellM.className = "tg-0pky";
-    cellM.textContent = key;
-    row.appendChild(cellM);
-    rowData.forEach(function(value) {
-      var cell = document.createElement("td");
-      cell.className = "tg-0pky";
-      cell.textContent = value;
-      row.appendChild(cell);
-    });
-    tbody.appendChild(row);
-  });
-
-  updateYourPayoffColumn(selectedX); // Initial update
-updateTableOpacity(from,to)
 
 
 
@@ -257,6 +234,69 @@ const pointsx = {
         2: [{ x: 1, y: 0.07407, yCDF: "0%", yPT: "7.41%", yADJ: "92.59%" }, { x: 2, y: 0.18519, yCDF: "7.38%", yPT: "18.52%", yADJ: "74.1%" }, { x: 3, y: 0.24074, yCDF: "25.93%", yPT: "24.07%", yADJ: "50.0%" }, { x: 4, y: 0.24074, yCDF: "50.03%", yPT: "24.07%", yADJ: "25.9%" }, { x: 5, y: 0.18519, yCDF: "74.08%", yPT: "18.52%", yADJ: "7.4%" }, { x: 6, y: 0.07407, yCDF: "92.59%", yPT: "7.41%", yADJ: "0.0%" }],
         3: [{ x: 1, y: 0.00463, yCDF: "0%", yPT: "0.46%", yADJ: "99.54%" }, { x: 2, y: 0.03241, yCDF: "0.46%", yPT: "3.24%", yADJ: "96.3%" }, { x: 3, y: 0.08796, yCDF: "3.7%", yPT: "8.8%", yADJ: "87.5%" }, { x: 4, y: 0.1713, yCDF: "12.47%", yPT: "17.13%", yADJ: "70.4%" }, { x: 5, y: 0.28241, yCDF: "29.66%", yPT: "28.24%", yADJ: "42.1%" }, { x: 6, y: 0.4213, yCDF: "57.87%", yPT: "42.13%", yADJ: "0.0%" }]};
 
+
+// Function to calculate the blue shade based on yPT value
+function calculateBlueShade(yPT) {
+    // Parse the yPT percentage to a number (e.g., "42.13%" => 42.13)
+    let value = parseFloat(yPT.replace('%', ''));
+    // Normalize the value to a range of 0-255
+    return Math.floor((value / 100) * 255);
+}
+
+// Loop through the dictionary and populate the table
+Object.keys(tableData).forEach(function (key) {
+    var row = document.createElement("tr"); // Create a new row element
+    var rowData = tableData[key]; // Get the array of values for the current key in tableData
+
+    // Create the first cell for the row, which displays the "M=..." label
+    var cellM = document.createElement("td");
+    cellM.className = "tg-0pky"; // Assign a CSS class for styling
+    cellM.textContent = key; // Set the text of the cell to the current key (e.g., "M=0")
+    row.appendChild(cellM); // Append the cell to the current row
+
+    // Create an empty cell for the "Your Payoff" column
+    var cellYourPayoff = document.createElement("td");
+    cellYourPayoff.className = "tg-0pky"; // Assign a CSS class for styling
+    cellYourPayoff.textContent = ""; // Leave the content empty (can set to "$0" if needed)
+    row.appendChild(cellYourPayoff); // Append the cell to the current row
+
+    // Find the maximum yPT value in pointsx[radioX] for normalization
+    let pointsRow = pointsx[radioX]; // Use the current radioX value
+    let maxYPT = Math.max(...(pointsRow?.map((pt) => parseFloat(pt.yPT.replace('%', ''))) || [1])); // Default to 1 if no data
+
+    // Iterate over the array of values for the current row starting with column 3
+    rowData.forEach(function (value, index) {
+        var cell = document.createElement("td"); // Create a new cell element
+        cell.className = "tg-0pky"; // Assign a CSS class for styling
+        cell.textContent = value; // Set the text of the cell to the current value (e.g., "$4")
+
+        // Apply gradient shading for columns starting from index 2 (column 3 in the table)
+        if (index >= 1) {
+            // Get the yPT value for the current column (index - 2 corresponds to column's x value)
+            let yPT = pointsRow?.[index - 1]?.yPT;
+
+            if (yPT) {
+                let normalizedYPT = parseFloat(yPT.replace('%', '')) / maxYPT; // Normalize yPT relative to maxYPT
+                let alpha = Math.min(Math.max(normalizedYPT, 0.1), 1)-0.25; // Ensure alpha is between 0.1 and 1
+                cell.style.backgroundColor = `rgba(0, 0, 255, ${alpha})`; // Use normalized alpha for opacity
+                console.log("Column:", index + 1, "yPT:", yPT, "Alpha:", alpha, "Max yPT:", maxYPT);
+            }
+        }
+
+        row.appendChild(cell); // Append the cell to the current row
+    });
+
+    tbody.appendChild(row); // Append the completed row to the table body
+});
+
+
+
+
+
+
+
+  updateYourPayoffColumn(selectedX); // Initial update
+updateTableOpacity(from,to)
 
 /**
  * Function to translate the (x, y) coordinates to a scaled coordinate system.
@@ -512,65 +552,8 @@ sliderTheta.oninput = function() {
     drawProbs(radioX,pointsx,yticksProb,sliderTheta.value);
 };
 
-document.addEventListener("DOMContentLoaded", function() {
-    var thetaRange = document.getElementById("thetaRange");
-
-    thetaRange.addEventListener("input", function() {
-        var thetaValue = parseInt(thetaRange.value);
-        var columnToHighlight = thetaValue + 3; // Adjust for your table's column indexing
-
-        // Debugging statement to check column
-        console.log("Highlighting column:", columnToHighlight);
-
-        // Remove existing borders from previous selections
-        var table = document.getElementById("payoffTable");
-        var rows = table.getElementsByTagName("tr");
-
-        for (var i = 0; i < rows.length; i++) {
-            var cells = rows[i].getElementsByTagName("td"); // Target only <td> cells for reset
-            for (var j = 0; j < cells.length; j++) {
-                cells[j].style.border = ""; // Reset all <td> cell borders
-            }
-        }
-
-        // Apply border to wrap only the exterior of the selected column, starting from data rows
-        for (var i = 1; i < rows.length; i++) { // Start from 1 to skip the header row
-            var cells = rows[i].getElementsByTagName("td"); // Ensure only <td> cells are targeted
-            var cell = cells[columnToHighlight - 1];
-            if (cell) {
-                if (i === 1) {
-                    // Top cell in the selected column: add top, left, and right borders
-                    cell.style.borderTop = "2px solid red";
-                    cell.style.borderLeft = "2px solid red";
-                    cell.style.borderRight = "2px solid red";
-                } else if (i === rows.length - 1) {
-                    // Bottom cell in the selected column: add bottom, left, and right borders
-                    cell.style.borderBottom = "2px solid red";
-                    cell.style.borderLeft = "2px solid red";
-                    cell.style.borderRight = "2px solid red";
-                } else {
-                    // Middle cells in the column: add left and right borders only
-                    cell.style.borderLeft = "2px solid red";
-                    cell.style.borderRight = "2px solid red";
-                }
-            } else {
-                console.log(`Cell not found in row ${i} for column ${columnToHighlight}`);
-            }
-        }
-    });
-});
-
-
-
-
 //Initial call
 drawProbs(radioX,pointsx,yticksProb,0);
-
-
-
-
-
-
 
 function updateTableOpacity(from,to) {
     // Select the table
@@ -593,16 +576,19 @@ function updateTableOpacity(from,to) {
     }
 }
 
-        // var columnToHighlight = 4; // Adding 2 because indexing starts from 0 and the table starts from the third column
-        //
-        // // Reset previous highlights
-        // var highlightedCells = document.querySelectorAll(".highlight");
-        // highlightedCells.forEach(function(cell) {
-        //     cell.classList.remove("highlight");
-        // });
-        //
-        // // Highlight cells in the selected column
-        // var cellsToHighlight = document.querySelectorAll("tbody td:nth-child(" + columnToHighlight + ")");
-        // cellsToHighlight.forEach(function(cell) {
-        //     cell.classList.add("highlight");
-        // });
+thetaRange.addEventListener("input", function() {
+    var thetaValue = parseInt(thetaRange.value);
+    var columnToHighlight = thetaValue + 3; // Adding 2 because indexing starts from 0 and the table starts from the third column
+
+    // Reset previous highlights
+    var highlightedCells = document.querySelectorAll(".highlight");
+    highlightedCells.forEach(function(cell) {
+        cell.classList.remove("highlight");
+    });
+
+    // Highlight cells in the selected column
+    var cellsToHighlight = document.querySelectorAll("tbody td:nth-child(" + columnToHighlight + ")");
+    cellsToHighlight.forEach(function(cell) {
+        cell.classList.add("highlight");
+    });
+});
