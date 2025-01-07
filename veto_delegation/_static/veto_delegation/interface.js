@@ -517,33 +517,41 @@ document.addEventListener("DOMContentLoaded", function() {
 
     thetaRange.addEventListener("input", function() {
         var thetaValue = parseInt(thetaRange.value);
-        var columnToHighlight = thetaValue + 3; // Adjust for your table's column indexing
+        var columnToHighlight = thetaValue + 3; // Adjust column index dynamically
 
         // Debugging statement to check column
         console.log("Highlighting column:", columnToHighlight);
 
         // Remove existing borders from previous selections
         var table = document.getElementById("payoffTable");
-        var rows = table.getElementsByTagName("tr");
+        var rows = table.querySelectorAll("tbody tr"); // Target only body rows
 
-        for (var i = 0; i < rows.length; i++) {
-            var cells = rows[i].getElementsByTagName("td"); // Target only <td> cells for reset
-            for (var j = 0; j < cells.length; j++) {
-                cells[j].style.border = ""; // Reset all <td> cell borders
+        // Reset all cell borders in the body rows
+        rows.forEach(row => {
+            var cells = row.querySelectorAll("td");
+            cells.forEach(cell => {
+                cell.style.border = ""; // Reset borders
+            });
+        });
+
+        // Apply borders to the selected column
+        rows.forEach((row, rowIndex) => {
+            var cells = row.querySelectorAll("td");
+
+            // Ensure the row has enough cells
+            if (cells.length < columnToHighlight) {
+                console.log(`Row ${rowIndex + 1} does not have enough cells. Check table structure.`);
+                return;
             }
-        }
 
-        // Apply border to wrap only the exterior of the selected column, starting from data rows
-        for (var i = 1; i < rows.length; i++) { // Start from 1 to skip the header row
-            var cells = rows[i].getElementsByTagName("td"); // Ensure only <td> cells are targeted
-            var cell = cells[columnToHighlight - 1];
+            var cell = cells[columnToHighlight - 1]; // Adjust for 0-based index
             if (cell) {
-                if (i === 1) {
-                    // Top cell in the selected column: add top, left, and right borders
+                if (rowIndex === 0) {
+                    // First data row in the selected column: add top, left, and right borders
                     cell.style.borderTop = "2px solid red";
                     cell.style.borderLeft = "2px solid red";
                     cell.style.borderRight = "2px solid red";
-                } else if (i === rows.length - 1) {
+                } else if (rowIndex === rows.length - 1) {
                     // Bottom cell in the selected column: add bottom, left, and right borders
                     cell.style.borderBottom = "2px solid red";
                     cell.style.borderLeft = "2px solid red";
@@ -553,12 +561,14 @@ document.addEventListener("DOMContentLoaded", function() {
                     cell.style.borderLeft = "2px solid red";
                     cell.style.borderRight = "2px solid red";
                 }
-            } else {
-                console.log(`Cell not found in row ${i} for column ${columnToHighlight}`);
             }
-        }
+        });
     });
 });
+
+
+
+
 
 
 
