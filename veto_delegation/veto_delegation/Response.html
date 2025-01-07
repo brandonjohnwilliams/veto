@@ -13,80 +13,23 @@ Minimum amount: {{ group.minSlider }}
 Maximum amount: {{ group.maxSlider }}
 </b></p>
 
+<p>
+    Your optimal point is {{ group.vetoer_bias }}. You can accept or reject the offer. If you accept, move the slider to choose your response amount.
+    If you reject the offer, hit the button for "reject."
+</p>
 
-    <p>You have <b>ideal value X=1</b> which came from the <b>middle</b> of three dice rolls.</p>
 
-    <div style="width: 300px; margin: 0 auto;">
-        <table class="tg">
-            <colgroup>
-                <col style="width: 251.2px">
-            </colgroup>
-            <thead>
-                <tr>
-                    <th class="tg-7fle"><span style="font-weight:bold">Ideal Value, X</span></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="tg-baqh"><span class="die-number" id="die1">1</span> ≤ <span class="die-number-red" id="die2">1</span> ≤ <span class="die-number" id="die3">3</span></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
 
-    <br><br>
+<canvas id="payoffCanvas" width="700" height="600"></canvas>
 
-    <div class="sub-container3">
-        <div class="choices-container">
-            <div class="choice" data-value="0">M=0</div>
-            <div class="choice" data-value="1">M=1</div>
-            <div class="choice" data-value="2">M=2</div>
-            <div class="choice" data-value="3">M=3</div>
-            <div class="choice" data-value="4">M=4</div>
-            <div class="choice" data-value="5">M=5</div>
-            <div class="choice" data-value="6">M=6</div>
-            <div class="choice" data-value="7">M=7</div>
-            <div class="choice" data-value="8">M=8</div>
-        </div>
 
-        <!-- Payoffs Table -->
-        <table class="tg" id="payoffTable">
-            <colgroup>
-                <col style="width: 190.2px">
-                <col style="width: 190.2px">
-                <col style="width: 190.2px">
-                <col style="width: 190.2px">
-                <col style="width: 190.2px">
-                <col style="width: 190.2px">
-                <col style="width: 190.2px">
-                <col style="width: 190.2px">
-                <col style="width: 190.2px">
-                <col style="width: 190.2px">
-            </colgroup>
-            <thead>
-                <tr>
-                    <th class="tg-c3ow" rowspan="2">Widgets <br>Purchased, M</th>
-                    <th class="tg-c3ow" rowspan="2">Your Payoff <br> (X=<span id="selectedX">-</span>)</th>
-                    <th class="tg-c3ow" rowspan="2">Seller <br> Payoff</th>
-                    <th class="tg-c3ow" colspan="6">Buyer Payoff (by ideal quantity X)</th>
-                </tr>
-                <tr>
-                    <th class="tg-0lax">X=1</th>
-                    <th class="tg-0lax">X=2</th>
-                    <th class="tg-0lax">X=3</th>
-                    <th class="tg-0lax">X=4</th>
-                    <th class="tg-0lax">X=5</th>
-                    <th class="tg-0lax">X=6</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody">
-                <!-- Table body will be populated dynamically -->
-            </tbody>
-        </table>
-    </div>
+<div class="slidecontainer">{{ group.minSlider }}<input type="range" name="response" id="response" class="slider" min="{{ group.minSlider }}" max="{{ group.maxSlider }}" oninput="updateDescription(this)" >{{ group.maxSlider }} <b>OR</b> <button class="btn btn-primary" name="veto" value="True" onClick="checkReject()">Reject</button></div>
+<span id="description"></span><span id="payoff"></span>
 
-    <!-- Include JavaScript file -->
-    <script src="{{ static 'veto_delegation/interface.js' }}"></script>
+
+
+
+<script src="{{ static 'veto_delegation/response-graph.js' }}"></script>
 
 
 {{ formfield_errors 'veto' }}
