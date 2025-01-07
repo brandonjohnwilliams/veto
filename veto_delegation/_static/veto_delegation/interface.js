@@ -525,6 +525,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Remove existing borders from previous selections
         var table = document.getElementById("payoffTable");
         var rows = table.querySelectorAll("tbody tr"); // Target only body rows
+        var headers = table.querySelectorAll("thead th"); // Target header cells
 
         // Reset all cell borders in the body rows
         rows.forEach(row => {
@@ -532,6 +533,11 @@ document.addEventListener("DOMContentLoaded", function() {
             cells.forEach(cell => {
                 cell.style.border = ""; // Reset borders
             });
+        });
+
+        // Reset all header borders
+        headers.forEach(header => {
+            header.style.border = ""; // Reset header borders
         });
 
         // Apply borders to the selected column
@@ -548,7 +554,6 @@ document.addEventListener("DOMContentLoaded", function() {
             if (cell) {
                 if (rowIndex === 0) {
                     // First data row in the selected column: add top, left, and right borders
-                    cell.style.borderTop = "2px solid red";
                     cell.style.borderLeft = "2px solid red";
                     cell.style.borderRight = "2px solid red";
                 } else if (rowIndex === rows.length - 1) {
@@ -563,24 +568,20 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             }
         });
+
+        // Highlight the corresponding header with X= in the text
+        const headerToHighlight = Array.from(headers).find(header => header.textContent.trim() === `X=${thetaValue}`);
+        if (headerToHighlight) {
+            headerToHighlight.style.borderTop = "2px solid red";
+            headerToHighlight.style.borderLeft = "2px solid red";
+            headerToHighlight.style.borderRight = "2px solid red";
+        }
     });
 });
 
 
-
-
-
-
-
-
 //Initial call
 drawProbs(radioX,pointsx,yticksProb,0);
-
-
-
-
-
-
 
 function updateTableOpacity(from,to) {
     // Select the table
@@ -603,16 +604,40 @@ function updateTableOpacity(from,to) {
     }
 }
 
-        // var columnToHighlight = 4; // Adding 2 because indexing starts from 0 and the table starts from the third column
-        //
-        // // Reset previous highlights
-        // var highlightedCells = document.querySelectorAll(".highlight");
-        // highlightedCells.forEach(function(cell) {
-        //     cell.classList.remove("highlight");
-        // });
-        //
-        // // Highlight cells in the selected column
-        // var cellsToHighlight = document.querySelectorAll("tbody td:nth-child(" + columnToHighlight + ")");
-        // cellsToHighlight.forEach(function(cell) {
-        //     cell.classList.add("highlight");
-        // });
+function shadeColumnsByYPT(radioX) {
+    // Get the corresponding pointsx array
+    const selectedPoints = pointsx[radioX];
+    if (!selectedPoints) return;
+
+    // Loop through columns (1 to 6)
+    selectedPoints.forEach(point => {
+        const columnIndex = point.x + 3; // Offset for table cells
+        const yPTValue = parseFloat(point.yPT) / 100; // Convert yPT to a decimal (e.g., 42.13% -> 0.4213)
+
+        // Select all cells in the column
+        const columnCells = document.querySelectorAll(`#payoffTable tr td:nth-child(${columnIndex})`);
+
+        // Select the header based on text content
+        const columnHeaders = document.querySelectorAll(`#payoffTable th`);
+        let columnHeader = null;
+        columnHeaders.forEach(header => {
+            if (header.textContent.trim() === `X=${point.x}`) {
+                columnHeader = header;
+            }
+        });
+
+        // Apply background color with opacity for all cells
+        columnCells.forEach(cell => {
+            cell.style.backgroundColor = `rgba(0, 0, 255, ${yPTValue})`; // Blue with variable opacity
+        });
+
+        // Apply to column header
+        if (columnHeader) {
+            columnHeader.style.backgroundColor = `rgba(0, 0, 255, ${yPTValue})`;
+        }
+    });
+}
+
+// Example usage
+shadeColumnsByYPT(js_vars.round_type); // Call with the current round_type value
+
