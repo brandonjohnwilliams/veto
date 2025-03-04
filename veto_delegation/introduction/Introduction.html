@@ -1,0 +1,15 @@
+{{ block title }}
+Welcome to the Experiment
+{{ endblock }}
+
+{{ block content }}
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+    </head>
+
+<!-- Text -->
+Today's experiment will consist of three parts.
+
+    <!-- Include JavaScript file -->
+    <script src="{{ static 'veto_delegation/script-graph.js' }}"></script>
+{{ endblock }}

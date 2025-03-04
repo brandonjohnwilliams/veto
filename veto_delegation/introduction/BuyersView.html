@@ -1,0 +1,120 @@
+{{ block title }}
+    Buyer's View
+{{ endblock }}
+
+{{ block content }}
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+    </head>
+
+    <!-- Text -->
+    <p>
+        The Buyer will see their ideal value along with what the Seller has made available to them. In this example, the Buyer has offered to the range from M=3 to M=8.
+        The Buyer may always walk away and choose M=0 as well.
+    </p>
+
+    <br><br>
+
+    <p>You have <b>ideal value X=1</b> which came from the <b>middle</b> of three dice rolls.</p>
+
+    <div style="width: 300px; margin: 0 auto;">
+        <table class="tg">
+            <colgroup>
+                <col style="width: 251.2px">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th class="tg-7fle"><span style="font-weight:bold">Ideal Value, X</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="tg-baqh"><span class="die-number" id="die1">1</span> ≤ <span class="die-number-red" id="die2">1</span> ≤ <span class="die-number" id="die3">3</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <br><br>
+
+    <div class="sub-container3">
+        <div class="choices-container">
+            <div class="choice" data-value="0">M=0</div>
+            <div class="choice" data-value="1">M=1</div>
+            <div class="choice" data-value="2">M=2</div>
+            <div class="choice" data-value="3">M=3</div>
+            <div class="choice" data-value="4">M=4</div>
+            <div class="choice" data-value="5">M=5</div>
+            <div class="choice" data-value="6">M=6</div>
+            <div class="choice" data-value="7">M=7</div>
+            <div class="choice" data-value="8">M=8</div>
+        </div>
+
+        <!-- Payoffs Table -->
+        <table class="tg" id="payoffTable">
+            <colgroup>
+                <col style="width: 190.2px">
+                <col style="width: 190.2px">
+                <col style="width: 190.2px">
+                <col style="width: 190.2px">
+                <col style="width: 190.2px">
+                <col style="width: 190.2px">
+                <col style="width: 190.2px">
+                <col style="width: 190.2px">
+                <col style="width: 190.2px">
+                <col style="width: 190.2px">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th class="tg-c3ow" rowspan="2">Widgets <br>Purchased, M</th>
+                    <th class="tg-c3ow" rowspan="2">Your Payoff <br> (X=<span id="selectedX">-</span>)</th>
+                    <th class="tg-c3ow" rowspan="2">Seller <br> Payoff</th>
+                    <th class="tg-c3ow" colspan="6">Buyer Payoff (by ideal quantity X)</th>
+                </tr>
+                <tr>
+                    <th class="tg-0lax">X=1</th>
+                    <th class="tg-0lax">X=2</th>
+                    <th class="tg-0lax">X=3</th>
+                    <th class="tg-0lax">X=4</th>
+                    <th class="tg-0lax">X=5</th>
+                    <th class="tg-0lax">X=6</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- Table body will be populated dynamically -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Include JavaScript file -->
+    <script src="{{ static 'veto_delegation/interface.js' }}"></script>
+
+<!--<script>-->
+<!--    const choices = document.querySelectorAll('.choices-container .choice');-->
+<!--const test = 3;-->
+<!--function toggleRadioButtons() {-->
+<!--    choices.forEach(function(choice) {-->
+<!--        const value = parseInt(choice.getAttribute('data-value'));-->
+<!--        if (value === 0 || value >= test) {-->
+<!--            choice.style.visibility = 'visible'; // Show radio button-->
+<!--        } else {-->
+<!--            choice.style.visibility = 'hidden'; // Hide radio button-->
+<!--        }-->
+<!--    });-->
+<!--}-->
+<!--    // Initially toggle the radio buttons-->
+<!--    toggleRadioButtons();-->
+<!--</script>-->
+
+
+
+
+
+
+
+
+
+
+
+
+{{ endblock }}

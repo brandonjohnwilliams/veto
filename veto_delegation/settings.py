@@ -4,7 +4,11 @@ SESSION_CONFIGS = [
      dict(
          name='veto_delegation',
          display_name="Standard Treatment",
-         app_sequence=['practice','veto_delegation'],
+         app_sequence=[
+             'introduction',
+             'practice',
+             'veto_delegation'
+         ],
          num_demo_participants=2,
          ),
     # dict(
