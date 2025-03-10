@@ -64,6 +64,14 @@ class PayoffsSeller(Page):
             selectedX=0,
         )
 
+class PayoffsBuyer(Page):
+    pass
+    @staticmethod
+    def js_vars(player):
+        return dict(
+            selectedX=0,
+        )
+
 class DeterminingX(Page):
     pass
 
@@ -98,4 +106,4 @@ class PayoffsRecap(Page):
 
 
 
-page_sequence = [Introduction, PartOne, Payoffs, PayoffsSeller, DeterminingX, SellersChoice, SellerView, BuyersChoice, BuyersView, PayoffsRecap]
+page_sequence = [Introduction, PartOne, Payoffs, PayoffsSeller, PayoffsBuyer, DeterminingX, SellersChoice, SellerView, BuyersChoice, BuyersView, PayoffsRecap]

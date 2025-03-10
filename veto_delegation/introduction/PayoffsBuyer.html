@@ -66,27 +66,44 @@
 <script src="{{ static 'veto_delegation/payoff-table.js' }}"></script>
 
 <script>
-  // Wait for the document to fully load before applying the highlight
-  document.addEventListener("DOMContentLoaded", function() {
-      function highlightSecondColumn() {
-          var tableRows = document.querySelectorAll("#payoffTable tbody tr");
-          tableRows.forEach(function(row) {
-              var secondCell = row.children[2]; // Select the second column (Your Payoff)
-              if (secondCell) {
-                  secondCell.style.backgroundColor = "rgba(0, 0, 255, .42)"; // Apply background color
-              }
-          });
+document.addEventListener("DOMContentLoaded", function() {
+  function highlightColumns(startIndex, endIndex, color = "lightblue") {
+        var tableRows = document.querySelectorAll("#payoffTable tbody tr");
 
-          // Also highlight the header
-          var headerCell = document.querySelector("#payoffTable th:nth-child(3)");
-          if (headerCell) {
-              headerCell.style.backgroundColor = "rgba(0, 0, 255, .42)";
-          }
-      }
+        // Highlight table body cells
+        tableRows.forEach(function(row) {
+            for (let i = startIndex; i <= endIndex; i++) {
+                var cell = row.children[i]; // Select the column in range
+                if (cell) {
+                    cell.style.backgroundColor = color; // Apply background color
+                }
+            }
+        });
 
-      // Call the function after populating the table
-      highlightSecondColumn();
-  });
+        // Highlight main table headers (1st row of headers)
+        for (let i = startIndex; i <= endIndex; i++) {
+            var headerCell = document.querySelector(`#payoffTable thead tr:first-child th:nth-child(${i + 1})`);
+            if (headerCell) {
+                headerCell.style.backgroundColor = color;
+            }
+        }
+
+        // Highlight buyer payoff headers (2nd row of headers)
+        var buyerHeaderRow = document.querySelector("#payoffTable thead tr:nth-child(2)");
+        if (buyerHeaderRow) {
+            for (let i = 0; i <= (endIndex - startIndex); i++) {
+                var buyerHeaderCell = buyerHeaderRow.children[i];
+                if (buyerHeaderCell) {
+                    buyerHeaderCell.style.backgroundColor = color;
+                }
+            }
+        }
+    }
+
+    // Example: Highlight columns 2 to 4 (Your Payoff + Seller Payoff)
+    highlightColumns(3, 8, "rgba(0, 0, 255, .42)"); // Adjust the indices as needed
+});
+
 </script>
 
 
