@@ -6,7 +6,7 @@ SESSION_CONFIGS = [
          display_name="Standard Treatment",
          app_sequence=[
              'introduction',
-             'practice',
+             # 'practice',
              'veto_delegation'
          ],
          num_demo_participants=2,

@@ -100,7 +100,8 @@ class Proposal(Page):
         )
 
 class WaitForP1(WaitPage):
-    pass
+    title_text = "Please wait"
+    body_text = "Waiting for the seller to make his or her choice"
 
 
 class Response(Page):

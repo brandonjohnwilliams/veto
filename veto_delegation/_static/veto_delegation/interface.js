@@ -512,6 +512,44 @@ sliderTheta.oninput = function() {
     drawProbs(radioX,pointsx,yticksProb,sliderTheta.value);
 };
 
+// Function to update the location text based on radioX value
+function updateLocationAndDice() {
+
+    // Update location text
+    let locationText = radioX === 1 ? "lowest" : radioX === 2 ? "middle" : "highest";
+    document.getElementById("location").textContent = locationText;
+
+    // Update dice order
+    let diceContainer = document.getElementById("dice-container");
+    let diceHtml = "";
+
+    if (radioX === 1) {
+        diceHtml = `
+            <span class="die-number-red"></span> ≤ 
+            <span class="die-number-white"></span> ≤ 
+            <span class="die-number-white"></span>
+        `;
+    } else if (radioX === 2) {
+        diceHtml = `
+            <span class="die-number-white"></span> ≤ 
+            <span class="die-number-red"></span> ≤ 
+            <span class="die-number-white"></span>
+        `;
+    } else if (radioX === 3) {
+        diceHtml = `
+            <span class="die-number-white"></span> ≤ 
+            <span class="die-number-white"></span> ≤ 
+            <span class="die-number-red"></span>
+        `;
+    }
+
+    diceContainer.innerHTML = diceHtml;
+}
+
+// Run the function when the page loads
+window.onload = updateLocationAndDice;
+
+
 document.addEventListener("DOMContentLoaded", function() {
     var thetaRange = document.getElementById("thetaRange");
 
