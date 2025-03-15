@@ -88,21 +88,27 @@ function updateYourPayoffColumn(selectedX) {
   var tbody = document.getElementById("tableBody");
 
   // Loop through the dictionary and populate the table
-  Object.keys(tableData).forEach(function(key) {
+Object.keys(tableData).forEach(function(key) {
     var row = document.createElement("tr");
+    row.setAttribute("data-value", key.replace("M=", "")); // Ensure numeric matching
+
+
     var rowData = tableData[key];
     var cellM = document.createElement("td");
     cellM.className = "tg-0pky";
     cellM.textContent = key;
     row.appendChild(cellM);
+
     rowData.forEach(function(value) {
-      var cell = document.createElement("td");
-      cell.className = "tg-0pky";
-      cell.textContent = value;
-      row.appendChild(cell);
+        var cell = document.createElement("td");
+        cell.className = "tg-0pky";
+        cell.textContent = value;
+        row.appendChild(cell);
     });
+
     tbody.appendChild(row);
-  });
+});
+
 
   updateYourPayoffColumn(selectedX); // Initial update
 updateTableOpacity(from,to)
@@ -184,9 +190,15 @@ function getParsed(currentFrom, currentTo) {
 
 // This function fills the control slider with appropriate colors
 function fillSlider(from, to, sliderColor, rangeColor, controlSlider) {
+    // Check if inputs exist and have valid properties
+    if (!from || !to || !controlSlider || isNaN(from.value) || isNaN(to.value)) {
+        return; // Exit the function early
+    }
+
     const rangeDistance = to.max - to.min;
     const fromPosition = from.value - to.min;
     const toPosition = to.value - to.min;
+
     controlSlider.style.background = `linear-gradient(
       to right,
       ${sliderColor} 0%,
@@ -197,8 +209,12 @@ function fillSlider(from, to, sliderColor, rangeColor, controlSlider) {
       ${sliderColor} 100%)`;
 }
 
+
 // This function sets the accessibility of the 'to' slider
 function setToggleAccessible(currentTarget) {
+    if (!currentTarget) {
+        return; // Exit the function early
+    }
     const toSlider = document.querySelector('#toSlider');
     if (Number(currentTarget.value) <= 0) {
         toSlider.style.zIndex = 2;
@@ -211,19 +227,19 @@ function setToggleAccessible(currentTarget) {
 const fromSlider = document.getElementById('fromSlider');
 const toSlider = document.querySelector('#toSlider');
 
-    const fromValueDisplay = document.getElementById('fromValue');
-    const toValueDisplay = document.getElementById('toValue');
+const fromValueDisplay = document.getElementById('fromValue');
+const toValueDisplay = document.getElementById('toValue');
 
-    // Update the displayed values when sliders are moved
-    if (fromSlider && toSlider && fromValueDisplay && toValueDisplay) {
-        fromSlider.addEventListener('input', function() {
-            fromValueDisplay.textContent = "Min: " + this.value;
-        });
+// Update the displayed values when sliders are moved
+if (fromSlider && toSlider && fromValueDisplay && toValueDisplay) {
+    fromSlider.addEventListener('input', function() {
+        fromValueDisplay.textContent = "Min: " + this.value;
+    });
 
-        toSlider.addEventListener('input', function() {
-            toValueDisplay.textContent = "Max: " + this.value;
-        });
-    }
+    toSlider.addEventListener('input', function() {
+        toValueDisplay.textContent = "Max: " + this.value;
+    });
+}
 
 
 // Initialize slider colors and accessibility
@@ -231,8 +247,17 @@ fillSlider(fromSlider, toSlider, '#C6C6C6', '#25daa5', toSlider);
 setToggleAccessible(toSlider);
 
 // Event listeners for input changes
-fromSlider.oninput = () => controlFromSlider(fromSlider, toSlider);
-toSlider.oninput = () => controlToSlider(fromSlider, toSlider);
+// Check if the sliders exist before adding event listeners
+if (typeof fromSlider !== "undefined" && fromSlider) {
+    fromSlider.oninput = () => controlFromSlider(fromSlider, toSlider);
+} else {
+}
+
+if (typeof toSlider !== "undefined" && toSlider) {
+    toSlider.oninput = () => controlToSlider(fromSlider, toSlider);
+} else {
+}
+
 
 // Probabilities Section
 
@@ -408,20 +433,26 @@ function drawTicks(ctx,yTicks,gs,xOff){
     });
 };
 
-// Function to draw the probability graph
 function drawProbs(showPlot, points, yticks, redPoint) {
-    // Get the canvas context
+    // Exit if canvasProb is not available
+    if (typeof canvasProb === "undefined" || !canvasProb) return;
+
+    // Get the canvas context and exit if not available
     const ctx = canvasProb.getContext("2d");
+    if (!ctx) return;
+
+    // Exit if points or the requested showPlot layer is missing
+    if (!points || !points[showPlot]) return;
 
     // Define graph settings
     const gs = {
-        'ch': canvasProb.height,    // called from HTML
-        'cw': canvasProb.width,     // called from HTML
-        'bw': 60,         // Bar width
-        'xMin': 1,        // X-axis minimum value
-        'xMax': xRange,       // X-axis maximum value
-        'yMin': 0,        // Y-axis minimum value
-        'yMax': yRange      // Y-axis maximum value
+        'ch': canvasProb.height,    // Called from HTML
+        'cw': canvasProb.width,     // Called from HTML
+        'bw': 60,                   // Bar width
+        'xMin': 1,                  // X-axis minimum value
+        'xMax': xRange,             // X-axis maximum value
+        'yMin': 0,                  // Y-axis minimum value
+        'yMax': yRange              // Y-axis maximum value
     };
 
     // Offset for x-axis labels
@@ -436,7 +467,7 @@ function drawProbs(showPlot, points, yticks, redPoint) {
     // Draw the yTicks
     drawTicks(ctx, yticks, gs, xTextoffset);
 
-    // For each point label the axis
+    // Label the x-axis for each point in the current layer
     points[showPlot].forEach(point => {
         const ptLoc = xyTranslate(point.x, 0, gs);
         ctx.fillStyle = "black";
@@ -450,14 +481,12 @@ function drawProbs(showPlot, points, yticks, redPoint) {
 
     // Plot each point for the showPlot layer
     points[showPlot].forEach(point => {
-        pt = xyTranslate(point.x, point.y, gs);
+        const pt = xyTranslate(point.x, point.y, gs);
         ctx.save();
 
-        // Draw circle for the point
-        if (point.x == redPoint) { // If the highlighted point
-
-            // Draw arrows for the highlighted point
-            let yArrow = yRange + .01;
+        // If this is the highlighted point, apply special styling and draw arrows
+        if (point.x == redPoint) {
+            let yArrow = yRange + 0.01;
             if (redPoint == 1) {
                 drawRArrow(ctx, parseInt(redPoint) + 1, yArrow, xRange, yArrow, point.yADJ, xTextoffset, gs);
             } else if (redPoint == 6) {
@@ -467,8 +496,6 @@ function drawProbs(showPlot, points, yticks, redPoint) {
                 drawRArrow(ctx, parseInt(redPoint) + 1, yArrow, xRange, yArrow, point.yADJ, xTextoffset, gs);
             }
 
-
-            // Apply special styling for the highlighted point
             ctx.strokeStyle = "black";
             ctx.shadowColor = "gray";
             ctx.fillStyle = "red";
@@ -476,27 +503,24 @@ function drawProbs(showPlot, points, yticks, redPoint) {
             ctx.shadowOffsetY = 5;
             ctx.shadowBlur = 4;
 
-            // Add text above the circle for the point labeled by point.yPT
             ctx.font = axisTextSize;
             ctx.textAlign = "center";
-            ctx.fillText(point.yPT, pt.cx + 10, pt.cy - 15); // Adjust the offset as needed
-
-        } else { // Otherwise, no special styling
+            ctx.fillText(point.yPT, pt.cx + 10, pt.cy - 15);
+        } else { // For non-highlighted points
             ctx.strokeStyle = "gray";
             ctx.fillStyle = "blue";
             ctx.shadowOffsetX = 0;
             ctx.shadowOffsetY = 0;
             ctx.shadowBlur = 0;
-        };
+        }
 
-        // Draw stem line
+        // Draw the stem line and the point
         drawLine(ctx, point.x, 0, point.x, point.y, gs);
-        // Draw points
         drawPoint(ctx, point.x, point.y, 7, gs);
-        ctx.restore(); // Restore settings
+        ctx.restore();
     });
-    // End of function def
-};
+}
+
 
 
 const sliderTheta = document.getElementById("thetaRange");
@@ -504,23 +528,47 @@ var outputTheta = document.getElementById("thetaOut");
 
 const canvasProb = document.getElementById("probCanvas");
 
-outputTheta.innerHTML = sliderTheta.value; // Display the default slider value
-// Update the current slider value (each time you drag the slider handle)
-sliderTheta.oninput = function() {
-    canvasProb.getContext("2d").clearRect(0, 0, canvasProb.width, canvasProb.height);
-    outputTheta.innerHTML = this.value;
-    drawProbs(radioX,pointsx,yticksProb,sliderTheta.value);
-};
+// Check if elements exist before setting the value
+if (typeof outputTheta !== "undefined" && outputTheta && typeof sliderTheta !== "undefined" && sliderTheta) {
+    outputTheta.innerHTML = sliderTheta.value; // Display the default slider value
+} else {
+}
+
+// Check if sliderTheta exists before adding event listener
+if (typeof sliderTheta !== "undefined" && sliderTheta) {
+    sliderTheta.oninput = function() {
+        // Ensure canvasProb and its context exist before clearing
+        if (typeof canvasProb !== "undefined" && canvasProb) {
+            const ctx = canvasProb.getContext("2d");
+            if (ctx) ctx.clearRect(0, 0, canvasProb.width, canvasProb.height);
+        }
+
+        // Update the output if it exists
+        if (typeof outputTheta !== "undefined" && outputTheta) {
+            outputTheta.innerHTML = this.value;
+        }
+
+        // Ensure drawProbs function exists before calling it
+        if (typeof drawProbs === "function") {
+            drawProbs(radioX, pointsx, yticksProb, sliderTheta.value);
+        }
+    };
+}
+
 
 // Function to update the location text based on radioX value
 function updateLocationAndDice() {
+    let locationElement = document.getElementById("location");
+    let diceContainer = document.getElementById("dice-container");
+
+    // Ensure the elements exist before proceeding
+    if (!locationElement || !diceContainer) return;
 
     // Update location text
     let locationText = radioX === 1 ? "lowest" : radioX === 2 ? "middle" : "highest";
-    document.getElementById("location").textContent = locationText;
+    locationElement.textContent = locationText;
 
     // Update dice order
-    let diceContainer = document.getElementById("dice-container");
     let diceHtml = "";
 
     if (radioX === 1) {
@@ -546,76 +594,64 @@ function updateLocationAndDice() {
     diceContainer.innerHTML = diceHtml;
 }
 
+
 // Run the function when the page loads
 window.onload = updateLocationAndDice;
 
 
 document.addEventListener("DOMContentLoaded", function() {
     var thetaRange = document.getElementById("thetaRange");
+    var table = document.getElementById("payoffTable");
 
-    thetaRange.addEventListener("input", function() {
-        var thetaValue = parseInt(thetaRange.value);
-        var columnToHighlight = thetaValue + 3; // Adjust column index dynamically
+    // Ensure thetaRange and table exist before adding event listener
+    if (thetaRange && table) {
+        thetaRange.addEventListener("input", function() {
+            var thetaValue = parseInt(thetaRange.value);
+            var columnToHighlight = thetaValue + 3; // Adjust column index dynamically
 
-        // Debugging statement to check column
-        console.log("Highlighting column:", columnToHighlight);
+            var rows = table.querySelectorAll("tbody tr"); // Target only body rows
+            var headers = table.querySelectorAll("thead th"); // Target header cells
 
-        // Remove existing borders from previous selections
-        var table = document.getElementById("payoffTable");
-        var rows = table.querySelectorAll("tbody tr"); // Target only body rows
-        var headers = table.querySelectorAll("thead th"); // Target header cells
-
-        // Reset all cell borders in the body rows
-        rows.forEach(row => {
-            var cells = row.querySelectorAll("td");
-            cells.forEach(cell => {
-                cell.style.border = ""; // Reset borders
+            // Reset all cell borders in the body rows
+            rows.forEach(row => {
+                row.querySelectorAll("td").forEach(cell => cell.style.border = "");
             });
-        });
 
-        // Reset all header borders
-        headers.forEach(header => {
-            header.style.border = ""; // Reset header borders
-        });
+            // Reset all header borders
+            headers.forEach(header => header.style.border = "");
 
-        // Apply borders to the selected column
-        rows.forEach((row, rowIndex) => {
-            var cells = row.querySelectorAll("td");
-
-            // Ensure the row has enough cells
-            if (cells.length < columnToHighlight) {
-                console.log(`Row ${rowIndex + 1} does not have enough cells. Check table structure.`);
-                return;
-            }
-
-            var cell = cells[columnToHighlight - 1]; // Adjust for 0-based index
-            if (cell) {
-                if (rowIndex === 0) {
-                    // First data row in the selected column: add top, left, and right borders
-                    cell.style.borderLeft = "2px solid red";
-                    cell.style.borderRight = "2px solid red";
-                } else if (rowIndex === rows.length - 1) {
-                    // Bottom cell in the selected column: add bottom, left, and right borders
-                    cell.style.borderBottom = "2px solid red";
-                    cell.style.borderLeft = "2px solid red";
-                    cell.style.borderRight = "2px solid red";
-                } else {
-                    // Middle cells in the column: add left and right borders only
-                    cell.style.borderLeft = "2px solid red";
-                    cell.style.borderRight = "2px solid red";
+            // Apply borders to the selected column
+            rows.forEach((row, rowIndex) => {
+                var cells = row.querySelectorAll("td");
+                if (cells.length >= columnToHighlight) { // Ensure the row has enough cells
+                    var cell = cells[columnToHighlight - 1]; // Adjust for 0-based index
+                    if (cell) {
+                        if (rowIndex === 0) {
+                            cell.style.borderLeft = "2px solid red";
+                            cell.style.borderRight = "2px solid red";
+                        } else if (rowIndex === rows.length - 1) {
+                            cell.style.borderBottom = "2px solid red";
+                            cell.style.borderLeft = "2px solid red";
+                            cell.style.borderRight = "2px solid red";
+                        } else {
+                            cell.style.borderLeft = "2px solid red";
+                            cell.style.borderRight = "2px solid red";
+                        }
+                    }
                 }
+            });
+
+            // Highlight the corresponding header with X= in the text
+            const headerToHighlight = Array.from(headers).find(header => header.textContent.trim() === `X=${thetaValue}`);
+            if (headerToHighlight) {
+                headerToHighlight.style.borderTop = "2px solid red";
+                headerToHighlight.style.borderLeft = "2px solid red";
+                headerToHighlight.style.borderRight = "2px solid red";
             }
         });
-
-        // Highlight the corresponding header with X= in the text
-        const headerToHighlight = Array.from(headers).find(header => header.textContent.trim() === `X=${thetaValue}`);
-        if (headerToHighlight) {
-            headerToHighlight.style.borderTop = "2px solid red";
-            headerToHighlight.style.borderLeft = "2px solid red";
-            headerToHighlight.style.borderRight = "2px solid red";
-        }
-    });
+    }
 });
+
 
 
 //Initial call
@@ -678,4 +714,41 @@ function shadeColumnsByYPT(radioX) {
 
 // Example usage
 shadeColumnsByYPT(js_vars.round_type); // Call with the current round_type value
+
+document.addEventListener("DOMContentLoaded", function () {
+    const choices = document.querySelectorAll(".choice");
+    const rows = document.querySelectorAll("#tableBody tr");
+
+    console.log("Choices found:", choices.length);
+    console.log("Rows found:", rows.length);
+
+    choices.forEach(choice => {
+        choice.addEventListener("click", function () {
+            console.log("Clicked choice:", this.innerText);
+
+            // Remove 'selected' class from all choices
+            choices.forEach(c => c.classList.remove("selected"));
+
+            // Add 'selected' class to the clicked choice
+            this.classList.add("selected");
+
+            // Get the selected value
+            let selectedValue = this.getAttribute("data-value");
+            console.log("Selected value:", selectedValue);
+
+            // Remove highlight from all rows
+            rows.forEach(row => row.classList.remove("highlighted-row"));
+
+            // Highlight the corresponding row
+            let selectedRow = document.querySelector(`#tableBody tr[data-value="${selectedValue}"]`);
+            console.log("Selected row found:", selectedRow);
+
+            if (selectedRow) {
+                selectedRow.classList.add("highlighted-row");
+            } else {
+                console.error("No matching row found for data-value:", selectedValue);
+            }
+        });
+    });
+});
 

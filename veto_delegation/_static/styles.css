@@ -152,7 +152,17 @@ p {
     }
 
     .choice:hover {
-        background-color: #e0e0e0;
+        background: #e3e3e3;
+    }
+
+    .choice.selected {
+        border-color: #0000ff; /* Highlight color */
+        background: #bebeff;
+    }
+
+    .highlighted-row {
+        background-color: #bebeff !important; /* Light red highlight */
+        transition: background 0.3s ease-in-out;
     }
 
 .choice.hidden {
