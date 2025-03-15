@@ -33,11 +33,17 @@ class Group(BaseGroup):
     response = models.IntegerField() # numerical response of the vetoer
     veto = models.BooleanField(blank=True, initial=False) # True if vetoed
 
+    # dice rolls
     vetoer_bias = models.IntegerField()
+    drawLow = models.IntegerField()
+    drawMed = models.IntegerField()
+    drawHigh = models.IntegerField()
 
     selectedX = models.IntegerField()
 
-    round_type = models.IntegerField()
+    # Distributions
+    roundType = models.IntegerField()
+    roundName = models.StringField()
 
 
 class Player(BasePlayer):
@@ -59,31 +65,46 @@ def creating_session(subsession):
     # pulls dice rolls from preset spreadsheet
 
     import statistics
-    import csv
+    import json
+    import random
 
-    file_path = 'draws.csv'
-    with open(file_path, 'r', encoding='utf-8-sig') as file:
-        reader = csv.DictReader(file, delimiter = ",")
-        rows = list(reader)
+    # Load the JSON file
+    with open("dice_rolls.json", "r") as f:
+        dice_rolls = json.load(f)
 
-    round = subsession.round_number - 1
+    # Randomly select an index
+    random_index = random.choice(list(dice_rolls.keys()))
 
-    # vetoes currently hard-coded as 1-min, 2-median, rest-max
-    if subsession.round_number == 1:
-        for group in subsession.get_groups():
-            group.vetoer_bias = min(int(value) for value in rows[round].values())
-            group.round_type = 1
-    elif subsession.round_number == 2:
-        for group in subsession.get_groups():
-            group.vetoer_bias = statistics.median(int(value) for value in rows[round].values())
-            group.round_type = 2
-    else:
-        for group in subsession.get_groups():
-            group.vetoer_bias = max(int(value) for value in rows[round].values())
-            group.round_type = 3
+    # Get the corresponding dice roll
+    selected_roll = dice_rolls[random_index]
+
+    print(f"Randomly selected index: {random_index}")
+    print(f"Dice roll: {selected_roll}")
+
+    for group in subsession.get_groups():
+
+        # Assign on ordering
+        group.drawLow = min(selected_roll)
+        group.drawMed = sorted(selected_roll)[1]  # Median value
+        group.drawHigh = max(selected_roll)
+
+        if subsession.round_number == 1:
+            group.roundType = 1
+            group.vetoer_bias = group.drawLow
+            group.roundName = "lowest"
+
+        elif subsession.round_number == 2:
+            group.roundType = 2
+            group.vetoer_bias = group.drawMed
+            group.roundName = "middle"
+
+        else:
+            group.roundType = 3
+            group.vetoer_bias = group.drawHigh
+            group.roundName = "highest"
 
 # Use to check if bias draws are being pulled correctly:
-    # print(group.vetoer_bias)
+
 # PAGES
 class Proposal(Page):
     form_model = 'group'
@@ -96,7 +117,7 @@ class Proposal(Page):
     @staticmethod
     def js_vars(player):
         return dict(
-            round_type=player.group.round_type,
+            round_type=player.group.roundType,
         )
 
 class WaitForP1(WaitPage):
@@ -114,11 +135,25 @@ class Response(Page):
 
     @staticmethod
     def js_vars(player):
+        group = player.group
         return dict(
-            selectedX=2, # Selecting 0 removes the column
-            fromM=3,
-            toM=6,
+            selectedX=player.group.vetoer_bias,
+            fromM=group.minSlider,
+            toM=group.maxSlider,
         )
+
+    @staticmethod
+    def vars_for_template(player):
+        group = player.group
+        return {
+            "selectedX": group.vetoer_bias,
+            "drawLow": group.drawLow,
+            "drawMed": group.drawMed,
+            "drawHigh": group.drawHigh,
+            "roundName": group.roundName,
+            "roundType": group.roundType,
+        }
+
 
 class WaitForP2(WaitPage):
     after_all_players_arrive = set_payoffs

@@ -5,7 +5,7 @@ SESSION_CONFIGS = [
          name='veto_delegation',
          display_name="Standard Treatment",
          app_sequence=[
-             'introduction',
+             # 'introduction',
              # 'practice',
              'veto_delegation'
          ],
