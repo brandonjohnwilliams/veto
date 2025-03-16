@@ -1,0 +1,68 @@
+{{ block title }}
+Robot Buyer - Instructions
+{{ endblock }}
+
+
+
+{{ block content }}
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+    </head>
+
+
+
+<p>
+    In the next three rounds, you will have the role of Seller.
+    However, instead of other participants acting as the Buyer, you will make your offer to a Robot Buyer.
+    As before, you will not know the Robot Buyer's ideal value X, but you will know which of three dice will determine the ideal value.
+    The Robot Buyer will respond to your offer by choosing the highest value it can achieve, either selecting the highest value from your range of options, or by choosing to buy none.
+    The Robot Buyer has the same payoffs available as the participant Buyers before.
+</p>
+
+<br><br>
+<!-- Payoffs Table -->
+<table class="tg" id="payoffTable">
+  <colgroup>
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+  </colgroup>
+  <thead>
+    <tr>
+      <th class="tg-c3ow" rowspan="2">Widgets <br>Purchased, M</th>
+      <th class="tg-c3ow" rowspan="2">Your Payoff <br> (X=<span id="selectedX">-</span>)</th>
+      <th class="tg-c3ow" rowspan="2">Seller <br> Payoff</th>
+      <th class="tg-c3ow" colspan="6">Robot Buyer Payoff (by ideal quantity X)</th>
+    </tr>
+    <tr>
+      <th class="tg-0lax">X=1</th>
+      <th class="tg-0lax">X=2</th>
+      <th class="tg-0lax">X=3</th>
+      <th class="tg-0lax">X=4</th>
+      <th class="tg-0lax">X=5</th>
+      <th class="tg-0lax">X=6</th>
+    </tr>
+  </thead>
+  <tbody id="tableBody">
+    <!-- Table body will be populated dynamically -->
+  </tbody>
+</table>
+<br><br>
+Click "next" when you understand the instructions for the Robot Buyer rounds.
+<br><br>
+<!-- Include JavaScript file -->
+<script src="{{ static 'veto_delegation/payoff-table.js' }}"></script>
+
+
+{{ next_button }}
+
+
+{{ endblock }}

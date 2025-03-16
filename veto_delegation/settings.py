@@ -5,11 +5,13 @@ SESSION_CONFIGS = [
          name='veto_delegation',
          display_name="Standard Treatment",
          app_sequence=[
-             # 'introduction',
+             'introduction',
              # 'practice',
-             'veto_delegation'
+             # 'veto_delegation',
+             'robot',
          ],
-         num_demo_participants=2,
+         num_demo_participants=4,
+         take_it_or_leave_it=False,
          ),
     # dict(
     #      name='veto_delegation_cheap',
@@ -34,7 +36,7 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00, participation_fee=0.00, doc=""
 )
 
-PARTICIPANT_FIELDS = []
+PARTICIPANT_FIELDS = ['sample']
 SESSION_FIELDS = []
 
 # ISO-639 code

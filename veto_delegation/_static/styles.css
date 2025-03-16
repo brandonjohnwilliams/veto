@@ -11,19 +11,27 @@
     gap: 0px; /* Adjust gap between columns as needed */
 }
 
+/* Wrapper: Center contents horizontally */
+.wrapper {
+    display: flex;
+    justify-content: center; /* Center contents horizontally */
+    width: 100%; /* Ensures it spans the full width */
+    margin-left: 150px;
+}
+
+/* Ensure sub-container3 does not stretch */
 .sub-container3 {
     display: grid;
-    grid-template-columns: 1fr 7fr; /* Adjust column widths as needed */
-    max-width: 900px; /* Adjust this value as needed */
-    gap: 0px; /* Adjust gap between columns as needed */
-    margin-left: 0px;
+    grid-template-columns: 1fr 7fr; /* Keep original layout */
+    max-width: 900px;
+    gap: 0px;
+    margin: 0 auto; /* Center the grid container */
+
 }
 
 #payoffTable {
     transform: translateX(25px); /* Adjust the translation amount as needed */
 }
-
-
 
 .graph-container {
     text-align: center;
@@ -137,7 +145,7 @@ p {
         justify-content: center;
         align-items: center;
         height: 460px;
-        margin-top: 110px;
+        margin-top: 90px;
         /*border: 1px solid #ff0000;*/
     }
 
@@ -407,4 +415,8 @@ th {
 .tg .tg-0lax {
     text-align: center;
     vertical-align: top;
+}
+
+.otree-timer {
+    display: none;
 }

@@ -29,7 +29,7 @@
         </li>
         <li>
             The Seller then chooses
-            {% if C.single == 0 %}
+            {% if player.single == 0 %}
                 a minimum and maximum quantity
             {% else %}
                 a quantity
@@ -38,7 +38,7 @@
         </li>
         <li>
             The Buyer then makes a quantity choice M, either walking away (purchasing M=0 widgets), or choosing to purchase
-            {% if C.single == 0 %}
+            {% if player.single == 0 %}
                 any amount between the seller’s chosen minimum and maximum.
             {% else %}
                 the seller’s chosen quantity.

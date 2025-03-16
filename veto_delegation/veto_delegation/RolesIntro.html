@@ -1,0 +1,34 @@
+{{ block title }}
+{{ if player.round_number == 1}} Your {{ else }} New {{ endif }} Role: {{ if player.id_in_group == 1}} Seller {{ else }} Buyer {{ endif }}
+{{ endblock }}
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+</head>
+
+{{ if player.id_in_group == 1}}
+
+<p>
+    For the next five rounds, you are the <b>Seller</b>. You will choose what options for the number of Widgets (M) that the Buyer can choose from.
+    Remember, you cannot remove 0 Widgets as an option. The Buyer can always walk away.
+</p>
+
+{{ else }}
+
+<p>
+    for the next five rounds, you are the <b>Buyer</b>. First, the Seller will choose what options for the number of widgets (M) that uou can choose from.
+    Remember, the Seller cannot remove 0 Widgets as an option. You can always walk away.
+</p>
+
+{{endif}}
+
+<p>This page will automatically advance in <span class="otree-timer__time-left">0:15</span>.</p>
+
+<!-- Include JavaScript file -->
+<script src="{{ static 'veto_delegation/interface.js' }}"></script>
+
+
+
+{% endblock %}

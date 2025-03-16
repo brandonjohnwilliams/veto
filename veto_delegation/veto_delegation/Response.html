@@ -1,17 +1,13 @@
+{{ block title }}
+Your Choice
+{{ endblock }}
+
 {% block content %}
 
 <head>
     <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
 </head>
 
-<p>
-Player A offered you the following range:
-</p>
-<p><b>
-Minimum amount: {{ group.minSlider }}
-<br>
-Maximum amount: {{ group.maxSlider }}
-</b></p>
 
 
     <p>You have <b>ideal value X={{selectedX}}</b> which came from the <b>{{ roundName }}</b> of three dice rolls.</p>
@@ -38,8 +34,19 @@ Maximum amount: {{ group.maxSlider }}
         </table>
     </div>
 
-    <br><br>
+<p>
+    <br>
+The Seller offered you the following range:
+</p>
+<b><ul>
+<li>Minimum amount: {{ group.minSlider }}</li>
 
+<li>Maximum amount: {{ group.maxSlider }}</li>
+</ul>
+</b>
+How many widgets (M) would you like to purchase?
+</p>
+    <div class="wrapper">
     <div class="sub-container3">
         <div class="choices-container">
             <div class="choice" data-value="0">M=0</div>
@@ -52,6 +59,10 @@ Maximum amount: {{ group.maxSlider }}
             <div class="choice" data-value="7">M=7</div>
             <div class="choice" data-value="8">M=8</div>
         </div>
+
+        <!-- Hidden input field to store the selected value -->
+        <input type="hidden" name="response" id="response">
+
 
         <!-- Payoffs Table -->
         <table class="tg" id="payoffTable">
@@ -88,10 +99,11 @@ Maximum amount: {{ group.maxSlider }}
             </tbody>
         </table>
     </div>
+        </div>
 
-{{ formfield_errors 'veto' }}
+{{ formfield_errors 'response' }}
 <br><br>
-<button type="button" class="btn btn-primary" onclick="checkSubmit()">Next</button>
+{{ next_button }}
 
     <!-- Include JavaScript file -->
     <script src="{{ static 'veto_delegation/interface.js' }}"></script>

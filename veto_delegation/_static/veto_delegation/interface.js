@@ -719,12 +719,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const choices = document.querySelectorAll(".choice");
     const rows = document.querySelectorAll("#tableBody tr");
 
-    console.log("Choices found:", choices.length);
-    console.log("Rows found:", rows.length);
-
     choices.forEach(choice => {
         choice.addEventListener("click", function () {
-            console.log("Clicked choice:", this.innerText);
 
             // Remove 'selected' class from all choices
             choices.forEach(c => c.classList.remove("selected"));
@@ -734,14 +730,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Get the selected value
             let selectedValue = this.getAttribute("data-value");
-            console.log("Selected value:", selectedValue);
 
             // Remove highlight from all rows
             rows.forEach(row => row.classList.remove("highlighted-row"));
 
             // Highlight the corresponding row
             let selectedRow = document.querySelector(`#tableBody tr[data-value="${selectedValue}"]`);
-            console.log("Selected row found:", selectedRow);
 
             if (selectedRow) {
                 selectedRow.classList.add("highlighted-row");
@@ -751,4 +745,60 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const choices = document.querySelectorAll(".choice");
+    const response = document.getElementById("response");
+
+    choices.forEach(choice => {
+        choice.addEventListener("click", function () {
+            // Remove 'selected' class from all choices
+            choices.forEach(c => c.classList.remove("selected"));
+
+            // Add 'selected' class to the clicked choice
+            this.classList.add("selected");
+
+            // Get the selected value and update the hidden input field
+            let selectedValue = this.getAttribute("data-value");
+            response.value = selectedValue;
+
+        });
+    });
+});
+
+
+// Hides the back columns on the buyer page
+
+function adjustTableColumns(pageType) {
+    const table = document.getElementById("payoffTable");
+    if (!table) return; // Exit if table is not found
+
+    const headers = table.querySelectorAll("thead th");
+    const rows = table.querySelectorAll("tbody tr");
+
+    if (pageType === "limited") { // Define the condition for hiding columns
+        // Hide headers for Buyer Payoff columns
+        headers.forEach((header, index) => {
+            if (index >= 3) {
+                header.style.display = "none";
+            }
+        });
+
+        // Hide corresponding columns in each row
+        rows.forEach(row => {
+            row.querySelectorAll("td").forEach((cell, index) => {
+                if (index >= 3) {
+                    cell.style.display = "none";
+                }
+            });
+        });
+    }
+}
+
+const response = js_vars.response
+if (response === 1) {
+    adjustTableColumns("limited"); // Change "limited" dynamically based on the page type
+}
+
 

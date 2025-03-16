@@ -11,7 +11,7 @@
     <p> The Seller's choice then is to select
 
         <!--   This determines which text to show based on the treatment, change this if the method of selecting treatment changes    -->
-        {{ if C.single == 0 }}
+        {{ if player.single == 0 }}
             minimum and maximum quantity
         {{else}}
             an offered quantity
@@ -75,7 +75,7 @@
     The Seller will then select their
 
     <!--   This determines which text to show based on the treatment, change this if the method of selecting treatment changes    -->
-    {{ if C.single == 0 }}
+    {{ if player.single == 0 }}
         minimum and maximum quantity
     {{else}}
         offered quantity

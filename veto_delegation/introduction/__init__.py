@@ -13,11 +13,6 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
 
-    endowment = 25
-    veto_amount = 0
-    guarantee = 5
-
-    single = 0
     round_type = 2 # defined only explicitly for the practice round
 
     setZero = 0  # define as such to remove buyer payoff column
@@ -30,24 +25,37 @@ class Group(BaseGroup):
     minSlider = models.IntegerField() # defines the left side of the delegated range
     maxSlider = models.IntegerField() # defines the right side of the delegated range
 
-    response = models.IntegerField() # numerical response of the vetoer
-    veto = models.BooleanField(blank=True, initial=False) # True if vetoed
-
-    vetoer_bias = models.IntegerField()
+    response = models.IntegerField() # numerical response of the vetoer    vetoer_bias = models.IntegerField()
 
     selectedX = models.IntegerField()
 
 
+
+
 class Player(BasePlayer):
-    quiz3 = models.BooleanField(label="Is 9 a prime number?")
+    single = models.IntegerField()
 
 # FUNCTIONS
+def creating_session(subsession):
+
+    for player in subsession.get_players():
+        if player.subsession.session.config['take_it_or_leave_it']:
+            player.single = 1
+        else:
+            player.single = 0
+        print(player.single)
 # PAGES
 class Introduction(Page):
     pass
 
 class PartOne(Page):
-    pass
+    @staticmethod
+    def vars_for_template(player):
+        return dict(
+            single=player.single,
+        )
+
+
 
 class Payoffs(Page):
     @staticmethod

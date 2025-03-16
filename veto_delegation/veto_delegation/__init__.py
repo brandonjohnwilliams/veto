@@ -1,5 +1,6 @@
 from otree.api import *
-import numpy as np
+import json
+import random
 
 
 
@@ -11,11 +12,12 @@ Veto Delegation
 class C(BaseConstants):
     NAME_IN_URL = 'veto_delegation'
     PLAYERS_PER_GROUP = 2
-    NUM_ROUNDS = 3
+    NUM_ROUNDS = 15
+    REMATCH_INTERVAL = 5  # Rematch after every 5 rounds
 
-    endowment = 25
-    veto_amount = 0
-    guarantee = 5
+    SELLER_ROLE = 'Seller'
+    BUYER_ROLE = 'Buyer'
+
 
     single = 0
 
@@ -31,7 +33,6 @@ class Group(BaseGroup):
     maxSlider = models.IntegerField() # defines the right side of the delegated range
 
     response = models.IntegerField() # numerical response of the vetoer
-    veto = models.BooleanField(blank=True, initial=False) # True if vetoed
 
     # dice rolls
     vetoer_bias = models.IntegerField()
@@ -51,22 +52,39 @@ class Player(BasePlayer):
 
 # FUNCTIONS
 def set_payoffs(group):
+    payoff_matrix = {
+        0: [4, 25, 20, 15, 10, 5, 4],
+        1: [8, 30, 25, 20, 15, 10, 5],
+        2: [12, 25, 30, 25, 20, 15, 10],
+        3: [16, 20, 25, 30, 25, 20, 15],
+        4: [20, 15, 20, 25, 30, 25, 20],
+        5: [24, 10, 15, 20, 25, 30, 25],
+        6: [28, 5, 10, 15, 20, 25, 30],
+        7: [32, 4, 5, 10, 15, 20, 25],
+        8: [36, 3, 4, 5, 10, 15, 20]
+    }
     p1 = group.get_player_by_id(1)
     p2 = group.get_player_by_id(2)
-    if group.veto == True:
-        p1.payoff = C.veto_amount + C.guarantee
-        p2.payoff = C.endowment + C.guarantee - np.abs(C.veto_amount - group.vetoer_bias)
-    else:
-        p1.payoff = group.response + C.guarantee # linear loss from optimal (max)
-        p2.payoff = C.endowment + C.guarantee - np.abs(group.response - group.vetoer_bias) # linear loss from optimal
 
+    p1.payoff = payoff_matrix[group.response][0]
+    p2.payoff = payoff_matrix[group.response][group.vetoer_bias]
+
+    print(f"Seller payoff: {p1.payoff}")
+    print(f"Buyer payoff: {p2.payoff}")
 
 def creating_session(subsession):
-    # pulls dice rolls from preset spreadsheet
+    # Sets role for 1-5 then reverses for 6-10 and then reverts for 11-15
+    if 5 < subsession.round_number < 11:
+        subsession.group_randomly(fixed_id_in_group=True)
+        matrix = subsession.get_group_matrix()
 
-    import statistics
-    import json
-    import random
+        for row in matrix:
+            row.reverse()
+
+        subsession.set_group_matrix(matrix)
+    else:
+        subsession.group_randomly(fixed_id_in_group=True)
+
 
     # Load the JSON file
     with open("dice_rolls.json", "r") as f:
@@ -75,11 +93,11 @@ def creating_session(subsession):
     # Randomly select an index
     random_index = random.choice(list(dice_rolls.keys()))
 
-    # Get the corresponding dice roll
-    selected_roll = dice_rolls[random_index]
+    # Select a distribution
+    dist = random.choice([1, 2, 3])
 
-    print(f"Randomly selected index: {random_index}")
-    print(f"Dice roll: {selected_roll}")
+    # Get the corresponding dice rolls
+    selected_roll = dice_rolls[random_index]
 
     for group in subsession.get_groups():
 
@@ -88,12 +106,12 @@ def creating_session(subsession):
         group.drawMed = sorted(selected_roll)[1]  # Median value
         group.drawHigh = max(selected_roll)
 
-        if subsession.round_number == 1:
+        if dist == 1:
             group.roundType = 1
             group.vetoer_bias = group.drawLow
             group.roundName = "lowest"
 
-        elif subsession.round_number == 2:
+        elif dist == 2:
             group.roundType = 2
             group.vetoer_bias = group.drawMed
             group.roundName = "middle"
@@ -106,40 +124,18 @@ def creating_session(subsession):
 # Use to check if bias draws are being pulled correctly:
 
 # PAGES
-class Proposal(Page):
-    form_model = 'group'
-    form_fields = ['minSlider','maxSlider']
-
+class RolesIntro(Page):
+    timeout_seconds = 15
     @staticmethod
     def is_displayed(player):
-        return player.id_in_group == 1
+        return (player.round_number - 1) % C.REMATCH_INTERVAL == 0
 
-    @staticmethod
-    def js_vars(player):
-        return dict(
-            round_type=player.group.roundType,
-        )
-
-class WaitForP1(WaitPage):
-    title_text = "Please wait"
-    body_text = "Waiting for the seller to make his or her choice"
-
-
-class Response(Page):
-    form_model = 'group'
-    form_fields = ['response','veto']
-
-    @staticmethod
-    def is_displayed(player):
-        return player.id_in_group == 2
-
+class Roles(Page):
     @staticmethod
     def js_vars(player):
         group = player.group
         return dict(
-            selectedX=player.group.vetoer_bias,
-            fromM=group.minSlider,
-            toM=group.maxSlider,
+            selectedX=group.vetoer_bias,
         )
 
     @staticmethod
@@ -154,11 +150,67 @@ class Response(Page):
             "roundType": group.roundType,
         }
 
+class Proposal(Page):
+    form_model = 'group'
+    form_fields = ['minSlider','maxSlider']
+
+    @staticmethod
+    def is_displayed(player):
+        return player.role == C.SELLER_ROLE
+
+    @staticmethod
+    def js_vars(player):
+        return dict(
+            round_type=player.group.roundType,
+        )
+
+class WaitForP1(WaitPage):
+    title_text = "Please wait"
+    body_text = "Waiting for the Seller to make his or her choice"
+
+
+class Response(Page):
+    form_model = 'group'
+    form_fields = ['response']
+
+    @staticmethod
+    def is_displayed(player):
+        return player.role == C.BUYER_ROLE
+
+    @staticmethod
+    def js_vars(player):
+        group = player.group
+        return dict(
+            selectedX=player.group.vetoer_bias,
+            fromM=group.minSlider,
+            toM=group.maxSlider,
+            response=1,
+        )
+
+    @staticmethod
+    def vars_for_template(player):
+        group = player.group
+        return {
+            "selectedX": group.vetoer_bias,
+            "drawLow": group.drawLow,
+            "drawMed": group.drawMed,
+            "drawHigh": group.drawHigh,
+            "roundName": group.roundName,
+            "roundType": group.roundType,
+        }
+
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        print("Player select: ", player.group.response)
+
 
 class WaitForP2(WaitPage):
+    title_text = "Please wait"
+    body_text = "Waiting for the Buyer to make his or her choice"
+
     after_all_players_arrive = set_payoffs
 
 class Results(Page):
     pass
 
-page_sequence = [Proposal, WaitForP1, Response, WaitForP2, Results]
+page_sequence = [RolesIntro, Roles, Proposal, WaitForP1, Response, WaitForP2, Results]
