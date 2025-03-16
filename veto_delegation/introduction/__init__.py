@@ -99,6 +99,7 @@ class SellerView(Page):
     def js_vars(player):
         return dict(
             round_type=C.round_type,
+            single=player.single
         )
 
 class BuyersChoice(Page):

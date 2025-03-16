@@ -5,7 +5,6 @@ let selectedX = js_vars.selectedX;
 let from = Number(js_vars.fromM);
 let to = Number(js_vars.toM)
 
-
 // Function to hide or show radio buttons based on the value of `from`
 
 const choices = document.querySelectorAll('.choices-container .choice');
@@ -111,7 +110,7 @@ Object.keys(tableData).forEach(function(key) {
 
 
   updateYourPayoffColumn(selectedX); // Initial update
-updateTableOpacity(from,to)
+
 
 
 
@@ -135,7 +134,7 @@ function controlFromSlider(fromSlider, toSlider) {
             }
         }
 
-            console.log("From:", fromSlider.value, "To:", to);
+        console.log("From:", fromSlider.value, "To:", to);
 
     } else {
         fromSlider.value = from;
@@ -151,7 +150,7 @@ function controlFromSlider(fromSlider, toSlider) {
         }
 
     }
-
+    updateTableOpacity(from,to)
 }
 
 // This function updates the 'to' slider based on user input
@@ -179,6 +178,7 @@ function controlToSlider(fromSlider, toSlider) {
     } else {
         toSlider.value = from;
     }
+    updateTableOpacity(from,to)
 }
 
 // This function parses values from input fields
@@ -657,26 +657,31 @@ document.addEventListener("DOMContentLoaded", function() {
 //Initial call
 drawProbs(radioX,pointsx,yticksProb,0);
 
-function updateTableOpacity(from,to) {
+function updateTableOpacity(from, to) {
     // Select the table
-    var table = document.getElementById('payoffTable'); // Replace 'your_table_id' with the actual ID of your table
+    var table = document.getElementById('payoffTable');
 
     // Get all rows in the table
     var rows = table.getElementsByTagName('tr');
 
-    // Loop through each row
+    // Adjust row numbers based on "from" and "to"
+    var fromADJ = from + 3;
+    var toADJ = to + 4;
+
+    // Loop through each row and update opacity
     for (var i = 0; i < rows.length; i++) {
-        var fromADJ = from + 2;
-        var toADJ = to + 4;
         var rowNumber = i + 1; // Row number starts from 1
 
-        // Check if the row number is greater than the input "from"
-        if (rowNumber >= 4 && rowNumber <= fromADJ || rowNumber >= toADJ) {
-            // Set opacity to 0.15 for rows greater than "from"
-            rows[i].style.opacity = 0.15;
+        // Rows less than 4 should always have full opacity
+        if (rowNumber < 4 || (rowNumber >= fromADJ && rowNumber < toADJ)) {
+            rows[i].style.opacity = "1";  // Fully visible
+        } else {
+            rows[i].style.opacity = "0.15"; // Faded
         }
     }
 }
+
+
 
 function shadeColumnsByYPT(radioX) {
     // Get the corresponding pointsx array
@@ -800,5 +805,46 @@ const response = js_vars.response
 if (response === 1) {
     adjustTableColumns("limited"); // Change "limited" dynamically based on the page type
 }
+
+updateTableOpacity(1,8)
+
+const single = js_vars.single;
+
+function updateSliders() {
+    if (single === 1) {
+        // Fully hide fromSlider and remove it from pointer interactions
+        fromSlider.disabled = true;
+        fromSlider.style.opacity = "0";
+        fromSlider.style.pointerEvents = "none";
+        fromSlider.style.visibility = "hidden";
+        fromSlider.style.width = "0";
+        fromSlider.style.height = "0";
+        fromSlider.style.position = "absolute";
+        fromSlider.style.zIndex = "-1";
+
+        toValueDisplay.style.display = "none"; // Hide max value label
+
+        updateTableOpacity(8, 8);
+
+        // Ensure toSlider moves alone, and fromSlider follows it
+        toSlider.oninput = function () {
+            const to = parseInt(toSlider.value, 10);
+            fromSlider.value = to; // Sync fromSlider with toSlider
+            fromValueDisplay.textContent = "Value: " + to;
+
+            // Ensure the slider bar is filled correctly
+            fillSlider(fromSlider, toSlider, '#C6C6C6', '#25daa5', toSlider);
+
+            // Call updateTableOpacity with from = to
+            updateTableOpacity(to, to);
+        };
+
+    }
+}
+
+// Call function on page load
+updateSliders();
+
+
 
 
