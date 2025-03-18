@@ -41,44 +41,62 @@ toggleRadioButtons();
   // Function to update the Your Payoff column based on selectedX
 function updateYourPayoffColumn(selectedX) {
     var yourPayoffColumnHeader = document.querySelector("#payoffTable th:nth-child(2)");
+    var tableBody = document.getElementById("tableBody");
+    var yourPayoffColumn = document.getElementById("selectedX");
 
-    // Check if selectedX is a valid number
+    // Ensure required elements exist before proceeding
+    if (!yourPayoffColumnHeader || !tableBody || !yourPayoffColumn) {
+        console.warn("Warning: One or more required elements (yourPayoffColumnHeader, tableBody, selectedX) are missing.");
+        return;
+    }
+
+    // Ensure selectedX is a valid number within range 1-6
     if (typeof selectedX === 'number' && selectedX >= 1 && selectedX <= 6) {
-        var yourPayoffColumn = document.getElementById("selectedX");
         yourPayoffColumn.textContent = selectedX;
 
         // Copy the corresponding Buyer Payoff column
         var buyerPayoffColumnIndex = selectedX + 1; // Buyer Payoff columns start from index 2
         var tableRows = document.querySelectorAll("#tableBody tr");
-        tableRows.forEach(function(row, index) {
-            var cell = row.children[buyerPayoffColumnIndex].cloneNode(true);
-            row.insertBefore(cell, row.children[1]); // Insert before the 2nd cell
+
+        tableRows.forEach(function(row) {
+            if (row.children.length > buyerPayoffColumnIndex) {
+                var cell = row.children[buyerPayoffColumnIndex].cloneNode(true);
+                row.insertBefore(cell, row.children[1]); // Insert before the 2nd cell
+            } else {
+                console.warn("Warning: Row does not have enough children to copy Buyer Payoff column.");
+            }
         });
 
-        // Show the Your Payoff column and header
+        // Show the "Your Payoff" column and header
         yourPayoffColumnHeader.style.display = '';
-        var tableRows = document.querySelectorAll("#tableBody tr");
-        tableRows.forEach(function(row, index) {
-            row.children[1].style.display = ''; // Show the 2nd cell (Your Payoff column)
+        tableRows.forEach(function(row) {
+            if (row.children.length > 1) {
+                row.children[1].style.display = ''; // Show the 2nd cell (Your Payoff column)
+            }
         });
     } else {
-        // Populate the "Your Payoff" column with all 0 values, this allows for the spacing to remain constant
+        // Populate the "Your Payoff" column with all 0 values
         var tableRows = document.querySelectorAll("#tableBody tr");
-        tableRows.forEach(function(row, index) {
-            var cell = document.createElement("td");
-            cell.className = "tg-0pky";
-            cell.textContent = "$0"; // Populate with 0 value
-            row.insertBefore(cell, row.children[1]); // Insert before the 2nd cell
+
+        tableRows.forEach(function(row) {
+            if (row.children.length > 1) {
+                var cell = document.createElement("td");
+                cell.className = "tg-0pky";
+                cell.textContent = "$0"; // Populate with 0 value
+                row.insertBefore(cell, row.children[1]); // Insert before the 2nd cell
+            }
         });
 
-        // Hide the Your Payoff column and header so that the table can be used in all pages
+        // Hide the "Your Payoff" column and header
         yourPayoffColumnHeader.style.display = 'none';
-        var tableRows = document.querySelectorAll("#tableBody tr");
-        tableRows.forEach(function(row, index) {
-            row.children[1].style.display = 'none'; // Hide the 2nd cell (Your Payoff column)
+        tableRows.forEach(function(row) {
+            if (row.children.length > 1) {
+                row.children[1].style.display = 'none'; // Hide the 2nd cell (Your Payoff column)
+            }
         });
     }
 }
+
 
 
 
@@ -87,26 +105,32 @@ function updateYourPayoffColumn(selectedX) {
   var tbody = document.getElementById("tableBody");
 
   // Loop through the dictionary and populate the table
-Object.keys(tableData).forEach(function(key) {
-    var row = document.createElement("tr");
-    row.setAttribute("data-value", key.replace("M=", "")); // Ensure numeric matching
+if (tableData && typeof tableData === "object" && tbody) {
+    Object.keys(tableData).forEach(function(key) {
+        var row = document.createElement("tr");
+        row.setAttribute("data-value", key.replace("M=", "")); // Ensure numeric matching
 
+        var rowData = tableData[key];
+        if (!Array.isArray(rowData)) return; // Skip if rowData is not an array
 
-    var rowData = tableData[key];
-    var cellM = document.createElement("td");
-    cellM.className = "tg-0pky";
-    cellM.textContent = key;
-    row.appendChild(cellM);
+        var cellM = document.createElement("td");
+        cellM.className = "tg-0pky";
+        cellM.textContent = key;
+        row.appendChild(cellM);
 
-    rowData.forEach(function(value) {
-        var cell = document.createElement("td");
-        cell.className = "tg-0pky";
-        cell.textContent = value;
-        row.appendChild(cell);
+        rowData.forEach(function(value) {
+            var cell = document.createElement("td");
+            cell.className = "tg-0pky";
+            cell.textContent = value;
+            row.appendChild(cell);
+        });
+
+        tbody.appendChild(row);
     });
+} else {
+    console.warn("Warning: tableData or tbody is missing, skipping table generation.");
+}
 
-    tbody.appendChild(row);
-});
 
 
   updateYourPayoffColumn(selectedX); // Initial update
@@ -658,11 +682,23 @@ document.addEventListener("DOMContentLoaded", function() {
 drawProbs(radioX,pointsx,yticksProb,0);
 
 function updateTableOpacity(from, to) {
-    // Select the table
+    // Select the table safely
     var table = document.getElementById('payoffTable');
+
+    // Check if the table exists before proceeding
+    if (!table) {
+        console.warn("Warning: Table with ID 'payoffTable' not found. Opacity update skipped.");
+        return;
+    }
 
     // Get all rows in the table
     var rows = table.getElementsByTagName('tr');
+
+    // Ensure 'from' and 'to' are valid numbers
+    if (typeof from !== 'number' || typeof to !== 'number' || from < 0 || to < 0) {
+        console.warn("Warning: Invalid 'from' or 'to' values provided. Opacity update skipped.");
+        return;
+    }
 
     // Adjust row numbers based on "from" and "to"
     var fromADJ = from + 3;
@@ -672,14 +708,20 @@ function updateTableOpacity(from, to) {
     for (var i = 0; i < rows.length; i++) {
         var rowNumber = i + 1; // Row number starts from 1
 
-        // Rows less than 4 should always have full opacity
-        if (rowNumber < 4 || (rowNumber >= fromADJ && rowNumber < toADJ)) {
-            rows[i].style.opacity = "1";  // Fully visible
+        // Ensure row has style property before applying opacity
+        if (rows[i] && rows[i].style) {
+            // Rows less than 4 should always have full opacity
+            if (rowNumber < 4 || (rowNumber >= fromADJ && rowNumber < toADJ)) {
+                rows[i].style.opacity = "1";  // Fully visible
+            } else {
+                rows[i].style.opacity = "0.15"; // Faded
+            }
         } else {
-            rows[i].style.opacity = "0.15"; // Faded
+            console.warn(`Warning: Skipped row ${i} as it does not have a style property.`);
         }
     }
 }
+
 
 
 
@@ -845,6 +887,28 @@ function updateSliders() {
 // Call function on page load
 updateSliders();
 
+function applyGreenText() {
+    document.querySelectorAll(".otree-chat__nickname").forEach(span => {
+        console.log("Checking text:", span.textContent.trim()); // Debugging
+
+        if (span.textContent.trim().includes("(Me)")) { // Use includes() in case of extra spaces
+            span.style.color = "green";
+            span.style.fontWeight = "bold";
+            console.log("✅ Green text applied to:", span); // Debugging confirmation
+        }
+    });
+}
 
 
 
+// Run once on initial page load
+applyGreenText();
+
+// Use MutationObserver to watch for dynamic changes in the chat
+const observer = new MutationObserver((mutationsList) => {
+    console.log("Mutation detected!", mutationsList); // ✅ Debugging line
+    applyGreenText();
+});
+
+
+observer.observe(document.body, { childList: true, subtree: true });

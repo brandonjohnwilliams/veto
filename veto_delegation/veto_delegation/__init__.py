@@ -2,8 +2,6 @@ from otree.api import *
 import json
 import random
 
-
-
 doc = """
 Veto Delegation
 """
@@ -13,11 +11,10 @@ class C(BaseConstants):
     NAME_IN_URL = 'veto_delegation'
     PLAYERS_PER_GROUP = 2
     NUM_ROUNDS = 15
-    REMATCH_INTERVAL = 5  # Rematch after every 5 rounds
+    REMATCH_INTERVAL = 5  # Reassign roles after every X rounds
 
     SELLER_ROLE = 'Seller'
     BUYER_ROLE = 'Buyer'
-
 
     single = 0
 
@@ -29,10 +26,10 @@ class Subsession(BaseSubsession):
 
 
 class Group(BaseGroup):
-    minSlider = models.IntegerField() # defines the left side of the delegated range
-    maxSlider = models.IntegerField() # defines the right side of the delegated range
+    minSlider = models.IntegerField()  # defines the left side of the delegated range
+    maxSlider = models.IntegerField()  # defines the right side of the delegated range
 
-    response = models.IntegerField() # numerical response of the vetoer
+    response = models.IntegerField()  # numerical response of the vetoer
 
     # dice rolls
     vetoer_bias = models.IntegerField()
@@ -49,6 +46,7 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     pass
+
 
 # FUNCTIONS
 def set_payoffs(group):
@@ -72,6 +70,7 @@ def set_payoffs(group):
     print(f"Seller payoff: {p1.payoff}")
     print(f"Buyer payoff: {p2.payoff}")
 
+
 def creating_session(subsession):
     # Sets role for 1-5 then reverses for 6-10 and then reverts for 11-15
     if 5 < subsession.round_number < 11:
@@ -84,7 +83,6 @@ def creating_session(subsession):
         subsession.set_group_matrix(matrix)
     else:
         subsession.group_randomly(fixed_id_in_group=True)
-
 
     # Load the JSON file
     with open("dice_rolls.json", "r") as f:
@@ -121,14 +119,15 @@ def creating_session(subsession):
             group.vetoer_bias = group.drawHigh
             group.roundName = "highest"
 
-# Use to check if bias draws are being pulled correctly:
 
 # PAGES
 class RolesIntro(Page):
     timeout_seconds = 15
+
     @staticmethod
     def is_displayed(player):
         return (player.round_number - 1) % C.REMATCH_INTERVAL == 0
+
 
 class Roles(Page):
     @staticmethod
@@ -150,9 +149,35 @@ class Roles(Page):
             "roundType": group.roundType,
         }
 
+
+class Chat(Page):
+    @staticmethod
+    def is_displayed(player):
+        return player.session.config['chat'] == True
+
+    @staticmethod
+    def js_vars(player):
+        group = player.group
+        return dict(
+            selectedX=group.vetoer_bias,
+        )
+
+    @staticmethod
+    def vars_for_template(player):
+        group = player.group
+        return {
+            "selectedX": group.vetoer_bias,
+            "drawLow": group.drawLow,
+            "drawMed": group.drawMed,
+            "drawHigh": group.drawHigh,
+            "roundName": group.roundName,
+            "roundType": group.roundType,
+        }
+
+
 class Proposal(Page):
     form_model = 'group'
-    form_fields = ['minSlider','maxSlider']
+    form_fields = ['minSlider', 'maxSlider']
 
     @staticmethod
     def is_displayed(player):
@@ -163,6 +188,7 @@ class Proposal(Page):
         return dict(
             round_type=player.group.roundType,
         )
+
 
 class WaitForP1(WaitPage):
     title_text = "Please wait"
@@ -210,7 +236,9 @@ class WaitForP2(WaitPage):
 
     after_all_players_arrive = set_payoffs
 
+
 class Results(Page):
     pass
 
-page_sequence = [RolesIntro, Roles, Proposal, WaitForP1, Response, WaitForP2, Results]
+
+page_sequence = [RolesIntro, Roles, Chat, Proposal, WaitForP1, Response, WaitForP2, Results]

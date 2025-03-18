@@ -7,11 +7,12 @@ SESSION_CONFIGS = [
          app_sequence=[
              'introduction',
              # 'practice',
-             # 'veto_delegation',
+             'veto_delegation',
              'robot',
          ],
          num_demo_participants=4,
          take_it_or_leave_it=False,
+         chat=False,
          ),
     # dict(
     #      name='veto_delegation_cheap',
