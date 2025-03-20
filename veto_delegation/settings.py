@@ -6,7 +6,6 @@ SESSION_CONFIGS = [
          display_name="Standard Treatment",
          app_sequence=[
              'introduction',
-             # 'practice',
              'veto_delegation',
              'robot',
          ],

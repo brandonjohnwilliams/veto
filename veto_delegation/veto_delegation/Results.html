@@ -1,9 +1,36 @@
 {{ block title }}
-    Results
+    Results - Round {{player.round_number}}
 {{ endblock }}
 
 
 {{ block content }}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Table</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        th:nth-child(1), td:nth-child(1) { width: 10%; } /* Round */
+        th:nth-child(2), td:nth-child(2) { width: 20%; } /* Dice Roll */
+        th:nth-child(3), td:nth-child(3) { width: 15%; } /* Ideal X */
+        th:nth-child(4), td:nth-child(4) { width: 15%; } /* Offer */
+        th:nth-child(5), td:nth-child(5) { width: 15%; } /* Choice */
+        th:nth-child(6), td:nth-child(6) { width: 15%; } /* Payoff */
+    </style>
+</head>
+Here are the results for Round {{player.round_number}}.
+
 {{ if player.id_in_group == 1}}
 
 <p>
@@ -20,9 +47,56 @@
     As the Buyer, you chose to purchase {{ if group.response == 1 }} {{ group.response}} widget. {{ else }} {{group.response}} widgets.{{endif}}
     Your payoff is {{ player.payoff }}.
 </p>
-
 {{endif}}
+Here is history of rounds so far:
+
+<table id="gameTable">
+    <thead>
+        <tr>
+            <th>Round</th>
+            <th>Dice Roll</th>
+            <th>Ideal X</th>
+            <th>Offer</th>
+            <th>Choice</th>
+            <th>Payoff</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+
     {{ next_button }}
+
+    <script>
+    function generateTable() {
+        let numRows = js_vars.round;  // Assuming this is the total number of rounds
+        let roundName = js_vars.roundName;
+        let idealX = js_vars.idealX;
+        let offerMin = js_vars.offerMin;
+        let offerMax = js_vars.offerMax;
+        let choice = js_vars.choice;
+        let payoff = js_vars.payoff;
+        let tbody = document.querySelector("#gameTable tbody");
+        tbody.innerHTML = ""; // Clear previous table contents
+
+        for (let i = 0; i < numRows; i++) {  // Start loop from 0 to match array indices
+            let row = tbody.insertRow();
+
+            row.insertCell(0).textContent = i + 1; // Round number (1-based index)
+            row.insertCell(1).textContent = roundName[i].replace(/^\w/, (c) => c.toUpperCase());  // Access rounddice at index i
+            row.insertCell(2).textContent = idealX[i];  // Access idealX at index i
+            row.insertCell(3).textContent = `${offerMin[i]} to ${offerMax[i]}`;  // Access range values
+            row.insertCell(4).textContent = choice[i];  // Access choice at index i
+            row.insertCell(5).textContent = payoff[i];  // Access payoff at index i
+        }
+    }
+
+    // Generate default table on load
+    window.onload = generateTable;
+
+    </script>
+
 {{ endblock }}
 
 

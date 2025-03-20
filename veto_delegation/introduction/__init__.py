@@ -34,6 +34,7 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     single = models.IntegerField()
+    chat = models.IntegerField()
 
 # FUNCTIONS
 def creating_session(subsession):
@@ -43,7 +44,11 @@ def creating_session(subsession):
             player.single = 1
         else:
             player.single = 0
-        print(player.single)
+        if player.subsession.session.config['chat']:
+            player.chat = 1
+        else:
+            player.chat = 0
+
 # PAGES
 class Introduction(Page):
     pass
@@ -53,6 +58,7 @@ class PartOne(Page):
     def vars_for_template(player):
         return dict(
             single=player.single,
+            chat=player.chat,
         )
 
 
@@ -123,5 +129,5 @@ class PayoffsRecap(Page):
 
 
 
-page_sequence = [Introduction, PartOne, Payoffs, PayoffsSeller, PayoffsBuyer, PayoffsBuyerX,
+page_sequence = [Introduction, PartOne, PayoffsSeller, PayoffsBuyer, PayoffsBuyerX,
                  DeterminingX, SellersChoice, SellerView, BuyersChoice, BuyersView, PayoffsRecap]

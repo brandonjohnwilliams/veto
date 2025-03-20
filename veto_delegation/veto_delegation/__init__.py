@@ -238,7 +238,44 @@ class WaitForP2(WaitPage):
 
 
 class Results(Page):
-    pass
+    @staticmethod
+    def js_vars(player):
+
+        # Initialize empty lists
+        roundName_list = []
+        idealX_list = []
+        offerMin_list = []
+        offerMax_list = []
+        choice_list = []
+        payoff_list = []
+
+        # Loop through each round
+        for i in range(1,player.round_number + 1):  # Assuming num_rounds is defined
+            prev_player = player.in_round(i)
+
+            # Append values from the respective round
+            roundName_list.append(prev_player.group.roundName)
+            idealX_list.append(prev_player.group.vetoer_bias)
+            offerMin_list.append(prev_player.group.minSlider)
+            offerMax_list.append(prev_player.group.maxSlider)
+            choice_list.append(prev_player.group.response)
+            payoff_list.append(prev_player.payoff)
+
+
+        return dict(
+            round=player.round_number,
+
+            # loop these variables
+            idealX=idealX_list,
+            offerMin=offerMin_list,
+            offerMax=offerMax_list,
+            choice=choice_list,
+            payoff=payoff_list,
+            roundName=roundName_list,
+        )
+
+
+
 
 
 page_sequence = [RolesIntro, Roles, Chat, Proposal, WaitForP1, Response, WaitForP2, Results]

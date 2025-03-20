@@ -25,6 +25,11 @@ Part One
     </ul>
     As a Seller your payoffs will increase with the number of widgets purchased. As a Buyer, you will privately be informed on the ideal number of widgets you would like to buy; where your payoff will be larger the closer you are to your ideal amount.
 
+    {{ if chat == 0 }}
+    {{ else }}
+    <br><br>
+    You will be able to chat with your counterpart in each round, after the Buyer has learned the ideal number of widgets and before the Seller decides how much to offer.
+    {{ endif }}
     <!-- Include JavaScript file -->
     <script src="{{ static 'veto_delegation/script-graph.js' }}"></script>
 {{ endblock }}
