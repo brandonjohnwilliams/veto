@@ -27,7 +27,7 @@ toggleRadioButtons();
 
   // Define your JavaScript dictionary with table values
   var tableData = {
-    "M=0": ["$4", "$25", "$20", "$15", "$10", "$5", "$4"],
+    "M=0": ["$4", "$27", "$22", "$17", "$12", "$7", "$4"],
     "M=1": ["$8", "$30", "$25", "$20", "$15", "$10", "$5"],
     "M=2": ["$12", "$25", "$30", "$25", "$20", "$15", "$10"],
     "M=3": ["$16", "$20", "$25", "$30", "$25", "$20", "$15"],
@@ -293,19 +293,65 @@ const axisTextSize = "14px Arial";
 
 // Points to label
 
-const yRange = .46;
+// Original points:
+
+// const yRange = .46;
+//
+// const yticksProb = [
+//         {  y: 0.15, yTxt:"15%" },
+//         {  y: 0.30, yTxt:"30%" },
+//         {  y: 0.45 , yTxt:"45%"}
+//     ];
+
+// const pointsx = {
+//         1: [{ x: 1, y: 0.4213, yCDF: "0%", yPT: "42.13%", yADJ: "57.87%" }, { x: 2, y: 0.28241, yCDF: "42.16%", yPT: "28.24%", yADJ: "29.6%" }, { x: 3, y: 0.1713, yCDF: "70.37%", yPT: "17.13%", yADJ: "12.5%" }, { x: 4, y: 0.08796, yCDF: "87.5%", yPT: "8.8%", yADJ: "3.7%" }, { x: 5, y: 0.03241, yCDF: "96.26%", yPT: "3.24%", yADJ: "0.5%" }, { x: 6, y: 0.00463, yCDF: "99.54%", yPT: "0.46%", yADJ: "0.0%" }],
+//         2: [{ x: 1, y: 0.07407, yCDF: "0%", yPT: "7.41%", yADJ: "92.59%" }, { x: 2, y: 0.18519, yCDF: "7.38%", yPT: "18.52%", yADJ: "74.1%" }, { x: 3, y: 0.24074, yCDF: "25.93%", yPT: "24.07%", yADJ: "50.0%" }, { x: 4, y: 0.24074, yCDF: "50.03%", yPT: "24.07%", yADJ: "25.9%" }, { x: 5, y: 0.18519, yCDF: "74.08%", yPT: "18.52%", yADJ: "7.4%" }, { x: 6, y: 0.07407, yCDF: "92.59%", yPT: "7.41%", yADJ: "0.0%" }],
+//         3: [{ x: 1, y: 0.00463, yCDF: "0%", yPT: "0.46%", yADJ: "99.54%" }, { x: 2, y: 0.03241, yCDF: "0.46%", yPT: "3.24%", yADJ: "96.3%" }, { x: 3, y: 0.08796, yCDF: "3.7%", yPT: "8.8%", yADJ: "87.5%" }, { x: 4, y: 0.1713, yCDF: "12.47%", yPT: "17.13%", yADJ: "70.4%" }, { x: 5, y: 0.28241, yCDF: "29.66%", yPT: "28.24%", yADJ: "42.1%" }, { x: 6, y: 0.4213, yCDF: "57.87%", yPT: "42.13%", yADJ: "0.0%" }]};
+
+// New "urn" points (in function form)
+
+const yRange = .36;
 
 const yticksProb = [
-        {  y: 0.15, yTxt:"15%" },
-        {  y: 0.30, yTxt:"30%" },
-        {  y: 0.45 , yTxt:"45%"}
+        {  y: 0.10, yTxt:"10%" },
+        {  y: 0.20, yTxt:"20%" },
+        {  y: 0.30 , yTxt:"30%"},
     ];
 
-const pointsx = {
-        1: [{ x: 1, y: 0.4213, yCDF: "0%", yPT: "42.13%", yADJ: "57.87%" }, { x: 2, y: 0.28241, yCDF: "42.16%", yPT: "28.24%", yADJ: "29.6%" }, { x: 3, y: 0.1713, yCDF: "70.37%", yPT: "17.13%", yADJ: "12.5%" }, { x: 4, y: 0.08796, yCDF: "87.5%", yPT: "8.8%", yADJ: "3.7%" }, { x: 5, y: 0.03241, yCDF: "96.26%", yPT: "3.24%", yADJ: "0.5%" }, { x: 6, y: 0.00463, yCDF: "99.54%", yPT: "0.46%", yADJ: "0.0%" }],
-        2: [{ x: 1, y: 0.07407, yCDF: "0%", yPT: "7.41%", yADJ: "92.59%" }, { x: 2, y: 0.18519, yCDF: "7.38%", yPT: "18.52%", yADJ: "74.1%" }, { x: 3, y: 0.24074, yCDF: "25.93%", yPT: "24.07%", yADJ: "50.0%" }, { x: 4, y: 0.24074, yCDF: "50.03%", yPT: "24.07%", yADJ: "25.9%" }, { x: 5, y: 0.18519, yCDF: "74.08%", yPT: "18.52%", yADJ: "7.4%" }, { x: 6, y: 0.07407, yCDF: "92.59%", yPT: "7.41%", yADJ: "0.0%" }],
-        3: [{ x: 1, y: 0.00463, yCDF: "0%", yPT: "0.46%", yADJ: "99.54%" }, { x: 2, y: 0.03241, yCDF: "0.46%", yPT: "3.24%", yADJ: "96.3%" }, { x: 3, y: 0.08796, yCDF: "3.7%", yPT: "8.8%", yADJ: "87.5%" }, { x: 4, y: 0.1713, yCDF: "12.47%", yPT: "17.13%", yADJ: "70.4%" }, { x: 5, y: 0.28241, yCDF: "29.66%", yPT: "28.24%", yADJ: "42.1%" }, { x: 6, y: 0.4213, yCDF: "57.87%", yPT: "42.13%", yADJ: "0.0%" }]};
+function updatePoints(basePoints, newYValues) {
+  const updated = {};
 
+  for (const group in newYValues) {
+    const ys = newYValues[group];
+    let cumulative = 0;
+
+    updated[group] = ys.map((y, index) => {
+      const yCDF = cumulative;
+      cumulative += y;
+
+      const yADJ = ys.slice(index + 1).reduce((a, b) => a + b, 0);
+
+      return {
+        x: index + 1,
+        y: y,
+        yCDF: (yCDF * 100).toFixed(2) + "%",
+        yPT: (y * 100).toFixed(2) + "%",
+        yADJ: (yADJ * 100).toFixed(2) + "%"
+      };
+    });
+  }
+
+  return updated;
+}
+
+// Example usage:
+const newYValues = {
+  1: [0.30, 0.25, 0.20, 0.15, 0.05, 0.05],
+  2: [0.05, 0.20, 0.25, 0.25, 0.20, 0.05],
+  3: [0.05, 0.05, 0.15, 0.20, 0.25, 0.30]
+};
+
+const pointsx = updatePoints({}, newYValues);
 
 /**
  * Function to translate the (x, y) coordinates to a scaled coordinate system.
@@ -906,9 +952,256 @@ applyGreenText();
 
 // Use MutationObserver to watch for dynamic changes in the chat
 const observer = new MutationObserver((mutationsList) => {
-    console.log("Mutation detected!", mutationsList); // ✅ Debugging line
     applyGreenText();
 });
 
 
 observer.observe(document.body, { childList: true, subtree: true });
+
+// Draw urn rather than dice:
+
+function createArray(N) {
+    let array = [];
+    for (let i = 1; i < N + 1; i++) {
+        for (let j = 1; j < N + 1; j++) {
+            array.push({ x: i, y: j });
+        }
+    }
+    return array;
+}
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+function drawLabeledBalls(canvas, ballSpecs) {
+    // Check if canvas exists and supports 2D context
+    if (!canvas || !canvas.getContext) {
+        console.warn("Canvas element not found or unsupported.");
+        return;
+    }
+
+    // Check if ballSpecs is a valid array
+    if (!Array.isArray(ballSpecs) || ballSpecs.length === 0) {
+        console.warn("ballSpecs is missing or not a valid array.");
+        return;
+    }
+
+    const ctx = canvas.getContext("2d");
+    const bw = 20;
+
+    const columns = 5;
+    const rows = 4;
+    const ballCount = ballSpecs.reduce((sum, spec) => sum + spec.count, 0);
+    const maxBalls = columns * rows;
+
+    if (ballCount > maxBalls) {
+        console.warn("Too many balls for the grid layout!");
+        return;
+    }
+
+    const canvasWidth = 350;
+    const canvasHeight = 300;
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+
+    // Draw background
+    ctx.beginPath();
+    ctx.fillStyle = "#C8C9C7";
+    ctx.roundRect(bw, bw, canvasWidth - 2 * bw, canvasHeight - 2 * bw, bw / 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Grid cell size
+    const cW = (canvasWidth - 2 * bw) / columns;
+    const cH = (canvasHeight - 2 * bw) / rows;
+    const radius = Math.min(cW, cH) / 2.5;
+
+    // Generate grid positions
+    const positions = [];
+    for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < columns; x++) {
+            positions.push({ x, y });
+        }
+    }
+
+    let index = 0;
+    ballSpecs.forEach(spec => {
+        for (let i = 0; i < spec.count; i++) {
+            const pos = positions[index++];
+            if (!pos) {
+                console.warn("Ran out of grid positions!");
+                return;
+            }
+
+            const centerX = bw + cW / 2 + pos.x * cW;
+            const centerY = bw + cH / 2 + pos.y * cH;
+
+            // Draw ball
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+            ctx.fillStyle = spec.color || "gray";
+            ctx.fill();
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Label
+            ctx.fillStyle = "black";
+            ctx.font = `${radius}px sans-serif`;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(spec.label ?? "", centerX, centerY);
+        }
+    });
+}
+
+
+
+
+const canvas1 = document.getElementById('ballCanvas');
+
+let ballData;
+
+if (radioX === 3) {
+    ballData = [
+        { count: 1, color: "white", label: "1" },
+        { count: 1, color: "#eaeded", label: "2" },
+        { count: 3, color: "#d5dbdb", label: "3" },
+        { count: 4, color: "#bfc9ca", label: "4" },
+        { count: 5, color: "#aab7b8", label: "5" },
+        { count: 6, color: "#95a5a6", label: "6" }
+    ];
+} else if (radioX === 2) {
+    ballData = [
+        { count: 1, color: "white", label: "1" },
+        { count: 4, color: "#eaeded", label: "2" },
+        { count: 5, color: "#d5dbdb", label: "3" },
+        { count: 5, color: "#bfc9ca", label: "4" },
+        { count: 4, color: "#aab7b8", label: "5" },
+        { count: 1, color: "#95a5a6", label: "6" }
+    ];
+} else {
+    ballData = [
+        { count: 6, color: "white", label: "1" },
+        { count: 5, color: "#eaeded", label: "2" },
+        { count: 4, color: "#d5dbdb", label: "3" },
+        { count: 3, color: "#bfc9ca", label: "4" },
+        { count: 1, color: "#aab7b8", label: "5" },
+        { count: 1, color: "#95a5a6", label: "6" }
+    ];
+}
+
+drawLabeledBalls(canvas1, ballData);
+
+function drawLabeledBallsWithHighlight(canvas, ballSpecs, highlightLabel) {
+    // Safety checks
+    if (!canvas || !canvas.getContext) {
+        console.warn("Canvas element not found or unsupported.");
+        return;
+    }
+    if (!Array.isArray(ballSpecs) || ballSpecs.length === 0) {
+        console.warn("ballSpecs is missing or not a valid array.");
+        return;
+    }
+
+    const ctx = canvas.getContext("2d");
+    const bw = 20;
+
+    const columns = 5;
+    const rows = 4;
+    const ballCount = ballSpecs.reduce((sum, spec) => sum + spec.count, 0);
+    const maxBalls = columns * rows;
+
+    if (ballCount > maxBalls) {
+        console.warn("Too many balls for the grid layout!");
+        return;
+    }
+
+    const canvasWidth = 350;
+    const canvasHeight = 300;
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+
+    // Draw background
+    ctx.beginPath();
+    ctx.fillStyle = "#C8C9C7";
+    ctx.roundRect(bw, bw, canvasWidth - 2 * bw, canvasHeight - 2 * bw, bw / 2);
+    ctx.fill();
+    ctx.stroke();
+
+    const cW = (canvasWidth - 2 * bw) / columns;
+    const cH = (canvasHeight - 2 * bw) / rows;
+    const radius = Math.min(cW, cH) / 2.5;
+
+    // Generate grid positions
+    const positions = [];
+    for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < columns; x++) {
+            positions.push({ x, y });
+        }
+    }
+
+    // Build a flat array of ball instances
+    const flatBalls = [];
+    ballSpecs.forEach(spec => {
+        for (let i = 0; i < spec.count; i++) {
+            flatBalls.push({ label: spec.label, color: spec.color });
+        }
+    });
+
+    // Find all indices matching the highlightLabel
+    const highlightIndices = flatBalls
+        .map((ball, index) => (ball.label === String(highlightLabel) ? index : -1))
+        .filter(index => index !== -1);
+
+
+    // Pick one at random to highlight (if any)
+    let highlightIndex = null;
+    if (highlightIndices.length > 0) {
+        highlightIndex = highlightIndices[Math.floor(Math.random() * highlightIndices.length)];
+    }
+
+    // Draw each ball
+    flatBalls.forEach((ball, index) => {
+        const pos = positions[index];
+        if (!pos) return;
+
+        const centerX = bw + cW / 2 + pos.x * cW;
+        const centerY = bw + cH / 2 + pos.y * cH;
+
+        // Draw ball
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = ball.color || "gray";
+        ctx.fill();
+
+        // Border color: red if this is the highlighted one
+        ctx.strokeStyle = (index === highlightIndex) ? "red" : "black";
+        ctx.lineWidth = (index === highlightIndex) ? 4 : 2;
+        ctx.stroke();
+
+        // Label
+        ctx.fillStyle = (index === highlightIndex) ? "red" : "black";
+        ctx.font = `${radius}px sans-serif`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(ball.label ?? "", centerX, centerY);
+    });
+}
+
+const canvas2 = document.getElementById('ballCanvas2');
+
+// Assume ballData is already defined as you showed
+drawLabeledBallsWithHighlight(canvas2, ballData, selectedX);  // randomly highlights one "3" ball
+
+
+
+
+
+
+

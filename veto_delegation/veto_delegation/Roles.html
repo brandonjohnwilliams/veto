@@ -14,8 +14,11 @@ Your Role
     You are the Seller. You will choose what options for the number of Widgets (M) that the Buyer can choose from.
     Remember, you cannot remove 0 Widgets as an option. The Buyer can always walk away.
 </p>
-<p>The Buyer's ideal value (X) will come from <b>{{ roundName }}</b> of three dice rolls.</p>
+<p>The Buyer's ideal value (X) will come from a type <b>{{ roundName }}</b> urn, which contains these possible draws:</p>
 
+<div class="canvas-container">
+  <canvas id="ballCanvas"></canvas>
+</div>
 
 
 {{ else }}
@@ -24,34 +27,18 @@ Your Role
     You are the Buyer. First, the Seller will choose what options for the number of widgets (M) that uou can choose from.
     Remember, the Seller cannot remove 0 Widgets as an option. You can always walk away.
 </p>
-<p>You have <b>ideal value X={{selectedX}}</b> which came from the <b>{{ roundName }}</b> of three dice rolls.</p>
+<p>You have <b>ideal value X={{selectedX}}</b> which came from the type <b>{{ roundName }}</b> urn.</p>
+
+<div class="canvas-container">
+  <canvas id="ballCanvas2"></canvas>
+</div>
 
 
 {{endif}}
 
 
-<div style="width: 300px; margin: 0 auto;">
-    <table class="tg">
-        <colgroup>
-            <col style="width: 251.2px">
-        </colgroup>
-        <thead>
-            <tr>
-                <th class="tg-7fle"><span style="font-weight:bold">Ideal Value, X</span></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="tg-baqh">
-                    <span class="die-number {% if roundType == 1 %}die-number-red{% endif %}" id="die1">{{ if player.id_in_group == 1}}{{else}}{{ drawLow }}{{endif}}</span> ≤
-                    <span class="die-number {% if roundType == 2 %}die-number-red{% endif %}" id="die2">{{ if player.id_in_group == 1}}{{else}}{{ drawMed }}{{endif}}</span> ≤
-                    <span class="die-number {% if roundType == 3 %}die-number-red{% endif %}" id="die3">{{ if player.id_in_group == 1}}{{else}}{{ drawHigh }}{{endif}}</span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<br><br>
+
+
 <p>Click next when you are ready to make your choice.</p>
 {{ next_button }}
 

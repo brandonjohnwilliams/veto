@@ -57,6 +57,20 @@
 canvas {
 	border: 1px solid #000;
 }
+
+.canvas-container {
+  text-align: center;
+}
+#ballCanvas{
+    border: none;
+}
+#ballCanvas2{
+    border: none;
+}
+#probCanvas{
+    border: 1px solid #ccc;
+  border-radius: 5px;
+}
 input[type="range"] {
     width: 80%;
 }

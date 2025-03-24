@@ -187,7 +187,20 @@ class Proposal(Page):
     def js_vars(player):
         return dict(
             round_type=player.group.roundType,
+            selectedX=player.group.vetoer_bias,
         )
+
+    @staticmethod
+    def vars_for_template(player):
+        group = player.group
+        return {
+            "selectedX": group.vetoer_bias,
+            "drawLow": group.drawLow,
+            "drawMed": group.drawMed,
+            "drawHigh": group.drawHigh,
+            "roundName": group.roundName,
+            "roundType": group.roundType,
+        }
 
 
 class WaitForP1(WaitPage):

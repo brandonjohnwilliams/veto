@@ -9,22 +9,27 @@ Proposal
     <head>
         <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
     </head>
+                The probability that the Buyer has each value is shown to the right. You can adjust the slider to see how the probability changes.                 You can also see the corresponding payoff for the selected value (highlighted in blue) in the table below.
 
-Please make your selection below.
+<br><br>
+Please make your selection below.                 <br><br>
+
 
     <div class="sub-container2">
         <div class="dice-box">
             <p>
-                The Buyer will be chosen by the <b><span id="location">middle</span></b> of three die:
-                <br>
-                <br>
+                The Buyer will be drawn from the <strong>
+                {{ if roundType == 1}}
+                "L" urn
+                {{ elif roundType == 2}}
+                "M" urn
+                {{else}}
+                "H" urn
+                {{endif}}
+                </strong>:
 
-                <span id="dice-container"></span>
 
-                <br><br>
-                The probability that the Buyer has each value is shown to the right. You can adjust the slider to see how the probability changes.
-                <br><br>
-                You can also see the corresponding payoff for the selected value (highlighted in blue) in the table below.
+                <canvas id="ballCanvas"></canvas>
 
             </p>
         </div>
