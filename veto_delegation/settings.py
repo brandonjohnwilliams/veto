@@ -5,11 +5,11 @@ SESSION_CONFIGS = [
          name='veto_delegation',
          display_name="Standard Treatment",
          app_sequence=[
-             'introduction',
+             # 'introduction',
              'veto_delegation',
              'robot',
          ],
-         num_demo_participants=4,
+         num_demo_participants=2,
          take_it_or_leave_it=False,
          chat=False,
          ),

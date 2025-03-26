@@ -12,7 +12,8 @@ Buyer's Choice
 
 <br>
 
-<div style="width: 300px; margin: 0 auto;">
+<div style="display: flex; justify-content: center; width: 100%;">
+<div style="display: flex; justify-content: center; width: 50%;">
 <table class="tg">
     <colgroup>
         <col style="width: 251.2px">
@@ -24,13 +25,15 @@ Buyer's Choice
     </thead>
     <tbody>
         <tr>
-            <td class="tg-baqh"><span class="die-number" id="die1"></span> ≤ <span class="die-number" id="die2"></span> ≤ <span class="die-number" id="die3"></span></td>
+            <td><canvas id="ballCanvas" width="280" height="250"></canvas></td>
         </tr>
     </tbody>
 </table>
 </div>
+</div>
 
-<button type="button" id="roll-button">Roll Dice</button>
+
+<button type="button" id="roll-button">Draw X</button>
 
 Given the Seller's choice, the Buyer will have to select a quantity:
 
@@ -48,7 +51,8 @@ Given the Seller's choice, the Buyer will have to select a quantity:
     </ul>
 
 To help you in this decision, for each of the possible quantity choices, the interface will display the payoffs to the Buyer and Seller.
-When you click the button to roll dice above, one die will be highlighted in red. This is the Buyer's ideal value, which is then highlighed in blue in the table below.
+When you click the button to Draw X above, one drawn ball will be highlighted in red.
+This is the Buyer's ideal value, which is then highlighed in red in the table below.
 If you are able to choose the number to purchase, M, that matches your ideal value, X, you will receive the highest possible payoff.
 
 <br><br>
@@ -85,11 +89,11 @@ If you are able to choose the number to purchase, M, that matches your ideal val
   <tr>
     <td class="tg-0pky">M=0</td>
     <td class="tg-0pky">$4</td>
-    <td class="tg-0pky">$25</td>
-    <td class="tg-0pky">$20</td>
-    <td class="tg-0pky">$15</td>
-    <td class="tg-0pky">$10</td>
-    <td class="tg-0pky">$5</td>
+    <td class="tg-0pky">$27</td>
+    <td class="tg-0pky">$22</td>
+    <td class="tg-0pky">$17</td>
+    <td class="tg-0pky">$12</td>
+    <td class="tg-0pky">$7</td>
     <td class="tg-0pky">$4</td>
   </tr>
   <tr>
@@ -175,73 +179,177 @@ If you are able to choose the number to purchase, M, that matches your ideal val
   </tbody>
 </table>
 </div>
-
-Note that the precise payoffs will depend on your ideal quantity, X. While X will be fixed in each round in the experiment, you can see how this will affect payoffs by clicking the Re-roll button above.
+<br><br>
+Note that the precise payoffs will depend on your ideal quantity, X. While X will be fixed in each round in the experiment, you can see how this will affect payoffs by clicking the "Draw X" button above.
     <!-- Include JavaScript file -->
     <script>
         // Dice Roll Section (for Practice Rounds)
 
-document.getElementById("roll-button").addEventListener("click", rollDice);
+document.getElementById("roll-button").addEventListener("click", rollFromUrnCanvas);
+let radioX = 2;
+function rollFromUrnCanvas() {
+  // Use the middle urn: radioX = 2
+  let radioX = 2;
+  const ballData = getBallDataForUrn(radioX);
 
-function rollDice() {
-    // Roll three 6-sided dice
-    let die1 = Math.floor(Math.random() * 6) + 1;
-    let die2 = Math.floor(Math.random() * 6) + 1;
-    let die3 = Math.floor(Math.random() * 6) + 1;
+  // Create weighted pool from ballData
+  const pool = [];
+  ballData.forEach(spec => {
+    for (let i = 0; i < spec.count; i++) {
+      pool.push(parseInt(spec.label));
+    }
+  });
 
-    // Sort the dice from lowest to highest
-    let dice = [die1, die2, die3];
-    dice.sort((a, b) => a - b);
+  // Draw one number at random
+  const randomIndex = Math.floor(Math.random() * pool.length);
+  const selectedX = pool[randomIndex];
 
-// Update the table with the results
-let dieNumbers = document.querySelectorAll(".die-number");
-for (let i = 0; i < dice.length; i++) {
-    dieNumbers[i].textContent = dice[i]; // Use textContent to set the text
-}
-    // Construct the return string
-    // let returnString = "Die Numbers: " + dice.join(", ");
+  console.log("Drawn value from middle urn:", selectedX);
 
-    // Print the return string
-    // console.log(returnString); // Prints to the console
+  // Get the canvas and draw it with the highlight
+  const canvas = document.getElementById("ballCanvas");
+  drawLabeledBallsWithHighlight(canvas, ballData, selectedX);
 
-        // Remove the "selected" class from all die elements
-    document.querySelectorAll('.die-number').forEach(element => {
-        element.classList.remove('selected');
+  // Highlight corresponding column in table
+    const columnToHighlight = selectedX + 2; // offset for 3rd column
+    document.querySelectorAll(".highlight").forEach(cell => {
+        cell.classList.remove("highlight");
     });
-        document.querySelectorAll('.die-number-white').forEach(element => {
-        element.classList.remove('selected');
+    document.querySelectorAll("tbody td:nth-child(" + columnToHighlight + ")").forEach(cell => {
+        cell.classList.add("highlight");
+    });
+}
+
+
+function drawLabeledBallsWithHighlight(canvas, ballSpecs, highlightLabel) {
+    // Safety checks
+    if (!canvas || !canvas.getContext) {
+        console.warn("Canvas element not found or unsupported.");
+        return;
+    }
+    if (!Array.isArray(ballSpecs) || ballSpecs.length === 0) {
+        console.warn("ballSpecs is missing or not a valid array.");
+        return;
+    }
+
+    const ctx = canvas.getContext("2d");
+    const bw = 20;
+
+    const columns = 5;
+    const rows = 4;
+    const ballCount = ballSpecs.reduce((sum, spec) => sum + spec.count, 0);
+    const maxBalls = columns * rows;
+
+    if (ballCount > maxBalls) {
+        console.warn("Too many balls for the grid layout!");
+        return;
+    }
+
+    const canvasWidth = 350;
+    const canvasHeight = 300;
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+
+    // Draw background
+    ctx.beginPath();
+    ctx.fillStyle = "#C8C9C7";
+    ctx.roundRect(bw, bw, canvasWidth - 2 * bw, canvasHeight - 2 * bw, bw / 2);
+    ctx.fill();
+    ctx.stroke();
+
+    const cW = (canvasWidth - 2 * bw) / columns;
+    const cH = (canvasHeight - 2 * bw) / rows;
+    const radius = Math.min(cW, cH) / 2.5;
+
+    // Generate grid positions
+    const positions = [];
+    for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < columns; x++) {
+            positions.push({ x, y });
+        }
+    }
+
+    // Build a flat array of ball instances
+    const flatBalls = [];
+    ballSpecs.forEach(spec => {
+        for (let i = 0; i < spec.count; i++) {
+            flatBalls.push({ label: spec.label, color: spec.color });
+        }
     });
 
-        // Randomly select a value between 1 and 3
-    let selectedDieIndex = Math.floor(Math.random() * 3); // 0, 1, or 2
+    // Find all indices matching the highlightLabel
+    const highlightIndices = flatBalls
+        .map((ball, index) => (ball.label === String(highlightLabel) ? index : -1))
+        .filter(index => index !== -1);
 
-    // // Based on the selected value, change the color of the corresponding die
-    let selectedDieId = "die" + (selectedDieIndex + 1);
-    document.getElementById(selectedDieId).classList.add("selected");
-    // let selectedColorId = "dieColor" + (selectedDieIndex + 1);
-    // document.getElementById(selectedColorId).classList.add("selected");
 
-    // Retrieve the selected die number from the dice array
-    let selectedDieNumber = dice[selectedDieIndex];
+    // Pick one at random to highlight (if any)
+    let highlightIndex = null;
+    if (highlightIndices.length > 0) {
+        highlightIndex = highlightIndices[Math.floor(Math.random() * highlightIndices.length)];
+    }
 
-    // Print the selected die number to the log
-    console.log("Selected Die Number:", selectedDieNumber);
+    // Draw each ball
+    flatBalls.forEach((ball, index) => {
+        const pos = positions[index];
+        if (!pos) return;
 
-            var columnToHighlight = selectedDieNumber + 2; // Adding 2 because indexing starts from 0 and the table starts from the third column
+        const centerX = bw + cW / 2 + pos.x * cW;
+        const centerY = bw + cH / 2 + pos.y * cH;
 
-            // Reset previous highlights
-            var highlightedCells = document.querySelectorAll(".highlight");
-            highlightedCells.forEach(function(cell) {
-                cell.classList.remove("highlight");
-            });
+        // Draw ball
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = ball.color || "gray";
+        ctx.fill();
 
-            // Highlight cells in the selected column
-            var cellsToHighlight = document.querySelectorAll("tbody td:nth-child(" + columnToHighlight + ")");
-            cellsToHighlight.forEach(function(cell) {
-                cell.classList.add("highlight");
-                });
+        // Border color: red if this is the highlighted one
+        ctx.strokeStyle = (index === highlightIndex) ? "red" : "black";
+        ctx.lineWidth = (index === highlightIndex) ? 4 : 2;
+        ctx.stroke();
 
+        // Label
+        ctx.fillStyle = (index === highlightIndex) ? "red" : "black";
+        ctx.font = `${radius}px sans-serif`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(ball.label ?? "", centerX, centerY);
+    });
 }
+
+
+function getBallDataForUrn(radioX) {
+  if (radioX === 3) {
+    return [
+      { count: 1, color: "white", label: "1" },
+      { count: 1, color: "#eaeded", label: "2" },
+      { count: 3, color: "#d5dbdb", label: "3" },
+      { count: 4, color: "#bfc9ca", label: "4" },
+      { count: 5, color: "#aab7b8", label: "5" },
+      { count: 6, color: "#95a5a6", label: "6" }
+    ];
+  } else if (radioX === 2) {
+    return [
+      { count: 1, color: "white", label: "1" },
+      { count: 4, color: "#eaeded", label: "2" },
+      { count: 5, color: "#d5dbdb", label: "3" },
+      { count: 5, color: "#bfc9ca", label: "4" },
+      { count: 4, color: "#aab7b8", label: "5" },
+      { count: 1, color: "#95a5a6", label: "6" }
+    ];
+  } else {
+    return [
+      { count: 6, color: "white", label: "1" },
+      { count: 5, color: "#eaeded", label: "2" },
+      { count: 4, color: "#d5dbdb", label: "3" },
+      { count: 3, color: "#bfc9ca", label: "4" },
+      { count: 1, color: "#aab7b8", label: "5" },
+      { count: 1, color: "#95a5a6", label: "6" }
+    ];
+  }
+}
+
+rollFromUrnCanvas();
 
     </script>
 {{ endblock }}

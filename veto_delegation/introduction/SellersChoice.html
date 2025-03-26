@@ -16,7 +16,7 @@
         {{else}}
             an offered quantity
         {{endif}}
-        to offer to the Buyer. The Seller will see if the selected ideal quantity for the Buyer was the smallest, median of largest quantity of the three rolls:
+        to offer to the Buyer. The Seller will see if the selected from the low, middle, or high urn:
     <br>
     <table class="tg" style="undefined;table-layout: fixed; width: 754px">
         <colgroup>
@@ -26,22 +26,22 @@
         </colgroup>
         <thead>
             <tr>
-                <th class="tg-7fle">Smallest</th>
+                <th class="tg-7fle">Low</th>
                 <th class="tg-7fle">Middle<br></th>
-                <th class="tg-7fle">Largest</th>
+                <th class="tg-7fle">High</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td class="tg-c3ow"><span class="die-number-red"></span> ≤ <span class="die-number-white"></span> ≤ <span class="die-number-white"></span><br></td>
-                <td class="tg-c3ow"><span class="die-number-white"></span> ≤ <span class="die-number-red"></span> ≤ <span class="die-number-white"></span></td>
-                <td class="tg-c3ow"><span class="die-number-white"></span> ≤ <span class="die-number-white"></span> ≤ <span class="die-number-red"></span></td>
+                <td class="tg-c3ow" ><canvas id="ballCanvas-low" style="border: none"></canvas></td>
+                <td class="tg-c3ow" ><canvas id="ballCanvas-middle" style="border: none"></canvas></td>
+                <td class="tg-c3ow" ><canvas id="ballCanvas-high" style="border: none"></canvas></td>
             </tr>
         </tbody>
     </table>
     <br>
 
-    Given this information, the Seller will be assisted with a graph showing the likelihood of each ideal quantity, given the information on the die roll being the Smallest/Middle/Largest.
+    Given this information, the Seller will be assisted with a graph showing the likelihood of each ideal quantity, depending on the urn type.
     <br>
     <br>
     <table class="tg" style="undefined;table-layout: fixed; width: 754px">
@@ -52,9 +52,9 @@
         </colgroup>
         <thead>
             <tr>
-                <th class="tg-7fle">Smallest</th>
+                <th class="tg-7fle">Low</th>
                 <th class="tg-7fle">Middle<br></th>
-                <th class="tg-7fle">Largest</th>
+                <th class="tg-7fle">High</th>
             </tr>
         </thead>
         <tbody>
@@ -85,4 +85,134 @@
 
     <!-- Include JavaScript file -->
     <script src="{{ static 'veto_delegation/small-graphs.js' }}"></script>
+
+    <script>
+        function drawLabeledBalls(canvas, ballSpecs) {
+            // Check if canvas exists and supports 2D context
+            if (!canvas || !canvas.getContext) {
+                console.warn("Canvas element not found or unsupported.");
+                return;
+            }
+
+            // Check if ballSpecs is a valid array
+            if (!Array.isArray(ballSpecs) || ballSpecs.length === 0) {
+                console.warn("ballSpecs is missing or not a valid array.");
+                return;
+            }
+
+            const ctx = canvas.getContext("2d");
+            const bw = 20;
+
+            const columns = 5;
+            const rows = 4;
+            const ballCount = ballSpecs.reduce((sum, spec) => sum + spec.count, 0);
+            const maxBalls = columns * rows;
+
+            if (ballCount > maxBalls) {
+                console.warn("Too many balls for the grid layout!");
+                return;
+            }
+
+            const canvasWidth = 275;
+            const canvasHeight = 225;
+            canvas.width = canvasWidth;
+            canvas.height = canvasHeight;
+
+            // Draw background
+            ctx.beginPath();
+            ctx.fillStyle = "#C8C9C7";
+            ctx.roundRect(bw, bw, canvasWidth - 2 * bw, canvasHeight - 2 * bw, bw / 2);
+            ctx.fill();
+            ctx.stroke();
+
+            // Grid cell size
+            const cW = (canvasWidth - 2 * bw) / columns;
+            const cH = (canvasHeight - 2 * bw) / rows;
+            const radius = Math.min(cW, cH) / 2.5;
+
+            // Generate grid positions
+            const positions = [];
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < columns; x++) {
+                    positions.push({ x, y });
+                }
+            }
+
+            let index = 0;
+            ballSpecs.forEach(spec => {
+                for (let i = 0; i < spec.count; i++) {
+                    const pos = positions[index++];
+                    if (!pos) {
+                        console.warn("Ran out of grid positions!");
+                        return;
+                    }
+
+                    const centerX = bw + cW / 2 + pos.x * cW;
+                    const centerY = bw + cH / 2 + pos.y * cH;
+
+                    // Draw ball
+                    ctx.beginPath();
+                    ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+                    ctx.fillStyle = spec.color || "gray";
+                    ctx.fill();
+                    ctx.strokeStyle = "black";
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+
+                    // Label
+                    ctx.fillStyle = "black";
+                    ctx.font = `${radius}px sans-serif`;
+                    ctx.textAlign = "center";
+                    ctx.textBaseline = "middle";
+                    ctx.fillText(spec.label ?? "", centerX, centerY);
+                }
+            });
+        }
+
+
+        function getBallDataForUrn(radioX) {
+          if (radioX === 3) {
+            return [
+              { count: 1, color: "white", label: "1" },
+              { count: 1, color: "#eaeded", label: "2" },
+              { count: 3, color: "#d5dbdb", label: "3" },
+              { count: 4, color: "#bfc9ca", label: "4" },
+              { count: 5, color: "#aab7b8", label: "5" },
+              { count: 6, color: "#95a5a6", label: "6" }
+            ];
+          } else if (radioX === 2) {
+            return [
+              { count: 1, color: "white", label: "1" },
+              { count: 4, color: "#eaeded", label: "2" },
+              { count: 5, color: "#d5dbdb", label: "3" },
+              { count: 5, color: "#bfc9ca", label: "4" },
+              { count: 4, color: "#aab7b8", label: "5" },
+              { count: 1, color: "#95a5a6", label: "6" }
+            ];
+          } else {
+            return [
+              { count: 6, color: "white", label: "1" },
+              { count: 5, color: "#eaeded", label: "2" },
+              { count: 4, color: "#d5dbdb", label: "3" },
+              { count: 3, color: "#bfc9ca", label: "4" },
+              { count: 1, color: "#aab7b8", label: "5" },
+              { count: 1, color: "#95a5a6", label: "6" }
+            ];
+          }
+        }
+
+        const canvasLow = document.getElementById('ballCanvas-low');
+        const ballDataLow = getBallDataForUrn(1);
+        drawLabeledBalls(canvasLow, ballDataLow);
+
+        const canvasMiddle = document.getElementById('ballCanvas-middle');
+        const ballDataMiddle = getBallDataForUrn(2);
+        drawLabeledBalls(canvasMiddle, ballDataMiddle);
+
+        const canvasHigh = document.getElementById('ballCanvas-high');
+        const ballDataHigh = getBallDataForUrn(3);
+        drawLabeledBalls(canvasHigh, ballDataHigh);
+
+
+    </script>
 {{ endblock }}

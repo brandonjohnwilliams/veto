@@ -9,20 +9,49 @@ const axisTextSize = "14px Arial";
 
 // Points to label
 
-const yRange = .46;
+
+const yRange = .36;
 
 const yticksProb = [
-        {  y: 0.15, yTxt:"15%" },
-        {  y: 0.30, yTxt:"30%" },
-        {  y: 0.45 , yTxt:"45%"}
+        {  y: 0.10, yTxt:"10%" },
+        {  y: 0.20, yTxt:"20%" },
+        {  y: 0.30 , yTxt:"30%"},
     ];
 
-const pointsx = {
-        1: [{ x: 1, y: 0.4213, yCDF: "0%", yPT: "42.13%", yADJ: "57.87%" }, { x: 2, y: 0.28241, yCDF: "42.16%", yPT: "28.24%", yADJ: "29.6%" }, { x: 3, y: 0.1713, yCDF: "70.37%", yPT: "17.13%", yADJ: "12.5%" }, { x: 4, y: 0.08796, yCDF: "87.5%", yPT: "8.8%", yADJ: "3.7%" }, { x: 5, y: 0.03241, yCDF: "96.26%", yPT: "3.24%", yADJ: "0.5%" }, { x: 6, y: 0.00463, yCDF: "99.54%", yPT: "0.46%", yADJ: "0.0%" }],
-        2: [{ x: 1, y: 0.07407, yCDF: "0%", yPT: "7.41%", yADJ: "92.59%" }, { x: 2, y: 0.18519, yCDF: "7.38%", yPT: "18.52%", yADJ: "74.1%" }, { x: 3, y: 0.24074, yCDF: "25.93%", yPT: "24.07%", yADJ: "50.0%" }, { x: 4, y: 0.24074, yCDF: "50.03%", yPT: "24.07%", yADJ: "25.9%" }, { x: 5, y: 0.18519, yCDF: "74.08%", yPT: "18.52%", yADJ: "7.4%" }, { x: 6, y: 0.07407, yCDF: "92.59%", yPT: "7.41%", yADJ: "0.0%" }],
-        3: [{ x: 1, y: 0.00463, yCDF: "0%", yPT: "0.46%", yADJ: "99.54%" }, { x: 2, y: 0.03241, yCDF: "0.46%", yPT: "3.24%", yADJ: "96.3%" }, { x: 3, y: 0.08796, yCDF: "3.7%", yPT: "8.8%", yADJ: "87.5%" }, { x: 4, y: 0.1713, yCDF: "12.47%", yPT: "17.13%", yADJ: "70.4%" }, { x: 5, y: 0.28241, yCDF: "29.66%", yPT: "28.24%", yADJ: "42.1%" }, { x: 6, y: 0.4213, yCDF: "57.87%", yPT: "42.13%", yADJ: "0.0%" }]};
+function updatePoints(basePoints, newYValues) {
+  const updated = {};
 
+  for (const group in newYValues) {
+    const ys = newYValues[group];
+    let cumulative = 0;
 
+    updated[group] = ys.map((y, index) => {
+      const yCDF = cumulative;
+      cumulative += y;
+
+      const yADJ = ys.slice(index + 1).reduce((a, b) => a + b, 0);
+
+      return {
+        x: index + 1,
+        y: y,
+        yCDF: (yCDF * 100).toFixed(2) + "%",
+        yPT: (y * 100).toFixed(2) + "%",
+        yADJ: (yADJ * 100).toFixed(2) + "%"
+      };
+    });
+  }
+
+  return updated;
+}
+
+// Example usage:
+const newYValues = {
+  1: [0.30, 0.25, 0.20, 0.15, 0.05, 0.05],
+  2: [0.05, 0.20, 0.25, 0.25, 0.20, 0.05],
+  3: [0.05, 0.05, 0.15, 0.20, 0.25, 0.30]
+};
+
+const pointsx = updatePoints({}, newYValues);
 /**
  * Function to translate the (x, y) coordinates to a scaled coordinate system.
  * @param {number} x - The x-coordinate to be translated.

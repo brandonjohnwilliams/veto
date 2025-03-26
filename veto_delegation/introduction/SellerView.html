@@ -8,7 +8,8 @@
         <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
     </head>
 
-    Below is the screen the Seller will see in each round. They see which of the three dice will determine the ideal value of the Buyer, and the corresponding probability information shown in graphical form. The Seller can use the slider below the probability graph to see the exact probabilities of each possible point, along with the probabilities of being above or below that point.
+    Below is the screen the Seller will see in each round.
+    They see which of the three urns will determine the ideal value of the Buyer, and the corresponding probability information shown in graphical form. The Seller can use the slider below the probability graph to see the exact probabilities of each possible point, along with the probabilities of being above or below that point.
     <br><br>
     <b>Notice you can never remove selling 0 widgets (M=0).</b> The Buyer may always walk away.
     <br><br>
@@ -17,21 +18,23 @@
 
     <div class="sub-container2">
         <div class="dice-box">
-            <p>
-                The Buyer will be chosen by the <b>middle</b> of three die:
-                <br>
-                <br>
+            <p class="centered-text">
+                The Buyer will be drawn from the <strong>
+                {{ if roundType == 1}}
+                "L" urn
+                {{ elif roundType == 2}}
+                "M" urn
+                {{else}}
+                "H" urn
+                {{endif}}
+                </strong>:
 
-                <span class="die-number-white"></span> ≤ <span class="die-number-red"></span> ≤ <span class="die-number-white"></span>
 
-
-                <br><br>
-                The probability that the Buyer has each value is shown to the right. You can adjust the slider to see how the probability changes.
-                <br><br>
-                You can also see the corresponding payoff for the selected value (highlighted in blue) in the table below.
+                <canvas id="ballCanvas"></canvas>
 
             </p>
         </div>
+
         <div class="theta-box">
 
             <canvas id="probCanvas" width="550" height="325"></canvas>

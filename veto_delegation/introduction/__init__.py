@@ -105,7 +105,15 @@ class SellerView(Page):
     def js_vars(player):
         return dict(
             round_type=C.round_type,
-            single=player.single
+            single=player.single,
+            fromM=1,
+            toM=8,
+        )
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        return dict(
+            roundType=C.round_type,
         )
 
 class BuyersChoice(Page):
@@ -114,6 +122,16 @@ class BuyersChoice(Page):
 class BuyersView(Page):
     @staticmethod
     def js_vars(player):
+        return dict(
+            selectedX=2, # Selecting 0 removes the column
+            fromM=3,
+            toM=6,
+            round_type=2,
+            response=1,
+        )
+
+    @staticmethod
+    def vars_for_template(player):
         return dict(
             selectedX=2, # Selecting 0 removes the column
             fromM=3,

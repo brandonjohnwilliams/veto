@@ -49,21 +49,23 @@ Here are the results for Round {{player.round_number}}.
 </p>
 {{endif}}
 Here is history of rounds so far:
+<br><br>
 
 <table id="gameTable">
     <thead>
         <tr>
             <th>Round</th>
-            <th>Dice Roll</th>
+            <th>Urn Type</th>
             <th>Ideal X</th>
             <th>Offer</th>
-            <th>Choice</th>
+<!--            <th>Choice</th>-->
             <th>Payoff</th>
         </tr>
     </thead>
     <tbody>
     </tbody>
 </table>
+<br><br>
 
 
     {{ next_button }}
@@ -85,10 +87,10 @@ Here is history of rounds so far:
 
             row.insertCell(0).textContent = i + 1; // Round number (1-based index)
             row.insertCell(1).textContent = roundName[i].replace(/^\w/, (c) => c.toUpperCase());  // Access rounddice at index i
-            row.insertCell(2).textContent = idealX[i];  // Access idealX at index i
-            row.insertCell(3).textContent = `${offerMin[i]} to ${offerMax[i]}`;  // Access range values
-            row.insertCell(4).textContent = choice[i];  // Access choice at index i
-            row.insertCell(5).textContent = payoff[i];  // Access payoff at index i
+            row.insertCell(2).textContent = `${idealX[i]} widgets`;  // Access idealX at index i
+            row.insertCell(3).textContent = `${offerMin[i]} to ${offerMax[i]} widgets`;  // Access range values
+            // row.insertCell(4).textContent = `${choice[i]} widgets`;  // Access choice at index i
+            row.insertCell(4).textContent = payoff[i];  // Access payoff at index i
         }
     }
 

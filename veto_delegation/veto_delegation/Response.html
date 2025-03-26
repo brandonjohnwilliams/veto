@@ -10,54 +10,30 @@ Your Choice
 
 
 
-    <p>You have <b>ideal value X={{selectedX}}</b> which came from the <b>{{ roundName }}</b> of three dice rolls.</p>
-
-    <div style="width: 300px; margin: 0 auto;">
-        <table class="tg">
-            <colgroup>
-                <col style="width: 251.2px">
-            </colgroup>
-            <thead>
-                <tr>
-                    <th class="tg-7fle"><span style="font-weight:bold">Ideal Value, X</span></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="tg-baqh">
-                        <span class="die-number {% if roundType == 1 %}die-number-red{% endif %}" id="die1">{{ drawLow }}</span> ≤
-                        <span class="die-number {% if roundType == 2 %}die-number-red{% endif %}" id="die2">{{ drawMed }}</span> ≤
-                        <span class="die-number {% if roundType == 3 %}die-number-red{% endif %}" id="die3">{{ drawHigh }}</span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-<p>
-    <br>
+<p>You have <b>ideal value X={{selectedX}}</b> which came from the <b>{{ roundName }}</b> urn type.
 The Seller offered you the following range:
 </p>
-<b><ul>
-<li>Minimum amount: {{ group.minSlider }}</li>
+<ul>
+<li>Minimum amount: {{ group.minSlider }} widgets</li>
 
-<li>Maximum amount: {{ group.maxSlider }}</li>
+<li>Maximum amount: {{ group.maxSlider }} widgets</li>
 </ul>
-</b>
-How many widgets (M) would you like to purchase?
+
+How many widgets would you like to purchase?
 </p>
+<br>
     <div class="wrapper">
     <div class="sub-container3">
         <div class="choices-container">
-            <div class="choice" data-value="0">M=0</div>
-            <div class="choice" data-value="1">M=1</div>
-            <div class="choice" data-value="2">M=2</div>
-            <div class="choice" data-value="3">M=3</div>
-            <div class="choice" data-value="4">M=4</div>
-            <div class="choice" data-value="5">M=5</div>
-            <div class="choice" data-value="6">M=6</div>
-            <div class="choice" data-value="7">M=7</div>
-            <div class="choice" data-value="8">M=8</div>
+            <div class="choice" data-value="0">0 widgets</div>
+            <div class="choice" data-value="1">1 widget</div>
+            <div class="choice" data-value="2">2 widgets</div>
+            <div class="choice" data-value="3">3 widgets</div>
+            <div class="choice" data-value="4">4 widgets</div>
+            <div class="choice" data-value="5">5 widgets</div>
+            <div class="choice" data-value="6">6 widgets</div>
+            <div class="choice" data-value="7">7 widgets</div>
+            <div class="choice" data-value="8">8 widgets</div>
         </div>
 
         <!-- Hidden input field to store the selected value -->
@@ -80,7 +56,7 @@ How many widgets (M) would you like to purchase?
             </colgroup>
             <thead>
                 <tr>
-                    <th class="tg-c3ow" rowspan="2">Widgets <br>Purchased, M</th>
+                    <th class="tg-c3ow" rowspan="2">Widgets <br>Purchased</th>
                     <th class="tg-c3ow" rowspan="2">Your Payoff <br> (X=<span id="selectedX">-</span>)</th>
                     <th class="tg-c3ow" rowspan="2">Seller <br> Payoff</th>
                     <th class="tg-c3ow" colspan="6">Buyer Payoff (by ideal quantity X)</th>

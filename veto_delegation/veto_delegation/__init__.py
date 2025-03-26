@@ -45,7 +45,7 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    pass
+    single = models.IntegerField()
 
 
 # FUNCTIONS
@@ -72,6 +72,13 @@ def set_payoffs(group):
 
 
 def creating_session(subsession):
+
+    for player in subsession.get_players():
+        if player.subsession.session.config['take_it_or_leave_it']:
+            player.single = 1
+        else:
+            player.single = 0
+
     # Sets role for 1-5 then reverses for 6-10 and then reverts for 11-15
     if 5 < subsession.round_number < 11:
         subsession.group_randomly(fixed_id_in_group=True)
@@ -107,7 +114,7 @@ def creating_session(subsession):
         if dist == 1:
             group.roundType = 1
             group.vetoer_bias = group.drawLow
-            group.roundName = "lowest"
+            group.roundName = "low"
 
         elif dist == 2:
             group.roundType = 2
@@ -117,7 +124,7 @@ def creating_session(subsession):
         else:
             group.roundType = 3
             group.vetoer_bias = group.drawHigh
-            group.roundName = "highest"
+            group.roundName = "high"
 
 
 # PAGES
@@ -187,8 +194,12 @@ class Proposal(Page):
     def js_vars(player):
         return dict(
             round_type=player.group.roundType,
-            selectedX=player.group.vetoer_bias,
+            selectedX=C.setZero,
+            fromM=1,
+            toM=8,
+            single=player.single
         )
+
 
     @staticmethod
     def vars_for_template(player):

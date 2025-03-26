@@ -26,17 +26,17 @@ toggleRadioButtons();
 // Section to dynamically create the table
 
   // Define your JavaScript dictionary with table values
-  var tableData = {
-    "M=0": ["$4", "$27", "$22", "$17", "$12", "$7", "$4"],
-    "M=1": ["$8", "$30", "$25", "$20", "$15", "$10", "$5"],
-    "M=2": ["$12", "$25", "$30", "$25", "$20", "$15", "$10"],
-    "M=3": ["$16", "$20", "$25", "$30", "$25", "$20", "$15"],
-    "M=4": ["$20", "$15", "$20", "$25", "$30", "$25", "$20"],
-    "M=5": ["$24", "$10", "$15", "$20", "$25", "$30", "$25"],
-    "M=6": ["$28", "$5", "$10", "$15", "$20", "$25", "$30"],
-    "M=7": ["$32", "$4", "$5", "$10", "$15", "$20", "$25"],
-    "M=8": ["$36", "$3", "$4", "$5", "$10", "$15", "$20"]
-  };
+    var tableData = {
+        "0 widgets": ["$4", "$27", "$22", "$17", "$12", "$7", "$4"],
+        "1 widget": ["$8", "$30", "$25", "$20", "$15", "$10", "$5"],
+        "2 widgets": ["$12", "$25", "$30", "$25", "$20", "$15", "$10"],
+        "3 widgets": ["$16", "$20", "$25", "$30", "$25", "$20", "$15"],
+        "4 widgets": ["$20", "$15", "$20", "$25", "$30", "$25", "$20"],
+        "5 widgets": ["$24", "$10", "$15", "$20", "$25", "$30", "$25"],
+        "6 widgets": ["$28", "$5", "$10", "$15", "$20", "$25", "$30"],
+        "7 widgets": ["$32", "$4", "$5", "$10", "$15", "$20", "$25"],
+        "8 widgets": ["$36", "$3", "$4", "$5", "$10", "$15", "$20"]
+    };
 
   // Function to update the Your Payoff column based on selectedX
 function updateYourPayoffColumn(selectedX) {
@@ -488,19 +488,23 @@ function drawTicks(ctx,yTicks,gs,xOff){
 
     // Function to draw an (x,y) point
     yTicks.forEach(tick => {
-        // Draw ytick
+        ctx.save();
         ctx.setLineDash([1, 3]);
-        ctx.strokeStyle = "gray,d";
-        drawLine(ctx,gs["xMin"],tick.y,gs["xMax"],tick.y,gs);
+        ctx.strokeStyle = "gray";
+        drawLine(ctx, gs["xMin"], tick.y, gs["xMax"], tick.y, gs);
+        ctx.restore();
+
+        // Draw labels (no dash or custom stroke bleed-over)
         ctx.fillStyle = "black";
         ctx.font = axisTextSize;
-        ctx.textAlign = "right" ;
-        const txtLoc1=xyTranslate(gs["xMin"],tick.y,gs);
-        const txtLoc2=xyTranslate(gs["xMax"],tick.y,gs);
-        ctx.fillText(tick.yTxt, txtLoc1.cx-xOff/2, txtLoc1.cy);
-        ctx.textAlign = "left" ;
-        ctx.fillText(tick.yTxt, txtLoc2.cx+xOff/2, txtLoc2.cy);
+        ctx.textAlign = "right";
+        const txtLoc1 = xyTranslate(gs["xMin"], tick.y, gs);
+        const txtLoc2 = xyTranslate(gs["xMax"], tick.y, gs);
+        ctx.fillText(tick.yTxt, txtLoc1.cx - xOff / 2, txtLoc1.cy);
+        ctx.textAlign = "left";
+        ctx.fillText(tick.yTxt, txtLoc2.cx + xOff / 2, txtLoc2.cy);
     });
+
 };
 
 function drawProbs(showPlot, points, yticks, redPoint) {
@@ -559,6 +563,7 @@ function drawProbs(showPlot, points, yticks, redPoint) {
             let yArrow = yRange + 0.01;
             if (redPoint == 1) {
                 drawRArrow(ctx, parseInt(redPoint) + 1, yArrow, xRange, yArrow, point.yADJ, xTextoffset, gs);
+                console.log("Point", point.x, "Highlight?", point.x == redPoint);
             } else if (redPoint == 6) {
                 drawLArrow(ctx, parseInt(redPoint) - 1, yArrow, 0.9, yArrow, point.yCDF, xTextoffset, gs);
             } else {
@@ -771,6 +776,7 @@ function updateTableOpacity(from, to) {
 
 
 
+
 function shadeColumnsByYPT(radioX) {
     // Get the corresponding pointsx array
     const selectedPoints = pointsx[radioX];
@@ -894,7 +900,7 @@ if (response === 1) {
     adjustTableColumns("limited"); // Change "limited" dynamically based on the page type
 }
 
-updateTableOpacity(1,8)
+updateTableOpacity(from,to)
 
 const single = js_vars.single;
 
@@ -911,6 +917,8 @@ function updateSliders() {
         fromSlider.style.zIndex = "-1";
 
         toValueDisplay.style.display = "none"; // Hide max value label
+
+        console.log("single")
 
         updateTableOpacity(8, 8);
 

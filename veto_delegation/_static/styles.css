@@ -379,6 +379,25 @@ input[type="range"] {
     margin: 20px auto; /* Center the roll button */
   }
 
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.button-container button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.centered-text {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
 table {
     border-collapse: collapse;
     width: 110%;
@@ -462,3 +481,8 @@ th {
   font-weight: bold;
 }
 
+.urn-text {
+  margin: 3px; /* or whatever space you need */
+}
+
+/*.otree-body { max-width:1400px }*/
