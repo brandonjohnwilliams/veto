@@ -262,6 +262,7 @@ class WaitForP2(WaitPage):
 
 
 class Results(Page):
+    timeout_seconds = 15
     @staticmethod
     def js_vars(player):
 

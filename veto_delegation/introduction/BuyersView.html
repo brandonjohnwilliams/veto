@@ -1,5 +1,5 @@
 {{ block title }}
-    Buyer's View
+    Example: Buyer's Choice
 {{ endblock }}
 
 {{ block content }}
@@ -8,18 +8,13 @@
     </head>
 
     <!-- Text -->
-    <p>
-        The Buyer will see their ideal value along with what the Seller has made available to them. In this example, the Buyer has offered to the range from M=3 to M=8.
-        The Buyer may always walk away and choose M=0 as well.
-    </p>
 
-    <p>You have <b>ideal value X={{selectedX}}</b> which came from the type middle urn.</p>
-
-</div>
+    <p>In this example you, as the Buyer, have <b>ideal value X={{selectedX}}</b> which came from the type middle urn.</p>
 
 
-    <br><br>
 
+
+<div style="display: flex; justify-content: center;">
     <div class="sub-container3">
         <div class="choices-container">
             <div class="choice" data-value="0">0 widgets</div>
@@ -49,7 +44,7 @@
             </colgroup>
             <thead>
                 <tr>
-                    <th class="tg-c3ow" rowspan="2">Widgets <br>Purchased, M</th>
+                    <th class="tg-c3ow" rowspan="2">Widgets <br>Purchased</th>
                     <th class="tg-c3ow" rowspan="2">Your Payoff <br> (X=<span id="selectedX">-</span>)</th>
                     <th class="tg-c3ow" rowspan="2">Seller <br> Payoff</th>
                     <th class="tg-c3ow" colspan="6">Buyer Payoff (by ideal quantity X)</th>
@@ -69,7 +64,7 @@
         </table>
 
     </div>
-
+</div>
     <!-- Include JavaScript file -->
     <script src="{{ static 'veto_delegation/interface.js' }}"></script>
 

@@ -1,0 +1,384 @@
+
+{{ block title }}
+    Examples: Different draws of X
+{{ endblock }}
+
+
+{{ block content }}
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+        <style>
+          .styled-box {
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            width: fit-content;
+            margin: 20px auto;
+            text-align: center;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+          }
+
+          .styled-button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: 1px solid #bbb; /* added border */
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+          }
+
+          .styled-button:hover {
+            background-color: #eaeaea;
+            border-color: #999; /* slightly darker on hover */
+          }
+        </style>
+    </head>
+
+<br>
+    <!-- Change distribution -->
+<div class="styled-box">
+  <p class="centered-text"><b>Select the type of urn to draw from:</b></p>
+  <div class="button-container">
+    <button class="styled-button" onclick="setRadioX(1)" type="button">Low</button>
+    <button class="styled-button" onclick="setRadioX(2)" type="button">Middle</button>
+    <button class="styled-button" onclick="setRadioX(3)" type="button">High</button>
+  </div>
+</div>
+
+
+    <!-- Urn Table -->
+    <table class="tg" style="border-collapse: separate; border-spacing: 0; width: auto; margin: 0 auto;">
+        <colgroup>
+            <col style="width: 251.2px">
+            <col style="width: 251.2px">
+        </colgroup>
+        <thead>
+            <tr>
+                <th class="tg-7fle" style="font-weight: bold; padding: 8px; border: 1px solid #ddd;">Seller Sees</th>
+                <th class="tg-7fle" style="font-weight: bold; padding: 8px; border: 1px solid #ddd;">Buyer Sees</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="tg-baqh" style="padding: 8px; border: 1px solid #ddd;"><canvas id="ballCanvas"></canvas> </td>
+                <td class="tg-baqh" style="padding: 8px; border: 1px solid #ddd;"><canvas id="ballCanvas2"></canvas></td>
+            </tr>
+        </tbody>
+    </table>
+
+<div class="styled-box">
+    <p class="centered-text"><b>Draw a new value of X from this type of urn:</b></p>
+    <div class="button-container">
+        <button onclick="drawSelectedX()" type="button" class="styled-button">Draw X</button>
+    </div>
+</div>
+
+    <!-- JavaScript -->
+    <script>
+// Draw urn rather than dice:
+let radioX = 1; // default value
+
+
+let selectedX=1
+
+function drawLabeledBalls(canvas, ballSpecs) {
+    // Check if canvas exists and supports 2D context
+    if (!canvas || !canvas.getContext) {
+        console.warn("Canvas element not found or unsupported.");
+        return;
+    }
+
+    // Check if ballSpecs is a valid array
+    if (!Array.isArray(ballSpecs) || ballSpecs.length === 0) {
+        console.warn("ballSpecs is missing or not a valid array.");
+        return;
+    }
+
+    const ctx = canvas.getContext("2d");
+    const bw = 20;
+
+    const columns = 5;
+    const rows = 4;
+    const ballCount = ballSpecs.reduce((sum, spec) => sum + spec.count, 0);
+    const maxBalls = columns * rows;
+
+    if (ballCount > maxBalls) {
+        console.warn("Too many balls for the grid layout!");
+        return;
+    }
+
+    const canvasWidth = 350;
+    const canvasHeight = 300;
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+
+    // Draw background
+    ctx.beginPath();
+    ctx.fillStyle = "#C8C9C7";
+    ctx.roundRect(bw, bw, canvasWidth - 2 * bw, canvasHeight - 2 * bw, bw / 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Grid cell size
+    const cW = (canvasWidth - 2 * bw) / columns;
+    const cH = (canvasHeight - 2 * bw) / rows;
+    const radius = Math.min(cW, cH) / 2.5;
+
+    // Generate grid positions
+    const positions = [];
+    for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < columns; x++) {
+            positions.push({ x, y });
+        }
+    }
+
+    let index = 0;
+    ballSpecs.forEach(spec => {
+        for (let i = 0; i < spec.count; i++) {
+            const pos = positions[index++];
+            if (!pos) {
+                console.warn("Ran out of grid positions!");
+                return;
+            }
+
+            const centerX = bw + cW / 2 + pos.x * cW;
+            const centerY = bw + cH / 2 + pos.y * cH;
+
+            // Draw ball
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+            ctx.fillStyle = spec.color || "gray";
+            ctx.fill();
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Label
+            ctx.fillStyle = "black";
+            ctx.font = `${radius}px sans-serif`;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(spec.label ?? "", centerX, centerY);
+        }
+    });
+}
+
+
+
+
+const canvas1 = document.getElementById('ballCanvas');
+
+let ballData;
+
+if (radioX === 3) {
+    ballData = [
+        { count: 1, color: "white", label: "1" },
+        { count: 1, color: "#eaeded", label: "2" },
+        { count: 3, color: "#d5dbdb", label: "3" },
+        { count: 4, color: "#bfc9ca", label: "4" },
+        { count: 5, color: "#aab7b8", label: "5" },
+        { count: 6, color: "#95a5a6", label: "6" }
+    ];
+} else if (radioX === 2) {
+    ballData = [
+        { count: 1, color: "white", label: "1" },
+        { count: 4, color: "#eaeded", label: "2" },
+        { count: 5, color: "#d5dbdb", label: "3" },
+        { count: 5, color: "#bfc9ca", label: "4" },
+        { count: 4, color: "#aab7b8", label: "5" },
+        { count: 1, color: "#95a5a6", label: "6" }
+    ];
+} else {
+    ballData = [
+        { count: 6, color: "white", label: "1" },
+        { count: 5, color: "#eaeded", label: "2" },
+        { count: 4, color: "#d5dbdb", label: "3" },
+        { count: 3, color: "#bfc9ca", label: "4" },
+        { count: 1, color: "#aab7b8", label: "5" },
+        { count: 1, color: "#95a5a6", label: "6" }
+    ];
+}
+
+drawLabeledBalls(canvas1, ballData);
+
+function drawLabeledBallsWithHighlight(canvas, ballSpecs, highlightLabel) {
+    // Safety checks
+    if (!canvas || !canvas.getContext) {
+        console.warn("Canvas element not found or unsupported.");
+        return;
+    }
+    if (!Array.isArray(ballSpecs) || ballSpecs.length === 0) {
+        console.warn("ballSpecs is missing or not a valid array.");
+        return;
+    }
+
+    const ctx = canvas.getContext("2d");
+    const bw = 20;
+
+    const columns = 5;
+    const rows = 4;
+    const ballCount = ballSpecs.reduce((sum, spec) => sum + spec.count, 0);
+    const maxBalls = columns * rows;
+
+    if (ballCount > maxBalls) {
+        console.warn("Too many balls for the grid layout!");
+        return;
+    }
+
+    const canvasWidth = 350;
+    const canvasHeight = 300;
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+
+    // Draw background
+    ctx.beginPath();
+    ctx.fillStyle = "#C8C9C7";
+    ctx.roundRect(bw, bw, canvasWidth - 2 * bw, canvasHeight - 2 * bw, bw / 2);
+    ctx.fill();
+    ctx.stroke();
+
+    const cW = (canvasWidth - 2 * bw) / columns;
+    const cH = (canvasHeight - 2 * bw) / rows;
+    const radius = Math.min(cW, cH) / 2.5;
+
+    // Generate grid positions
+    const positions = [];
+    for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < columns; x++) {
+            positions.push({ x, y });
+        }
+    }
+
+    // Build a flat array of ball instances
+    const flatBalls = [];
+    ballSpecs.forEach(spec => {
+        for (let i = 0; i < spec.count; i++) {
+            flatBalls.push({ label: spec.label, color: spec.color });
+        }
+    });
+
+    // Find all indices matching the highlightLabel
+    const highlightIndices = flatBalls
+        .map((ball, index) => (ball.label === String(highlightLabel) ? index : -1))
+        .filter(index => index !== -1);
+
+
+    // Pick one at random to highlight (if any)
+    let highlightIndex = null;
+    if (highlightIndices.length > 0) {
+        highlightIndex = highlightIndices[Math.floor(Math.random() * highlightIndices.length)];
+    }
+
+    // Draw each ball
+    flatBalls.forEach((ball, index) => {
+        const pos = positions[index];
+        if (!pos) return;
+
+        const centerX = bw + cW / 2 + pos.x * cW;
+        const centerY = bw + cH / 2 + pos.y * cH;
+
+        if (index === highlightIndex) {
+          // Draw glow/shadow behind the selected ball
+          ctx.beginPath();
+          ctx.arc(centerX, centerY, radius + 6, 0, 2 * Math.PI, false);
+          ctx.fillStyle = "rgba(255, 0, 0, 0.2)"; // soft red glow
+          ctx.fill();
+        }
+
+        // Draw main ball
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = ball.color || "gray";
+        ctx.fill();
+
+
+        // Border color: red if this is the highlighted one
+        ctx.strokeStyle = (index === highlightIndex) ? "red" : "black";
+        ctx.lineWidth = (index === highlightIndex) ? 4 : 2;
+        ctx.stroke();
+
+        // Label
+        ctx.fillStyle = "black";
+        ctx.font = `${radius}px sans-serif`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(ball.label ?? "", centerX, centerY);
+    });
+}
+
+const canvas2 = document.getElementById('ballCanvas2');
+
+// Assume ballData is already defined as you showed
+drawLabeledBallsWithHighlight(canvas2, ballData, selectedX);  // randomly highlights one "3" ball
+
+function setRadioX(value) {
+  radioX = value;
+  console.log("radioX set to:", radioX);
+
+  // Update ballData based on selected urn
+  if (radioX === 3) {
+    ballData = [
+      { count: 1, color: "white", label: "1" },
+      { count: 1, color: "#eaeded", label: "2" },
+      { count: 3, color: "#d5dbdb", label: "3" },
+      { count: 4, color: "#bfc9ca", label: "4" },
+      { count: 5, color: "#aab7b8", label: "5" },
+      { count: 6, color: "#95a5a6", label: "6" }
+    ];
+  } else if (radioX === 2) {
+    ballData = [
+      { count: 1, color: "white", label: "1" },
+      { count: 4, color: "#eaeded", label: "2" },
+      { count: 5, color: "#d5dbdb", label: "3" },
+      { count: 5, color: "#bfc9ca", label: "4" },
+      { count: 4, color: "#aab7b8", label: "5" },
+      { count: 1, color: "#95a5a6", label: "6" }
+    ];
+  } else {
+    ballData = [
+      { count: 6, color: "white", label: "1" },
+      { count: 5, color: "#eaeded", label: "2" },
+      { count: 4, color: "#d5dbdb", label: "3" },
+      { count: 3, color: "#bfc9ca", label: "4" },
+      { count: 1, color: "#aab7b8", label: "5" },
+      { count: 1, color: "#95a5a6", label: "6" }
+    ];
+  }
+
+  // Redraw canvases with updated data
+  drawLabeledBallsWithHighlight(canvas2, ballData, selectedX);
+  drawLabeledBalls(canvas1, ballData);
+}
+
+function drawSelectedX() {
+  if (!ballData || ballData.length === 0) {
+    console.warn("ballData is not defined");
+    return;
+  }
+
+  // Build a flat array with repeated labels based on counts
+  const weightedPool = [];
+  ballData.forEach(spec => {
+    for (let i = 0; i < spec.count; i++) {
+      weightedPool.push(parseInt(spec.label));
+    }
+  });
+
+  // Draw one at random
+  const randomIndex = Math.floor(Math.random() * weightedPool.length);
+  const drawnValue = weightedPool[randomIndex];
+  selectedX = drawnValue;
+
+  console.log("New selectedX:", selectedX);
+
+  // Update display and redraw highlight
+  // document.getElementById("selectedXDisplay").textContent = `Selected X: ${selectedX}`;
+  drawLabeledBallsWithHighlight(canvas2, ballData, selectedX);
+}
+
+
+
+    </script>
+{{ endblock }}

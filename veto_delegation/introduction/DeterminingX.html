@@ -1,6 +1,6 @@
 
 {{ block title }}
-    Determining <em>X</em>
+    Determining the Buyers Ideal Quantity
 {{ endblock }}
 
 
@@ -10,375 +10,165 @@
     </head>
 
     <!-- Text -->
-    <p>The Buyer’s ideal quantity X is chosen as follows:</p>
-    <ol>
-        <li> The computer will draw a ball at random from an urn. The draw will determine the Buyer's ideal quantity.
-        </li>
-        <li>The values that can be drawn range from 1 to 6. However, not every number is equally likely.</li>
-        <li> In each round, both the Buyer and the Seller will know which urn the ball is drawn from. There are three types of urns:
-            <ul>
-                <li><b>Low</b> urn, where lower numbers (1s and 2s) are more common</li>
-                <li><b>Middle</b> urn, where middle numbers (3s and 4s) are more common</li>
-                <li><b>High</b> urn, where high numbers (5s and 6s) are more common</li>
+<p>The Buyer’s ideal quantity X is secretly drawn from one of three different urns, and shown to the Buyer but not the Seller. Each of the three urns contains 20 balls labeled 1 to 6, where each ball is equally likely to be selected (a 5 percent chance of each). However, the chances of each value are not equally likely, as the different urns have different compositions.</p>
+The three different types of urn are:
+<ul>
+                <li>A <b>Low (L)</b> urn, where lower numbers (1s and 2s) are more common</li>
+                <li>A <b>Middle (M)</b> urn, where middle numbers (3s and 4s) are more common</li>
+                <li>A <b>High (H)</b> urn, where high numbers (5s and 6s) are more common</li>
             </ul>
-        </li>
-        <li>
-            The Seller then chooses
-            {% if player.single == 0 %}
-                a minimum and maximum quantity
-            {% else %}
-                a quantity
-            {% endif %}
-            to offer to the Buyer.
-        </li>
-        <li>
-            The Buyer then makes a quantity choice M, either walking away (purchasing M=0 widgets), or choosing to purchase
-            {% if player.single == 0 %}
-                any amount between the seller’s chosen minimum and maximum.
-            {% else %}
-                the seller’s chosen quantity.
-            {% endif %}
-        </li>
-        <li>Payoffs for the round are determined according to the table for the given quantity choice M and the ideal quantity X.</li>
-    </ol>
 
-    <p>You can play with this here. You can change the type of urn to draw from (therefore changing the likelihood of different values of X), and you can have the computer draw a new value of X depending on the distribution. </p>
-
-    <!-- Change distribution -->
-    <p class="centered-text"><b>Select the type of urn to draw from:</b></p>
-<div class="button-container">
-  <button onclick="setRadioX(1)" type="button">Low</button>
-  <button onclick="setRadioX(2)" type="button">Middle</button>
-  <button onclick="setRadioX(3)" type="button">High</button>
-</div>
-<br><br>
-    <!-- Urn Table -->
-    <table class="tg" style="border-collapse: separate; border-spacing: 0; width: auto; margin: 0 auto;">
+<div style="display: flex; justify-content: center;">
+    <table class="tg" style="undefined;table-layout: fixed; width: 800px">
         <colgroup>
-            <col style="width: 251.2px">
-            <col style="width: 251.2px">
+            <col style="width: 300.2px">
+            <col style="width: 300.2px">
+            <col style="width: 300.2px">
         </colgroup>
         <thead>
             <tr>
-                <th class="tg-7fle" style="font-weight: bold; padding: 8px; border: 1px solid #ddd;">Seller Sees</th>
-                <th class="tg-7fle" style="font-weight: bold; padding: 8px; border: 1px solid #ddd;">Buyer Sees</th>
+                <th class="tg-7fle">Low</th>
+                <th class="tg-7fle">Middle<br></th>
+                <th class="tg-7fle">High</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td class="tg-baqh" style="padding: 8px; border: 1px solid #ddd;"><canvas id="ballCanvas"></canvas> </td>
-                <td class="tg-baqh" style="padding: 8px; border: 1px solid #ddd;"><canvas id="ballCanvas2"></canvas></td>
+                <td class="tg-c3ow" ><canvas id="ballCanvas-low" style="border: none"></canvas></td>
+                <td class="tg-c3ow" ><canvas id="ballCanvas-middle" style="border: none"></canvas></td>
+                <td class="tg-c3ow" ><canvas id="ballCanvas-high" style="border: none"></canvas></td>
             </tr>
         </tbody>
     </table>
-<p class="centered-text"><b>Draw a new value of X from this type of urn:</b></p>
-<div class="button-container">
-    <button onclick="drawSelectedX()" type="button">Draw X</button>
 </div>
-
 
     <!-- JavaScript -->
     <script>
-// Draw urn rather than dice:
-let radioX = 1; // default value
-
-
-let selectedX=1
-
-function drawLabeledBalls(canvas, ballSpecs) {
-    // Check if canvas exists and supports 2D context
-    if (!canvas || !canvas.getContext) {
-        console.warn("Canvas element not found or unsupported.");
-        return;
-    }
-
-    // Check if ballSpecs is a valid array
-    if (!Array.isArray(ballSpecs) || ballSpecs.length === 0) {
-        console.warn("ballSpecs is missing or not a valid array.");
-        return;
-    }
-
-    const ctx = canvas.getContext("2d");
-    const bw = 20;
-
-    const columns = 5;
-    const rows = 4;
-    const ballCount = ballSpecs.reduce((sum, spec) => sum + spec.count, 0);
-    const maxBalls = columns * rows;
-
-    if (ballCount > maxBalls) {
-        console.warn("Too many balls for the grid layout!");
-        return;
-    }
-
-    const canvasWidth = 350;
-    const canvasHeight = 300;
-    canvas.width = canvasWidth;
-    canvas.height = canvasHeight;
-
-    // Draw background
-    ctx.beginPath();
-    ctx.fillStyle = "#C8C9C7";
-    ctx.roundRect(bw, bw, canvasWidth - 2 * bw, canvasHeight - 2 * bw, bw / 2);
-    ctx.fill();
-    ctx.stroke();
-
-    // Grid cell size
-    const cW = (canvasWidth - 2 * bw) / columns;
-    const cH = (canvasHeight - 2 * bw) / rows;
-    const radius = Math.min(cW, cH) / 2.5;
-
-    // Generate grid positions
-    const positions = [];
-    for (let y = 0; y < rows; y++) {
-        for (let x = 0; x < columns; x++) {
-            positions.push({ x, y });
-        }
-    }
-
-    let index = 0;
-    ballSpecs.forEach(spec => {
-        for (let i = 0; i < spec.count; i++) {
-            const pos = positions[index++];
-            if (!pos) {
-                console.warn("Ran out of grid positions!");
+        function drawLabeledBalls(canvas, ballSpecs) {
+            // Check if canvas exists and supports 2D context
+            if (!canvas || !canvas.getContext) {
+                console.warn("Canvas element not found or unsupported.");
                 return;
             }
 
-            const centerX = bw + cW / 2 + pos.x * cW;
-            const centerY = bw + cH / 2 + pos.y * cH;
+            // Check if ballSpecs is a valid array
+            if (!Array.isArray(ballSpecs) || ballSpecs.length === 0) {
+                console.warn("ballSpecs is missing or not a valid array.");
+                return;
+            }
 
-            // Draw ball
+            const ctx = canvas.getContext("2d");
+            const bw = 20;
+
+            const columns = 5;
+            const rows = 4;
+            const ballCount = ballSpecs.reduce((sum, spec) => sum + spec.count, 0);
+            const maxBalls = columns * rows;
+
+            if (ballCount > maxBalls) {
+                console.warn("Too many balls for the grid layout!");
+                return;
+            }
+
+            const canvasWidth = 275;
+            const canvasHeight = 225;
+            canvas.width = canvasWidth;
+            canvas.height = canvasHeight;
+
+            // Draw background
             ctx.beginPath();
-            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-            ctx.fillStyle = spec.color || "gray";
+            ctx.fillStyle = "#C8C9C7";
+            ctx.roundRect(bw, bw, canvasWidth - 2 * bw, canvasHeight - 2 * bw, bw / 2);
             ctx.fill();
-            ctx.strokeStyle = "black";
-            ctx.lineWidth = 2;
             ctx.stroke();
 
-            // Label
-            ctx.fillStyle = "black";
-            ctx.font = `${radius}px sans-serif`;
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.fillText(spec.label ?? "", centerX, centerY);
-        }
-    });
-}
+            // Grid cell size
+            const cW = (canvasWidth - 2 * bw) / columns;
+            const cH = (canvasHeight - 2 * bw) / rows;
+            const radius = Math.min(cW, cH) / 2.5;
 
+            // Generate grid positions
+            const positions = [];
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < columns; x++) {
+                    positions.push({ x, y });
+                }
+            }
 
+            let index = 0;
+            ballSpecs.forEach(spec => {
+                for (let i = 0; i < spec.count; i++) {
+                    const pos = positions[index++];
+                    if (!pos) {
+                        console.warn("Ran out of grid positions!");
+                        return;
+                    }
 
+                    const centerX = bw + cW / 2 + pos.x * cW;
+                    const centerY = bw + cH / 2 + pos.y * cH;
 
-const canvas1 = document.getElementById('ballCanvas');
+                    // Draw ball
+                    ctx.beginPath();
+                    ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+                    ctx.fillStyle = spec.color || "gray";
+                    ctx.fill();
+                    ctx.strokeStyle = "black";
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
 
-let ballData;
-
-if (radioX === 3) {
-    ballData = [
-        { count: 1, color: "white", label: "1" },
-        { count: 1, color: "#eaeded", label: "2" },
-        { count: 3, color: "#d5dbdb", label: "3" },
-        { count: 4, color: "#bfc9ca", label: "4" },
-        { count: 5, color: "#aab7b8", label: "5" },
-        { count: 6, color: "#95a5a6", label: "6" }
-    ];
-} else if (radioX === 2) {
-    ballData = [
-        { count: 1, color: "white", label: "1" },
-        { count: 4, color: "#eaeded", label: "2" },
-        { count: 5, color: "#d5dbdb", label: "3" },
-        { count: 5, color: "#bfc9ca", label: "4" },
-        { count: 4, color: "#aab7b8", label: "5" },
-        { count: 1, color: "#95a5a6", label: "6" }
-    ];
-} else {
-    ballData = [
-        { count: 6, color: "white", label: "1" },
-        { count: 5, color: "#eaeded", label: "2" },
-        { count: 4, color: "#d5dbdb", label: "3" },
-        { count: 3, color: "#bfc9ca", label: "4" },
-        { count: 1, color: "#aab7b8", label: "5" },
-        { count: 1, color: "#95a5a6", label: "6" }
-    ];
-}
-
-drawLabeledBalls(canvas1, ballData);
-
-function drawLabeledBallsWithHighlight(canvas, ballSpecs, highlightLabel) {
-    // Safety checks
-    if (!canvas || !canvas.getContext) {
-        console.warn("Canvas element not found or unsupported.");
-        return;
-    }
-    if (!Array.isArray(ballSpecs) || ballSpecs.length === 0) {
-        console.warn("ballSpecs is missing or not a valid array.");
-        return;
-    }
-
-    const ctx = canvas.getContext("2d");
-    const bw = 20;
-
-    const columns = 5;
-    const rows = 4;
-    const ballCount = ballSpecs.reduce((sum, spec) => sum + spec.count, 0);
-    const maxBalls = columns * rows;
-
-    if (ballCount > maxBalls) {
-        console.warn("Too many balls for the grid layout!");
-        return;
-    }
-
-    const canvasWidth = 350;
-    const canvasHeight = 300;
-    canvas.width = canvasWidth;
-    canvas.height = canvasHeight;
-
-    // Draw background
-    ctx.beginPath();
-    ctx.fillStyle = "#C8C9C7";
-    ctx.roundRect(bw, bw, canvasWidth - 2 * bw, canvasHeight - 2 * bw, bw / 2);
-    ctx.fill();
-    ctx.stroke();
-
-    const cW = (canvasWidth - 2 * bw) / columns;
-    const cH = (canvasHeight - 2 * bw) / rows;
-    const radius = Math.min(cW, cH) / 2.5;
-
-    // Generate grid positions
-    const positions = [];
-    for (let y = 0; y < rows; y++) {
-        for (let x = 0; x < columns; x++) {
-            positions.push({ x, y });
-        }
-    }
-
-    // Build a flat array of ball instances
-    const flatBalls = [];
-    ballSpecs.forEach(spec => {
-        for (let i = 0; i < spec.count; i++) {
-            flatBalls.push({ label: spec.label, color: spec.color });
-        }
-    });
-
-    // Find all indices matching the highlightLabel
-    const highlightIndices = flatBalls
-        .map((ball, index) => (ball.label === String(highlightLabel) ? index : -1))
-        .filter(index => index !== -1);
-
-
-    // Pick one at random to highlight (if any)
-    let highlightIndex = null;
-    if (highlightIndices.length > 0) {
-        highlightIndex = highlightIndices[Math.floor(Math.random() * highlightIndices.length)];
-    }
-
-    // Draw each ball
-    flatBalls.forEach((ball, index) => {
-        const pos = positions[index];
-        if (!pos) return;
-
-        const centerX = bw + cW / 2 + pos.x * cW;
-        const centerY = bw + cH / 2 + pos.y * cH;
-
-        if (index === highlightIndex) {
-          // Draw glow/shadow behind the selected ball
-          ctx.beginPath();
-          ctx.arc(centerX, centerY, radius + 6, 0, 2 * Math.PI, false);
-          ctx.fillStyle = "rgba(255, 0, 0, 0.2)"; // soft red glow
-          ctx.fill();
+                    // Label
+                    ctx.fillStyle = "black";
+                    ctx.font = `${radius}px sans-serif`;
+                    ctx.textAlign = "center";
+                    ctx.textBaseline = "middle";
+                    ctx.fillText(spec.label ?? "", centerX, centerY);
+                }
+            });
         }
 
-        // Draw main ball
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-        ctx.fillStyle = ball.color || "gray";
-        ctx.fill();
 
+        function getBallDataForUrn(radioX) {
+          if (radioX === 3) {
+            return [
+              { count: 1, color: "white", label: "1" },
+              { count: 1, color: "#eaeded", label: "2" },
+              { count: 3, color: "#d5dbdb", label: "3" },
+              { count: 4, color: "#bfc9ca", label: "4" },
+              { count: 5, color: "#aab7b8", label: "5" },
+              { count: 6, color: "#95a5a6", label: "6" }
+            ];
+          } else if (radioX === 2) {
+            return [
+              { count: 1, color: "white", label: "1" },
+              { count: 4, color: "#eaeded", label: "2" },
+              { count: 5, color: "#d5dbdb", label: "3" },
+              { count: 5, color: "#bfc9ca", label: "4" },
+              { count: 4, color: "#aab7b8", label: "5" },
+              { count: 1, color: "#95a5a6", label: "6" }
+            ];
+          } else {
+            return [
+              { count: 6, color: "white", label: "1" },
+              { count: 5, color: "#eaeded", label: "2" },
+              { count: 4, color: "#d5dbdb", label: "3" },
+              { count: 3, color: "#bfc9ca", label: "4" },
+              { count: 1, color: "#aab7b8", label: "5" },
+              { count: 1, color: "#95a5a6", label: "6" }
+            ];
+          }
+        }
 
-        // Border color: red if this is the highlighted one
-        ctx.strokeStyle = (index === highlightIndex) ? "red" : "black";
-        ctx.lineWidth = (index === highlightIndex) ? 4 : 2;
-        ctx.stroke();
+        const canvasLow = document.getElementById('ballCanvas-low');
+        const ballDataLow = getBallDataForUrn(1);
+        drawLabeledBalls(canvasLow, ballDataLow);
 
-        // Label
-        ctx.fillStyle = "black";
-        ctx.font = `${radius}px sans-serif`;
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillText(ball.label ?? "", centerX, centerY);
-    });
-}
+        const canvasMiddle = document.getElementById('ballCanvas-middle');
+        const ballDataMiddle = getBallDataForUrn(2);
+        drawLabeledBalls(canvasMiddle, ballDataMiddle);
 
-const canvas2 = document.getElementById('ballCanvas2');
-
-// Assume ballData is already defined as you showed
-drawLabeledBallsWithHighlight(canvas2, ballData, selectedX);  // randomly highlights one "3" ball
-
-function setRadioX(value) {
-  radioX = value;
-  console.log("radioX set to:", radioX);
-
-  // Update ballData based on selected urn
-  if (radioX === 3) {
-    ballData = [
-      { count: 1, color: "white", label: "1" },
-      { count: 1, color: "#eaeded", label: "2" },
-      { count: 3, color: "#d5dbdb", label: "3" },
-      { count: 4, color: "#bfc9ca", label: "4" },
-      { count: 5, color: "#aab7b8", label: "5" },
-      { count: 6, color: "#95a5a6", label: "6" }
-    ];
-  } else if (radioX === 2) {
-    ballData = [
-      { count: 1, color: "white", label: "1" },
-      { count: 4, color: "#eaeded", label: "2" },
-      { count: 5, color: "#d5dbdb", label: "3" },
-      { count: 5, color: "#bfc9ca", label: "4" },
-      { count: 4, color: "#aab7b8", label: "5" },
-      { count: 1, color: "#95a5a6", label: "6" }
-    ];
-  } else {
-    ballData = [
-      { count: 6, color: "white", label: "1" },
-      { count: 5, color: "#eaeded", label: "2" },
-      { count: 4, color: "#d5dbdb", label: "3" },
-      { count: 3, color: "#bfc9ca", label: "4" },
-      { count: 1, color: "#aab7b8", label: "5" },
-      { count: 1, color: "#95a5a6", label: "6" }
-    ];
-  }
-
-  // Redraw canvases with updated data
-  drawLabeledBallsWithHighlight(canvas2, ballData, selectedX);
-  drawLabeledBalls(canvas1, ballData);
-}
-
-function drawSelectedX() {
-  if (!ballData || ballData.length === 0) {
-    console.warn("ballData is not defined");
-    return;
-  }
-
-  // Build a flat array with repeated labels based on counts
-  const weightedPool = [];
-  ballData.forEach(spec => {
-    for (let i = 0; i < spec.count; i++) {
-      weightedPool.push(parseInt(spec.label));
-    }
-  });
-
-  // Draw one at random
-  const randomIndex = Math.floor(Math.random() * weightedPool.length);
-  const drawnValue = weightedPool[randomIndex];
-  selectedX = drawnValue;
-
-  console.log("New selectedX:", selectedX);
-
-  // Update display and redraw highlight
-  // document.getElementById("selectedXDisplay").textContent = `Selected X: ${selectedX}`;
-  drawLabeledBallsWithHighlight(canvas2, ballData, selectedX);
-}
+        const canvasHigh = document.getElementById('ballCanvas-high');
+        const ballDataHigh = getBallDataForUrn(3);
+        drawLabeledBalls(canvasHigh, ballDataHigh);
 
 
 

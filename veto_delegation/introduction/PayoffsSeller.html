@@ -7,7 +7,16 @@
   <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
 </head>
 
-<p>To incentivize your choices, the amount you can earn are determined by the decisions of both the Buyer and the Seller, as given in the table below (also printed out at your desks):</p>
+<p>The payoffs in a round for both the Buyer and Seller are directly related to the number of widgets purchased:</p>
+<ul>
+<li>
+    For Buyers the round payoff depends on how close the purchased quantity is to their ideal value X, drawn at random from an urn. Buyers’ maximum payoffs are $30 if they exactly purchase their ideal number of widgets, where this payoff falls the further the purchased quantity is from their ideal.
+      </li>
+      <li>Sellers round payoffs are larger the more widgets are purchased, where they make $8 plus $4 per widget purchased.</li>
+</ul>
+
+<p>Below we provide a table indicating the round payoffs for the Seller and Buyer for each possible combination of widgets purchased (the rows of the table) and Buyer ideal quantity  X (the columns).</p>
+
 <!-- Payoffs Table -->
 <table class="tg" id="payoffTable">
   <colgroup>
@@ -46,14 +55,6 @@
 <!-- Text -->
 <br>
 
-<ul>
-  <li>Sellers always make $4 plus $4 per widget sold to the Buyer. So the amount a buyer can earn increases with the number of widgets they sell.</li>
-  <li>
-    Buyers have an ideal quantity of widgets that they wish to purchase, X, determined by a six-sided die roll. The buyer’s payoff is determined by how far away M is from the ideal quantity X.
-  </li>
-      <li>Buyers earn $30 if they purchase their ideal amount (M=X), but lose $5 for each widget purchased above or below their ideal quantity (with the additional loss falling to $1 once below $5).</li>
-
-</ul>
 
 
 
