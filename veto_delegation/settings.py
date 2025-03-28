@@ -7,8 +7,10 @@ SESSION_CONFIGS = [
          app_sequence=[
              # 'introduction',
              # 'veto_delegation',
-             'robot',
+             # 'robot',
+             'lotteries',
          ],
+
          num_demo_participants=2,
          take_it_or_leave_it=False,
          chat=False,

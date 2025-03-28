@@ -1,0 +1,6142 @@
+{
+    "8": {
+        "subjectAssignment": {
+            "7": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "4": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "1": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "2": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "3": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "8": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "5": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "6": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            }
+        },
+        "PeriodMatching": {
+            "1": [
+                {
+                    "proposer": 7,
+                    "responder": 8
+                },
+                {
+                    "proposer": 1,
+                    "responder": 5
+                },
+                {
+                    "proposer": 4,
+                    "responder": 3
+                },
+                {
+                    "proposer": 2,
+                    "responder": 6
+                }
+            ],
+            "2": [
+                {
+                    "proposer": 7,
+                    "responder": 6
+                },
+                {
+                    "proposer": 1,
+                    "responder": 8
+                },
+                {
+                    "proposer": 4,
+                    "responder": 5
+                },
+                {
+                    "proposer": 2,
+                    "responder": 3
+                }
+            ],
+            "3": [
+                {
+                    "proposer": 7,
+                    "responder": 3
+                },
+                {
+                    "proposer": 1,
+                    "responder": 6
+                },
+                {
+                    "proposer": 4,
+                    "responder": 8
+                },
+                {
+                    "proposer": 2,
+                    "responder": 5
+                }
+            ],
+            "4": [
+                {
+                    "proposer": 7,
+                    "responder": 5
+                },
+                {
+                    "proposer": 1,
+                    "responder": 3
+                },
+                {
+                    "proposer": 4,
+                    "responder": 6
+                },
+                {
+                    "proposer": 2,
+                    "responder": 8
+                }
+            ],
+            "5": [
+                {
+                    "proposer": 7,
+                    "responder": 8
+                },
+                {
+                    "proposer": 1,
+                    "responder": 5
+                },
+                {
+                    "proposer": 4,
+                    "responder": 3
+                },
+                {
+                    "proposer": 2,
+                    "responder": 6
+                }
+            ],
+            "6": [
+                {
+                    "proposer": 3,
+                    "responder": 1
+                },
+                {
+                    "proposer": 8,
+                    "responder": 2
+                },
+                {
+                    "proposer": 5,
+                    "responder": 7
+                },
+                {
+                    "proposer": 6,
+                    "responder": 4
+                }
+            ],
+            "7": [
+                {
+                    "proposer": 3,
+                    "responder": 4
+                },
+                {
+                    "proposer": 8,
+                    "responder": 1
+                },
+                {
+                    "proposer": 5,
+                    "responder": 2
+                },
+                {
+                    "proposer": 6,
+                    "responder": 7
+                }
+            ],
+            "8": [
+                {
+                    "proposer": 3,
+                    "responder": 7
+                },
+                {
+                    "proposer": 8,
+                    "responder": 4
+                },
+                {
+                    "proposer": 5,
+                    "responder": 1
+                },
+                {
+                    "proposer": 6,
+                    "responder": 2
+                }
+            ],
+            "9": [
+                {
+                    "proposer": 3,
+                    "responder": 2
+                },
+                {
+                    "proposer": 8,
+                    "responder": 7
+                },
+                {
+                    "proposer": 5,
+                    "responder": 4
+                },
+                {
+                    "proposer": 6,
+                    "responder": 1
+                }
+            ],
+            "10": [
+                {
+                    "proposer": 3,
+                    "responder": 1
+                },
+                {
+                    "proposer": 8,
+                    "responder": 2
+                },
+                {
+                    "proposer": 5,
+                    "responder": 7
+                },
+                {
+                    "proposer": 6,
+                    "responder": 4
+                }
+            ],
+            "11": [
+                {
+                    "proposer": 1,
+                    "responder": 3
+                },
+                {
+                    "proposer": 4,
+                    "responder": 8
+                },
+                {
+                    "proposer": 2,
+                    "responder": 5
+                },
+                {
+                    "proposer": 7,
+                    "responder": 6
+                }
+            ],
+            "12": [
+                {
+                    "proposer": 1,
+                    "responder": 6
+                },
+                {
+                    "proposer": 4,
+                    "responder": 3
+                },
+                {
+                    "proposer": 2,
+                    "responder": 8
+                },
+                {
+                    "proposer": 7,
+                    "responder": 5
+                }
+            ],
+            "13": [
+                {
+                    "proposer": 1,
+                    "responder": 5
+                },
+                {
+                    "proposer": 4,
+                    "responder": 6
+                },
+                {
+                    "proposer": 2,
+                    "responder": 3
+                },
+                {
+                    "proposer": 7,
+                    "responder": 8
+                }
+            ],
+            "14": [
+                {
+                    "proposer": 1,
+                    "responder": 8
+                },
+                {
+                    "proposer": 4,
+                    "responder": 5
+                },
+                {
+                    "proposer": 2,
+                    "responder": 6
+                },
+                {
+                    "proposer": 7,
+                    "responder": 3
+                }
+            ],
+            "15": [
+                {
+                    "proposer": 1,
+                    "responder": 3
+                },
+                {
+                    "proposer": 4,
+                    "responder": 8
+                },
+                {
+                    "proposer": 2,
+                    "responder": 5
+                },
+                {
+                    "proposer": 7,
+                    "responder": 6
+                }
+            ]
+        }
+    },
+    "10": {
+        "subjectAssignment": {
+            "6": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "3": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "10": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "2": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "4": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "8": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "7": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "1": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "9": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "5": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            }
+        },
+        "PeriodMatching": {
+            "1": [
+                {
+                    "proposer": 4,
+                    "responder": 5
+                },
+                {
+                    "proposer": 3,
+                    "responder": 1
+                },
+                {
+                    "proposer": 6,
+                    "responder": 9
+                },
+                {
+                    "proposer": 10,
+                    "responder": 7
+                },
+                {
+                    "proposer": 2,
+                    "responder": 8
+                }
+            ],
+            "2": [
+                {
+                    "proposer": 4,
+                    "responder": 8
+                },
+                {
+                    "proposer": 3,
+                    "responder": 5
+                },
+                {
+                    "proposer": 6,
+                    "responder": 1
+                },
+                {
+                    "proposer": 10,
+                    "responder": 9
+                },
+                {
+                    "proposer": 2,
+                    "responder": 7
+                }
+            ],
+            "3": [
+                {
+                    "proposer": 4,
+                    "responder": 7
+                },
+                {
+                    "proposer": 3,
+                    "responder": 8
+                },
+                {
+                    "proposer": 6,
+                    "responder": 5
+                },
+                {
+                    "proposer": 10,
+                    "responder": 1
+                },
+                {
+                    "proposer": 2,
+                    "responder": 9
+                }
+            ],
+            "4": [
+                {
+                    "proposer": 4,
+                    "responder": 9
+                },
+                {
+                    "proposer": 3,
+                    "responder": 7
+                },
+                {
+                    "proposer": 6,
+                    "responder": 8
+                },
+                {
+                    "proposer": 10,
+                    "responder": 5
+                },
+                {
+                    "proposer": 2,
+                    "responder": 1
+                }
+            ],
+            "5": [
+                {
+                    "proposer": 4,
+                    "responder": 1
+                },
+                {
+                    "proposer": 3,
+                    "responder": 9
+                },
+                {
+                    "proposer": 6,
+                    "responder": 7
+                },
+                {
+                    "proposer": 10,
+                    "responder": 8
+                },
+                {
+                    "proposer": 2,
+                    "responder": 5
+                }
+            ],
+            "6": [
+                {
+                    "proposer": 5,
+                    "responder": 3
+                },
+                {
+                    "proposer": 7,
+                    "responder": 6
+                },
+                {
+                    "proposer": 1,
+                    "responder": 2
+                },
+                {
+                    "proposer": 9,
+                    "responder": 10
+                },
+                {
+                    "proposer": 8,
+                    "responder": 4
+                }
+            ],
+            "7": [
+                {
+                    "proposer": 5,
+                    "responder": 4
+                },
+                {
+                    "proposer": 7,
+                    "responder": 3
+                },
+                {
+                    "proposer": 1,
+                    "responder": 6
+                },
+                {
+                    "proposer": 9,
+                    "responder": 2
+                },
+                {
+                    "proposer": 8,
+                    "responder": 10
+                }
+            ],
+            "8": [
+                {
+                    "proposer": 5,
+                    "responder": 10
+                },
+                {
+                    "proposer": 7,
+                    "responder": 4
+                },
+                {
+                    "proposer": 1,
+                    "responder": 3
+                },
+                {
+                    "proposer": 9,
+                    "responder": 6
+                },
+                {
+                    "proposer": 8,
+                    "responder": 2
+                }
+            ],
+            "9": [
+                {
+                    "proposer": 5,
+                    "responder": 2
+                },
+                {
+                    "proposer": 7,
+                    "responder": 10
+                },
+                {
+                    "proposer": 1,
+                    "responder": 4
+                },
+                {
+                    "proposer": 9,
+                    "responder": 3
+                },
+                {
+                    "proposer": 8,
+                    "responder": 6
+                }
+            ],
+            "10": [
+                {
+                    "proposer": 5,
+                    "responder": 6
+                },
+                {
+                    "proposer": 7,
+                    "responder": 2
+                },
+                {
+                    "proposer": 1,
+                    "responder": 10
+                },
+                {
+                    "proposer": 9,
+                    "responder": 4
+                },
+                {
+                    "proposer": 8,
+                    "responder": 3
+                }
+            ],
+            "11": [
+                {
+                    "proposer": 2,
+                    "responder": 7
+                },
+                {
+                    "proposer": 10,
+                    "responder": 9
+                },
+                {
+                    "proposer": 4,
+                    "responder": 8
+                },
+                {
+                    "proposer": 6,
+                    "responder": 5
+                },
+                {
+                    "proposer": 3,
+                    "responder": 1
+                }
+            ],
+            "12": [
+                {
+                    "proposer": 2,
+                    "responder": 1
+                },
+                {
+                    "proposer": 10,
+                    "responder": 7
+                },
+                {
+                    "proposer": 4,
+                    "responder": 9
+                },
+                {
+                    "proposer": 6,
+                    "responder": 8
+                },
+                {
+                    "proposer": 3,
+                    "responder": 5
+                }
+            ],
+            "13": [
+                {
+                    "proposer": 2,
+                    "responder": 5
+                },
+                {
+                    "proposer": 10,
+                    "responder": 1
+                },
+                {
+                    "proposer": 4,
+                    "responder": 7
+                },
+                {
+                    "proposer": 6,
+                    "responder": 9
+                },
+                {
+                    "proposer": 3,
+                    "responder": 8
+                }
+            ],
+            "14": [
+                {
+                    "proposer": 2,
+                    "responder": 8
+                },
+                {
+                    "proposer": 10,
+                    "responder": 5
+                },
+                {
+                    "proposer": 4,
+                    "responder": 1
+                },
+                {
+                    "proposer": 6,
+                    "responder": 7
+                },
+                {
+                    "proposer": 3,
+                    "responder": 9
+                }
+            ],
+            "15": [
+                {
+                    "proposer": 2,
+                    "responder": 9
+                },
+                {
+                    "proposer": 10,
+                    "responder": 8
+                },
+                {
+                    "proposer": 4,
+                    "responder": 5
+                },
+                {
+                    "proposer": 6,
+                    "responder": 1
+                },
+                {
+                    "proposer": 3,
+                    "responder": 7
+                }
+            ]
+        }
+    },
+    "12": {
+        "subjectAssignment": {
+            "6": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "4": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "5": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "3": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "2": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "12": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "8": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "1": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "11": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "7": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "9": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "10": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            }
+        },
+        "PeriodMatching": {
+            "1": [
+                {
+                    "proposer": 6,
+                    "responder": 8
+                },
+                {
+                    "proposer": 5,
+                    "responder": 10
+                },
+                {
+                    "proposer": 3,
+                    "responder": 9
+                },
+                {
+                    "proposer": 12,
+                    "responder": 11
+                },
+                {
+                    "proposer": 2,
+                    "responder": 7
+                },
+                {
+                    "proposer": 4,
+                    "responder": 1
+                }
+            ],
+            "2": [
+                {
+                    "proposer": 6,
+                    "responder": 1
+                },
+                {
+                    "proposer": 5,
+                    "responder": 8
+                },
+                {
+                    "proposer": 3,
+                    "responder": 10
+                },
+                {
+                    "proposer": 12,
+                    "responder": 9
+                },
+                {
+                    "proposer": 2,
+                    "responder": 11
+                },
+                {
+                    "proposer": 4,
+                    "responder": 7
+                }
+            ],
+            "3": [
+                {
+                    "proposer": 6,
+                    "responder": 7
+                },
+                {
+                    "proposer": 5,
+                    "responder": 1
+                },
+                {
+                    "proposer": 3,
+                    "responder": 8
+                },
+                {
+                    "proposer": 12,
+                    "responder": 10
+                },
+                {
+                    "proposer": 2,
+                    "responder": 9
+                },
+                {
+                    "proposer": 4,
+                    "responder": 11
+                }
+            ],
+            "4": [
+                {
+                    "proposer": 6,
+                    "responder": 11
+                },
+                {
+                    "proposer": 5,
+                    "responder": 7
+                },
+                {
+                    "proposer": 3,
+                    "responder": 1
+                },
+                {
+                    "proposer": 12,
+                    "responder": 8
+                },
+                {
+                    "proposer": 2,
+                    "responder": 10
+                },
+                {
+                    "proposer": 4,
+                    "responder": 9
+                }
+            ],
+            "5": [
+                {
+                    "proposer": 6,
+                    "responder": 9
+                },
+                {
+                    "proposer": 5,
+                    "responder": 11
+                },
+                {
+                    "proposer": 3,
+                    "responder": 7
+                },
+                {
+                    "proposer": 12,
+                    "responder": 1
+                },
+                {
+                    "proposer": 2,
+                    "responder": 8
+                },
+                {
+                    "proposer": 4,
+                    "responder": 10
+                }
+            ],
+            "6": [
+                {
+                    "proposer": 8,
+                    "responder": 12
+                },
+                {
+                    "proposer": 1,
+                    "responder": 2
+                },
+                {
+                    "proposer": 11,
+                    "responder": 4
+                },
+                {
+                    "proposer": 7,
+                    "responder": 5
+                },
+                {
+                    "proposer": 10,
+                    "responder": 6
+                },
+                {
+                    "proposer": 9,
+                    "responder": 3
+                }
+            ],
+            "7": [
+                {
+                    "proposer": 8,
+                    "responder": 3
+                },
+                {
+                    "proposer": 1,
+                    "responder": 12
+                },
+                {
+                    "proposer": 11,
+                    "responder": 2
+                },
+                {
+                    "proposer": 7,
+                    "responder": 4
+                },
+                {
+                    "proposer": 10,
+                    "responder": 5
+                },
+                {
+                    "proposer": 9,
+                    "responder": 6
+                }
+            ],
+            "8": [
+                {
+                    "proposer": 8,
+                    "responder": 6
+                },
+                {
+                    "proposer": 1,
+                    "responder": 3
+                },
+                {
+                    "proposer": 11,
+                    "responder": 12
+                },
+                {
+                    "proposer": 7,
+                    "responder": 2
+                },
+                {
+                    "proposer": 10,
+                    "responder": 4
+                },
+                {
+                    "proposer": 9,
+                    "responder": 5
+                }
+            ],
+            "9": [
+                {
+                    "proposer": 8,
+                    "responder": 5
+                },
+                {
+                    "proposer": 1,
+                    "responder": 6
+                },
+                {
+                    "proposer": 11,
+                    "responder": 3
+                },
+                {
+                    "proposer": 7,
+                    "responder": 12
+                },
+                {
+                    "proposer": 10,
+                    "responder": 2
+                },
+                {
+                    "proposer": 9,
+                    "responder": 4
+                }
+            ],
+            "10": [
+                {
+                    "proposer": 8,
+                    "responder": 4
+                },
+                {
+                    "proposer": 1,
+                    "responder": 5
+                },
+                {
+                    "proposer": 11,
+                    "responder": 6
+                },
+                {
+                    "proposer": 7,
+                    "responder": 3
+                },
+                {
+                    "proposer": 10,
+                    "responder": 12
+                },
+                {
+                    "proposer": 9,
+                    "responder": 2
+                }
+            ],
+            "11": [
+                {
+                    "proposer": 4,
+                    "responder": 1
+                },
+                {
+                    "proposer": 6,
+                    "responder": 8
+                },
+                {
+                    "proposer": 12,
+                    "responder": 10
+                },
+                {
+                    "proposer": 5,
+                    "responder": 11
+                },
+                {
+                    "proposer": 2,
+                    "responder": 7
+                },
+                {
+                    "proposer": 3,
+                    "responder": 9
+                }
+            ],
+            "12": [
+                {
+                    "proposer": 4,
+                    "responder": 9
+                },
+                {
+                    "proposer": 6,
+                    "responder": 1
+                },
+                {
+                    "proposer": 12,
+                    "responder": 8
+                },
+                {
+                    "proposer": 5,
+                    "responder": 10
+                },
+                {
+                    "proposer": 2,
+                    "responder": 11
+                },
+                {
+                    "proposer": 3,
+                    "responder": 7
+                }
+            ],
+            "13": [
+                {
+                    "proposer": 4,
+                    "responder": 7
+                },
+                {
+                    "proposer": 6,
+                    "responder": 9
+                },
+                {
+                    "proposer": 12,
+                    "responder": 1
+                },
+                {
+                    "proposer": 5,
+                    "responder": 8
+                },
+                {
+                    "proposer": 2,
+                    "responder": 10
+                },
+                {
+                    "proposer": 3,
+                    "responder": 11
+                }
+            ],
+            "14": [
+                {
+                    "proposer": 4,
+                    "responder": 11
+                },
+                {
+                    "proposer": 6,
+                    "responder": 7
+                },
+                {
+                    "proposer": 12,
+                    "responder": 9
+                },
+                {
+                    "proposer": 5,
+                    "responder": 1
+                },
+                {
+                    "proposer": 2,
+                    "responder": 8
+                },
+                {
+                    "proposer": 3,
+                    "responder": 10
+                }
+            ],
+            "15": [
+                {
+                    "proposer": 4,
+                    "responder": 10
+                },
+                {
+                    "proposer": 6,
+                    "responder": 11
+                },
+                {
+                    "proposer": 12,
+                    "responder": 7
+                },
+                {
+                    "proposer": 5,
+                    "responder": 9
+                },
+                {
+                    "proposer": 2,
+                    "responder": 1
+                },
+                {
+                    "proposer": 3,
+                    "responder": 8
+                }
+            ]
+        }
+    },
+    "14": {
+        "subjectAssignment": {
+            "5": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "4": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "14": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "13": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "11": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "6": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "2": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "7": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "9": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "3": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "8": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "10": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "1": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "12": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            }
+        },
+        "PeriodMatching": {
+            "1": [
+                {
+                    "proposer": 11,
+                    "responder": 7
+                },
+                {
+                    "proposer": 6,
+                    "responder": 10
+                },
+                {
+                    "proposer": 2,
+                    "responder": 3
+                },
+                {
+                    "proposer": 14,
+                    "responder": 12
+                },
+                {
+                    "proposer": 13,
+                    "responder": 9
+                },
+                {
+                    "proposer": 5,
+                    "responder": 1
+                },
+                {
+                    "proposer": 4,
+                    "responder": 8
+                }
+            ],
+            "2": [
+                {
+                    "proposer": 11,
+                    "responder": 8
+                },
+                {
+                    "proposer": 6,
+                    "responder": 7
+                },
+                {
+                    "proposer": 2,
+                    "responder": 10
+                },
+                {
+                    "proposer": 14,
+                    "responder": 3
+                },
+                {
+                    "proposer": 13,
+                    "responder": 12
+                },
+                {
+                    "proposer": 5,
+                    "responder": 9
+                },
+                {
+                    "proposer": 4,
+                    "responder": 1
+                }
+            ],
+            "3": [
+                {
+                    "proposer": 11,
+                    "responder": 1
+                },
+                {
+                    "proposer": 6,
+                    "responder": 8
+                },
+                {
+                    "proposer": 2,
+                    "responder": 7
+                },
+                {
+                    "proposer": 14,
+                    "responder": 10
+                },
+                {
+                    "proposer": 13,
+                    "responder": 3
+                },
+                {
+                    "proposer": 5,
+                    "responder": 12
+                },
+                {
+                    "proposer": 4,
+                    "responder": 9
+                }
+            ],
+            "4": [
+                {
+                    "proposer": 11,
+                    "responder": 9
+                },
+                {
+                    "proposer": 6,
+                    "responder": 1
+                },
+                {
+                    "proposer": 2,
+                    "responder": 8
+                },
+                {
+                    "proposer": 14,
+                    "responder": 7
+                },
+                {
+                    "proposer": 13,
+                    "responder": 10
+                },
+                {
+                    "proposer": 5,
+                    "responder": 3
+                },
+                {
+                    "proposer": 4,
+                    "responder": 12
+                }
+            ],
+            "5": [
+                {
+                    "proposer": 11,
+                    "responder": 12
+                },
+                {
+                    "proposer": 6,
+                    "responder": 9
+                },
+                {
+                    "proposer": 2,
+                    "responder": 1
+                },
+                {
+                    "proposer": 14,
+                    "responder": 8
+                },
+                {
+                    "proposer": 13,
+                    "responder": 7
+                },
+                {
+                    "proposer": 5,
+                    "responder": 10
+                },
+                {
+                    "proposer": 4,
+                    "responder": 3
+                }
+            ],
+            "6": [
+                {
+                    "proposer": 8,
+                    "responder": 6
+                },
+                {
+                    "proposer": 10,
+                    "responder": 5
+                },
+                {
+                    "proposer": 3,
+                    "responder": 4
+                },
+                {
+                    "proposer": 9,
+                    "responder": 2
+                },
+                {
+                    "proposer": 7,
+                    "responder": 13
+                },
+                {
+                    "proposer": 1,
+                    "responder": 14
+                },
+                {
+                    "proposer": 12,
+                    "responder": 11
+                }
+            ],
+            "7": [
+                {
+                    "proposer": 8,
+                    "responder": 11
+                },
+                {
+                    "proposer": 10,
+                    "responder": 6
+                },
+                {
+                    "proposer": 3,
+                    "responder": 5
+                },
+                {
+                    "proposer": 9,
+                    "responder": 4
+                },
+                {
+                    "proposer": 7,
+                    "responder": 2
+                },
+                {
+                    "proposer": 1,
+                    "responder": 13
+                },
+                {
+                    "proposer": 12,
+                    "responder": 14
+                }
+            ],
+            "8": [
+                {
+                    "proposer": 8,
+                    "responder": 14
+                },
+                {
+                    "proposer": 10,
+                    "responder": 11
+                },
+                {
+                    "proposer": 3,
+                    "responder": 6
+                },
+                {
+                    "proposer": 9,
+                    "responder": 5
+                },
+                {
+                    "proposer": 7,
+                    "responder": 4
+                },
+                {
+                    "proposer": 1,
+                    "responder": 2
+                },
+                {
+                    "proposer": 12,
+                    "responder": 13
+                }
+            ],
+            "9": [
+                {
+                    "proposer": 8,
+                    "responder": 13
+                },
+                {
+                    "proposer": 10,
+                    "responder": 14
+                },
+                {
+                    "proposer": 3,
+                    "responder": 11
+                },
+                {
+                    "proposer": 9,
+                    "responder": 6
+                },
+                {
+                    "proposer": 7,
+                    "responder": 5
+                },
+                {
+                    "proposer": 1,
+                    "responder": 4
+                },
+                {
+                    "proposer": 12,
+                    "responder": 2
+                }
+            ],
+            "10": [
+                {
+                    "proposer": 8,
+                    "responder": 2
+                },
+                {
+                    "proposer": 10,
+                    "responder": 13
+                },
+                {
+                    "proposer": 3,
+                    "responder": 14
+                },
+                {
+                    "proposer": 9,
+                    "responder": 11
+                },
+                {
+                    "proposer": 7,
+                    "responder": 6
+                },
+                {
+                    "proposer": 1,
+                    "responder": 5
+                },
+                {
+                    "proposer": 12,
+                    "responder": 4
+                }
+            ],
+            "11": [
+                {
+                    "proposer": 5,
+                    "responder": 7
+                },
+                {
+                    "proposer": 4,
+                    "responder": 3
+                },
+                {
+                    "proposer": 2,
+                    "responder": 1
+                },
+                {
+                    "proposer": 6,
+                    "responder": 12
+                },
+                {
+                    "proposer": 14,
+                    "responder": 9
+                },
+                {
+                    "proposer": 11,
+                    "responder": 8
+                },
+                {
+                    "proposer": 13,
+                    "responder": 10
+                }
+            ],
+            "12": [
+                {
+                    "proposer": 5,
+                    "responder": 10
+                },
+                {
+                    "proposer": 4,
+                    "responder": 7
+                },
+                {
+                    "proposer": 2,
+                    "responder": 3
+                },
+                {
+                    "proposer": 6,
+                    "responder": 1
+                },
+                {
+                    "proposer": 14,
+                    "responder": 12
+                },
+                {
+                    "proposer": 11,
+                    "responder": 9
+                },
+                {
+                    "proposer": 13,
+                    "responder": 8
+                }
+            ],
+            "13": [
+                {
+                    "proposer": 5,
+                    "responder": 8
+                },
+                {
+                    "proposer": 4,
+                    "responder": 10
+                },
+                {
+                    "proposer": 2,
+                    "responder": 7
+                },
+                {
+                    "proposer": 6,
+                    "responder": 3
+                },
+                {
+                    "proposer": 14,
+                    "responder": 1
+                },
+                {
+                    "proposer": 11,
+                    "responder": 12
+                },
+                {
+                    "proposer": 13,
+                    "responder": 9
+                }
+            ],
+            "14": [
+                {
+                    "proposer": 5,
+                    "responder": 9
+                },
+                {
+                    "proposer": 4,
+                    "responder": 8
+                },
+                {
+                    "proposer": 2,
+                    "responder": 10
+                },
+                {
+                    "proposer": 6,
+                    "responder": 7
+                },
+                {
+                    "proposer": 14,
+                    "responder": 3
+                },
+                {
+                    "proposer": 11,
+                    "responder": 1
+                },
+                {
+                    "proposer": 13,
+                    "responder": 12
+                }
+            ],
+            "15": [
+                {
+                    "proposer": 5,
+                    "responder": 12
+                },
+                {
+                    "proposer": 4,
+                    "responder": 9
+                },
+                {
+                    "proposer": 2,
+                    "responder": 8
+                },
+                {
+                    "proposer": 6,
+                    "responder": 10
+                },
+                {
+                    "proposer": 14,
+                    "responder": 7
+                },
+                {
+                    "proposer": 11,
+                    "responder": 3
+                },
+                {
+                    "proposer": 13,
+                    "responder": 1
+                }
+            ]
+        }
+    },
+    "16": {
+        "subjectAssignment": {
+            "11": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "2": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "1": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "9": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "7": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "14": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "3": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "10": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "6": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "16": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "4": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "12": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "15": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "13": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "5": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "8": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            }
+        },
+        "PeriodMatching": {
+            "1": [
+                {
+                    "proposer": 9,
+                    "responder": 8
+                },
+                {
+                    "proposer": 7,
+                    "responder": 15
+                },
+                {
+                    "proposer": 11,
+                    "responder": 6
+                },
+                {
+                    "proposer": 14,
+                    "responder": 13
+                },
+                {
+                    "proposer": 2,
+                    "responder": 5
+                },
+                {
+                    "proposer": 1,
+                    "responder": 12
+                },
+                {
+                    "proposer": 10,
+                    "responder": 4
+                },
+                {
+                    "proposer": 3,
+                    "responder": 16
+                }
+            ],
+            "2": [
+                {
+                    "proposer": 9,
+                    "responder": 16
+                },
+                {
+                    "proposer": 7,
+                    "responder": 8
+                },
+                {
+                    "proposer": 11,
+                    "responder": 15
+                },
+                {
+                    "proposer": 14,
+                    "responder": 6
+                },
+                {
+                    "proposer": 2,
+                    "responder": 13
+                },
+                {
+                    "proposer": 1,
+                    "responder": 5
+                },
+                {
+                    "proposer": 10,
+                    "responder": 12
+                },
+                {
+                    "proposer": 3,
+                    "responder": 4
+                }
+            ],
+            "3": [
+                {
+                    "proposer": 9,
+                    "responder": 4
+                },
+                {
+                    "proposer": 7,
+                    "responder": 16
+                },
+                {
+                    "proposer": 11,
+                    "responder": 8
+                },
+                {
+                    "proposer": 14,
+                    "responder": 15
+                },
+                {
+                    "proposer": 2,
+                    "responder": 6
+                },
+                {
+                    "proposer": 1,
+                    "responder": 13
+                },
+                {
+                    "proposer": 10,
+                    "responder": 5
+                },
+                {
+                    "proposer": 3,
+                    "responder": 12
+                }
+            ],
+            "4": [
+                {
+                    "proposer": 9,
+                    "responder": 12
+                },
+                {
+                    "proposer": 7,
+                    "responder": 4
+                },
+                {
+                    "proposer": 11,
+                    "responder": 16
+                },
+                {
+                    "proposer": 14,
+                    "responder": 8
+                },
+                {
+                    "proposer": 2,
+                    "responder": 15
+                },
+                {
+                    "proposer": 1,
+                    "responder": 6
+                },
+                {
+                    "proposer": 10,
+                    "responder": 13
+                },
+                {
+                    "proposer": 3,
+                    "responder": 5
+                }
+            ],
+            "5": [
+                {
+                    "proposer": 9,
+                    "responder": 5
+                },
+                {
+                    "proposer": 7,
+                    "responder": 12
+                },
+                {
+                    "proposer": 11,
+                    "responder": 4
+                },
+                {
+                    "proposer": 14,
+                    "responder": 16
+                },
+                {
+                    "proposer": 2,
+                    "responder": 8
+                },
+                {
+                    "proposer": 1,
+                    "responder": 15
+                },
+                {
+                    "proposer": 10,
+                    "responder": 6
+                },
+                {
+                    "proposer": 3,
+                    "responder": 13
+                }
+            ],
+            "6": [
+                {
+                    "proposer": 12,
+                    "responder": 10
+                },
+                {
+                    "proposer": 5,
+                    "responder": 3
+                },
+                {
+                    "proposer": 6,
+                    "responder": 1
+                },
+                {
+                    "proposer": 16,
+                    "responder": 2
+                },
+                {
+                    "proposer": 4,
+                    "responder": 7
+                },
+                {
+                    "proposer": 13,
+                    "responder": 14
+                },
+                {
+                    "proposer": 8,
+                    "responder": 11
+                },
+                {
+                    "proposer": 15,
+                    "responder": 9
+                }
+            ],
+            "7": [
+                {
+                    "proposer": 12,
+                    "responder": 9
+                },
+                {
+                    "proposer": 5,
+                    "responder": 10
+                },
+                {
+                    "proposer": 6,
+                    "responder": 3
+                },
+                {
+                    "proposer": 16,
+                    "responder": 1
+                },
+                {
+                    "proposer": 4,
+                    "responder": 2
+                },
+                {
+                    "proposer": 13,
+                    "responder": 7
+                },
+                {
+                    "proposer": 8,
+                    "responder": 14
+                },
+                {
+                    "proposer": 15,
+                    "responder": 11
+                }
+            ],
+            "8": [
+                {
+                    "proposer": 12,
+                    "responder": 11
+                },
+                {
+                    "proposer": 5,
+                    "responder": 9
+                },
+                {
+                    "proposer": 6,
+                    "responder": 10
+                },
+                {
+                    "proposer": 16,
+                    "responder": 3
+                },
+                {
+                    "proposer": 4,
+                    "responder": 1
+                },
+                {
+                    "proposer": 13,
+                    "responder": 2
+                },
+                {
+                    "proposer": 8,
+                    "responder": 7
+                },
+                {
+                    "proposer": 15,
+                    "responder": 14
+                }
+            ],
+            "9": [
+                {
+                    "proposer": 12,
+                    "responder": 14
+                },
+                {
+                    "proposer": 5,
+                    "responder": 11
+                },
+                {
+                    "proposer": 6,
+                    "responder": 9
+                },
+                {
+                    "proposer": 16,
+                    "responder": 10
+                },
+                {
+                    "proposer": 4,
+                    "responder": 3
+                },
+                {
+                    "proposer": 13,
+                    "responder": 1
+                },
+                {
+                    "proposer": 8,
+                    "responder": 2
+                },
+                {
+                    "proposer": 15,
+                    "responder": 7
+                }
+            ],
+            "10": [
+                {
+                    "proposer": 12,
+                    "responder": 7
+                },
+                {
+                    "proposer": 5,
+                    "responder": 14
+                },
+                {
+                    "proposer": 6,
+                    "responder": 11
+                },
+                {
+                    "proposer": 16,
+                    "responder": 9
+                },
+                {
+                    "proposer": 4,
+                    "responder": 10
+                },
+                {
+                    "proposer": 13,
+                    "responder": 3
+                },
+                {
+                    "proposer": 8,
+                    "responder": 1
+                },
+                {
+                    "proposer": 15,
+                    "responder": 2
+                }
+            ],
+            "11": [
+                {
+                    "proposer": 2,
+                    "responder": 4
+                },
+                {
+                    "proposer": 7,
+                    "responder": 8
+                },
+                {
+                    "proposer": 3,
+                    "responder": 13
+                },
+                {
+                    "proposer": 14,
+                    "responder": 5
+                },
+                {
+                    "proposer": 1,
+                    "responder": 12
+                },
+                {
+                    "proposer": 9,
+                    "responder": 16
+                },
+                {
+                    "proposer": 10,
+                    "responder": 15
+                },
+                {
+                    "proposer": 11,
+                    "responder": 6
+                }
+            ],
+            "12": [
+                {
+                    "proposer": 2,
+                    "responder": 6
+                },
+                {
+                    "proposer": 7,
+                    "responder": 4
+                },
+                {
+                    "proposer": 3,
+                    "responder": 8
+                },
+                {
+                    "proposer": 14,
+                    "responder": 13
+                },
+                {
+                    "proposer": 1,
+                    "responder": 5
+                },
+                {
+                    "proposer": 9,
+                    "responder": 12
+                },
+                {
+                    "proposer": 10,
+                    "responder": 16
+                },
+                {
+                    "proposer": 11,
+                    "responder": 15
+                }
+            ],
+            "13": [
+                {
+                    "proposer": 2,
+                    "responder": 15
+                },
+                {
+                    "proposer": 7,
+                    "responder": 6
+                },
+                {
+                    "proposer": 3,
+                    "responder": 4
+                },
+                {
+                    "proposer": 14,
+                    "responder": 8
+                },
+                {
+                    "proposer": 1,
+                    "responder": 13
+                },
+                {
+                    "proposer": 9,
+                    "responder": 5
+                },
+                {
+                    "proposer": 10,
+                    "responder": 12
+                },
+                {
+                    "proposer": 11,
+                    "responder": 16
+                }
+            ],
+            "14": [
+                {
+                    "proposer": 2,
+                    "responder": 16
+                },
+                {
+                    "proposer": 7,
+                    "responder": 15
+                },
+                {
+                    "proposer": 3,
+                    "responder": 6
+                },
+                {
+                    "proposer": 14,
+                    "responder": 4
+                },
+                {
+                    "proposer": 1,
+                    "responder": 8
+                },
+                {
+                    "proposer": 9,
+                    "responder": 13
+                },
+                {
+                    "proposer": 10,
+                    "responder": 5
+                },
+                {
+                    "proposer": 11,
+                    "responder": 12
+                }
+            ],
+            "15": [
+                {
+                    "proposer": 2,
+                    "responder": 12
+                },
+                {
+                    "proposer": 7,
+                    "responder": 16
+                },
+                {
+                    "proposer": 3,
+                    "responder": 15
+                },
+                {
+                    "proposer": 14,
+                    "responder": 6
+                },
+                {
+                    "proposer": 1,
+                    "responder": 4
+                },
+                {
+                    "proposer": 9,
+                    "responder": 8
+                },
+                {
+                    "proposer": 10,
+                    "responder": 13
+                },
+                {
+                    "proposer": 11,
+                    "responder": 5
+                }
+            ]
+        }
+    },
+    "18": {
+        "subjectAssignment": {
+            "6": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "3": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "5": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "8": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "7": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "9": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "12": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "14": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "4": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "16": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "15": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "2": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "13": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "1": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "17": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "18": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "11": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "10": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            }
+        },
+        "PeriodMatching": {
+            "1": [
+                {
+                    "proposer": 8,
+                    "responder": 18
+                },
+                {
+                    "proposer": 14,
+                    "responder": 17
+                },
+                {
+                    "proposer": 3,
+                    "responder": 16
+                },
+                {
+                    "proposer": 9,
+                    "responder": 2
+                },
+                {
+                    "proposer": 4,
+                    "responder": 13
+                },
+                {
+                    "proposer": 12,
+                    "responder": 1
+                },
+                {
+                    "proposer": 6,
+                    "responder": 15
+                },
+                {
+                    "proposer": 7,
+                    "responder": 10
+                },
+                {
+                    "proposer": 5,
+                    "responder": 11
+                }
+            ],
+            "2": [
+                {
+                    "proposer": 8,
+                    "responder": 11
+                },
+                {
+                    "proposer": 14,
+                    "responder": 18
+                },
+                {
+                    "proposer": 3,
+                    "responder": 17
+                },
+                {
+                    "proposer": 9,
+                    "responder": 16
+                },
+                {
+                    "proposer": 4,
+                    "responder": 2
+                },
+                {
+                    "proposer": 12,
+                    "responder": 13
+                },
+                {
+                    "proposer": 6,
+                    "responder": 1
+                },
+                {
+                    "proposer": 7,
+                    "responder": 15
+                },
+                {
+                    "proposer": 5,
+                    "responder": 10
+                }
+            ],
+            "3": [
+                {
+                    "proposer": 8,
+                    "responder": 10
+                },
+                {
+                    "proposer": 14,
+                    "responder": 11
+                },
+                {
+                    "proposer": 3,
+                    "responder": 18
+                },
+                {
+                    "proposer": 9,
+                    "responder": 17
+                },
+                {
+                    "proposer": 4,
+                    "responder": 16
+                },
+                {
+                    "proposer": 12,
+                    "responder": 2
+                },
+                {
+                    "proposer": 6,
+                    "responder": 13
+                },
+                {
+                    "proposer": 7,
+                    "responder": 1
+                },
+                {
+                    "proposer": 5,
+                    "responder": 15
+                }
+            ],
+            "4": [
+                {
+                    "proposer": 8,
+                    "responder": 15
+                },
+                {
+                    "proposer": 14,
+                    "responder": 10
+                },
+                {
+                    "proposer": 3,
+                    "responder": 11
+                },
+                {
+                    "proposer": 9,
+                    "responder": 18
+                },
+                {
+                    "proposer": 4,
+                    "responder": 17
+                },
+                {
+                    "proposer": 12,
+                    "responder": 16
+                },
+                {
+                    "proposer": 6,
+                    "responder": 2
+                },
+                {
+                    "proposer": 7,
+                    "responder": 13
+                },
+                {
+                    "proposer": 5,
+                    "responder": 1
+                }
+            ],
+            "5": [
+                {
+                    "proposer": 8,
+                    "responder": 1
+                },
+                {
+                    "proposer": 14,
+                    "responder": 15
+                },
+                {
+                    "proposer": 3,
+                    "responder": 10
+                },
+                {
+                    "proposer": 9,
+                    "responder": 11
+                },
+                {
+                    "proposer": 4,
+                    "responder": 18
+                },
+                {
+                    "proposer": 12,
+                    "responder": 17
+                },
+                {
+                    "proposer": 6,
+                    "responder": 16
+                },
+                {
+                    "proposer": 7,
+                    "responder": 2
+                },
+                {
+                    "proposer": 5,
+                    "responder": 13
+                }
+            ],
+            "6": [
+                {
+                    "proposer": 1,
+                    "responder": 6
+                },
+                {
+                    "proposer": 18,
+                    "responder": 12
+                },
+                {
+                    "proposer": 16,
+                    "responder": 5
+                },
+                {
+                    "proposer": 15,
+                    "responder": 9
+                },
+                {
+                    "proposer": 11,
+                    "responder": 14
+                },
+                {
+                    "proposer": 13,
+                    "responder": 4
+                },
+                {
+                    "proposer": 10,
+                    "responder": 3
+                },
+                {
+                    "proposer": 2,
+                    "responder": 8
+                },
+                {
+                    "proposer": 17,
+                    "responder": 7
+                }
+            ],
+            "7": [
+                {
+                    "proposer": 1,
+                    "responder": 7
+                },
+                {
+                    "proposer": 18,
+                    "responder": 6
+                },
+                {
+                    "proposer": 16,
+                    "responder": 12
+                },
+                {
+                    "proposer": 15,
+                    "responder": 5
+                },
+                {
+                    "proposer": 11,
+                    "responder": 9
+                },
+                {
+                    "proposer": 13,
+                    "responder": 14
+                },
+                {
+                    "proposer": 10,
+                    "responder": 4
+                },
+                {
+                    "proposer": 2,
+                    "responder": 3
+                },
+                {
+                    "proposer": 17,
+                    "responder": 8
+                }
+            ],
+            "8": [
+                {
+                    "proposer": 1,
+                    "responder": 8
+                },
+                {
+                    "proposer": 18,
+                    "responder": 7
+                },
+                {
+                    "proposer": 16,
+                    "responder": 6
+                },
+                {
+                    "proposer": 15,
+                    "responder": 12
+                },
+                {
+                    "proposer": 11,
+                    "responder": 5
+                },
+                {
+                    "proposer": 13,
+                    "responder": 9
+                },
+                {
+                    "proposer": 10,
+                    "responder": 14
+                },
+                {
+                    "proposer": 2,
+                    "responder": 4
+                },
+                {
+                    "proposer": 17,
+                    "responder": 3
+                }
+            ],
+            "9": [
+                {
+                    "proposer": 1,
+                    "responder": 3
+                },
+                {
+                    "proposer": 18,
+                    "responder": 8
+                },
+                {
+                    "proposer": 16,
+                    "responder": 7
+                },
+                {
+                    "proposer": 15,
+                    "responder": 6
+                },
+                {
+                    "proposer": 11,
+                    "responder": 12
+                },
+                {
+                    "proposer": 13,
+                    "responder": 5
+                },
+                {
+                    "proposer": 10,
+                    "responder": 9
+                },
+                {
+                    "proposer": 2,
+                    "responder": 14
+                },
+                {
+                    "proposer": 17,
+                    "responder": 4
+                }
+            ],
+            "10": [
+                {
+                    "proposer": 1,
+                    "responder": 4
+                },
+                {
+                    "proposer": 18,
+                    "responder": 3
+                },
+                {
+                    "proposer": 16,
+                    "responder": 8
+                },
+                {
+                    "proposer": 15,
+                    "responder": 7
+                },
+                {
+                    "proposer": 11,
+                    "responder": 6
+                },
+                {
+                    "proposer": 13,
+                    "responder": 12
+                },
+                {
+                    "proposer": 10,
+                    "responder": 5
+                },
+                {
+                    "proposer": 2,
+                    "responder": 9
+                },
+                {
+                    "proposer": 17,
+                    "responder": 14
+                }
+            ],
+            "11": [
+                {
+                    "proposer": 14,
+                    "responder": 11
+                },
+                {
+                    "proposer": 5,
+                    "responder": 18
+                },
+                {
+                    "proposer": 8,
+                    "responder": 1
+                },
+                {
+                    "proposer": 7,
+                    "responder": 17
+                },
+                {
+                    "proposer": 4,
+                    "responder": 15
+                },
+                {
+                    "proposer": 6,
+                    "responder": 10
+                },
+                {
+                    "proposer": 9,
+                    "responder": 2
+                },
+                {
+                    "proposer": 12,
+                    "responder": 16
+                },
+                {
+                    "proposer": 3,
+                    "responder": 13
+                }
+            ],
+            "12": [
+                {
+                    "proposer": 14,
+                    "responder": 13
+                },
+                {
+                    "proposer": 5,
+                    "responder": 11
+                },
+                {
+                    "proposer": 8,
+                    "responder": 18
+                },
+                {
+                    "proposer": 7,
+                    "responder": 1
+                },
+                {
+                    "proposer": 4,
+                    "responder": 17
+                },
+                {
+                    "proposer": 6,
+                    "responder": 15
+                },
+                {
+                    "proposer": 9,
+                    "responder": 10
+                },
+                {
+                    "proposer": 12,
+                    "responder": 2
+                },
+                {
+                    "proposer": 3,
+                    "responder": 16
+                }
+            ],
+            "13": [
+                {
+                    "proposer": 14,
+                    "responder": 16
+                },
+                {
+                    "proposer": 5,
+                    "responder": 13
+                },
+                {
+                    "proposer": 8,
+                    "responder": 11
+                },
+                {
+                    "proposer": 7,
+                    "responder": 18
+                },
+                {
+                    "proposer": 4,
+                    "responder": 1
+                },
+                {
+                    "proposer": 6,
+                    "responder": 17
+                },
+                {
+                    "proposer": 9,
+                    "responder": 15
+                },
+                {
+                    "proposer": 12,
+                    "responder": 10
+                },
+                {
+                    "proposer": 3,
+                    "responder": 2
+                }
+            ],
+            "14": [
+                {
+                    "proposer": 14,
+                    "responder": 2
+                },
+                {
+                    "proposer": 5,
+                    "responder": 16
+                },
+                {
+                    "proposer": 8,
+                    "responder": 13
+                },
+                {
+                    "proposer": 7,
+                    "responder": 11
+                },
+                {
+                    "proposer": 4,
+                    "responder": 18
+                },
+                {
+                    "proposer": 6,
+                    "responder": 1
+                },
+                {
+                    "proposer": 9,
+                    "responder": 17
+                },
+                {
+                    "proposer": 12,
+                    "responder": 15
+                },
+                {
+                    "proposer": 3,
+                    "responder": 10
+                }
+            ],
+            "15": [
+                {
+                    "proposer": 14,
+                    "responder": 10
+                },
+                {
+                    "proposer": 5,
+                    "responder": 2
+                },
+                {
+                    "proposer": 8,
+                    "responder": 16
+                },
+                {
+                    "proposer": 7,
+                    "responder": 13
+                },
+                {
+                    "proposer": 4,
+                    "responder": 11
+                },
+                {
+                    "proposer": 6,
+                    "responder": 18
+                },
+                {
+                    "proposer": 9,
+                    "responder": 1
+                },
+                {
+                    "proposer": 12,
+                    "responder": 17
+                },
+                {
+                    "proposer": 3,
+                    "responder": 15
+                }
+            ]
+        }
+    },
+    "20": {
+        "subjectAssignment": {
+            "15": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "13": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "7": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "20": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "17": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "6": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "14": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "3": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "5": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "8": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "2": {
+                "MatchingGroup": 2,
+                "SubGroup": "a"
+            },
+            "11": {
+                "MatchingGroup": 2,
+                "SubGroup": "a"
+            },
+            "18": {
+                "MatchingGroup": 2,
+                "SubGroup": "a"
+            },
+            "4": {
+                "MatchingGroup": 2,
+                "SubGroup": "a"
+            },
+            "16": {
+                "MatchingGroup": 2,
+                "SubGroup": "a"
+            },
+            "12": {
+                "MatchingGroup": 2,
+                "SubGroup": "b"
+            },
+            "9": {
+                "MatchingGroup": 2,
+                "SubGroup": "b"
+            },
+            "1": {
+                "MatchingGroup": 2,
+                "SubGroup": "b"
+            },
+            "19": {
+                "MatchingGroup": 2,
+                "SubGroup": "b"
+            },
+            "10": {
+                "MatchingGroup": 2,
+                "SubGroup": "b"
+            }
+        },
+        "PeriodMatching": {
+            "1": [
+                {
+                    "proposer": 13,
+                    "responder": 3
+                },
+                {
+                    "proposer": 15,
+                    "responder": 6
+                },
+                {
+                    "proposer": 20,
+                    "responder": 5
+                },
+                {
+                    "proposer": 17,
+                    "responder": 8
+                },
+                {
+                    "proposer": 7,
+                    "responder": 14
+                },
+                {
+                    "proposer": 18,
+                    "responder": 9
+                },
+                {
+                    "proposer": 4,
+                    "responder": 1
+                },
+                {
+                    "proposer": 2,
+                    "responder": 12
+                },
+                {
+                    "proposer": 11,
+                    "responder": 19
+                },
+                {
+                    "proposer": 16,
+                    "responder": 10
+                }
+            ],
+            "2": [
+                {
+                    "proposer": 13,
+                    "responder": 14
+                },
+                {
+                    "proposer": 15,
+                    "responder": 3
+                },
+                {
+                    "proposer": 20,
+                    "responder": 6
+                },
+                {
+                    "proposer": 17,
+                    "responder": 5
+                },
+                {
+                    "proposer": 7,
+                    "responder": 8
+                },
+                {
+                    "proposer": 18,
+                    "responder": 10
+                },
+                {
+                    "proposer": 4,
+                    "responder": 9
+                },
+                {
+                    "proposer": 2,
+                    "responder": 1
+                },
+                {
+                    "proposer": 11,
+                    "responder": 12
+                },
+                {
+                    "proposer": 16,
+                    "responder": 19
+                }
+            ],
+            "3": [
+                {
+                    "proposer": 13,
+                    "responder": 8
+                },
+                {
+                    "proposer": 15,
+                    "responder": 14
+                },
+                {
+                    "proposer": 20,
+                    "responder": 3
+                },
+                {
+                    "proposer": 17,
+                    "responder": 6
+                },
+                {
+                    "proposer": 7,
+                    "responder": 5
+                },
+                {
+                    "proposer": 18,
+                    "responder": 19
+                },
+                {
+                    "proposer": 4,
+                    "responder": 10
+                },
+                {
+                    "proposer": 2,
+                    "responder": 9
+                },
+                {
+                    "proposer": 11,
+                    "responder": 1
+                },
+                {
+                    "proposer": 16,
+                    "responder": 12
+                }
+            ],
+            "4": [
+                {
+                    "proposer": 13,
+                    "responder": 5
+                },
+                {
+                    "proposer": 15,
+                    "responder": 8
+                },
+                {
+                    "proposer": 20,
+                    "responder": 14
+                },
+                {
+                    "proposer": 17,
+                    "responder": 3
+                },
+                {
+                    "proposer": 7,
+                    "responder": 6
+                },
+                {
+                    "proposer": 18,
+                    "responder": 12
+                },
+                {
+                    "proposer": 4,
+                    "responder": 19
+                },
+                {
+                    "proposer": 2,
+                    "responder": 10
+                },
+                {
+                    "proposer": 11,
+                    "responder": 9
+                },
+                {
+                    "proposer": 16,
+                    "responder": 1
+                }
+            ],
+            "5": [
+                {
+                    "proposer": 13,
+                    "responder": 6
+                },
+                {
+                    "proposer": 15,
+                    "responder": 5
+                },
+                {
+                    "proposer": 20,
+                    "responder": 8
+                },
+                {
+                    "proposer": 17,
+                    "responder": 14
+                },
+                {
+                    "proposer": 7,
+                    "responder": 3
+                },
+                {
+                    "proposer": 18,
+                    "responder": 1
+                },
+                {
+                    "proposer": 4,
+                    "responder": 12
+                },
+                {
+                    "proposer": 2,
+                    "responder": 19
+                },
+                {
+                    "proposer": 11,
+                    "responder": 10
+                },
+                {
+                    "proposer": 16,
+                    "responder": 9
+                }
+            ],
+            "6": [
+                {
+                    "proposer": 6,
+                    "responder": 20
+                },
+                {
+                    "proposer": 8,
+                    "responder": 7
+                },
+                {
+                    "proposer": 14,
+                    "responder": 15
+                },
+                {
+                    "proposer": 3,
+                    "responder": 13
+                },
+                {
+                    "proposer": 5,
+                    "responder": 17
+                },
+                {
+                    "proposer": 1,
+                    "responder": 18
+                },
+                {
+                    "proposer": 9,
+                    "responder": 11
+                },
+                {
+                    "proposer": 12,
+                    "responder": 16
+                },
+                {
+                    "proposer": 19,
+                    "responder": 4
+                },
+                {
+                    "proposer": 10,
+                    "responder": 2
+                }
+            ],
+            "7": [
+                {
+                    "proposer": 6,
+                    "responder": 17
+                },
+                {
+                    "proposer": 8,
+                    "responder": 20
+                },
+                {
+                    "proposer": 14,
+                    "responder": 7
+                },
+                {
+                    "proposer": 3,
+                    "responder": 15
+                },
+                {
+                    "proposer": 5,
+                    "responder": 13
+                },
+                {
+                    "proposer": 1,
+                    "responder": 2
+                },
+                {
+                    "proposer": 9,
+                    "responder": 18
+                },
+                {
+                    "proposer": 12,
+                    "responder": 11
+                },
+                {
+                    "proposer": 19,
+                    "responder": 16
+                },
+                {
+                    "proposer": 10,
+                    "responder": 4
+                }
+            ],
+            "8": [
+                {
+                    "proposer": 6,
+                    "responder": 13
+                },
+                {
+                    "proposer": 8,
+                    "responder": 17
+                },
+                {
+                    "proposer": 14,
+                    "responder": 20
+                },
+                {
+                    "proposer": 3,
+                    "responder": 7
+                },
+                {
+                    "proposer": 5,
+                    "responder": 15
+                },
+                {
+                    "proposer": 1,
+                    "responder": 4
+                },
+                {
+                    "proposer": 9,
+                    "responder": 2
+                },
+                {
+                    "proposer": 12,
+                    "responder": 18
+                },
+                {
+                    "proposer": 19,
+                    "responder": 11
+                },
+                {
+                    "proposer": 10,
+                    "responder": 16
+                }
+            ],
+            "9": [
+                {
+                    "proposer": 6,
+                    "responder": 15
+                },
+                {
+                    "proposer": 8,
+                    "responder": 13
+                },
+                {
+                    "proposer": 14,
+                    "responder": 17
+                },
+                {
+                    "proposer": 3,
+                    "responder": 20
+                },
+                {
+                    "proposer": 5,
+                    "responder": 7
+                },
+                {
+                    "proposer": 1,
+                    "responder": 16
+                },
+                {
+                    "proposer": 9,
+                    "responder": 4
+                },
+                {
+                    "proposer": 12,
+                    "responder": 2
+                },
+                {
+                    "proposer": 19,
+                    "responder": 18
+                },
+                {
+                    "proposer": 10,
+                    "responder": 11
+                }
+            ],
+            "10": [
+                {
+                    "proposer": 6,
+                    "responder": 7
+                },
+                {
+                    "proposer": 8,
+                    "responder": 15
+                },
+                {
+                    "proposer": 14,
+                    "responder": 13
+                },
+                {
+                    "proposer": 3,
+                    "responder": 17
+                },
+                {
+                    "proposer": 5,
+                    "responder": 20
+                },
+                {
+                    "proposer": 1,
+                    "responder": 11
+                },
+                {
+                    "proposer": 9,
+                    "responder": 16
+                },
+                {
+                    "proposer": 12,
+                    "responder": 4
+                },
+                {
+                    "proposer": 19,
+                    "responder": 2
+                },
+                {
+                    "proposer": 10,
+                    "responder": 18
+                }
+            ],
+            "11": [
+                {
+                    "proposer": 15,
+                    "responder": 14
+                },
+                {
+                    "proposer": 13,
+                    "responder": 3
+                },
+                {
+                    "proposer": 7,
+                    "responder": 5
+                },
+                {
+                    "proposer": 20,
+                    "responder": 8
+                },
+                {
+                    "proposer": 17,
+                    "responder": 6
+                },
+                {
+                    "proposer": 16,
+                    "responder": 19
+                },
+                {
+                    "proposer": 11,
+                    "responder": 10
+                },
+                {
+                    "proposer": 18,
+                    "responder": 9
+                },
+                {
+                    "proposer": 2,
+                    "responder": 12
+                },
+                {
+                    "proposer": 4,
+                    "responder": 1
+                }
+            ],
+            "12": [
+                {
+                    "proposer": 15,
+                    "responder": 6
+                },
+                {
+                    "proposer": 13,
+                    "responder": 14
+                },
+                {
+                    "proposer": 7,
+                    "responder": 3
+                },
+                {
+                    "proposer": 20,
+                    "responder": 5
+                },
+                {
+                    "proposer": 17,
+                    "responder": 8
+                },
+                {
+                    "proposer": 16,
+                    "responder": 1
+                },
+                {
+                    "proposer": 11,
+                    "responder": 19
+                },
+                {
+                    "proposer": 18,
+                    "responder": 10
+                },
+                {
+                    "proposer": 2,
+                    "responder": 9
+                },
+                {
+                    "proposer": 4,
+                    "responder": 12
+                }
+            ],
+            "13": [
+                {
+                    "proposer": 15,
+                    "responder": 8
+                },
+                {
+                    "proposer": 13,
+                    "responder": 6
+                },
+                {
+                    "proposer": 7,
+                    "responder": 14
+                },
+                {
+                    "proposer": 20,
+                    "responder": 3
+                },
+                {
+                    "proposer": 17,
+                    "responder": 5
+                },
+                {
+                    "proposer": 16,
+                    "responder": 12
+                },
+                {
+                    "proposer": 11,
+                    "responder": 1
+                },
+                {
+                    "proposer": 18,
+                    "responder": 19
+                },
+                {
+                    "proposer": 2,
+                    "responder": 10
+                },
+                {
+                    "proposer": 4,
+                    "responder": 9
+                }
+            ],
+            "14": [
+                {
+                    "proposer": 15,
+                    "responder": 5
+                },
+                {
+                    "proposer": 13,
+                    "responder": 8
+                },
+                {
+                    "proposer": 7,
+                    "responder": 6
+                },
+                {
+                    "proposer": 20,
+                    "responder": 14
+                },
+                {
+                    "proposer": 17,
+                    "responder": 3
+                },
+                {
+                    "proposer": 16,
+                    "responder": 9
+                },
+                {
+                    "proposer": 11,
+                    "responder": 12
+                },
+                {
+                    "proposer": 18,
+                    "responder": 1
+                },
+                {
+                    "proposer": 2,
+                    "responder": 19
+                },
+                {
+                    "proposer": 4,
+                    "responder": 10
+                }
+            ],
+            "15": [
+                {
+                    "proposer": 15,
+                    "responder": 3
+                },
+                {
+                    "proposer": 13,
+                    "responder": 5
+                },
+                {
+                    "proposer": 7,
+                    "responder": 8
+                },
+                {
+                    "proposer": 20,
+                    "responder": 6
+                },
+                {
+                    "proposer": 17,
+                    "responder": 14
+                },
+                {
+                    "proposer": 16,
+                    "responder": 10
+                },
+                {
+                    "proposer": 11,
+                    "responder": 9
+                },
+                {
+                    "proposer": 18,
+                    "responder": 12
+                },
+                {
+                    "proposer": 2,
+                    "responder": 1
+                },
+                {
+                    "proposer": 4,
+                    "responder": 19
+                }
+            ]
+        }
+    },
+    "22": {
+        "subjectAssignment": {
+            "13": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "20": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "10": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "21": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "6": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "11": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "4": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "5": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "15": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "8": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "17": {
+                "MatchingGroup": 2,
+                "SubGroup": "a"
+            },
+            "22": {
+                "MatchingGroup": 2,
+                "SubGroup": "a"
+            },
+            "9": {
+                "MatchingGroup": 2,
+                "SubGroup": "a"
+            },
+            "18": {
+                "MatchingGroup": 2,
+                "SubGroup": "a"
+            },
+            "16": {
+                "MatchingGroup": 2,
+                "SubGroup": "a"
+            },
+            "12": {
+                "MatchingGroup": 2,
+                "SubGroup": "a"
+            },
+            "14": {
+                "MatchingGroup": 2,
+                "SubGroup": "b"
+            },
+            "2": {
+                "MatchingGroup": 2,
+                "SubGroup": "b"
+            },
+            "3": {
+                "MatchingGroup": 2,
+                "SubGroup": "b"
+            },
+            "19": {
+                "MatchingGroup": 2,
+                "SubGroup": "b"
+            },
+            "7": {
+                "MatchingGroup": 2,
+                "SubGroup": "b"
+            },
+            "1": {
+                "MatchingGroup": 2,
+                "SubGroup": "b"
+            }
+        },
+        "PeriodMatching": {
+            "1": [
+                {
+                    "proposer": 10,
+                    "responder": 11
+                },
+                {
+                    "proposer": 13,
+                    "responder": 15
+                },
+                {
+                    "proposer": 20,
+                    "responder": 5
+                },
+                {
+                    "proposer": 6,
+                    "responder": 4
+                },
+                {
+                    "proposer": 21,
+                    "responder": 8
+                },
+                {
+                    "proposer": 9,
+                    "responder": 1
+                },
+                {
+                    "proposer": 17,
+                    "responder": 7
+                },
+                {
+                    "proposer": 16,
+                    "responder": 19
+                },
+                {
+                    "proposer": 18,
+                    "responder": 14
+                },
+                {
+                    "proposer": 12,
+                    "responder": 2
+                },
+                {
+                    "proposer": 22,
+                    "responder": 3
+                }
+            ],
+            "2": [
+                {
+                    "proposer": 10,
+                    "responder": 8
+                },
+                {
+                    "proposer": 13,
+                    "responder": 11
+                },
+                {
+                    "proposer": 20,
+                    "responder": 15
+                },
+                {
+                    "proposer": 6,
+                    "responder": 5
+                },
+                {
+                    "proposer": 21,
+                    "responder": 4
+                },
+                {
+                    "proposer": 9,
+                    "responder": 3
+                },
+                {
+                    "proposer": 17,
+                    "responder": 1
+                },
+                {
+                    "proposer": 16,
+                    "responder": 7
+                },
+                {
+                    "proposer": 18,
+                    "responder": 19
+                },
+                {
+                    "proposer": 12,
+                    "responder": 14
+                },
+                {
+                    "proposer": 22,
+                    "responder": 2
+                }
+            ],
+            "3": [
+                {
+                    "proposer": 10,
+                    "responder": 4
+                },
+                {
+                    "proposer": 13,
+                    "responder": 8
+                },
+                {
+                    "proposer": 20,
+                    "responder": 11
+                },
+                {
+                    "proposer": 6,
+                    "responder": 15
+                },
+                {
+                    "proposer": 21,
+                    "responder": 5
+                },
+                {
+                    "proposer": 9,
+                    "responder": 2
+                },
+                {
+                    "proposer": 17,
+                    "responder": 3
+                },
+                {
+                    "proposer": 16,
+                    "responder": 1
+                },
+                {
+                    "proposer": 18,
+                    "responder": 7
+                },
+                {
+                    "proposer": 12,
+                    "responder": 19
+                },
+                {
+                    "proposer": 22,
+                    "responder": 14
+                }
+            ],
+            "4": [
+                {
+                    "proposer": 10,
+                    "responder": 5
+                },
+                {
+                    "proposer": 13,
+                    "responder": 4
+                },
+                {
+                    "proposer": 20,
+                    "responder": 8
+                },
+                {
+                    "proposer": 6,
+                    "responder": 11
+                },
+                {
+                    "proposer": 21,
+                    "responder": 15
+                },
+                {
+                    "proposer": 9,
+                    "responder": 14
+                },
+                {
+                    "proposer": 17,
+                    "responder": 2
+                },
+                {
+                    "proposer": 16,
+                    "responder": 3
+                },
+                {
+                    "proposer": 18,
+                    "responder": 1
+                },
+                {
+                    "proposer": 12,
+                    "responder": 7
+                },
+                {
+                    "proposer": 22,
+                    "responder": 19
+                }
+            ],
+            "5": [
+                {
+                    "proposer": 10,
+                    "responder": 15
+                },
+                {
+                    "proposer": 13,
+                    "responder": 5
+                },
+                {
+                    "proposer": 20,
+                    "responder": 4
+                },
+                {
+                    "proposer": 6,
+                    "responder": 8
+                },
+                {
+                    "proposer": 21,
+                    "responder": 11
+                },
+                {
+                    "proposer": 9,
+                    "responder": 19
+                },
+                {
+                    "proposer": 17,
+                    "responder": 14
+                },
+                {
+                    "proposer": 16,
+                    "responder": 2
+                },
+                {
+                    "proposer": 18,
+                    "responder": 3
+                },
+                {
+                    "proposer": 12,
+                    "responder": 1
+                },
+                {
+                    "proposer": 22,
+                    "responder": 7
+                }
+            ],
+            "6": [
+                {
+                    "proposer": 8,
+                    "responder": 21
+                },
+                {
+                    "proposer": 15,
+                    "responder": 13
+                },
+                {
+                    "proposer": 5,
+                    "responder": 10
+                },
+                {
+                    "proposer": 4,
+                    "responder": 20
+                },
+                {
+                    "proposer": 11,
+                    "responder": 6
+                },
+                {
+                    "proposer": 19,
+                    "responder": 9
+                },
+                {
+                    "proposer": 3,
+                    "responder": 18
+                },
+                {
+                    "proposer": 1,
+                    "responder": 22
+                },
+                {
+                    "proposer": 2,
+                    "responder": 12
+                },
+                {
+                    "proposer": 14,
+                    "responder": 16
+                },
+                {
+                    "proposer": 7,
+                    "responder": 17
+                }
+            ],
+            "7": [
+                {
+                    "proposer": 8,
+                    "responder": 6
+                },
+                {
+                    "proposer": 15,
+                    "responder": 21
+                },
+                {
+                    "proposer": 5,
+                    "responder": 13
+                },
+                {
+                    "proposer": 4,
+                    "responder": 10
+                },
+                {
+                    "proposer": 11,
+                    "responder": 20
+                },
+                {
+                    "proposer": 19,
+                    "responder": 17
+                },
+                {
+                    "proposer": 3,
+                    "responder": 9
+                },
+                {
+                    "proposer": 1,
+                    "responder": 18
+                },
+                {
+                    "proposer": 2,
+                    "responder": 22
+                },
+                {
+                    "proposer": 14,
+                    "responder": 12
+                },
+                {
+                    "proposer": 7,
+                    "responder": 16
+                }
+            ],
+            "8": [
+                {
+                    "proposer": 8,
+                    "responder": 20
+                },
+                {
+                    "proposer": 15,
+                    "responder": 6
+                },
+                {
+                    "proposer": 5,
+                    "responder": 21
+                },
+                {
+                    "proposer": 4,
+                    "responder": 13
+                },
+                {
+                    "proposer": 11,
+                    "responder": 10
+                },
+                {
+                    "proposer": 19,
+                    "responder": 16
+                },
+                {
+                    "proposer": 3,
+                    "responder": 17
+                },
+                {
+                    "proposer": 1,
+                    "responder": 9
+                },
+                {
+                    "proposer": 2,
+                    "responder": 18
+                },
+                {
+                    "proposer": 14,
+                    "responder": 22
+                },
+                {
+                    "proposer": 7,
+                    "responder": 12
+                }
+            ],
+            "9": [
+                {
+                    "proposer": 8,
+                    "responder": 10
+                },
+                {
+                    "proposer": 15,
+                    "responder": 20
+                },
+                {
+                    "proposer": 5,
+                    "responder": 6
+                },
+                {
+                    "proposer": 4,
+                    "responder": 21
+                },
+                {
+                    "proposer": 11,
+                    "responder": 13
+                },
+                {
+                    "proposer": 19,
+                    "responder": 12
+                },
+                {
+                    "proposer": 3,
+                    "responder": 16
+                },
+                {
+                    "proposer": 1,
+                    "responder": 17
+                },
+                {
+                    "proposer": 2,
+                    "responder": 9
+                },
+                {
+                    "proposer": 14,
+                    "responder": 18
+                },
+                {
+                    "proposer": 7,
+                    "responder": 22
+                }
+            ],
+            "10": [
+                {
+                    "proposer": 8,
+                    "responder": 13
+                },
+                {
+                    "proposer": 15,
+                    "responder": 10
+                },
+                {
+                    "proposer": 5,
+                    "responder": 20
+                },
+                {
+                    "proposer": 4,
+                    "responder": 6
+                },
+                {
+                    "proposer": 11,
+                    "responder": 21
+                },
+                {
+                    "proposer": 19,
+                    "responder": 22
+                },
+                {
+                    "proposer": 3,
+                    "responder": 12
+                },
+                {
+                    "proposer": 1,
+                    "responder": 16
+                },
+                {
+                    "proposer": 2,
+                    "responder": 17
+                },
+                {
+                    "proposer": 14,
+                    "responder": 9
+                },
+                {
+                    "proposer": 7,
+                    "responder": 18
+                }
+            ],
+            "11": [
+                {
+                    "proposer": 21,
+                    "responder": 11
+                },
+                {
+                    "proposer": 10,
+                    "responder": 4
+                },
+                {
+                    "proposer": 20,
+                    "responder": 5
+                },
+                {
+                    "proposer": 6,
+                    "responder": 15
+                },
+                {
+                    "proposer": 13,
+                    "responder": 8
+                },
+                {
+                    "proposer": 9,
+                    "responder": 3
+                },
+                {
+                    "proposer": 16,
+                    "responder": 1
+                },
+                {
+                    "proposer": 12,
+                    "responder": 19
+                },
+                {
+                    "proposer": 18,
+                    "responder": 14
+                },
+                {
+                    "proposer": 17,
+                    "responder": 2
+                },
+                {
+                    "proposer": 22,
+                    "responder": 7
+                }
+            ],
+            "12": [
+                {
+                    "proposer": 21,
+                    "responder": 8
+                },
+                {
+                    "proposer": 10,
+                    "responder": 11
+                },
+                {
+                    "proposer": 20,
+                    "responder": 4
+                },
+                {
+                    "proposer": 6,
+                    "responder": 5
+                },
+                {
+                    "proposer": 13,
+                    "responder": 15
+                },
+                {
+                    "proposer": 9,
+                    "responder": 7
+                },
+                {
+                    "proposer": 16,
+                    "responder": 3
+                },
+                {
+                    "proposer": 12,
+                    "responder": 1
+                },
+                {
+                    "proposer": 18,
+                    "responder": 19
+                },
+                {
+                    "proposer": 17,
+                    "responder": 14
+                },
+                {
+                    "proposer": 22,
+                    "responder": 2
+                }
+            ],
+            "13": [
+                {
+                    "proposer": 21,
+                    "responder": 15
+                },
+                {
+                    "proposer": 10,
+                    "responder": 8
+                },
+                {
+                    "proposer": 20,
+                    "responder": 11
+                },
+                {
+                    "proposer": 6,
+                    "responder": 4
+                },
+                {
+                    "proposer": 13,
+                    "responder": 5
+                },
+                {
+                    "proposer": 9,
+                    "responder": 2
+                },
+                {
+                    "proposer": 16,
+                    "responder": 7
+                },
+                {
+                    "proposer": 12,
+                    "responder": 3
+                },
+                {
+                    "proposer": 18,
+                    "responder": 1
+                },
+                {
+                    "proposer": 17,
+                    "responder": 19
+                },
+                {
+                    "proposer": 22,
+                    "responder": 14
+                }
+            ],
+            "14": [
+                {
+                    "proposer": 21,
+                    "responder": 5
+                },
+                {
+                    "proposer": 10,
+                    "responder": 15
+                },
+                {
+                    "proposer": 20,
+                    "responder": 8
+                },
+                {
+                    "proposer": 6,
+                    "responder": 11
+                },
+                {
+                    "proposer": 13,
+                    "responder": 4
+                },
+                {
+                    "proposer": 9,
+                    "responder": 14
+                },
+                {
+                    "proposer": 16,
+                    "responder": 2
+                },
+                {
+                    "proposer": 12,
+                    "responder": 7
+                },
+                {
+                    "proposer": 18,
+                    "responder": 3
+                },
+                {
+                    "proposer": 17,
+                    "responder": 1
+                },
+                {
+                    "proposer": 22,
+                    "responder": 19
+                }
+            ],
+            "15": [
+                {
+                    "proposer": 21,
+                    "responder": 4
+                },
+                {
+                    "proposer": 10,
+                    "responder": 5
+                },
+                {
+                    "proposer": 20,
+                    "responder": 15
+                },
+                {
+                    "proposer": 6,
+                    "responder": 8
+                },
+                {
+                    "proposer": 13,
+                    "responder": 11
+                },
+                {
+                    "proposer": 9,
+                    "responder": 19
+                },
+                {
+                    "proposer": 16,
+                    "responder": 14
+                },
+                {
+                    "proposer": 12,
+                    "responder": 2
+                },
+                {
+                    "proposer": 18,
+                    "responder": 7
+                },
+                {
+                    "proposer": 17,
+                    "responder": 3
+                },
+                {
+                    "proposer": 22,
+                    "responder": 1
+                }
+            ]
+        }
+    },
+    "24": {
+        "subjectAssignment": {
+            "18": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "2": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "14": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "17": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "13": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "12": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "6": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "3": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "1": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "15": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "16": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "7": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "4": {
+                "MatchingGroup": 2,
+                "SubGroup": "a"
+            },
+            "9": {
+                "MatchingGroup": 2,
+                "SubGroup": "a"
+            },
+            "21": {
+                "MatchingGroup": 2,
+                "SubGroup": "a"
+            },
+            "5": {
+                "MatchingGroup": 2,
+                "SubGroup": "a"
+            },
+            "10": {
+                "MatchingGroup": 2,
+                "SubGroup": "a"
+            },
+            "24": {
+                "MatchingGroup": 2,
+                "SubGroup": "a"
+            },
+            "22": {
+                "MatchingGroup": 2,
+                "SubGroup": "b"
+            },
+            "20": {
+                "MatchingGroup": 2,
+                "SubGroup": "b"
+            },
+            "23": {
+                "MatchingGroup": 2,
+                "SubGroup": "b"
+            },
+            "11": {
+                "MatchingGroup": 2,
+                "SubGroup": "b"
+            },
+            "19": {
+                "MatchingGroup": 2,
+                "SubGroup": "b"
+            },
+            "8": {
+                "MatchingGroup": 2,
+                "SubGroup": "b"
+            }
+        },
+        "PeriodMatching": {
+            "1": [
+                {
+                    "proposer": 18,
+                    "responder": 7
+                },
+                {
+                    "proposer": 2,
+                    "responder": 6
+                },
+                {
+                    "proposer": 13,
+                    "responder": 16
+                },
+                {
+                    "proposer": 14,
+                    "responder": 1
+                },
+                {
+                    "proposer": 17,
+                    "responder": 3
+                },
+                {
+                    "proposer": 12,
+                    "responder": 15
+                },
+                {
+                    "proposer": 9,
+                    "responder": 20
+                },
+                {
+                    "proposer": 24,
+                    "responder": 8
+                },
+                {
+                    "proposer": 10,
+                    "responder": 19
+                },
+                {
+                    "proposer": 4,
+                    "responder": 11
+                },
+                {
+                    "proposer": 21,
+                    "responder": 23
+                },
+                {
+                    "proposer": 5,
+                    "responder": 22
+                }
+            ],
+            "2": [
+                {
+                    "proposer": 18,
+                    "responder": 15
+                },
+                {
+                    "proposer": 2,
+                    "responder": 7
+                },
+                {
+                    "proposer": 13,
+                    "responder": 6
+                },
+                {
+                    "proposer": 14,
+                    "responder": 16
+                },
+                {
+                    "proposer": 17,
+                    "responder": 1
+                },
+                {
+                    "proposer": 12,
+                    "responder": 3
+                },
+                {
+                    "proposer": 9,
+                    "responder": 22
+                },
+                {
+                    "proposer": 24,
+                    "responder": 20
+                },
+                {
+                    "proposer": 10,
+                    "responder": 8
+                },
+                {
+                    "proposer": 4,
+                    "responder": 19
+                },
+                {
+                    "proposer": 21,
+                    "responder": 11
+                },
+                {
+                    "proposer": 5,
+                    "responder": 23
+                }
+            ],
+            "3": [
+                {
+                    "proposer": 18,
+                    "responder": 3
+                },
+                {
+                    "proposer": 2,
+                    "responder": 15
+                },
+                {
+                    "proposer": 13,
+                    "responder": 7
+                },
+                {
+                    "proposer": 14,
+                    "responder": 6
+                },
+                {
+                    "proposer": 17,
+                    "responder": 16
+                },
+                {
+                    "proposer": 12,
+                    "responder": 1
+                },
+                {
+                    "proposer": 9,
+                    "responder": 23
+                },
+                {
+                    "proposer": 24,
+                    "responder": 22
+                },
+                {
+                    "proposer": 10,
+                    "responder": 20
+                },
+                {
+                    "proposer": 4,
+                    "responder": 8
+                },
+                {
+                    "proposer": 21,
+                    "responder": 19
+                },
+                {
+                    "proposer": 5,
+                    "responder": 11
+                }
+            ],
+            "4": [
+                {
+                    "proposer": 18,
+                    "responder": 1
+                },
+                {
+                    "proposer": 2,
+                    "responder": 3
+                },
+                {
+                    "proposer": 13,
+                    "responder": 15
+                },
+                {
+                    "proposer": 14,
+                    "responder": 7
+                },
+                {
+                    "proposer": 17,
+                    "responder": 6
+                },
+                {
+                    "proposer": 12,
+                    "responder": 16
+                },
+                {
+                    "proposer": 9,
+                    "responder": 11
+                },
+                {
+                    "proposer": 24,
+                    "responder": 23
+                },
+                {
+                    "proposer": 10,
+                    "responder": 22
+                },
+                {
+                    "proposer": 4,
+                    "responder": 20
+                },
+                {
+                    "proposer": 21,
+                    "responder": 8
+                },
+                {
+                    "proposer": 5,
+                    "responder": 19
+                }
+            ],
+            "5": [
+                {
+                    "proposer": 18,
+                    "responder": 16
+                },
+                {
+                    "proposer": 2,
+                    "responder": 1
+                },
+                {
+                    "proposer": 13,
+                    "responder": 3
+                },
+                {
+                    "proposer": 14,
+                    "responder": 15
+                },
+                {
+                    "proposer": 17,
+                    "responder": 7
+                },
+                {
+                    "proposer": 12,
+                    "responder": 6
+                },
+                {
+                    "proposer": 9,
+                    "responder": 19
+                },
+                {
+                    "proposer": 24,
+                    "responder": 11
+                },
+                {
+                    "proposer": 10,
+                    "responder": 23
+                },
+                {
+                    "proposer": 4,
+                    "responder": 22
+                },
+                {
+                    "proposer": 21,
+                    "responder": 20
+                },
+                {
+                    "proposer": 5,
+                    "responder": 8
+                }
+            ],
+            "6": [
+                {
+                    "proposer": 1,
+                    "responder": 14
+                },
+                {
+                    "proposer": 7,
+                    "responder": 13
+                },
+                {
+                    "proposer": 6,
+                    "responder": 18
+                },
+                {
+                    "proposer": 3,
+                    "responder": 17
+                },
+                {
+                    "proposer": 15,
+                    "responder": 2
+                },
+                {
+                    "proposer": 16,
+                    "responder": 12
+                },
+                {
+                    "proposer": 23,
+                    "responder": 9
+                },
+                {
+                    "proposer": 8,
+                    "responder": 10
+                },
+                {
+                    "proposer": 11,
+                    "responder": 5
+                },
+                {
+                    "proposer": 19,
+                    "responder": 4
+                },
+                {
+                    "proposer": 20,
+                    "responder": 24
+                },
+                {
+                    "proposer": 22,
+                    "responder": 21
+                }
+            ],
+            "7": [
+                {
+                    "proposer": 1,
+                    "responder": 12
+                },
+                {
+                    "proposer": 7,
+                    "responder": 14
+                },
+                {
+                    "proposer": 6,
+                    "responder": 13
+                },
+                {
+                    "proposer": 3,
+                    "responder": 18
+                },
+                {
+                    "proposer": 15,
+                    "responder": 17
+                },
+                {
+                    "proposer": 16,
+                    "responder": 2
+                },
+                {
+                    "proposer": 23,
+                    "responder": 21
+                },
+                {
+                    "proposer": 8,
+                    "responder": 9
+                },
+                {
+                    "proposer": 11,
+                    "responder": 10
+                },
+                {
+                    "proposer": 19,
+                    "responder": 5
+                },
+                {
+                    "proposer": 20,
+                    "responder": 4
+                },
+                {
+                    "proposer": 22,
+                    "responder": 24
+                }
+            ],
+            "8": [
+                {
+                    "proposer": 1,
+                    "responder": 2
+                },
+                {
+                    "proposer": 7,
+                    "responder": 12
+                },
+                {
+                    "proposer": 6,
+                    "responder": 14
+                },
+                {
+                    "proposer": 3,
+                    "responder": 13
+                },
+                {
+                    "proposer": 15,
+                    "responder": 18
+                },
+                {
+                    "proposer": 16,
+                    "responder": 17
+                },
+                {
+                    "proposer": 23,
+                    "responder": 24
+                },
+                {
+                    "proposer": 8,
+                    "responder": 21
+                },
+                {
+                    "proposer": 11,
+                    "responder": 9
+                },
+                {
+                    "proposer": 19,
+                    "responder": 10
+                },
+                {
+                    "proposer": 20,
+                    "responder": 5
+                },
+                {
+                    "proposer": 22,
+                    "responder": 4
+                }
+            ],
+            "9": [
+                {
+                    "proposer": 1,
+                    "responder": 17
+                },
+                {
+                    "proposer": 7,
+                    "responder": 2
+                },
+                {
+                    "proposer": 6,
+                    "responder": 12
+                },
+                {
+                    "proposer": 3,
+                    "responder": 14
+                },
+                {
+                    "proposer": 15,
+                    "responder": 13
+                },
+                {
+                    "proposer": 16,
+                    "responder": 18
+                },
+                {
+                    "proposer": 23,
+                    "responder": 4
+                },
+                {
+                    "proposer": 8,
+                    "responder": 24
+                },
+                {
+                    "proposer": 11,
+                    "responder": 21
+                },
+                {
+                    "proposer": 19,
+                    "responder": 9
+                },
+                {
+                    "proposer": 20,
+                    "responder": 10
+                },
+                {
+                    "proposer": 22,
+                    "responder": 5
+                }
+            ],
+            "10": [
+                {
+                    "proposer": 1,
+                    "responder": 18
+                },
+                {
+                    "proposer": 7,
+                    "responder": 17
+                },
+                {
+                    "proposer": 6,
+                    "responder": 2
+                },
+                {
+                    "proposer": 3,
+                    "responder": 12
+                },
+                {
+                    "proposer": 15,
+                    "responder": 14
+                },
+                {
+                    "proposer": 16,
+                    "responder": 13
+                },
+                {
+                    "proposer": 23,
+                    "responder": 5
+                },
+                {
+                    "proposer": 8,
+                    "responder": 4
+                },
+                {
+                    "proposer": 11,
+                    "responder": 24
+                },
+                {
+                    "proposer": 19,
+                    "responder": 21
+                },
+                {
+                    "proposer": 20,
+                    "responder": 9
+                },
+                {
+                    "proposer": 22,
+                    "responder": 10
+                }
+            ],
+            "11": [
+                {
+                    "proposer": 14,
+                    "responder": 16
+                },
+                {
+                    "proposer": 18,
+                    "responder": 6
+                },
+                {
+                    "proposer": 12,
+                    "responder": 15
+                },
+                {
+                    "proposer": 2,
+                    "responder": 7
+                },
+                {
+                    "proposer": 13,
+                    "responder": 3
+                },
+                {
+                    "proposer": 17,
+                    "responder": 1
+                },
+                {
+                    "proposer": 9,
+                    "responder": 22
+                },
+                {
+                    "proposer": 21,
+                    "responder": 8
+                },
+                {
+                    "proposer": 10,
+                    "responder": 19
+                },
+                {
+                    "proposer": 5,
+                    "responder": 23
+                },
+                {
+                    "proposer": 4,
+                    "responder": 20
+                },
+                {
+                    "proposer": 24,
+                    "responder": 11
+                }
+            ],
+            "12": [
+                {
+                    "proposer": 14,
+                    "responder": 1
+                },
+                {
+                    "proposer": 18,
+                    "responder": 16
+                },
+                {
+                    "proposer": 12,
+                    "responder": 6
+                },
+                {
+                    "proposer": 2,
+                    "responder": 15
+                },
+                {
+                    "proposer": 13,
+                    "responder": 7
+                },
+                {
+                    "proposer": 17,
+                    "responder": 3
+                },
+                {
+                    "proposer": 9,
+                    "responder": 11
+                },
+                {
+                    "proposer": 21,
+                    "responder": 22
+                },
+                {
+                    "proposer": 10,
+                    "responder": 8
+                },
+                {
+                    "proposer": 5,
+                    "responder": 19
+                },
+                {
+                    "proposer": 4,
+                    "responder": 23
+                },
+                {
+                    "proposer": 24,
+                    "responder": 20
+                }
+            ],
+            "13": [
+                {
+                    "proposer": 14,
+                    "responder": 3
+                },
+                {
+                    "proposer": 18,
+                    "responder": 1
+                },
+                {
+                    "proposer": 12,
+                    "responder": 16
+                },
+                {
+                    "proposer": 2,
+                    "responder": 6
+                },
+                {
+                    "proposer": 13,
+                    "responder": 15
+                },
+                {
+                    "proposer": 17,
+                    "responder": 7
+                },
+                {
+                    "proposer": 9,
+                    "responder": 20
+                },
+                {
+                    "proposer": 21,
+                    "responder": 11
+                },
+                {
+                    "proposer": 10,
+                    "responder": 22
+                },
+                {
+                    "proposer": 5,
+                    "responder": 8
+                },
+                {
+                    "proposer": 4,
+                    "responder": 19
+                },
+                {
+                    "proposer": 24,
+                    "responder": 23
+                }
+            ],
+            "14": [
+                {
+                    "proposer": 14,
+                    "responder": 7
+                },
+                {
+                    "proposer": 18,
+                    "responder": 3
+                },
+                {
+                    "proposer": 12,
+                    "responder": 1
+                },
+                {
+                    "proposer": 2,
+                    "responder": 16
+                },
+                {
+                    "proposer": 13,
+                    "responder": 6
+                },
+                {
+                    "proposer": 17,
+                    "responder": 15
+                },
+                {
+                    "proposer": 9,
+                    "responder": 23
+                },
+                {
+                    "proposer": 21,
+                    "responder": 20
+                },
+                {
+                    "proposer": 10,
+                    "responder": 11
+                },
+                {
+                    "proposer": 5,
+                    "responder": 22
+                },
+                {
+                    "proposer": 4,
+                    "responder": 8
+                },
+                {
+                    "proposer": 24,
+                    "responder": 19
+                }
+            ],
+            "15": [
+                {
+                    "proposer": 14,
+                    "responder": 15
+                },
+                {
+                    "proposer": 18,
+                    "responder": 7
+                },
+                {
+                    "proposer": 12,
+                    "responder": 3
+                },
+                {
+                    "proposer": 2,
+                    "responder": 1
+                },
+                {
+                    "proposer": 13,
+                    "responder": 16
+                },
+                {
+                    "proposer": 17,
+                    "responder": 6
+                },
+                {
+                    "proposer": 9,
+                    "responder": 19
+                },
+                {
+                    "proposer": 21,
+                    "responder": 23
+                },
+                {
+                    "proposer": 10,
+                    "responder": 20
+                },
+                {
+                    "proposer": 5,
+                    "responder": 11
+                },
+                {
+                    "proposer": 4,
+                    "responder": 22
+                },
+                {
+                    "proposer": 24,
+                    "responder": 8
+                }
+            ]
+        }
+    },
+    "26": {
+        "subjectAssignment": {
+            "3": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "11": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "19": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "24": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "2": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "5": {
+                "MatchingGroup": 1,
+                "SubGroup": "a"
+            },
+            "1": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "7": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "22": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "14": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "25": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "6": {
+                "MatchingGroup": 1,
+                "SubGroup": "b"
+            },
+            "8": {
+                "MatchingGroup": 2,
+                "SubGroup": "a"
+            },
+            "20": {
+                "MatchingGroup": 2,
+                "SubGroup": "a"
+            },
+            "13": {
+                "MatchingGroup": 2,
+                "SubGroup": "a"
+            },
+            "4": {
+                "MatchingGroup": 2,
+                "SubGroup": "a"
+            },
+            "26": {
+                "MatchingGroup": 2,
+                "SubGroup": "a"
+            },
+            "16": {
+                "MatchingGroup": 2,
+                "SubGroup": "a"
+            },
+            "17": {
+                "MatchingGroup": 2,
+                "SubGroup": "a"
+            },
+            "23": {
+                "MatchingGroup": 2,
+                "SubGroup": "b"
+            },
+            "9": {
+                "MatchingGroup": 2,
+                "SubGroup": "b"
+            },
+            "10": {
+                "MatchingGroup": 2,
+                "SubGroup": "b"
+            },
+            "12": {
+                "MatchingGroup": 2,
+                "SubGroup": "b"
+            },
+            "21": {
+                "MatchingGroup": 2,
+                "SubGroup": "b"
+            },
+            "18": {
+                "MatchingGroup": 2,
+                "SubGroup": "b"
+            },
+            "15": {
+                "MatchingGroup": 2,
+                "SubGroup": "b"
+            }
+        },
+        "PeriodMatching": {
+            "1": [
+                {
+                    "proposer": 19,
+                    "responder": 25
+                },
+                {
+                    "proposer": 3,
+                    "responder": 1
+                },
+                {
+                    "proposer": 11,
+                    "responder": 14
+                },
+                {
+                    "proposer": 24,
+                    "responder": 6
+                },
+                {
+                    "proposer": 5,
+                    "responder": 22
+                },
+                {
+                    "proposer": 2,
+                    "responder": 7
+                },
+                {
+                    "proposer": 26,
+                    "responder": 10
+                },
+                {
+                    "proposer": 16,
+                    "responder": 21
+                },
+                {
+                    "proposer": 13,
+                    "responder": 12
+                },
+                {
+                    "proposer": 20,
+                    "responder": 15
+                },
+                {
+                    "proposer": 4,
+                    "responder": 9
+                },
+                {
+                    "proposer": 8,
+                    "responder": 18
+                },
+                {
+                    "proposer": 17,
+                    "responder": 23
+                }
+            ],
+            "2": [
+                {
+                    "proposer": 19,
+                    "responder": 7
+                },
+                {
+                    "proposer": 3,
+                    "responder": 25
+                },
+                {
+                    "proposer": 11,
+                    "responder": 1
+                },
+                {
+                    "proposer": 24,
+                    "responder": 14
+                },
+                {
+                    "proposer": 5,
+                    "responder": 6
+                },
+                {
+                    "proposer": 2,
+                    "responder": 22
+                },
+                {
+                    "proposer": 26,
+                    "responder": 23
+                },
+                {
+                    "proposer": 16,
+                    "responder": 10
+                },
+                {
+                    "proposer": 13,
+                    "responder": 21
+                },
+                {
+                    "proposer": 20,
+                    "responder": 12
+                },
+                {
+                    "proposer": 4,
+                    "responder": 15
+                },
+                {
+                    "proposer": 8,
+                    "responder": 9
+                },
+                {
+                    "proposer": 17,
+                    "responder": 18
+                }
+            ],
+            "3": [
+                {
+                    "proposer": 19,
+                    "responder": 22
+                },
+                {
+                    "proposer": 3,
+                    "responder": 7
+                },
+                {
+                    "proposer": 11,
+                    "responder": 25
+                },
+                {
+                    "proposer": 24,
+                    "responder": 1
+                },
+                {
+                    "proposer": 5,
+                    "responder": 14
+                },
+                {
+                    "proposer": 2,
+                    "responder": 6
+                },
+                {
+                    "proposer": 26,
+                    "responder": 18
+                },
+                {
+                    "proposer": 16,
+                    "responder": 23
+                },
+                {
+                    "proposer": 13,
+                    "responder": 10
+                },
+                {
+                    "proposer": 20,
+                    "responder": 21
+                },
+                {
+                    "proposer": 4,
+                    "responder": 12
+                },
+                {
+                    "proposer": 8,
+                    "responder": 15
+                },
+                {
+                    "proposer": 17,
+                    "responder": 9
+                }
+            ],
+            "4": [
+                {
+                    "proposer": 19,
+                    "responder": 6
+                },
+                {
+                    "proposer": 3,
+                    "responder": 22
+                },
+                {
+                    "proposer": 11,
+                    "responder": 7
+                },
+                {
+                    "proposer": 24,
+                    "responder": 25
+                },
+                {
+                    "proposer": 5,
+                    "responder": 1
+                },
+                {
+                    "proposer": 2,
+                    "responder": 14
+                },
+                {
+                    "proposer": 26,
+                    "responder": 9
+                },
+                {
+                    "proposer": 16,
+                    "responder": 18
+                },
+                {
+                    "proposer": 13,
+                    "responder": 23
+                },
+                {
+                    "proposer": 20,
+                    "responder": 10
+                },
+                {
+                    "proposer": 4,
+                    "responder": 21
+                },
+                {
+                    "proposer": 8,
+                    "responder": 12
+                },
+                {
+                    "proposer": 17,
+                    "responder": 15
+                }
+            ],
+            "5": [
+                {
+                    "proposer": 19,
+                    "responder": 14
+                },
+                {
+                    "proposer": 3,
+                    "responder": 6
+                },
+                {
+                    "proposer": 11,
+                    "responder": 22
+                },
+                {
+                    "proposer": 24,
+                    "responder": 7
+                },
+                {
+                    "proposer": 5,
+                    "responder": 25
+                },
+                {
+                    "proposer": 2,
+                    "responder": 1
+                },
+                {
+                    "proposer": 26,
+                    "responder": 15
+                },
+                {
+                    "proposer": 16,
+                    "responder": 9
+                },
+                {
+                    "proposer": 13,
+                    "responder": 18
+                },
+                {
+                    "proposer": 20,
+                    "responder": 23
+                },
+                {
+                    "proposer": 4,
+                    "responder": 10
+                },
+                {
+                    "proposer": 8,
+                    "responder": 21
+                },
+                {
+                    "proposer": 17,
+                    "responder": 12
+                }
+            ],
+            "6": [
+                {
+                    "proposer": 1,
+                    "responder": 19
+                },
+                {
+                    "proposer": 6,
+                    "responder": 11
+                },
+                {
+                    "proposer": 7,
+                    "responder": 3
+                },
+                {
+                    "proposer": 22,
+                    "responder": 2
+                },
+                {
+                    "proposer": 25,
+                    "responder": 24
+                },
+                {
+                    "proposer": 14,
+                    "responder": 5
+                },
+                {
+                    "proposer": 18,
+                    "responder": 20
+                },
+                {
+                    "proposer": 9,
+                    "responder": 13
+                },
+                {
+                    "proposer": 15,
+                    "responder": 16
+                },
+                {
+                    "proposer": 12,
+                    "responder": 4
+                },
+                {
+                    "proposer": 21,
+                    "responder": 26
+                },
+                {
+                    "proposer": 23,
+                    "responder": 17
+                },
+                {
+                    "proposer": 10,
+                    "responder": 8
+                }
+            ],
+            "7": [
+                {
+                    "proposer": 1,
+                    "responder": 5
+                },
+                {
+                    "proposer": 6,
+                    "responder": 19
+                },
+                {
+                    "proposer": 7,
+                    "responder": 11
+                },
+                {
+                    "proposer": 22,
+                    "responder": 3
+                },
+                {
+                    "proposer": 25,
+                    "responder": 2
+                },
+                {
+                    "proposer": 14,
+                    "responder": 24
+                },
+                {
+                    "proposer": 18,
+                    "responder": 8
+                },
+                {
+                    "proposer": 9,
+                    "responder": 20
+                },
+                {
+                    "proposer": 15,
+                    "responder": 13
+                },
+                {
+                    "proposer": 12,
+                    "responder": 16
+                },
+                {
+                    "proposer": 21,
+                    "responder": 4
+                },
+                {
+                    "proposer": 23,
+                    "responder": 26
+                },
+                {
+                    "proposer": 10,
+                    "responder": 17
+                }
+            ],
+            "8": [
+                {
+                    "proposer": 1,
+                    "responder": 24
+                },
+                {
+                    "proposer": 6,
+                    "responder": 5
+                },
+                {
+                    "proposer": 7,
+                    "responder": 19
+                },
+                {
+                    "proposer": 22,
+                    "responder": 11
+                },
+                {
+                    "proposer": 25,
+                    "responder": 3
+                },
+                {
+                    "proposer": 14,
+                    "responder": 2
+                },
+                {
+                    "proposer": 18,
+                    "responder": 17
+                },
+                {
+                    "proposer": 9,
+                    "responder": 8
+                },
+                {
+                    "proposer": 15,
+                    "responder": 20
+                },
+                {
+                    "proposer": 12,
+                    "responder": 13
+                },
+                {
+                    "proposer": 21,
+                    "responder": 16
+                },
+                {
+                    "proposer": 23,
+                    "responder": 4
+                },
+                {
+                    "proposer": 10,
+                    "responder": 26
+                }
+            ],
+            "9": [
+                {
+                    "proposer": 1,
+                    "responder": 2
+                },
+                {
+                    "proposer": 6,
+                    "responder": 24
+                },
+                {
+                    "proposer": 7,
+                    "responder": 5
+                },
+                {
+                    "proposer": 22,
+                    "responder": 19
+                },
+                {
+                    "proposer": 25,
+                    "responder": 11
+                },
+                {
+                    "proposer": 14,
+                    "responder": 3
+                },
+                {
+                    "proposer": 18,
+                    "responder": 26
+                },
+                {
+                    "proposer": 9,
+                    "responder": 17
+                },
+                {
+                    "proposer": 15,
+                    "responder": 8
+                },
+                {
+                    "proposer": 12,
+                    "responder": 20
+                },
+                {
+                    "proposer": 21,
+                    "responder": 13
+                },
+                {
+                    "proposer": 23,
+                    "responder": 16
+                },
+                {
+                    "proposer": 10,
+                    "responder": 4
+                }
+            ],
+            "10": [
+                {
+                    "proposer": 1,
+                    "responder": 3
+                },
+                {
+                    "proposer": 6,
+                    "responder": 2
+                },
+                {
+                    "proposer": 7,
+                    "responder": 24
+                },
+                {
+                    "proposer": 22,
+                    "responder": 5
+                },
+                {
+                    "proposer": 25,
+                    "responder": 19
+                },
+                {
+                    "proposer": 14,
+                    "responder": 11
+                },
+                {
+                    "proposer": 18,
+                    "responder": 4
+                },
+                {
+                    "proposer": 9,
+                    "responder": 26
+                },
+                {
+                    "proposer": 15,
+                    "responder": 17
+                },
+                {
+                    "proposer": 12,
+                    "responder": 8
+                },
+                {
+                    "proposer": 21,
+                    "responder": 20
+                },
+                {
+                    "proposer": 23,
+                    "responder": 13
+                },
+                {
+                    "proposer": 10,
+                    "responder": 16
+                }
+            ],
+            "11": [
+                {
+                    "proposer": 2,
+                    "responder": 7
+                },
+                {
+                    "proposer": 19,
+                    "responder": 14
+                },
+                {
+                    "proposer": 3,
+                    "responder": 22
+                },
+                {
+                    "proposer": 24,
+                    "responder": 6
+                },
+                {
+                    "proposer": 5,
+                    "responder": 1
+                },
+                {
+                    "proposer": 11,
+                    "responder": 25
+                },
+                {
+                    "proposer": 4,
+                    "responder": 18
+                },
+                {
+                    "proposer": 20,
+                    "responder": 12
+                },
+                {
+                    "proposer": 8,
+                    "responder": 10
+                },
+                {
+                    "proposer": 17,
+                    "responder": 21
+                },
+                {
+                    "proposer": 13,
+                    "responder": 23
+                },
+                {
+                    "proposer": 16,
+                    "responder": 9
+                },
+                {
+                    "proposer": 26,
+                    "responder": 15
+                }
+            ],
+            "12": [
+                {
+                    "proposer": 2,
+                    "responder": 25
+                },
+                {
+                    "proposer": 19,
+                    "responder": 7
+                },
+                {
+                    "proposer": 3,
+                    "responder": 14
+                },
+                {
+                    "proposer": 24,
+                    "responder": 22
+                },
+                {
+                    "proposer": 5,
+                    "responder": 6
+                },
+                {
+                    "proposer": 11,
+                    "responder": 1
+                },
+                {
+                    "proposer": 4,
+                    "responder": 15
+                },
+                {
+                    "proposer": 20,
+                    "responder": 18
+                },
+                {
+                    "proposer": 8,
+                    "responder": 12
+                },
+                {
+                    "proposer": 17,
+                    "responder": 10
+                },
+                {
+                    "proposer": 13,
+                    "responder": 21
+                },
+                {
+                    "proposer": 16,
+                    "responder": 23
+                },
+                {
+                    "proposer": 26,
+                    "responder": 9
+                }
+            ],
+            "13": [
+                {
+                    "proposer": 2,
+                    "responder": 1
+                },
+                {
+                    "proposer": 19,
+                    "responder": 25
+                },
+                {
+                    "proposer": 3,
+                    "responder": 7
+                },
+                {
+                    "proposer": 24,
+                    "responder": 14
+                },
+                {
+                    "proposer": 5,
+                    "responder": 22
+                },
+                {
+                    "proposer": 11,
+                    "responder": 6
+                },
+                {
+                    "proposer": 4,
+                    "responder": 9
+                },
+                {
+                    "proposer": 20,
+                    "responder": 15
+                },
+                {
+                    "proposer": 8,
+                    "responder": 18
+                },
+                {
+                    "proposer": 17,
+                    "responder": 12
+                },
+                {
+                    "proposer": 13,
+                    "responder": 10
+                },
+                {
+                    "proposer": 16,
+                    "responder": 21
+                },
+                {
+                    "proposer": 26,
+                    "responder": 23
+                }
+            ],
+            "14": [
+                {
+                    "proposer": 2,
+                    "responder": 6
+                },
+                {
+                    "proposer": 19,
+                    "responder": 1
+                },
+                {
+                    "proposer": 3,
+                    "responder": 25
+                },
+                {
+                    "proposer": 24,
+                    "responder": 7
+                },
+                {
+                    "proposer": 5,
+                    "responder": 14
+                },
+                {
+                    "proposer": 11,
+                    "responder": 22
+                },
+                {
+                    "proposer": 4,
+                    "responder": 23
+                },
+                {
+                    "proposer": 20,
+                    "responder": 9
+                },
+                {
+                    "proposer": 8,
+                    "responder": 15
+                },
+                {
+                    "proposer": 17,
+                    "responder": 18
+                },
+                {
+                    "proposer": 13,
+                    "responder": 12
+                },
+                {
+                    "proposer": 16,
+                    "responder": 10
+                },
+                {
+                    "proposer": 26,
+                    "responder": 21
+                }
+            ],
+            "15": [
+                {
+                    "proposer": 2,
+                    "responder": 22
+                },
+                {
+                    "proposer": 19,
+                    "responder": 6
+                },
+                {
+                    "proposer": 3,
+                    "responder": 1
+                },
+                {
+                    "proposer": 24,
+                    "responder": 25
+                },
+                {
+                    "proposer": 5,
+                    "responder": 7
+                },
+                {
+                    "proposer": 11,
+                    "responder": 14
+                },
+                {
+                    "proposer": 4,
+                    "responder": 21
+                },
+                {
+                    "proposer": 20,
+                    "responder": 23
+                },
+                {
+                    "proposer": 8,
+                    "responder": 9
+                },
+                {
+                    "proposer": 17,
+                    "responder": 15
+                },
+                {
+                    "proposer": 13,
+                    "responder": 18
+                },
+                {
+                    "proposer": 16,
+                    "responder": 12
+                },
+                {
+                    "proposer": 26,
+                    "responder": 10
+                }
+            ]
+        }
+    }
+}

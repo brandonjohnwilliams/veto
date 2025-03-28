@@ -12,7 +12,7 @@ Risk preferences
 class C(BaseConstants):
     NAME_IN_URL = 'lotteries'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 3
+    NUM_ROUNDS = 1
 
     single = 0
 
@@ -25,22 +25,7 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    minSlider = models.IntegerField()  # defines the left side of the delegated range
-    maxSlider = models.IntegerField()  # defines the right side of the delegated range
-
-    robotChoice = models.IntegerField()  # numerical response of the robot buyer
-
-    # dice rolls
-    vetoer_bias = models.IntegerField()
-    drawLow = models.IntegerField()
-    drawMed = models.IntegerField()
-    drawHigh = models.IntegerField()
-
-    selectedX = models.IntegerField()
-
-    # Distributions
-    roundType = models.IntegerField()
-    roundName = models.StringField()
+    lottery = models.StringField()
 
 
 # FUNCTIONS
@@ -120,93 +105,18 @@ def creating_session(subsession):
             player.roundName = "highest"
 
 # PAGES
-class Intro(Page):
-    @staticmethod
-    def is_displayed(player):
-        return player.round_number == 1
+
 
 class Instructions(Page):
-    @staticmethod
-    def is_displayed(player):
-        return player.round_number == 1
+    pass
 
-class robot(Page):
+class lotteries(Page):
     form_model = 'player'
-    form_fields = ['minSlider','maxSlider']
+    form_fields = ['lottery']
 
-    @staticmethod
-    def js_vars(player):
-        return dict(
-            round_type=player.roundType,
-            single_treat=C.single,
-            fromM=1,
-            toM=8,
-            roundType=player.roundType,
-        )
-
-    @staticmethod
-    def vars_for_template(player):
-        return dict(
-            roundType=player.roundType,
-            roundName=player.roundName,
-        )
-
-    @staticmethod
-    def before_next_page(player: Player, timeout_happened):
-        set_payoffs(player)
-
-class Results(Page):
-    timeout_seconds = 15
-    @staticmethod
-    def js_vars(player):
-
-        # Initialize empty lists
-        roundName_list = []
-        idealX_list = []
-        offerMin_list = []
-        offerMax_list = []
-        choice_list = []
-        payoff_list = []
-
-        # Loop through each round
-        for i in range(1,player.round_number + 1):  # Assuming num_rounds is defined
-            prev_player = player.in_round(i)
-
-            # Append values from the respective round
-            roundName_list.append(prev_player.roundName)
-            idealX_list.append(prev_player.vetoer_bias)
-            offerMin_list.append(prev_player.minSlider)
-            offerMax_list.append(prev_player.maxSlider)
-            choice_list.append(prev_player.robotChoice)
-            payoff_list.append(prev_player.payoff)
-
-
-        return dict(
-            round=player.round_number,
-
-            # loop these variables
-            idealX=idealX_list,
-            offerMin=offerMin_list,
-            offerMax=offerMax_list,
-            choice=choice_list,
-            payoff=payoff_list,
-            roundName=roundName_list,
-        )
-
-    @staticmethod
-    def vars_for_template(player):
-        return dict(
-            round_type=player.roundType,
-            roundName=player.roundName,
-        )
-
-class WaitPage(WaitPage):
-    @staticmethod
-    def is_displayed(player):
-        return player.round_number == 3
-
+class Waiting(WaitPage):
     wait_for_all_groups = True
 
-    body_text = "Waiting for all participants to complete Part Two."
+    body_text = "Waiting for all participants to complete Part Three."
 
-page_sequence = [Intro, Instructions, robot, Results, WaitPage]
+page_sequence = [Instructions, lotteries, Waiting]

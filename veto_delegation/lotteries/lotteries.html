@@ -1,0 +1,295 @@
+{{ block title }}
+Lottery
+{{ endblock }}
+
+{{ block content }}
+
+    <head>
+<!--        <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">-->
+        <style>
+            canvas {
+                border: 1px solid #000;
+            }
+
+            .canvas-container {
+              text-align: center;
+            }
+          #lotteryTable {
+            margin-top: 20px;
+            border-collapse: collapse;
+          }
+          #lotteryTable th, #lotteryTable td {
+            border: 1px solid #ddd;
+            padding: 4px;
+            text-align: center;
+            width: 85px;
+          }
+          #lotteryTable th:first-child, #lotteryTable td:first-child {
+            border: none;
+            width: 150px;
+            padding: 0;
+          }
+
+
+    .active-row td:not(:first-child) {
+      background-color: #bebeff;
+    }
+        .lottery-button {
+          margin: 8px 0;
+          padding: 5px 20px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          background-color: #f9f9f9;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+
+        .lottery-button:hover {
+          background: #e3e3e3;
+        }
+
+        .lottery-button.active-button {
+          border-color: #0000ff;
+          background: #bebeff;
+        }
+
+        </style>
+    </head>
+
+<div style="position: relative; width: fit-content; margin-left: 129px">
+  <canvas id="canvasProb" width="800" height="400"></canvas>
+  <div style="position: absolute; top: 50%; left: -50px; transform: rotate(-90deg) translateY(+10%) translateX(-50%); transform-origin: left center; font-family: Arial; font-size: 16px;">
+    <b>Percent chance to win amount</b>
+  </div>
+</div>
+<div style="text-align: center; margin-top: 4px; font-family: Arial; transform: translateX(+5%); font-size: 16px;">
+  <b>Winning amount</b>
+</div>
+
+
+<table id="lotteryTable">
+  <thead>
+    <tr>
+      <th></th>
+      <th>4</th>
+      <th>8</th>
+      <th>12</th>
+      <th>16</th>
+      <th>20</th>
+      <th>24</th>
+      <th>28</th>
+      <th>32</th>
+      <th>36</th>
+    </tr>
+  </thead>
+  <tbody id="lotteryTableBody"></tbody>
+</table>
+
+<input type="hidden" name="lottery" id="selectedLotteryInput" value="">
+
+{{ formfield_errors 'lottery' }}
+{{ next_button }}
+
+<script>
+const lotteries = {
+  "Lottery A": { action: "{0} U [1,8]", lot: { 4: 0, 8: 30.0, 12: 25.0, 16: 20.0, 20: 15.0, 24: 5.0, 28: 5.0, 32: 0, 36: 0 }, expec: 14.2 },
+  "Lottery B": { action: "{0} U [2,8]", lot: { 4: 30.0, 8: 0, 12: 25.0, 16: 20.0, 20: 15.0, 24: 5.0, 28: 5.0, 32: 0, 36: 0 }, expec: 13.0 },
+  "Lottery C": { action: "{0} U [3,8]", lot: { 4: 30.0, 8: 0, 12: 0, 16: 45.0, 20: 15.0, 24: 5.0, 28: 5.0, 32: 0, 36: 0 }, expec: 14.0 },
+  "Lottery D": { action: "{0} U [4,8]", lot: { 4: 55.0, 8: 0, 12: 0, 16: 0, 20: 35.0, 24: 5.0, 28: 5.0, 32: 0, 36: 0 }, expec: 11.8 },
+  "Lottery E": { action: "{0} U [5,8]", lot: { 4: 55.0, 8: 0, 12: 0, 16: 0, 20: 0, 24: 40.0, 28: 5.0, 32: 0, 36: 0 }, expec: 13.2 },
+  "Lottery F": { action: "{0} U [6,8]", lot: { 4: 75.0, 8: 0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 25.0, 32: 0, 36: 0 }, expec: 10.0 },
+  "Lottery G": { action: "{0} U [7,8]", lot: { 4: 75.0, 8: 0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 0, 32: 25.0, 36: 0 }, expec: 11.0 },
+  "Lottery H": { action: "{0,8}", lot: { 4: 90.0, 8: 0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 0, 32: 0, 36: 10.0 }, expec: 7.2 }
+};
+
+const canvasProb = document.getElementById("canvasProb");
+const ctx = canvasProb.getContext("2d");
+const xRange = 9;
+const yRange = 1.0;
+const axisTextSize = "14px Arial";
+
+const yticks = [
+  { y: 0.00, yTxt: "0%" },
+  { y: 0.25, yTxt: "25%" },
+  { y: 0.50, yTxt: "50%" },
+  { y: 0.75, yTxt: "75%" },
+  { y: 1.00, yTxt: "100%" }
+];
+
+function updatePoints(basePoints, newYValues) {
+  const updated = {};
+  for (const group in newYValues) {
+    const ys = newYValues[group];
+    let cumulative = 0;
+    updated[group] = ys.map((y, index) => {
+      const yCDF = cumulative;
+      cumulative += y;
+      const yADJ = ys.slice(index + 1).reduce((a, b) => a + b, 0);
+      return {
+        x: index + 1,
+        y: y,
+        yCDF: (yCDF * 100).toFixed(2) + "%",
+        yPT: (y * 100).toFixed(2) + "%",
+        yADJ: (yADJ * 100).toFixed(2) + "%"
+      };
+    });
+  }
+  return updated;
+}
+
+function formatForUpdatePoints(lottery) {
+  const lot = lotteries[lottery].lot;
+  const keys = Object.keys(lot).sort((a, b) => parseInt(a) - parseInt(b));
+  const values = keys.map(k => lot[k] / 100);
+  return { [lottery]: values };
+}
+
+function xyTranslate(x, y, setts) {
+  const bw = setts['bw'];
+  const chb = setts['ch'] - 2 * bw;
+  const cwb = setts['cw'] - 2 * bw;
+  const originY = bw + chb;
+  const xMin = setts['xMin'];
+  const xIncrement = cwb / (setts['xMax'] - xMin);
+  const yMin = setts['yMin'];
+  const yIncrement = chb / (setts['yMax'] - yMin);
+  return {
+    cx: setts['bw'] + (x - xMin) * xIncrement,
+    cy: originY - (y - yMin) * yIncrement
+  };
+}
+
+function drawLine(ctx,x1,y1,x2,y2,graphsettings){
+  const pt0=xyTranslate(x1,y1,graphsettings);
+  const pt1=xyTranslate(x2,y2,graphsettings);
+  ctx.beginPath();
+  ctx.moveTo(pt0.cx, pt0.cy);
+  ctx.lineTo(pt1.cx, pt1.cy);
+  ctx.stroke();
+};
+
+function drawPoint(ctx,x1,y1,r,graphsettings){
+  const pt0=xyTranslate(x1,y1,graphsettings);
+  ctx.beginPath();
+  ctx.arc(pt0.cx, pt0.cy, r, 0, 2 * Math.PI);
+  ctx.fill();
+  ctx.stroke();
+};
+
+function drawTicks(ctx,yTicks,gs,xOff){
+  yTicks.forEach(tick => {
+    ctx.save();
+    ctx.setLineDash([1, 3]);
+    ctx.strokeStyle = "gray";
+    drawLine(ctx, gs["xMin"], tick.y, gs["xMax"], tick.y, gs);
+    ctx.restore();
+    ctx.fillStyle = "black";
+    ctx.font = axisTextSize;
+    ctx.textAlign = "right";
+    const txtLoc1 = xyTranslate(gs["xMin"], tick.y, gs);
+    ctx.fillText(tick.yTxt, txtLoc1.cx - xOff / 2, txtLoc1.cy);
+    ctx.textAlign = "left";
+    const txtLoc2 = xyTranslate(gs["xMax"], tick.y, gs);
+    ctx.fillText(tick.yTxt, txtLoc2.cx + xOff / 2, txtLoc2.cy);
+  });
+};
+
+function drawProbs(showPlot, points, yticks) {
+  if (!canvasProb || !points || !points[showPlot]) return;
+  const ctx = canvasProb.getContext("2d");
+  ctx.clearRect(0, 0, canvasProb.width, canvasProb.height);
+
+  const gs = {
+    'ch': canvasProb.height,
+    'cw': canvasProb.width,
+    'bw': 60,
+    'xMin': 1,
+    'xMax': xRange,
+    'yMin': 0,
+    'yMax': yRange
+  };
+
+  const xTextoffset = 30;
+  ctx.strokeStyle = "black";
+  drawLine(ctx, 1, 0, xRange, 0, gs);
+  drawTicks(ctx, yticks, gs, xTextoffset);
+
+  points[showPlot].forEach((point, i) => {
+    const ptLoc = xyTranslate(point.x, 0, gs);
+    ctx.fillStyle = "black";
+    ctx.font = axisTextSize;
+    ctx.textAlign = "center";
+    ctx.fillText(Object.keys(lotteries[showPlot].lot)[i], ptLoc.cx, ptLoc.cy + xTextoffset);
+  });
+
+  ctx.setLineDash([]);
+
+  points[showPlot].forEach(point => {
+    const pt = xyTranslate(point.x, point.y, gs);
+    ctx.save();
+    ctx.strokeStyle = "gray";
+    ctx.fillStyle = "blue";
+    drawLine(ctx, point.x, 0, point.x, point.y, gs);
+    drawPoint(ctx, point.x, point.y, 7, gs);
+    ctx.restore();
+  });
+}
+
+let pointsx = {};
+let currentLottery = "Lottery A";
+
+function selectLottery(lotteryName) {
+  const data = formatForUpdatePoints(lotteryName);
+  pointsx = updatePoints({}, data);
+  drawProbs(lotteryName, pointsx, yticks);
+  document.getElementById("selectedLotteryInput").value = lotteryName;
+}
+
+
+const tableBody = document.getElementById("lotteryTableBody");
+const buttonRefs = {};
+const rowRefs = {};
+
+Object.entries(lotteries).forEach(([name, details]) => {
+  const row = document.createElement("tr");
+  rowRefs[name] = row;
+
+  const btnCell = document.createElement("td");
+  btnCell.style.border = "none";
+  const btn = document.createElement("button");
+  btn.innerText = name;
+  btn.type = "button";
+  btn.classList.add("lottery-button");
+  btn.onclick = () => {
+    currentLottery = name;
+    selectLottery(name);
+    highlightActive(name);
+  };
+  buttonRefs[name] = btn;
+  btnCell.appendChild(btn);
+  row.appendChild(btnCell);
+
+  [4, 8, 12, 16, 20, 24, 28, 32, 36].forEach(val => {
+    const td = document.createElement("td");
+    td.innerText = details.lot[val] + "%";
+    row.appendChild(td);
+  });
+
+  tableBody.appendChild(row);
+});
+
+
+function highlightActive(activeName) {
+  Object.entries(rowRefs).forEach(([name, row]) => {
+    row.classList.toggle("active-row", name === activeName);
+  });
+  Object.entries(buttonRefs).forEach(([name, btn]) => {
+    btn.classList.toggle("active-button", name === activeName);
+  });
+}
+
+selectLottery(currentLottery);
+highlightActive(currentLottery);
+</script>
+
+{{ endblock }}
