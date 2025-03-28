@@ -6,12 +6,12 @@ SESSION_CONFIGS = [
          display_name="Standard Treatment",
          app_sequence=[
              # 'introduction',
-             # 'veto_delegation',
+             'veto_delegation',
              # 'robot',
-             'lotteries',
+             # 'lotteries',
          ],
 
-         num_demo_participants=2,
+         num_demo_participants=8,
          take_it_or_leave_it=False,
          chat=False,
          ),

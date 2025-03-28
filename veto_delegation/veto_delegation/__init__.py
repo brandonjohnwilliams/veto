@@ -79,6 +79,25 @@ def creating_session(subsession):
         else:
             player.single = 0
 
+        # Load the JSON file
+        with open("SubjectMatching.json", "r") as f:
+            subject_matching = json.load(f)
+
+            matching_dict = subject_matching[str(player.subsession.session.num_participants)]
+
+            # Access its elements
+            subject_assignment = matching_dict["subjectAssignment"]
+            period_matching = matching_dict["PeriodMatching"]
+
+            # Print or use them as needed
+            print(subject_assignment)
+            print(period_matching)
+
+
+
+
+
+
     # Sets role for 1-5 then reverses for 6-10 and then reverts for 11-15
     if 5 < subsession.round_number < 11:
         subsession.group_randomly(fixed_id_in_group=True)
