@@ -28,6 +28,9 @@
             <div class="choice" data-value="8">8 widgets</div>
         </div>
 
+        <!-- Hidden input field to store the selected value -->
+        <input type="hidden" name="response" id="response">
+
         <!-- Payoffs Table -->
         <table class="tg" id="payoffTable">
             <colgroup>
@@ -65,6 +68,10 @@
 
     </div>
 </div>
+
+<br><br>
+{{ formfield_errors 'response' }}
+{{ next_button }}
     <!-- Include JavaScript file -->
     <script src="{{ static 'veto_delegation/interface.js' }}"></script>
 

@@ -8,55 +8,26 @@
 </head>
 
 <!-- Text -->
-<p>To incentivize your choices, the amount you can earn are determined by the decisions of both the Buyer and the Seller:</p>
+
 <ul>
-  <li>Sellers make $4 plus $4 per widget sold to the Buyer</li>
+  <li>There are fifteen rounds in total for Part One, where we will give you additional Instructions for Parts Two, Three and Four.</li>
+  <li>At the start of the experiment half of the participants in this room will initially become Sellers and the other half will become Buyers. </li>
+  <ul>
+    <li>You will remain in your initial Buyer/Seller role for five rounds</li>
+    <li>Every five rounds you will switch role; Buyers becoming Sellers, and vice versa.</li>
+    <li>In every new round the participant you are matched with will change. So in every new round you will be rematched into a different Buyer-Seller pair than the previous round.</li>
+  </ul>
+  <li>One round from the fifteen in Part one will be randomly and fairly selected for payment.</li>
+  <ul>
+    <li>The randomly selected round will be used for all payment for all participants in the room. As such, you should treat every round as if it is the one that will be selected for payment for both you and the other matched participant as the Buyer or Seller in that round.</li>
+  </ul>
   <li>
-    Buyers have an ideal quantity of widgets that they wish to purchase, X, determined by a six-sided die roll. The buyer’s payoff is determined by how far away M is from the ideal quantity X.
-    <p>
-      <br>
-      Buyers earn $30 if they purchase their ideal amount (M=X), but lose $5 for each widget purchased above or below their ideal quantity (with the additional loss falling to $1 once below $5).
-    </p>
+    {{ if chat == 1 }} The experiment is anonymous, and at no point will you find out which participants you have engaged with. While you are free to use the chats in any way you wish with respect to the Buyer-Seller task, we ask that you not reveal any identifying information to other participants.
+    {{ else }} The experiment is anonymous, and at no point will you find out which participants you have engaged with.
+    {{ endif }}
   </li>
 </ul>
-<p>So, based on the Buyer’s ideal quantity X, and the number of widgets purchased M, the payoffs to the Seller and Buyer are given in the table below (also printed out at your desks):</p>
-<br>
-<br>
 
-<!-- Payoffs Table -->
-<table class="tg" id="payoffTable">
-  <colgroup>
-    <col style="width: 190.2px">
-    <col style="width: 190.2px">
-    <col style="width: 190.2px">
-    <col style="width: 190.2px">
-    <col style="width: 190.2px">
-    <col style="width: 190.2px">
-    <col style="width: 190.2px">
-    <col style="width: 190.2px">
-    <col style="width: 190.2px">
-    <col style="width: 190.2px">
-  </colgroup>
-  <thead>
-    <tr>
-      <th class="tg-c3ow" rowspan="2">Widgets <br>Purchased, M</th>
-      <th class="tg-c3ow" rowspan="2">Your Payoff <br> (X=<span id="selectedX">-</span>)</th>
-      <th class="tg-c3ow" rowspan="2">Seller <br> Payoff</th>
-      <th class="tg-c3ow" colspan="6">Buyer Payoff (by ideal quantity X)</th>
-    </tr>
-    <tr>
-      <th class="tg-0lax">X=1</th>
-      <th class="tg-0lax">X=2</th>
-      <th class="tg-0lax">X=3</th>
-      <th class="tg-0lax">X=4</th>
-      <th class="tg-0lax">X=5</th>
-      <th class="tg-0lax">X=6</th>
-    </tr>
-  </thead>
-  <tbody id="tableBody">
-    <!-- Table body will be populated dynamically -->
-  </tbody>
-</table>
 
 <!-- Include JavaScript file -->
 <script src="{{ static 'veto_delegation/payoff-table.js' }}"></script>

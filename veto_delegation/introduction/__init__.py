@@ -38,7 +38,14 @@ class Player(BasePlayer):
 
     selectedX = models.IntegerField()
 
+    response = models.IntegerField()
+
+    sellerPayoff = models.IntegerField()
+    buyerPayoff = models.IntegerField()
+
 # FUNCTIONS
+
+
 def creating_session(subsession):
 
     for player in subsession.get_players():
@@ -141,6 +148,8 @@ class SellerWait(WaitPage):
     wait_for_all_groups = True
     body_text = "Waiting for all participants to make their choice."
 
+
+
     # template_name = 'SellerWaitPage.html'
     #
     # @staticmethod
@@ -164,7 +173,7 @@ class BuyersChoice(Page):
 
 class BuyersView(Page):
     form_model = 'player'
-    form_fields = ['minSlider', 'maxSlider']
+    form_fields = ['response']
 
     @staticmethod
     def js_vars(player):
@@ -184,20 +193,40 @@ class BuyersView(Page):
             toM=player.maxSlider,
         )
 
+class BuyerWait(WaitPage):
+    wait_for_all_groups = True
+    body_text = "Waiting for all participants to make their choice."
+
+
 class Results(Page):
     timeout_seconds = 15
+
     @staticmethod
     def js_vars(player):
+
+        payoff_matrix = {
+            0: [4, 25, 20, 15, 10, 5, 4],
+            1: [8, 30, 25, 20, 15, 10, 5],
+            2: [12, 25, 30, 25, 20, 15, 10],
+            3: [16, 20, 25, 30, 25, 20, 15],
+            4: [20, 15, 20, 25, 30, 25, 20],
+            5: [24, 10, 15, 20, 25, 30, 25],
+            6: [28, 5, 10, 15, 20, 25, 30],
+            7: [32, 4, 5, 10, 15, 20, 25],
+            8: [36, 3, 4, 5, 10, 15, 20]
+        }
+
+        sellerPayoff = payoff_matrix[player.response][0]
+        buyerPayoff = payoff_matrix[player.response][2]
+
         return dict(
             round=player.round_number,
-
-            # loop these variables
-            idealX=idealX_list,
-            offerMin=offerMin_list,
-            offerMax=offerMax_list,
-            choice=choice_list,
-            payoff=payoff_list,
-            roundName=roundName_list,
+            offerMin=player.minSlider,
+            offerMax=player.maxSlider,
+            choice=player.response,
+            seller_payoff=sellerPayoff,
+            buyer_payoff=buyerPayoff,
+            roundName="Middle",
         )
 
 
@@ -206,6 +235,13 @@ class PayoffsRecap(Page):
     def js_vars(player):
         return dict(
             selectedX=C.setZero,  # Selecting 0 removes the column
+            chat=player.chat,
+        )
+
+    @staticmethod
+    def vars_for_template(player):
+        return dict(
+            chat=player.chat,
         )
 
 
@@ -219,4 +255,6 @@ page_sequence = [
     SellerWait,
     # BuyersChoice,
     BuyersView,
+    BuyerWait,
+    Results,
     PayoffsRecap]

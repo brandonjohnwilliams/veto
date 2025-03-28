@@ -5,12 +5,12 @@ import numpy as np
 
 
 doc = """
-Versus non-human player
+Risk preferences
 """
 
 
 class C(BaseConstants):
-    NAME_IN_URL = 'robot'
+    NAME_IN_URL = 'lotteries'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 3
 
