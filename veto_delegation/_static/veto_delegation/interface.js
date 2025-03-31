@@ -108,14 +108,18 @@ function updateYourPayoffColumn(selectedX) {
 if (tableData && typeof tableData === "object" && tbody) {
     Object.keys(tableData).forEach(function(key) {
         var row = document.createElement("tr");
-        row.setAttribute("data-value", key.replace("M=", "")); // Ensure numeric matching
+
+        // ✅ Extract just the numeric part for matching
+        var value = key.replace("M=", "").trim();
+        var numericValue = value.split(" ")[0]; // Only keep the number before "widgets"
+        row.setAttribute("data-value", numericValue); // This will match the .choice buttons
 
         var rowData = tableData[key];
-        if (!Array.isArray(rowData)) return; // Skip if rowData is not an array
+        if (!Array.isArray(rowData)) return;
 
         var cellM = document.createElement("td");
         cellM.className = "tg-0pky";
-        cellM.textContent = key;
+        cellM.textContent = key; // Still shows "M=3 widgets" or similar in the table
         row.appendChild(cellM);
 
         rowData.forEach(function(value) {
@@ -816,19 +820,17 @@ shadeColumnsByYPT(js_vars.round_type); // Call with the current round_type value
 
 document.addEventListener("DOMContentLoaded", function () {
     const choices = document.querySelectorAll(".choice");
-    const rows = document.querySelectorAll("#tableBody tr");
 
     choices.forEach(choice => {
         choice.addEventListener("click", function () {
-
             // Remove 'selected' class from all choices
             choices.forEach(c => c.classList.remove("selected"));
-
-            // Add 'selected' class to the clicked choice
             this.classList.add("selected");
 
-            // Get the selected value
             let selectedValue = this.getAttribute("data-value");
+
+            // 🔄 Get rows AFTER they have been rendered
+            const rows = document.querySelectorAll("#tableBody tr");
 
             // Remove highlight from all rows
             rows.forEach(row => row.classList.remove("highlighted-row"));
@@ -840,10 +842,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 selectedRow.classList.add("highlighted-row");
             } else {
                 console.error("No matching row found for data-value:", selectedValue);
+
+                const allRowValues = Array.from(document.querySelectorAll("#tableBody tr")).map(row =>
+                    row.getAttribute("data-value")
+                );
+                console.log("Available row data-values:", allRowValues);
             }
+
         });
     });
 });
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -1086,12 +1095,12 @@ if (radioX === 3) {
     ];
 } else if (radioX === 2) {
     ballData = [
-        { count: 1, color: "white", label: "1" },
-        { count: 4, color: "#eaeded", label: "2" },
+        { count: 2, color: "white", label: "1" },
+        { count: 3, color: "#eaeded", label: "2" },
         { count: 5, color: "#d5dbdb", label: "3" },
         { count: 5, color: "#bfc9ca", label: "4" },
-        { count: 4, color: "#aab7b8", label: "5" },
-        { count: 1, color: "#95a5a6", label: "6" }
+        { count: 3, color: "#aab7b8", label: "5" },
+        { count: 2, color: "#95a5a6", label: "6" }
     ];
 } else {
     ballData = [

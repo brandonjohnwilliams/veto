@@ -11,7 +11,7 @@ SESSION_CONFIGS = [
              # 'lotteries',
          ],
 
-         num_demo_participants=8,
+         num_demo_participants=20,
          take_it_or_leave_it=False,
          chat=False,
          ),

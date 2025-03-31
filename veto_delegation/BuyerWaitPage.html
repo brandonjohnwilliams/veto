@@ -1,0 +1,27 @@
+{{ extends 'oTree/WaitPage.html' }}
+{{ block title }}
+    Please Wait
+{{ endblock }}
+
+{{ block content }}
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+    </head>
+
+<p>While you wait, here is a reminder of the details for this round.</p>
+<p>
+    You are the Buyer. First, the Seller will choose what options for the number of widgets (M) that you can choose from.
+    Remember, the Seller cannot remove 0 Widgets as an option. You can always walk away.
+</p>
+<p>You have <b>ideal value X={{selectedX}}</b> which came from the type <b>{{ roundName }}</b> urn.</p>
+
+<div class="canvas-container">
+  <canvas id="ballCanvas2"></canvas>
+</div>
+
+<p>Waiting for the Seller to make their choice...</p>
+
+    <script src="{{ static 'veto_delegation/interface.js' }}"></script>
+
+{{ endblock }}

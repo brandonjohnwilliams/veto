@@ -71,7 +71,6 @@ Lottery
   <thead>
     <tr>
       <th></th>
-      <th>4</th>
       <th>8</th>
       <th>12</th>
       <th>16</th>
@@ -80,6 +79,7 @@ Lottery
       <th>28</th>
       <th>32</th>
       <th>36</th>
+      <th>40</th>
     </tr>
   </thead>
   <tbody id="lotteryTableBody"></tbody>
@@ -91,16 +91,42 @@ Lottery
 {{ next_button }}
 
 <script>
-const lotteries = {
-  "Lottery A": { action: "{0} U [1,8]", lot: { 4: 0, 8: 30.0, 12: 25.0, 16: 20.0, 20: 15.0, 24: 5.0, 28: 5.0, 32: 0, 36: 0 }, expec: 14.2 },
-  "Lottery B": { action: "{0} U [2,8]", lot: { 4: 30.0, 8: 0, 12: 25.0, 16: 20.0, 20: 15.0, 24: 5.0, 28: 5.0, 32: 0, 36: 0 }, expec: 13.0 },
-  "Lottery C": { action: "{0} U [3,8]", lot: { 4: 30.0, 8: 0, 12: 0, 16: 45.0, 20: 15.0, 24: 5.0, 28: 5.0, 32: 0, 36: 0 }, expec: 14.0 },
-  "Lottery D": { action: "{0} U [4,8]", lot: { 4: 55.0, 8: 0, 12: 0, 16: 0, 20: 35.0, 24: 5.0, 28: 5.0, 32: 0, 36: 0 }, expec: 11.8 },
-  "Lottery E": { action: "{0} U [5,8]", lot: { 4: 55.0, 8: 0, 12: 0, 16: 0, 20: 0, 24: 40.0, 28: 5.0, 32: 0, 36: 0 }, expec: 13.2 },
-  "Lottery F": { action: "{0} U [6,8]", lot: { 4: 75.0, 8: 0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 25.0, 32: 0, 36: 0 }, expec: 10.0 },
-  "Lottery G": { action: "{0} U [7,8]", lot: { 4: 75.0, 8: 0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 0, 32: 25.0, 36: 0 }, expec: 11.0 },
-  "Lottery H": { action: "{0,8}", lot: { 4: 90.0, 8: 0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 0, 32: 0, 36: 10.0 }, expec: 7.2 }
-};
+const lotteries = {'Lottery A': {'action': '{0} U [1,8]',
+  'lot': {8: 0,
+   12: 10.0,
+   16: 15.0,
+   20: 25.0,
+   24: 25.0,
+   28: 15.0,
+   32: 10.0,
+   36: 0,
+   40: 0},
+  'expec': 22.0},
+ 'Lottery B': {'action': '{0} U [3,8]',
+  'lot': {8: 10.0,
+   12: 0,
+   16: 0,
+   20: 40.0,
+   24: 25.0,
+   28: 15.0,
+   32: 10.0,
+   36: 0,
+   40: 0},
+  'expec': 22.2},
+ 'Lottery C': {'action': '{0} U [5,8]',
+  'lot': {8: 25.0,
+   12: 0,
+   16: 0,
+   20: 0,
+   24: 0,
+   28: 65.0,
+   32: 10.0,
+   36: 0,
+   40: 0},
+  'expec': 23.4},
+ 'Lottery D': {'action': '{0} U [7,8]',
+  'lot': {8: 50.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 0, 32: 0, 36: 50.0, 40: 0},
+  'expec': 22.0}}
 
 const canvasProb = document.getElementById("canvasProb");
 const ctx = canvasProb.getContext("2d");
@@ -269,7 +295,7 @@ Object.entries(lotteries).forEach(([name, details]) => {
   btnCell.appendChild(btn);
   row.appendChild(btnCell);
 
-  [4, 8, 12, 16, 20, 24, 28, 32, 36].forEach(val => {
+  [8, 12, 16, 20, 24, 28, 32, 36, 40].forEach(val => {
     const td = document.createElement("td");
     td.innerText = details.lot[val] + "%";
     row.appendChild(td);

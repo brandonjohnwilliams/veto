@@ -70,8 +70,50 @@ def set_payoffs(group):
     print(f"Seller payoff: {p1.payoff}")
     print(f"Buyer payoff: {p2.payoff}")
 
-
 def creating_session(subsession):
+    with open('SubjectMatching.json', 'r') as f:
+        subject_matching = json.load(f)
+
+    matching_dict = subject_matching[str(subsession.session.num_participants)]
+    subject_assignment = matching_dict['subjectAssignment']
+    period_matching_dict = matching_dict['PeriodMatching']  # ✅ fixed this line
+
+    players = list(subsession.get_players())
+
+    # Step 1: Build id map (otree_id → subject_id)
+    id_map = {}
+    for player, (subject_id_str, _) in zip(sorted(players, key=lambda p: p.id_in_subsession), subject_assignment.items()):
+        subject_id = int(subject_id_str)
+        id_map[player.id_in_subsession] = subject_id
+        player.participant.label = subject_id  # optional
+
+    # Step 2: Reverse map (subject_id → otree_id)
+    subject_to_player_id = {v: k for k, v in id_map.items()}
+    subsession.session.vars['subject_to_player_id'] = subject_to_player_id
+
+    # Step 3: Get matching for this round
+    round_num = str(subsession.round_number)
+    if round_num not in period_matching_dict:
+        raise ValueError(f"Round {round_num} not found in PeriodMatching.")
+
+    round_matches = period_matching_dict[round_num]
+
+    group_matrix = []
+
+    for match in round_matches:
+        seller_subject = match['proposer']
+        buyer_subject = match['responder']
+
+        seller_otree_id = subject_to_player_id[seller_subject]
+        buyer_otree_id = subject_to_player_id[buyer_subject]
+
+        group_matrix.append([seller_otree_id, buyer_otree_id])
+
+    subsession.set_group_matrix(group_matrix)
+
+    print(f"Full group matrix: {subsession.get_group_matrix()}")
+
+    # Set session var parameters
 
     for player in subsession.get_players():
         if player.subsession.session.config['take_it_or_leave_it']:
@@ -79,36 +121,7 @@ def creating_session(subsession):
         else:
             player.single = 0
 
-        # Load the JSON file
-        with open("SubjectMatching.json", "r") as f:
-            subject_matching = json.load(f)
-
-            matching_dict = subject_matching[str(player.subsession.session.num_participants)]
-
-            # Access its elements
-            subject_assignment = matching_dict["subjectAssignment"]
-            period_matching = matching_dict["PeriodMatching"]
-
-            # Print or use them as needed
-            print(subject_assignment)
-            print(period_matching)
-
-
-
-
-
-
-    # Sets role for 1-5 then reverses for 6-10 and then reverts for 11-15
-    if 5 < subsession.round_number < 11:
-        subsession.group_randomly(fixed_id_in_group=True)
-        matrix = subsession.get_group_matrix()
-
-        for row in matrix:
-            row.reverse()
-
-        subsession.set_group_matrix(matrix)
-    else:
-        subsession.group_randomly(fixed_id_in_group=True)
+    # CHANGE THIS: Setting the distributions and rolls in advance
 
     # Load the JSON file
     with open("dice_rolls.json", "r") as f:
@@ -234,8 +247,30 @@ class Proposal(Page):
 
 
 class WaitForP1(WaitPage):
-    title_text = "Please wait"
-    body_text = "Waiting for the Seller to make his or her choice"
+    # title_text = "Please wait"
+    # body_text = "Waiting for the Seller to make his or her choice"
+
+    template_name = 'BuyerWaitPage.html'
+
+    @staticmethod
+    def js_vars(player):
+        return dict(
+            round_type=player.group.roundType,
+            single=player.single,
+            selectedX=player.group.vetoer_bias,
+        )
+
+    @staticmethod
+    def vars_for_template(player):
+        group = player.group
+        return {
+            "selectedX": group.vetoer_bias,
+            "drawLow": group.drawLow,
+            "drawMed": group.drawMed,
+            "drawHigh": group.drawHigh,
+            "roundName": group.roundName,
+            "roundType": group.roundType,
+        }
 
 
 class Response(Page):
@@ -268,14 +303,35 @@ class Response(Page):
             "roundType": group.roundType,
         }
 
-    @staticmethod
-    def before_next_page(player, timeout_happened):
-        print("Player select: ", player.group.response)
 
 
 class WaitForP2(WaitPage):
-    title_text = "Please wait"
-    body_text = "Waiting for the Buyer to make his or her choice"
+    # title_text = "Please wait"
+    # body_text = "Waiting for the Buyer to make his or her choice"
+
+    template_name = 'SellerWaitPage.html'
+
+    @staticmethod
+    def js_vars(player):
+        group = player.group
+        return dict(
+            selectedX=player.group.vetoer_bias,
+            fromM=group.minSlider,
+            toM=group.maxSlider,
+            response=1,
+        )
+
+    @staticmethod
+    def vars_for_template(player):
+        group = player.group
+        return {
+            "selectedX": group.vetoer_bias,
+            "drawLow": group.drawLow,
+            "drawMed": group.drawMed,
+            "drawHigh": group.drawHigh,
+            "roundName": group.roundName,
+            "roundType": group.roundType,
+        }
 
     after_all_players_arrive = set_payoffs
 

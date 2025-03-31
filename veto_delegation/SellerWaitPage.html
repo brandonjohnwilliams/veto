@@ -1,66 +1,46 @@
 {{ extends 'oTree/WaitPage.html' }}
 {{ block title }}
-    Seller's Choice
+Please Wait
 {{ endblock }}
 
-{{ block content }}
+{% block content %}
 
-    <head>
-        <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
-    </head>
-<p>
-The Sellers task in each round is to select
-{{ if single == 1}}
-    a quantity of widgets using the vertical slider. <b>Notice that the Buyer always has the option to walk away.</b>
-{{ else }}
-    minimum and maximum offered quantities of widgets using the vertical slider. <b>Notice that the Buyer always retains the option to walk away in all menus.</b>
-{{ endif }}
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+</head>
+
+<p>While you wait, here is a reminder of your offer to the Buyer.</p>
+
+
+<p>The Buyer will have an ideal number of widgets X, which came from the <b>{{ roundName }}</b> urn type.
+    You offered you the following menu of options:
 </p>
-    <div class="sub-container2">
-        <div class="dice-box">
-            <p class="centered-text">
-                The Buyer will be drawn from the <strong>
-                {{ if roundType == 1}}
-                "L" urn:
-                {{ elif roundType == 2}}
-                "M" urn:
-                {{else}}
-                "H" urn:
-                {{endif}}
-                </strong>
+<ul>
+<li>Minimum amount: {{ group.minSlider }} widgets</li>
 
-
-                <canvas id="ballCanvas"></canvas>
-
-            </p>
+<li>Maximum amount: {{ group.maxSlider }} widgets</li>
+</ul>
+<p>
+The Buyer will see make their choice from the following possible widget quantities:
+</p>
+<br>
+    <div class="wrapper">
+    <div class="sub-container3">
+        <div class="choices-container">
+            <div class="choice" data-value="0">0 widgets</div>
+            <div class="choice" data-value="1">1 widget</div>
+            <div class="choice" data-value="2">2 widgets</div>
+            <div class="choice" data-value="3">3 widgets</div>
+            <div class="choice" data-value="4">4 widgets</div>
+            <div class="choice" data-value="5">5 widgets</div>
+            <div class="choice" data-value="6">6 widgets</div>
+            <div class="choice" data-value="7">7 widgets</div>
+            <div class="choice" data-value="8">8 widgets</div>
         </div>
 
-        <div class="theta-box">
+        <!-- Hidden input field to store the selected value -->
+        <input type="hidden" name="response" id="response">
 
-            <canvas id="probCanvas" width="550" height="325"></canvas>
-
-            <div class="theta_control">
-                <span class="thetaOut" id="thetaOut"></span><input type="range" min="1" max="6" value="1" class="slider" id="thetaRange">
-            </div>
-
-        </div>
-    </div>
-    <br>
-    <br>
-    <div class="sub-container">
-
-        <!-- Two-sided slider -->
-        <div class="range_container">
-            <div class="sliders_control">
-                <input id="fromSlider" type="range" value="1" min="1" max="8"/>
-
-
-                <input id="toSlider" type="range" value="8" min="1" max="8"/>
-
-                <div class="slider_value" id="fromValue">{{if player.single == 1 }}Value: 8 {{else}}Min: 1{{endif}}</div>
-                <div class="slider_value" id="toValue">{{if player.single == 1 }}{{else}}Max: 8{{endif}}</div>
-            </div>
-        </div>
 
         <!-- Payoffs Table -->
         <table class="tg" id="payoffTable">
@@ -78,9 +58,9 @@ The Sellers task in each round is to select
             </colgroup>
             <thead>
                 <tr>
-                    <th class="tg-c3ow" rowspan="2">Widgets <br>Purchased, M</th>
+                    <th class="tg-c3ow" rowspan="2">Widgets <br>Purchased</th>
                     <th class="tg-c3ow" rowspan="2">Your Payoff <br> (X=<span id="selectedX">-</span>)</th>
-                    <th class="tg-c3ow" rowspan="2">Your <br> Payoff</th>
+                    <th class="tg-c3ow" rowspan="2">Seller <br> Payoff</th>
                     <th class="tg-c3ow" colspan="6">Buyer Payoff (by ideal quantity X)</th>
                 </tr>
                 <tr>
@@ -97,8 +77,20 @@ The Sellers task in each round is to select
             </tbody>
         </table>
     </div>
+        </div>
+<br><br>
+<p>Please wait for the Buyer to make their choice...</p>
 
-
+    <!-- Include JavaScript file -->
     <script src="{{ static 'veto_delegation/interface.js' }}"></script>
+    <script>
+        document.querySelectorAll('.choice').forEach(choice => {
+            choice.style.pointerEvents = "none";   // Disables click/hover
+            choice.style.cursor = "default";       // Optional: normal cursor
+        });
 
-{{ endblock }}
+    </script>
+
+
+
+{% endblock %}

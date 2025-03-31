@@ -149,25 +149,6 @@ class SellerWait(WaitPage):
     body_text = "Waiting for all participants to make their choice."
 
 
-
-    # template_name = 'SellerWaitPage.html'
-    #
-    # @staticmethod
-    # def js_vars(player):
-    #     return dict(
-    #         round_type=C.round_type,
-    #         single=player.single,
-    #         fromM=1,
-    #         toM=8,
-    #     )
-    #
-    # @staticmethod
-    # def vars_for_template(player: Player):
-    #     return dict(
-    #         roundType=C.round_type,
-    #         single=player.single,
-    #     )
-
 class BuyersChoice(Page):
     pass
 
@@ -199,21 +180,19 @@ class BuyerWait(WaitPage):
 
 
 class Results(Page):
-    timeout_seconds = 15
 
     @staticmethod
     def js_vars(player):
-
         payoff_matrix = {
-            0: [4, 25, 20, 15, 10, 5, 4],
-            1: [8, 30, 25, 20, 15, 10, 5],
-            2: [12, 25, 30, 25, 20, 15, 10],
-            3: [16, 20, 25, 30, 25, 20, 15],
-            4: [20, 15, 20, 25, 30, 25, 20],
-            5: [24, 10, 15, 20, 25, 30, 25],
-            6: [28, 5, 10, 15, 20, 25, 30],
-            7: [32, 4, 5, 10, 15, 20, 25],
-            8: [36, 3, 4, 5, 10, 15, 20]
+            0: [8, 26, 21, 16, 11, 10, 10],
+            1: [12, 30, 25, 20, 15, 12, 11],
+            2: [16, 25, 30, 25, 20, 15, 12],
+            3: [20, 20, 25, 30, 25, 20, 15],
+            4: [24, 15, 20, 25, 30, 25, 20],
+            5: [28, 12, 15, 20, 25, 30, 25],
+            6: [32, 11, 12, 15, 20, 25, 30],
+            7: [36, 10, 11, 12, 15, 20, 25],
+            8: [40, 10, 10, 11, 12, 15, 20]
         }
 
         sellerPayoff = payoff_matrix[player.response][0]
@@ -246,7 +225,7 @@ class PayoffsRecap(Page):
 
 
 page_sequence = [
-    # Introduction, PartOne, PayoffsSeller, DeterminingX, RoundTiming,
+    Introduction, PartOne, PayoffsSeller, DeterminingX, RoundTiming,
 
     # Start here for no instructions on screen
     ExampleDraws,
