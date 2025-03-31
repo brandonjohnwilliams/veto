@@ -33,11 +33,6 @@ class Group(BaseGroup):
 
     # dice rolls
     vetoer_bias = models.IntegerField()
-    drawLow = models.IntegerField()
-    drawMed = models.IntegerField()
-    drawHigh = models.IntegerField()
-
-    selectedX = models.IntegerField()
 
     # Distributions
     roundType = models.IntegerField()
@@ -46,6 +41,7 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     single = models.IntegerField()
+
 
 
 # FUNCTIONS
@@ -71,93 +67,93 @@ def set_payoffs(group):
     print(f"Buyer payoff: {p2.payoff}")
 
 def creating_session(subsession):
+
+    # Lock in round for payment
+
+
+
+    # Load JSON file
     with open('SubjectMatching.json', 'r') as f:
         subject_matching = json.load(f)
 
-    matching_dict = subject_matching[str(subsession.session.num_participants)]
+    # Load relevant sections
+    num_participants = str(subsession.session.num_participants)
+    matching_dict = subject_matching[num_participants]
     subject_assignment = matching_dict['subjectAssignment']
-    period_matching_dict = matching_dict['PeriodMatching']  # ✅ fixed this line
+    urn_assignment_dict = matching_dict['urnAssignment']
+    period_matching_dict = matching_dict['PeriodMatching']
+
+    # Get session key like "Session1"
+    session_key = f"Session{subsession.session.config['Session']}"
+
+    round_num = str(subsession.round_number)
+    if round_num not in period_matching_dict:
+        raise ValueError(f"Round {round_num} not found in PeriodMatching.")
 
     players = list(subsession.get_players())
 
     # Step 1: Build id map (otree_id → subject_id)
     id_map = {}
-    for player, (subject_id_str, _) in zip(sorted(players, key=lambda p: p.id_in_subsession), subject_assignment.items()):
+    for player, (subject_id_str, attributes) in zip(sorted(players, key=lambda p: p.id_in_subsession), subject_assignment.items()):
         subject_id = int(subject_id_str)
         id_map[player.id_in_subsession] = subject_id
-        player.participant.label = subject_id  # optional
+        player.participant.label = subject_id  # Save subject ID to label
+
+        # Save attributes in participant.vars
+        player.participant.vars['MatchingGroup'] = attributes['MatchingGroup']
+        player.participant.vars['SubGroup'] = attributes['SubGroup']
 
     # Step 2: Reverse map (subject_id → otree_id)
     subject_to_player_id = {v: k for k, v in id_map.items()}
     subsession.session.vars['subject_to_player_id'] = subject_to_player_id
 
-    # Step 3: Get matching for this round
-    round_num = str(subsession.round_number)
-    if round_num not in period_matching_dict:
-        raise ValueError(f"Round {round_num} not found in PeriodMatching.")
-
+    # Step 3: Create group matrix from PeriodMatching
     round_matches = period_matching_dict[round_num]
-
     group_matrix = []
-
     for match in round_matches:
-        seller_subject = match['proposer']
-        buyer_subject = match['responder']
-
-        seller_otree_id = subject_to_player_id[seller_subject]
-        buyer_otree_id = subject_to_player_id[buyer_subject]
-
+        proposer_subject = match['proposer']
+        responder_subject = match['responder']
+        seller_otree_id = subject_to_player_id[proposer_subject]
+        buyer_otree_id = subject_to_player_id[responder_subject]
         group_matrix.append([seller_otree_id, buyer_otree_id])
-
     subsession.set_group_matrix(group_matrix)
 
-    print(f"Full group matrix: {subsession.get_group_matrix()}")
-
-    # Set session var parameters
-
+    # Step 4: Set any session config–based vars
     for player in subsession.get_players():
-        if player.subsession.session.config['take_it_or_leave_it']:
-            player.single = 1
-        else:
-            player.single = 0
+        player.single = 1 if player.subsession.session.config['take_it_or_leave_it'] else 0
 
-    # CHANGE THIS: Setting the distributions and rolls in advance
+    # Step 5: Assign roundType and selectedX using proposer only
+    for match in round_matches:
+        proposer_subject_id = match['proposer']
+        proposer_otree_id = subject_to_player_id[proposer_subject_id]
+        proposer_player = next(p for p in subsession.get_players() if p.id_in_subsession == proposer_otree_id)
+        group = proposer_player.group
 
-    # Load the JSON file
-    with open("dice_rolls.json", "r") as f:
-        dice_rolls = json.load(f)
+        # Get urn assignment
+        matching_group = proposer_player.participant.vars['MatchingGroup']
+        urn_type = urn_assignment_dict[session_key][f"MatchingGroup{matching_group}"][round_num]['urn']
+        urn_key = urn_type.split()[-1]  # "L", "M", or "H"
 
-    # Randomly select an index
-    random_index = random.choice(list(dice_rolls.keys()))
-
-    # Select a distribution
-    dist = random.choice([1, 2, 3])
-
-    # Get the corresponding dice rolls
-    selected_roll = dice_rolls[random_index]
-
-    for group in subsession.get_groups():
-
-        # Assign on ordering
-        group.drawLow = min(selected_roll)
-        group.drawMed = sorted(selected_roll)[1]  # Median value
-        group.drawHigh = max(selected_roll)
-
-        if dist == 1:
-            group.roundType = 1
-            group.vetoer_bias = group.drawLow
-            group.roundName = "low"
-
-        elif dist == 2:
+        # Assign to group
+        if urn_key == "M":
             group.roundType = 2
-            group.vetoer_bias = group.drawMed
-            group.roundName = "middle"
+            group.roundName = "Middle"
+
+        elif urn_key == "L":
+            group.roundType = 1
+            group.roundName = "Low"
 
         else:
             group.roundType = 3
-            group.vetoer_bias = group.drawHigh
-            group.roundName = "high"
+            group.roundName = "High"
 
+        group.vetoer_bias = match[urn_key]
+
+        # Debug
+        print(f"✅ Group {group.id_in_subsession}: proposer {proposer_subject_id}, urn {urn_type}, selectedX = {group.vetoer_bias}")
+
+
+        # The dict seems to break after 18 people, why?
 
 # PAGES
 class RolesIntro(Page):
@@ -181,9 +177,6 @@ class Roles(Page):
         group = player.group
         return {
             "selectedX": group.vetoer_bias,
-            "drawLow": group.drawLow,
-            "drawMed": group.drawMed,
-            "drawHigh": group.drawHigh,
             "roundName": group.roundName,
             "roundType": group.roundType,
         }
@@ -206,9 +199,6 @@ class Chat(Page):
         group = player.group
         return {
             "selectedX": group.vetoer_bias,
-            "drawLow": group.drawLow,
-            "drawMed": group.drawMed,
-            "drawHigh": group.drawHigh,
             "roundName": group.roundName,
             "roundType": group.roundType,
         }
@@ -238,9 +228,6 @@ class Proposal(Page):
         group = player.group
         return {
             "selectedX": group.vetoer_bias,
-            "drawLow": group.drawLow,
-            "drawMed": group.drawMed,
-            "drawHigh": group.drawHigh,
             "roundName": group.roundName,
             "roundType": group.roundType,
         }
@@ -265,9 +252,6 @@ class WaitForP1(WaitPage):
         group = player.group
         return {
             "selectedX": group.vetoer_bias,
-            "drawLow": group.drawLow,
-            "drawMed": group.drawMed,
-            "drawHigh": group.drawHigh,
             "roundName": group.roundName,
             "roundType": group.roundType,
         }
@@ -296,9 +280,6 @@ class Response(Page):
         group = player.group
         return {
             "selectedX": group.vetoer_bias,
-            "drawLow": group.drawLow,
-            "drawMed": group.drawMed,
-            "drawHigh": group.drawHigh,
             "roundName": group.roundName,
             "roundType": group.roundType,
         }
@@ -326,9 +307,6 @@ class WaitForP2(WaitPage):
         group = player.group
         return {
             "selectedX": group.vetoer_bias,
-            "drawLow": group.drawLow,
-            "drawMed": group.drawMed,
-            "drawHigh": group.drawHigh,
             "roundName": group.roundName,
             "roundType": group.roundType,
         }
@@ -373,6 +351,24 @@ class Results(Page):
             payoff=payoff_list,
             roundName=roundName_list,
         )
+
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        import random
+
+        participant = player.participant
+
+        # if it's the last round
+        if player.round_number == C.NUM_ROUNDS:
+            random_round = random.randint(2, C.NUM_ROUNDS)
+            participant.selected_round = random_round
+            player_in_selected_round = player.in_round(random_round)
+            player.payoff_final = float(player_in_selected_round.payoff)
+            participant.payoff = player.payoff_final
+
+    def vars_for_template(player: Player):
+        return dict(me_in_all_rounds=player.in_all_rounds(), contribution=player.contribution, payoff=player.payoff,
+                    transfer_amount = player.transfer_amount)
 
 
 

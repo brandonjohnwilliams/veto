@@ -11,9 +11,11 @@ SESSION_CONFIGS = [
              # 'lotteries',
          ],
 
-         num_demo_participants=20,
+         num_demo_participants=10,
          take_it_or_leave_it=False,
          chat=False,
+         Session=1,
+         doc="""Set the session number to the total number in the treatment"""
          ),
     # dict(
     #      name='veto_delegation_cheap',
@@ -38,7 +40,7 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00, participation_fee=0.00, doc=""
 )
 
-PARTICIPANT_FIELDS = ['sample']
+PARTICIPANT_FIELDS = ['MatchingGroup', 'SubGroup']
 SESSION_FIELDS = []
 
 # ISO-639 code
