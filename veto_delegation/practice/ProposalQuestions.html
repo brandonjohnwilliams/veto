@@ -1,0 +1,94 @@
+{{ block title }}
+Practice Part 3
+{{ endblock }}
+
+
+
+{{ block content }}
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+    </head>
+<div id="pageWrapper">
+
+    <p>
+        You offered the following menu to the Buyer. Use the information in the table to answer the following questions:
+    </p>
+            <!-- Payoffs Table -->
+        <table class="tg" id="payoffTable">
+            <colgroup>
+                <col style="width: 190.2px">
+                <col style="width: 190.2px">
+                <col style="width: 190.2px">
+                <col style="width: 190.2px">
+                <col style="width: 190.2px">
+                <col style="width: 190.2px">
+                <col style="width: 190.2px">
+                <col style="width: 190.2px">
+                <col style="width: 190.2px">
+                <col style="width: 190.2px">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th class="tg-c3ow" rowspan="2">Widgets <br>Purchased</th>
+                    <th class="tg-c3ow" rowspan="2">Your Payoff <br> (X=<span id="selectedX">-</span>)</th>
+                    <th class="tg-c3ow" rowspan="2">Your <br> Payoff</th>
+                    <th class="tg-c3ow" colspan="6">Buyer Payoff (by ideal quantity X)</th>
+                </tr>
+                <tr>
+                    <th class="tg-0lax">X=1</th>
+                    <th class="tg-0lax">X=2</th>
+                    <th class="tg-0lax">X=3</th>
+                    <th class="tg-0lax">X=4</th>
+                    <th class="tg-0lax">X=5</th>
+                    <th class="tg-0lax">X=6</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- Table body will be populated dynamically -->
+            </tbody>
+        </table>
+
+<br><br>
+<!-- Quiz Question 1 -->
+<label for="quiz3" style="display: inline-block; margin-bottom: 8px;">
+    What is the <b>maximum</b> number of widgets the Buyer can buy based on your offer?
+</label>
+<input type="number" id="quiz3" name="quiz3"
+       style="border: 1px solid #aaa; border-radius: 6px; padding: 6px 10px; margin-left: 10px;
+              font-size: 15px; background-color: #f9f9f9; width: 40px;">
+
+<br><br>
+
+<!-- Quiz Question 2 -->
+<label for="quiz4" style="display: inline-block; margin-bottom: 8px;">
+    What is the <b>minimum</b> number of widgets the Buyer can buy based on your offer?
+</label>
+<input type="number" id="quiz4" name="quiz4"
+       style="border: 1px solid #aaa; border-radius: 6px; padding: 6px 10px; margin-left: 11px;
+              font-size: 15px; background-color: #f9f9f9; width: 40px;">
+
+
+{{ formfield_errors 'quiz3' }}
+{{ formfield_errors 'quiz4' }}
+<br><br>
+     Click next to submit your answers. You can only advance if the answers are correct.
+    <br><br>
+{{ next_button }}
+</div>
+
+<!-- Hidden message -->
+<div id="timeoutMessage" style="display: none; text-align: center; margin-top: 30px;">
+    <p style="color: red; font-size: 20px; font-weight: bold;">Please make your selection</p>
+</div>
+
+    <script src="{{ static 'veto_delegation/interface.js' }}"></script>
+<script>
+// setTimeout(function() {
+//     document.getElementById("timeoutMessage").style.display = "block";
+//     document.getElementById("pageWrapper").style.outline = "2px solid red";
+//     document.getElementById("pageWrapper").style.outlineOffset = "100px";
+// }, 60000);  // or 3000 for testing
+
+</script>
+{{ endblock }}

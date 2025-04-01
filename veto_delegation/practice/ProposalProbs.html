@@ -1,0 +1,87 @@
+{{ block title }}
+Practice Part 2
+{{ endblock }}
+
+
+
+{{ block content }}
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+    </head>
+<div id="pageWrapper">
+
+    <p> When the Seller makes their choice, they will be shown the following information. The image on the left shows the type of urn that Buyer's Ideal value X will be drawn from. Inside, you can see the total number of balls in the urn, and the amount of each type of ball.</p>
+    <p>On the right, there is a chart showing the type of ball on the x-axis and the probability that type of ball is drawn on the right. The shape of this probability plot will change based on the urn type. You can manipulate the slider under the graph to reveal detailed information about each ball type.</p>
+    <p>Please use the information in these figures to answer the questions below.</p>
+    <div class="sub-container2">
+        <div class="dice-box">
+            <p>
+                The Buyer will be drawn from the <strong>
+                {{ if roundType == 1}}
+                "L" urn
+                {{ elif roundType == 2}}
+                "M" urn
+                {{else}}
+                "H" urn
+                {{endif}}
+                </strong>:
+
+
+                <canvas id="ballCanvas"></canvas>
+
+            </p>
+        </div>
+        <div class="theta-box">
+
+            <canvas id="probCanvas" width="550" height="325"></canvas>
+
+            <div class="theta_control">
+                <span class="thetaOut" id="thetaOut"></span><input type="range" min="1" max="6" value="1" class="slider" id="thetaRange">
+            </div>
+
+        </div>
+    </div>
+    <br>
+    <br>
+
+<!-- Quiz Question 1 -->
+<label for="quiz1" style="display: inline-block; margin-bottom: 8px;">
+    Out of 20 total balls in the urn, how many are balls with the number 5?
+</label>
+<input type="number" id="quiz1" name="quiz1"
+       style="border: 1px solid #aaa; border-radius: 6px; padding: 6px 10px; margin-left: 10px;
+              font-size: 15px; background-color: #f9f9f9;">
+
+<br><br>
+
+<!-- Quiz Question 2 -->
+<label for="quiz2" style="display: inline-block; margin-bottom: 8px;">
+    What is the percentage probability of drawing a 3 from the urn?
+</label>
+<input type="number" id="quiz2" name="quiz2"
+       style="border: 1px solid #aaa; border-radius: 6px; padding: 6px 10px; margin-left: 10px;
+              font-size: 15px; background-color: #f9f9f9; width: 80px;"> %
+
+<br><br>
+{{ formfield_errors 'quiz1' }}
+{{ formfield_errors 'quiz2' }}
+ Click next to submit your answers. You can only advance if the answers are correct.
+<br><br>
+{{ next_button }}
+</div>
+<!-- Hidden message -->
+<div id="timeoutMessage" style="display: none; text-align: center; margin-top: 30px;">
+    <p style="color: red; font-size: 20px; font-weight: bold;">Please make your selection</p>
+</div>
+
+    <script src="{{ static 'veto_delegation/interface.js' }}"></script>
+<script>
+// setTimeout(function() {
+//     document.getElementById("timeoutMessage").style.display = "block";
+//     document.getElementById("pageWrapper").style.outline = "2px solid red";
+//     document.getElementById("pageWrapper").style.outlineOffset = "100px";
+// }, 60000);  // or 3000 for testing
+
+</script>
+{{ endblock }}

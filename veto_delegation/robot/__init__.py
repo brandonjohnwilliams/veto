@@ -155,63 +155,63 @@ class robot(Page):
     def before_next_page(player: Player, timeout_happened):
         set_payoffs(player)
 
-class Results(Page):
-    timeout_seconds = 15
-    @staticmethod
-    def js_vars(player):
-
-        # Initialize empty lists
-        roundName_list = []
-        idealX_list = []
-        offerMin_list = []
-        offerMax_list = []
-        choice_list = []
-        payoff_list = []
-
-        # Loop through each round
-        for i in range(1,player.round_number + 1):  # Assuming num_rounds is defined
-            prev_player = player.in_round(i)
-
-            # Append values from the respective round
-            roundName_list.append(prev_player.roundName)
-            idealX_list.append(prev_player.vetoer_bias)
-            offerMin_list.append(prev_player.minSlider)
-            offerMax_list.append(prev_player.maxSlider)
-            choice_list.append(prev_player.robotChoice)
-            payoff_list.append(prev_player.payoff)
-
-
-        return dict(
-            round=player.round_number,
-
-            # loop these variables
-            idealX=idealX_list,
-            offerMin=offerMin_list,
-            offerMax=offerMax_list,
-            choice=choice_list,
-            payoff=payoff_list,
-            roundName=roundName_list,
-        )
-
-    @staticmethod
-    def vars_for_template(player):
-        return dict(
-            round_type=player.roundType,
-            roundName=player.roundName,
-        )
-
-    @staticmethod
-    def before_next_page(player, timeout_happened):
-        # Run at the end
-        if player.round_number == C.NUM_ROUNDS:
-            # Check if the player is the lucky one
-            lucky_player = int(player.participant.label)
-            if lucky_player == int(player.session.vars['PartTwoPay']):
-                # Draw one of the rounds to pay
-                lucky_round = random.randint(1, C.NUM_ROUNDS)
-                lucky_draw = player.in_round(lucky_round)
-                player.participant.vars['BonusPay'] = lucky_draw.payoff
-                print(f"Paying {player.session.vars['PartTwoPay']} a bonus of {player.participant.vars['BonusPay']}")
+# class Results(Page):
+#     timeout_seconds = 15
+#     @staticmethod
+#     def js_vars(player):
+#
+#         # Initialize empty lists
+#         roundName_list = []
+#         idealX_list = []
+#         offerMin_list = []
+#         offerMax_list = []
+#         choice_list = []
+#         payoff_list = []
+#
+#         # Loop through each round
+#         for i in range(1,player.round_number + 1):  # Assuming num_rounds is defined
+#             prev_player = player.in_round(i)
+#
+#             # Append values from the respective round
+#             roundName_list.append(prev_player.roundName)
+#             idealX_list.append(prev_player.vetoer_bias)
+#             offerMin_list.append(prev_player.minSlider)
+#             offerMax_list.append(prev_player.maxSlider)
+#             choice_list.append(prev_player.robotChoice)
+#             payoff_list.append(prev_player.payoff)
+#
+#
+#         return dict(
+#             round=player.round_number,
+#
+#             # loop these variables
+#             idealX=idealX_list,
+#             offerMin=offerMin_list,
+#             offerMax=offerMax_list,
+#             choice=choice_list,
+#             payoff=payoff_list,
+#             roundName=roundName_list,
+#         )
+#
+#     @staticmethod
+#     def vars_for_template(player):
+#         return dict(
+#             round_type=player.roundType,
+#             roundName=player.roundName,
+#         )
+#
+#     @staticmethod
+#     def before_next_page(player, timeout_happened):
+#         # Run at the end
+#         if player.round_number == C.NUM_ROUNDS:
+#             # Check if the player is the lucky one
+#             lucky_player = int(player.participant.label)
+#             if lucky_player == int(player.session.vars['PartTwoPay']):
+#                 # Draw one of the rounds to pay
+#                 lucky_round = random.randint(1, C.NUM_ROUNDS)
+#                 lucky_draw = player.in_round(lucky_round)
+#                 player.participant.vars['BonusPay'] = lucky_draw.payoff
+#                 print(f"Paying {player.session.vars['PartTwoPay']} a bonus of {player.participant.vars['BonusPay']}")
 
 class WaitPage2(WaitPage):
     @staticmethod
@@ -222,4 +222,4 @@ class WaitPage2(WaitPage):
 
     body_text = "Waiting for all participants to complete Part Two."
 
-page_sequence = [Intro, Instructions, robot, Results, WaitPage2]
+page_sequence = [Intro, Instructions, robot, WaitPage2]

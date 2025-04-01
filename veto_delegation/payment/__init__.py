@@ -26,6 +26,7 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     lottery = models.StringField()
+    totalPay = models.IntegerField()
 
 def creating_session(subsession):
     pass
@@ -53,6 +54,8 @@ class Payment(Page):
         PartFourGive= 1 if player.participant.label == player.session.vars.get('PartFourPayGive') else 0
         PartFourReceive = 1 if player.participant.label == player.session.vars.get('PartFourPayReceive') else 0
 
+        player.totalPay = int(PartOnePay + BonusPay)
+
         return dict(
             PartOnePay=PartOnePay,
             Bonus=BonusPay,
@@ -61,6 +64,7 @@ class Payment(Page):
             PartThree=PartThree,
             PartFourGive=PartFourGive,
             PartFourReceive=PartFourReceive,
+            TotalPay=player.totalPay
         )
 
 

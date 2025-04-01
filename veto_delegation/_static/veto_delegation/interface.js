@@ -338,9 +338,9 @@ function updatePoints(basePoints, newYValues) {
       return {
         x: index + 1,
         y: y,
-        yCDF: (yCDF * 100).toFixed(2) + "%",
-        yPT: (y * 100).toFixed(2) + "%",
-        yADJ: (yADJ * 100).toFixed(2) + "%"
+        yCDF: (yCDF * 100).toFixed(0) + "%",
+        yPT: (y * 100).toFixed(0) + "%",
+        yADJ: (yADJ * 100).toFixed(0) + "%"
       };
     });
   }
@@ -584,7 +584,7 @@ function drawProbs(showPlot, points, yticks, redPoint) {
 
             ctx.font = axisTextSize;
             ctx.textAlign = "center";
-            ctx.fillText(point.yPT, pt.cx + 10, pt.cy - 15);
+            ctx.fillText(point.yPT, pt.cx, pt.cy - 15);
         } else { // For non-highlighted points
             ctx.strokeStyle = "gray";
             ctx.fillStyle = "blue";

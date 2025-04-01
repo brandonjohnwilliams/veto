@@ -9,6 +9,7 @@ Proposal
     <head>
         <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
     </head>
+<div id="pageWrapper">
                 The probability that the Buyer has each value is shown to the right. You can adjust the slider to see how the probability changes.                 You can also see the corresponding payoff for the selected value (highlighted in blue) in the table below.
 
 <br><br>
@@ -95,7 +96,19 @@ Please make your selection below.                 <br><br>
 {{ formfield_errors 'minSlider' }}
 <br><br>
 {{ next_button }}
+</div>
+<!-- Hidden message -->
+<div id="timeoutMessage" style="display: none; text-align: center; margin-top: 30px;">
+    <p style="color: red; font-size: 20px; font-weight: bold;">Please make your selection</p>
+</div>
 
     <script src="{{ static 'veto_delegation/interface.js' }}"></script>
+<script>
+setTimeout(function() {
+    document.getElementById("timeoutMessage").style.display = "block";
+    document.getElementById("pageWrapper").style.outline = "2px solid red";
+    document.getElementById("pageWrapper").style.outlineOffset = "100px";
+}, 60000);  // or 3000 for testing
 
+</script>
 {{ endblock }}

@@ -1,0 +1,22 @@
+{{ block title }}
+Ready to Begin
+{{ endblock }}
+
+{{ block content }}
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+    </head>
+
+<!-- Text -->
+  <p>
+    We will now begin the main part of the experiment.
+  </p>
+<p>
+  Remember, if you have any questions during the experiment, please raise your hand and someone will come to answer your question in private.
+</p>
+
+
+
+    <!-- Include JavaScript file -->
+    <script src="{{ static 'veto_delegation/script-graph.js' }}"></script>
+{{ endblock }}

@@ -1,9 +1,10 @@
+{{ extends 'oTree/WaitPage.html' }}
 {{ block title }}
-    Results - Round {{player.round_number}}
+Please Wait
 {{ endblock }}
 
+{% block content %}
 
-{{ block content }}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,26 +30,7 @@
         th:nth-child(6), td:nth-child(6) { width: 15%; } /* Payoff */
     </style>
 </head>
-Here are the results for Round {{player.round_number}}.
-
-{{ if player.id_in_group == 1}}
-
-<p>
-    As the Seller, you offered a range of {{ group.minSlider }} and {{group.maxSlider}} widgets.
-    The Buyer chose to purchase {{ if group.response == 1 }} {{ group.response}} widget. {{ else }} {{group.response}} widgets.{{endif}}
-    Your payoff is {{ player.payoff }}.
-</p>
-
-
-{{ else }}
-
-<p>
-    The Seller offered a range of {{ group.minSlider }} and {{group.maxSlider}} widgets.
-    As the Buyer, you chose to purchase {{ if group.response == 1 }} {{ group.response}} widget. {{ else }} {{group.response}} widgets.{{endif}}
-    Your payoff is {{ player.payoff }}.
-</p>
-{{endif}}
-Here is history of rounds so far:
+While you wait for the next player to match with, here is history of rounds so far:
 <br><br>
 
 <table id="gameTable">
@@ -67,9 +49,10 @@ Here is history of rounds so far:
 </table>
 <br><br>
 
+<br><br>
+<p>Please wait for the next player to match with...</p>
 
-    {{ next_button }}
-
+    <!-- Include JavaScript file -->
     <script>
     function generateTable() {
         let numRows = js_vars.round;  // Assuming this is the total number of rounds
@@ -99,6 +82,6 @@ Here is history of rounds so far:
 
     </script>
 
-{{ endblock }}
 
 
+{% endblock %}

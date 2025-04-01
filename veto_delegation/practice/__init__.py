@@ -13,11 +13,6 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
 
-    endowment = 25
-    veto_amount = 0
-    guarantee = 5
-
-    single = 0
     round_type = 2 # defined only explicitly for the practice round
 
     setZero = 0  # define as such to remove buyer payoff column
@@ -27,60 +22,116 @@ class Subsession(BaseSubsession):
 
 
 class Group(BaseGroup):
-    minSlider = models.IntegerField() # defines the left side of the delegated range
-    maxSlider = models.IntegerField() # defines the right side of the delegated range
+    pass
 
-    response = models.IntegerField() # numerical response of the vetoer
-    veto = models.BooleanField(blank=True, initial=False) # True if vetoed
+class Player(BasePlayer):
 
-    vetoer_bias = models.IntegerField()
+    quiz1 = models.IntegerField()
+    quiz2 = models.IntegerField()
+    quiz3 = models.IntegerField()
+    quiz4 = models.IntegerField()
+
+    single = models.IntegerField()
+    chat = models.IntegerField()
+
+    minSlider = models.IntegerField()  # defines the left side of the delegated range
+    maxSlider = models.IntegerField()  # defines the right side of the delegated range
 
     selectedX = models.IntegerField()
 
+    response = models.IntegerField()
 
-class Player(BasePlayer):
-    quiz3 = models.BooleanField(label="Is 9 a prime number?")
+    sellerPayoff = models.IntegerField()
+    buyerPayoff = models.IntegerField()
 
 # FUNCTIONS
 # PAGES
 class Introduction(Page):
     pass
 
-class PartOne(Page):
-    pass
+class ProposalProbs(Page):
+    form_model = 'player'
+    form_fields = ['quiz1', 'quiz2']
+    @staticmethod
+    def js_vars(player):
+        if player.session.config['take_it_or_leave_it']==1:
+            player.single = 1
+        else: player.single = 0
+        return dict(
+            round_type=3,
+            selectedX=C.setZero,
+            fromM=1,
+            toM=8,
+            single=player.single,
+        )
 
-class Payoffs(Page):
+    @staticmethod
+    def vars_for_template(player):
+        return {
+            "selectedX": 2,
+            "roundName": "Middle",
+            "roundType": 3,
+        }
+
+    @staticmethod
+    def error_message(player: Player, values):
+        solutions = dict(quiz1=5, quiz2=15)
+
+        if values != solutions:
+            return "One or more answers were incorrect."
+
+class ProposalMenu(Page):
+    form_model = 'player'
+    form_fields = ['minSlider', 'maxSlider']
     @staticmethod
     def js_vars(player):
         return dict(
-            selectedX=C.setZero,  # Selecting 0 removes the column
+            round_type=3,
+            single=player.single,
+            fromM=1,
+            toM=8,
         )
 
-class DeterminingX(Page):
-    pass
+    @staticmethod
+    def vars_for_template(player: Player):
+        return dict(
+            roundType=3,
+            single=player.single,
+        )
 
-class SellersChoice(Page):
-    pass
+class ProposalQuestions(Page):
+    form_model = 'player'
+    form_fields = ['quiz3','quiz4']
 
-class SellerView(Page):
     @staticmethod
     def js_vars(player):
         return dict(
-            round_type=C.round_type,
+            # selectedX=2, # Selecting 0 removes the column
+            fromM=player.minSlider,
+            toM=player.maxSlider,
+            round_type=3,
+            # response=1,
         )
 
-class BuyersChoice(Page):
-    pass
-
-class BuyersView(Page):
     @staticmethod
-    def js_vars(player):
+    def vars_for_template(player):
         return dict(
-            selectedX=2, # Selecting 0 removes the column
-            fromM=3,
-            toM=6,
+            # selectedX=2, # Selecting 0 removes the column
+            fromM=player.minSlider,
+            toM=player.maxSlider,
+            roundType=3,
         )
 
+    @staticmethod
+    def error_message(player: Player, values):
+        solutions = dict(quiz3=0, quiz4=player.maxSlider)
 
+        if values != solutions:
+            return "One or more answers were incorrect."
 
-page_sequence = [Introduction, PartOne, Payoffs, DeterminingX, SellersChoice, SellerView, BuyersChoice, BuyersView]
+class WaitPage2(WaitPage):
+    wait_for_all_groups = True
+
+    body_text = "Waiting for all participants to complete the practice. Once everyone is ready, we will begin the main experiment."
+
+page_sequence = [Introduction, ProposalProbs, ProposalMenu, ProposalQuestions, WaitPage2]

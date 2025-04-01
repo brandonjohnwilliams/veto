@@ -10,7 +10,7 @@ Veto Delegation
 class C(BaseConstants):
     NAME_IN_URL = 'veto_delegation'
     PLAYERS_PER_GROUP = 2
-    NUM_ROUNDS = 3
+    NUM_ROUNDS = 15
     REMATCH_INTERVAL = 5  # Reassign roles after every X rounds
 
     SELLER_ROLE = 'Seller'
@@ -262,6 +262,9 @@ class Proposal(Page):
 class WaitForP1(WaitPage):
     # title_text = "Please wait"
     # body_text = "Waiting for the Seller to make his or her choice"
+    @staticmethod
+    def is_displayed(player):
+        return player.role == C.BUYER_ROLE
 
     template_name = 'BuyerWaitPage.html'
 
@@ -321,7 +324,7 @@ class WaitForP2(WaitPage):
     def js_vars(player):
         group = player.group
         return dict(
-            selectedX=player.group.vetoer_bias,
+            selectedX=0,
             fromM=group.minSlider,
             toM=group.maxSlider,
             response=1,
@@ -389,5 +392,45 @@ class Results(Page):
             player.participant.PartOnePayoff = float(player_in_selected_round.payoff)
             # print("Paying for part one: ", player.participant.PartOnePayoff)
 
+class WaitForRematch(WaitPage):
+    # title_text = "Please wait"
+    # body_text = "Waiting for the Buyer to make his or her choice"
+    wait_for_all_groups = True
 
-page_sequence = [RolesIntro, Roles, Chat, Proposal, WaitForP1, Response, WaitForP2, Results]
+    template_name = 'ResultsWaitPage.html'
+
+    @staticmethod
+    def js_vars(player):
+        # Initialize empty lists
+        roundName_list = []
+        idealX_list = []
+        offerMin_list = []
+        offerMax_list = []
+        choice_list = []
+        payoff_list = []
+
+        # Loop through each round
+        for i in range(1, player.round_number + 1):  # Assuming num_rounds is defined
+            prev_player = player.in_round(i)
+
+            # Append values from the respective round
+            roundName_list.append(prev_player.group.roundName)
+            idealX_list.append(prev_player.group.vetoer_bias)
+            offerMin_list.append(prev_player.group.minSlider)
+            offerMax_list.append(prev_player.group.maxSlider)
+            choice_list.append(prev_player.group.response)
+            payoff_list.append(prev_player.payoff)
+
+        return dict(
+            round=player.round_number,
+
+            # loop these variables
+            idealX=idealX_list,
+            offerMin=offerMin_list,
+            offerMax=offerMax_list,
+            choice=choice_list,
+            payoff=payoff_list,
+            roundName=roundName_list,
+        )
+
+page_sequence = [RolesIntro, Roles, Chat, Proposal, WaitForP1, Response, WaitForP2, Results, WaitForRematch]
