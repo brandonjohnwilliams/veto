@@ -1,0 +1,45 @@
+{{ block title }}
+Payment
+{{ endblock }}
+
+
+
+{{ block content }}
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+    </head>
+
+
+<p>
+Please write down your total earnings on your receipt.
+</p>
+<ul>
+    <li>You earned ${{ PartOnePay }} from Part One. The computer randomly selected Round {{ Round }} for payment.</li>
+<li>
+    {% if Bonus > 0 %}
+        You earned {{ Bonus }} in bonus payments from the randomly selected round in Part
+        {% if PartTwo == 1 %}
+            Two
+        {% elif PartThree == 1 %}
+            Three
+        {% else %}
+            Four
+        {% endif %}.
+    {% else %}
+        You did not earn any bonus payments from the randomly selected rounds in Parts Two, Three or Four.
+    {% endif %}
+</li>
+</ul>
+
+<p>Once you have recorded your earnings, please click next. This ensures the privacy of all participants and their earnings.</p>
+
+<button class="o-tree-btn-next btn btn-primary" id="Next" style="visibility:hidden;">Next</button>
+
+<script>
+    window.onload = function () {
+        setTimeout(function(){document.querySelector("#Next").style.visibility = "visible";}, 1000);
+    }
+</script>
+
+{{ endblock }}

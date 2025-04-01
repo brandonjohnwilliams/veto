@@ -68,15 +68,15 @@ def set_payoffs(player):
         for y in range(1, len(payoff_matrix))  # Start from 1 to avoid duplicate row 0
     ])
 
-    print("Robot ideal X=", player.vetoer_bias, "Robot choices=", robotChoices)
+    # print("Robot ideal X=", player.vetoer_bias, "Robot choices=", robotChoices)
 
     robotMax = max(robotChoices)
     robotChoice = robotChoices.index(robotMax)  # Index within X
     player.robotChoice = robotChoice
-    print(robotChoice)
+    # print(robotChoice)
 
     player.payoff = payoff_matrix[robotChoice][0]
-    print(player.payoff)
+    # print(player.payoff)
 
 
 def creating_session(subsession):
@@ -199,6 +199,19 @@ class Results(Page):
             round_type=player.roundType,
             roundName=player.roundName,
         )
+
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        # Run at the end
+        if player.round_number == C.NUM_ROUNDS:
+            # Check if the player is the lucky one
+            lucky_player = int(player.participant.label)
+            if lucky_player == int(player.session.vars['PartTwoPay']):
+                # Draw one of the rounds to pay
+                lucky_round = random.randint(1, C.NUM_ROUNDS)
+                lucky_draw = player.in_round(lucky_round)
+                player.participant.vars['BonusPay'] = lucky_draw.payoff
+                print(f"Paying {player.session.vars['PartTwoPay']} a bonus of {player.participant.vars['BonusPay']}")
 
 class WaitPage(WaitPage):
     @staticmethod

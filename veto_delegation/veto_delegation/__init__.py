@@ -10,7 +10,7 @@ Veto Delegation
 class C(BaseConstants):
     NAME_IN_URL = 'veto_delegation'
     PLAYERS_PER_GROUP = 2
-    NUM_ROUNDS = 15
+    NUM_ROUNDS = 3
     REMATCH_INTERVAL = 5  # Reassign roles after every X rounds
 
     SELLER_ROLE = 'Seller'
@@ -43,7 +43,6 @@ class Player(BasePlayer):
     single = models.IntegerField()
 
 
-
 # FUNCTIONS
 def set_payoffs(group):
     payoff_matrix = {
@@ -63,14 +62,23 @@ def set_payoffs(group):
     p1.payoff = payoff_matrix[group.response][0]
     p2.payoff = payoff_matrix[group.response][group.vetoer_bias]
 
-    print(f"Seller payoff: {p1.payoff}")
-    print(f"Buyer payoff: {p2.payoff}")
+    # print(f"Seller payoff: {p1.payoff}")
+    # print(f"Buyer payoff: {p2.payoff}")
+
 
 def creating_session(subsession):
+    # Establish who will be paid for Parts 2, 3 and 4
+    if subsession.round_number == 1:
+        lucky_participants = random.sample(range(1, subsession.session.num_participants + 1), 3)
 
-    # Lock in round for payment
+        subsession.session.vars['PartTwoPay'] = lucky_participants[0]
+        subsession.session.vars['PartThreePay'] = lucky_participants[1]
+        subsession.session.vars['PartFourPay'] = lucky_participants[2]
 
-
+        print("Lucky participants are: ",
+              subsession.session.vars['PartTwoPay'],
+              subsession.session.vars['PartThreePay'],
+              subsession.session.vars['PartFourPay'])
 
     # Load JSON file
     with open('SubjectMatching.json', 'r') as f:
@@ -94,14 +102,31 @@ def creating_session(subsession):
 
     # Step 1: Build id map (otree_id → subject_id)
     id_map = {}
-    for player, (subject_id_str, attributes) in zip(sorted(players, key=lambda p: p.id_in_subsession), subject_assignment.items()):
+
+    # Generate payoff round outside of loop:
+    payRound1 = random.randint(1, C.NUM_ROUNDS)
+    payRound2 = random.randint(1, C.NUM_ROUNDS)
+
+    for player, (subject_id_str, attributes) in zip(sorted(players, key=lambda p: p.id_in_subsession),
+                                                    subject_assignment.items()):
         subject_id = int(subject_id_str)
         id_map[player.id_in_subsession] = subject_id
         player.participant.label = subject_id  # Save subject ID to label
 
         # Save attributes in participant.vars
+        matching_group = attributes['MatchingGroup']
         player.participant.vars['MatchingGroup'] = attributes['MatchingGroup']
         player.participant.vars['SubGroup'] = attributes['SubGroup']
+
+        # Generate PayRound for the MatchingGroup only in first round
+        if player.round_number == 1:
+            # Initialize BonusPay as zero
+            player.participant.vars['BonusPay'] = 0
+            if player.participant.vars['MatchingGroup'] == 1:
+                player.participant.vars['PayRound'] = payRound1
+            else:
+                player.participant.vars['PayRound'] = payRound2
+            # print("Paying round: ", player.participant.vars['PayRound'])
 
     # Step 2: Reverse map (subject_id → otree_id)
     subject_to_player_id = {v: k for k, v in id_map.items()}
@@ -150,10 +175,10 @@ def creating_session(subsession):
         group.vetoer_bias = match[urn_key]
 
         # Debug
-        print(f"✅ Group {group.id_in_subsession}: proposer {proposer_subject_id}, urn {urn_type}, selectedX = {group.vetoer_bias}")
-
+        # print(f"✅ Group {group.id_in_subsession}: proposer {proposer_subject_id}, urn {urn_type}, selectedX = {group.vetoer_bias}")
 
         # The dict seems to break after 18 people, why?
+
 
 # PAGES
 class RolesIntro(Page):
@@ -222,7 +247,6 @@ class Proposal(Page):
             single=player.single
         )
 
-
     @staticmethod
     def vars_for_template(player):
         group = player.group
@@ -285,7 +309,6 @@ class Response(Page):
         }
 
 
-
 class WaitForP2(WaitPage):
     # title_text = "Please wait"
     # body_text = "Waiting for the Buyer to make his or her choice"
@@ -316,6 +339,7 @@ class WaitForP2(WaitPage):
 
 class Results(Page):
     timeout_seconds = 15
+
     @staticmethod
     def js_vars(player):
 
@@ -328,7 +352,7 @@ class Results(Page):
         payoff_list = []
 
         # Loop through each round
-        for i in range(1,player.round_number + 1):  # Assuming num_rounds is defined
+        for i in range(1, player.round_number + 1):  # Assuming num_rounds is defined
             prev_player = player.in_round(i)
 
             # Append values from the respective round
@@ -338,7 +362,6 @@ class Results(Page):
             offerMax_list.append(prev_player.group.maxSlider)
             choice_list.append(prev_player.group.response)
             payoff_list.append(prev_player.payoff)
-
 
         return dict(
             round=player.round_number,
@@ -358,20 +381,11 @@ class Results(Page):
 
         participant = player.participant
 
-        # if it's the last round
-        if player.round_number == C.NUM_ROUNDS:
-            random_round = random.randint(2, C.NUM_ROUNDS)
-            participant.selected_round = random_round
-            player_in_selected_round = player.in_round(random_round)
-            player.payoff_final = float(player_in_selected_round.payoff)
-            participant.payoff = player.payoff_final
-
-    def vars_for_template(player: Player):
-        return dict(me_in_all_rounds=player.in_all_rounds(), contribution=player.contribution, payoff=player.payoff,
-                    transfer_amount = player.transfer_amount)
-
-
-
+        # if it's the round to pay
+        if player.round_number == player.participant.vars['PayRound']:
+            player_in_selected_round = player.in_round(player.participant.vars['PayRound'])
+            player.participant.PartOnePayoff = float(player_in_selected_round.payoff)
+            # print("Paying for part one: ", player.participant.PartOnePayoff)
 
 
 page_sequence = [RolesIntro, Roles, Chat, Proposal, WaitForP1, Response, WaitForP2, Results]

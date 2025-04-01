@@ -12,7 +12,7 @@ Risk preferences
 class C(BaseConstants):
     NAME_IN_URL = 'lotteries'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 1
+    NUM_ROUNDS = 6
 
     single = 0
 
@@ -30,91 +30,380 @@ class Player(BasePlayer):
 
 # FUNCTIONS
 def set_payoffs(player):
-    payoff_matrix = {
-        0: [8, 26, 21, 16, 11, 10, 10],
-        1: [12, 30, 25, 20, 15, 12, 11],
-        2: [16, 25, 30, 25, 20, 15, 12],
-        3: [20, 20, 25, 30, 25, 20, 15],
-        4: [24, 15, 20, 25, 30, 25, 20],
-        5: [28, 12, 15, 20, 25, 30, 25],
-        6: [32, 11, 12, 15, 20, 25, 30],
-        7: [36, 10, 11, 12, 15, 20, 25],
-        8: [40, 10, 10, 11, 12, 15, 20]
+    all_lotteries = {
+        "DelLow": {
+            "Lottery A": {
+                "action": "{0} U [1,8]",
+                "lot": {8: 0, 12: 30.0, 16: 25.0, 20: 20.0, 24: 15.0, 28: 5.0, 32: 5.0, 36: 0, 40: 0},
+                "expec": 18.2,
+            },
+            "Lottery B": {
+                "action": "{0} U [3,8]",
+                "lot": {8: 30.0, 12: 0, 16: 0, 20: 45.0, 24: 15.0, 28: 5.0, 32: 5.0, 36: 0, 40: 0},
+                "expec": 18.0,
+            },
+            "Lottery C": {
+                "action": "{0} U [5,8]",
+                "lot": {8: 55.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 40.0, 32: 5.0, 36: 0, 40: 0},
+                "expec": 17.2,
+            },
+            "Lottery D": {
+                "action": "{0} U [7,8]",
+                "lot": {8: 75.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 0, 32: 0, 36: 25.0, 40: 0},
+                "expec": 15.0,
+            },
+        },
+        "TIOLILow": {
+            "Lottery A": {
+                "action": "{0,1}",
+                "lot": {8: 0, 12: 100.0, 16: 0, 20: 0, 24: 0, 28: 0, 32: 0, 36: 0, 40: 0},
+                "expec": 12.0,
+            },
+            "Lottery B": {
+                "action": "{0,3}",
+                "lot": {8: 30.0, 12: 0, 16: 0, 20: 70.0, 24: 0, 28: 0, 32: 0, 36: 0, 40: 0},
+                "expec": 16.4,
+            },
+            "Lottery C": {
+                "action": "{0,5}",
+                "lot": {8: 55.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 45.0, 32: 0, 36: 0, 40: 0},
+                "expec": 17.0,
+            },
+            "Lottery D": {
+                "action": "{0,7}",
+                "lot": {8: 75.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 0, 32: 0, 36: 25.0, 40: 0},
+                "expec": 15.0,
+            },
+        },
+        "DelMid": {
+            "Lottery A": {
+                "action": "{0} U [1,8]",
+                "lot": {8: 0, 12: 10.0, 16: 15.0, 20: 25.0, 24: 25.0, 28: 15.0, 32: 10.0, 36: 0, 40: 0},
+                "expec": 22.0,
+            },
+            "Lottery B": {
+                "action": "{0} U [3,8]",
+                "lot": {8: 10.0, 12: 0, 16: 0, 20: 40.0, 24: 25.0, 28: 15.0, 32: 10.0, 36: 0, 40: 0},
+                "expec": 22.2,
+            },
+            "Lottery C": {
+                "action": "{0} U [5,8]",
+                "lot": {8: 25.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 65.0, 32: 10.0, 36: 0, 40: 0},
+                "expec": 23.4,
+            },
+            "Lottery D": {
+                "action": "{0} U [7,8]",
+                "lot": {8: 50.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 0, 32: 0, 36: 50.0, 40: 0},
+                "expec": 22.0,
+            },
+        },
+        "TIOLIMid": {
+            "Lottery A": {
+                "action": "{0,1}",
+                "lot": {8: 0, 12: 100.0, 16: 0, 20: 0, 24: 0, 28: 0, 32: 0, 36: 0, 40: 0},
+                "expec": 12.0,
+            },
+            "Lottery B": {
+                "action": "{0,3}",
+                "lot": {8: 10.0, 12: 0, 16: 0, 20: 90.0, 24: 0, 28: 0, 32: 0, 36: 0, 40: 0},
+                "expec": 18.8,
+            },
+            "Lottery C": {
+                "action": "{0,5}",
+                "lot": {8: 25.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 75.0, 32: 0, 36: 0, 40: 0},
+                "expec": 23.0,
+            },
+            "Lottery D": {
+                "action": "{0,7}",
+                "lot": {8: 50.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 0, 32: 0, 36: 50.0, 40: 0},
+                "expec": 22.0,
+            },
+        },
+        "DelHigh": {
+            "Lottery A": {
+                "action": "{0} U [1,8]",
+                "lot": {8: 0, 12: 5.0, 16: 5.0, 20: 15.0, 24: 20.0, 28: 25.0, 32: 30.0, 36: 0, 40: 0},
+                "expec": 25.8,
+            },
+            "Lottery B": {
+                "action": "{0} U [3,8]",
+                "lot": {8: 5.0, 12: 0, 16: 0, 20: 20.0, 24: 20.0, 28: 25.0, 32: 30.0, 36: 0, 40: 0},
+                "expec": 25.8,
+            },
+            "Lottery C": {
+                "action": "{0} U [5,8]",
+                "lot": {8: 10.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 60.0, 32: 30.0, 36: 0, 40: 0},
+                "expec": 27.2,
+            },
+            "Lottery D": {
+                "action": "{0} U [7,8]",
+                "lot": {8: 25.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 0, 32: 0, 36: 75.0, 40: 0},
+                "expec": 29.0,
+            },
+        },
+        "TIOLIHigh": {
+            "Lottery A": {
+                "action": "{0,1}",
+                "lot": {8: 0, 12: 100.0, 16: 0, 20: 0, 24: 0, 28: 0, 32: 0, 36: 0, 40: 0},
+                "expec": 12.0,
+            },
+            "Lottery B": {
+                "action": "{0,3}",
+                "lot": {8: 5.0, 12: 0, 16: 0, 20: 95.0, 24: 0, 28: 0, 32: 0, 36: 0, 40: 0},
+                "expec": 19.4,
+            },
+            "Lottery C": {
+                "action": "{0,5}",
+                "lot": {8: 10.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 90.0, 32: 0, 36: 0, 40: 0},
+                "expec": 26.0,
+            },
+            "Lottery D": {
+                "action": "{0,7}",
+                "lot": {8: 25.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 0, 32: 0, 36: 75.0, 40: 0},
+                "expec": 29.0,
+            },
+        },
     }
 
-    # Convert minSlider and maxSlider to integers
-    min_Slider = int(player.minSlider)
-    max_Slider = int(player.maxSlider)
+    # Define the round-to-group mapping
+    lottery_order = [
+        "DelLow",
+        "TIOLILow",
+        "DelMid",
+        "TIOLIMid",
+        "DelHigh",
+        "TIOLIHigh",
+    ]
 
-    robotChoices = [payoff_matrix[0][player.vetoer_bias]]  # Start with row 0 value
-    # Iterate over all rows (1-8) and replace out-of-range values with 0
-    robotChoices.extend([
-        payoff_matrix[y][player.vetoer_bias] if min_Slider <= y <= max_Slider else 0
-        for y in range(1, len(payoff_matrix))  # Start from 1 to avoid duplicate row 0
-    ])
+    # Use modulo in case rounds go beyond the list length
+    group_key = lottery_order[(player.round_number - 1) % len(lottery_order)]
 
-    print("Robot ideal X=", player.vetoer_bias, "Robot choices=", robotChoices)
+    # Safely get the group dictionary
+    group_dict = all_lotteries.get(group_key)
+    if not group_dict:
+        print(f"Group key {group_key} not found in all_lotteries.")
+        return
 
-    robotMax = max(robotChoices)
-    robotChoice = robotChoices.index(robotMax)  # Index within X
-    player.robotChoice = robotChoice
-    print(robotChoice)
+    # Safely get the selected lottery details
+    selected_lottery = group_dict.get(player.lottery)
+    if not selected_lottery:
+        print(f"Lottery {player.lottery} not found in {group_key}.")
+        return
 
-    player.payoff = payoff_matrix[robotChoice][0]
-    print(player.payoff)
+    # Get the "lot" dictionary
+    lot_distribution = selected_lottery.get("lot")
+
+    # Optional: Save it in player or participant.vars for future use
+    player.participant.vars["lot_distribution"] = lot_distribution
+
+    # Example: Pick a payoff from the lot using probabilities
+    # (This assumes the values in `lot_distribution` are percentages)
+    from random import choices
+
+    outcomes = list(lot_distribution.keys())
+    weights = list(lot_distribution.values())
+
+    chosen_outcome = choices(outcomes, weights=weights, k=1)[0]
+    player.payoff = chosen_outcome
+
+    print(f"Round {player.round_number} - {player.lottery}: payoff set to {player.payoff}")
 
 
 def creating_session(subsession):
-
-    for player in subsession.get_players():
-        # Load the JSON file
-        with open("dice_rolls.json", "r") as f:
-            dice_rolls = json.load(f)
-
-        # Randomly select an index
-        random_index = random.choice(list(dice_rolls.keys()))
-
-        # Get the corresponding dice rolls
-        selected_roll = dice_rolls[random_index]
-
-        # Select a distribution
-        if subsession.round_number == 1:
-            # Generate a single random permutation of [1, 2, 3] and store it
-            player.participant.sample = random.sample([1, 2, 3], k=3)
-
-        dist = player.participant.sample[subsession.round_number-1]
-
-        # Assign on ordering
-        player.drawLow = min(selected_roll)
-        player.drawMed = sorted(selected_roll)[1]  # Median value
-        player.drawHigh = max(selected_roll)
-
-        if dist == 1:
-            player.roundType = 1
-            player.vetoer_bias = player.drawLow
-            player.roundName = "lowest"
-
-        elif dist == 2:
-            player.roundType = 2
-            player.vetoer_bias = player.drawMed
-            player.roundName = "middle"
-
-        else:
-            player.roundType = 3
-            player.vetoer_bias = player.drawHigh
-            player.roundName = "highest"
+    pass
 
 # PAGES
 
 
 class Instructions(Page):
-    pass
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == 1
 
 class lotteries(Page):
     form_model = 'player'
     form_fields = ['lottery']
 
+
+
+    @staticmethod
+    def js_vars(player):
+
+        # for setting the lotteries:
+
+        all_lotteries = {
+            "DelLow": {
+                "Lottery A": {
+                    "action": "{0} U [1,8]",
+                    "lot": {8: 0, 12: 30.0, 16: 25.0, 20: 20.0, 24: 15.0, 28: 5.0, 32: 5.0, 36: 0, 40: 0},
+                    "expec": 18.2,
+                },
+                "Lottery B": {
+                    "action": "{0} U [3,8]",
+                    "lot": {8: 30.0, 12: 0, 16: 0, 20: 45.0, 24: 15.0, 28: 5.0, 32: 5.0, 36: 0, 40: 0},
+                    "expec": 18.0,
+                },
+                "Lottery C": {
+                    "action": "{0} U [5,8]",
+                    "lot": {8: 55.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 40.0, 32: 5.0, 36: 0, 40: 0},
+                    "expec": 17.2,
+                },
+                "Lottery D": {
+                    "action": "{0} U [7,8]",
+                    "lot": {8: 75.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 0, 32: 0, 36: 25.0, 40: 0},
+                    "expec": 15.0,
+                },
+            },
+            "TIOLILow": {
+                "Lottery A": {
+                    "action": "{0,1}",
+                    "lot": {8: 0, 12: 100.0, 16: 0, 20: 0, 24: 0, 28: 0, 32: 0, 36: 0, 40: 0},
+                    "expec": 12.0,
+                },
+                "Lottery B": {
+                    "action": "{0,3}",
+                    "lot": {8: 30.0, 12: 0, 16: 0, 20: 70.0, 24: 0, 28: 0, 32: 0, 36: 0, 40: 0},
+                    "expec": 16.4,
+                },
+                "Lottery C": {
+                    "action": "{0,5}",
+                    "lot": {8: 55.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 45.0, 32: 0, 36: 0, 40: 0},
+                    "expec": 17.0,
+                },
+                "Lottery D": {
+                    "action": "{0,7}",
+                    "lot": {8: 75.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 0, 32: 0, 36: 25.0, 40: 0},
+                    "expec": 15.0,
+                },
+            },
+            "DelMid": {
+                "Lottery A": {
+                    "action": "{0} U [1,8]",
+                    "lot": {8: 0, 12: 10.0, 16: 15.0, 20: 25.0, 24: 25.0, 28: 15.0, 32: 10.0, 36: 0, 40: 0},
+                    "expec": 22.0,
+                },
+                "Lottery B": {
+                    "action": "{0} U [3,8]",
+                    "lot": {8: 10.0, 12: 0, 16: 0, 20: 40.0, 24: 25.0, 28: 15.0, 32: 10.0, 36: 0, 40: 0},
+                    "expec": 22.2,
+                },
+                "Lottery C": {
+                    "action": "{0} U [5,8]",
+                    "lot": {8: 25.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 65.0, 32: 10.0, 36: 0, 40: 0},
+                    "expec": 23.4,
+                },
+                "Lottery D": {
+                    "action": "{0} U [7,8]",
+                    "lot": {8: 50.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 0, 32: 0, 36: 50.0, 40: 0},
+                    "expec": 22.0,
+                },
+            },
+            "TIOLIMid": {
+                "Lottery A": {
+                    "action": "{0,1}",
+                    "lot": {8: 0, 12: 100.0, 16: 0, 20: 0, 24: 0, 28: 0, 32: 0, 36: 0, 40: 0},
+                    "expec": 12.0,
+                },
+                "Lottery B": {
+                    "action": "{0,3}",
+                    "lot": {8: 10.0, 12: 0, 16: 0, 20: 90.0, 24: 0, 28: 0, 32: 0, 36: 0, 40: 0},
+                    "expec": 18.8,
+                },
+                "Lottery C": {
+                    "action": "{0,5}",
+                    "lot": {8: 25.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 75.0, 32: 0, 36: 0, 40: 0},
+                    "expec": 23.0,
+                },
+                "Lottery D": {
+                    "action": "{0,7}",
+                    "lot": {8: 50.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 0, 32: 0, 36: 50.0, 40: 0},
+                    "expec": 22.0,
+                },
+            },
+            "DelHigh": {
+                "Lottery A": {
+                    "action": "{0} U [1,8]",
+                    "lot": {8: 0, 12: 5.0, 16: 5.0, 20: 15.0, 24: 20.0, 28: 25.0, 32: 30.0, 36: 0, 40: 0},
+                    "expec": 25.8,
+                },
+                "Lottery B": {
+                    "action": "{0} U [3,8]",
+                    "lot": {8: 5.0, 12: 0, 16: 0, 20: 20.0, 24: 20.0, 28: 25.0, 32: 30.0, 36: 0, 40: 0},
+                    "expec": 25.8,
+                },
+                "Lottery C": {
+                    "action": "{0} U [5,8]",
+                    "lot": {8: 10.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 60.0, 32: 30.0, 36: 0, 40: 0},
+                    "expec": 27.2,
+                },
+                "Lottery D": {
+                    "action": "{0} U [7,8]",
+                    "lot": {8: 25.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 0, 32: 0, 36: 75.0, 40: 0},
+                    "expec": 29.0,
+                },
+            },
+            "TIOLIHigh": {
+                "Lottery A": {
+                    "action": "{0,1}",
+                    "lot": {8: 0, 12: 100.0, 16: 0, 20: 0, 24: 0, 28: 0, 32: 0, 36: 0, 40: 0},
+                    "expec": 12.0,
+                },
+                "Lottery B": {
+                    "action": "{0,3}",
+                    "lot": {8: 5.0, 12: 0, 16: 0, 20: 95.0, 24: 0, 28: 0, 32: 0, 36: 0, 40: 0},
+                    "expec": 19.4,
+                },
+                "Lottery C": {
+                    "action": "{0,5}",
+                    "lot": {8: 10.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 90.0, 32: 0, 36: 0, 40: 0},
+                    "expec": 26.0,
+                },
+                "Lottery D": {
+                    "action": "{0,7}",
+                    "lot": {8: 25.0, 12: 0, 16: 0, 20: 0, 24: 0, 28: 0, 32: 0, 36: 75.0, 40: 0},
+                    "expec": 29.0,
+                },
+            },
+        }
+
+        lottery_order = [
+            "DelLow",
+            "TIOLILow",
+            "DelMid",
+            "TIOLIMid",
+            "DelHigh",
+            "TIOLIHigh",
+        ]
+
+        group_key = lottery_order[player.round_number - 1]
+        lottery = all_lotteries[group_key]
+
+        return dict(
+            lottery=lottery,
+        )
+
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        set_payoffs(player)
+
+        # Run at the end
+        if player.round_number == C.NUM_ROUNDS:
+            # Check if the player is the lucky one
+            lucky_player = int(player.participant.label)
+            if lucky_player == int(player.session.vars['PartThreePay']):
+                # Draw one of the rounds to pay
+                lucky_round = random.randint(1, C.NUM_ROUNDS)
+                lucky_draw = player.in_round(lucky_round)
+                player.participant.vars['BonusPay'] = lucky_draw.payoff
+                print(f"Paying {player.session.vars['PartThreePay']} a bonus of {player.participant.vars['BonusPay']}")
+
+
+
 class Waiting(WaitPage):
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == C.NUM_ROUNDS
+
     wait_for_all_groups = True
 
     body_text = "Waiting for all participants to complete Part Three."
