@@ -1,0 +1,120 @@
+{% block title %}
+Part Four - Round {{ player.round_number }}
+{% endblock %}
+
+{% block content %}
+<style>
+  #dictatorTable {
+    margin-top: 20px;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #dictatorTable th, #dictatorTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    width: 150px;
+  }
+  #dictatorTable th:first-child, #dictatorTable td:first-child {
+    border: none;
+    width: 120px;
+    padding: 0;
+    background-color: white;
+  }
+
+    #dictatorTable th {
+    background-color: #f2f2f2;
+  }
+  .active-row td:not(:first-child) {
+    background-color: #bebeff;
+  }
+  .lottery-button {
+    margin: 8px 0;
+    padding: 5px 20px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+  }
+  .lottery-button:hover {
+    background-color: #e3e3e3;
+  }
+  .lottery-button.active-button {
+    border-color: #0000ff;
+    background-color: #bebeff;
+  }
+</style>
+
+Please choose the allocation that you would prefer. If you are selected for payment, than one of your choices will be implemented and we will allocate the amount you choose between yourself and another participant in the room.
+
+
+<table id="dictatorTable">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Your Payoff</th>
+      <th>Other Person Payoff</th>
+    </tr>
+  </thead>
+  <tbody id="dictatorTableBody"></tbody>
+</table>
+
+<input type="hidden" name="dictator_choice" id="selectedDictatorInput" value="">
+
+<br><br>
+{{ formfield_errors 'dictator_choice' }}
+{{ next_button }}
+
+<script>
+
+const dictatorData = js_vars.dictator
+
+const tableBody = document.getElementById("dictatorTableBody");
+const buttonRefs = {};
+const rowRefs = {};
+
+Object.entries(dictatorData).forEach(([option, values]) => {
+  const row = document.createElement("tr");
+  rowRefs[option] = row;
+
+  const btnCell = document.createElement("td");
+  const btn = document.createElement("button");
+  btn.innerText = `Option ${option}`;
+  btn.type = "button";
+  btn.classList.add("lottery-button");
+  btn.onclick = () => {
+    selectOption(option);
+    highlightActive(option);
+  };
+  buttonRefs[option] = btn;
+  btnCell.appendChild(btn);
+  row.appendChild(btnCell);
+
+  const yourPayoff = document.createElement("td");
+  yourPayoff.innerText = values.take;
+  const otherPayoff = document.createElement("td");
+  otherPayoff.innerText = values.give;
+
+  row.appendChild(yourPayoff);
+  row.appendChild(otherPayoff);
+
+  tableBody.appendChild(row);
+});
+
+function selectOption(option) {
+  document.getElementById("selectedDictatorInput").value = option;
+}
+
+function highlightActive(activeOption) {
+  Object.entries(rowRefs).forEach(([opt, row]) => {
+    row.classList.toggle("active-row", parseInt(opt) === parseInt(activeOption));
+  });
+  Object.entries(buttonRefs).forEach(([opt, btn]) => {
+    btn.classList.toggle("active-button", parseInt(opt) === parseInt(activeOption));
+  });
+}
+</script>
+{% endblock %}

@@ -12,7 +12,7 @@ Payment
 class C(BaseConstants):
     NAME_IN_URL = 'payment'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 6
+    NUM_ROUNDS = 1
 
     single = 0
 
@@ -37,23 +37,24 @@ class Instructions(Page):
 class Payment(Page):
     @staticmethod
     def vars_for_template(player):
-        participant = player.participant
 
-        PartOnePay = participant.vars.get('PartOnePayoff')
-        BonusPay = participant.vars.get('BonusPay')
-        Round = participant.vars.get('PayRound')
+        PartOnePay = player.participant.vars.get('PartOnePayoff')
+        BonusPay = player.participant.vars.get('BonusPay')
+        Round = player.participant.vars.get('PayRound')
 
-        PartTwo = 1 if participant.label == player.session.vars.get('PartTwoPay') else 0
-        PartThree = 1 if participant.label == player.session.vars.get('PartThreePay') else 0
-        PartFour = 1 if participant.label == player.session.vars.get('PartFourPay') else 0
+        PartTwo = 1 if player.participant.label == player.session.vars.get('PartTwoPay') else 0
+        PartThree = 1 if player.participant.label == player.session.vars.get('PartThreePay') else 0
+        PartFourGive= 1 if player.participant.label == player.session.vars.get('PartFourPayGive') else 0
+        PartFourReceive = 1 if player.participant.label == player.session.vars.get('PartFourPayReceive') else 0
 
         return dict(
             PartOnePay=PartOnePay,
-            BonusPay=BonusPay,
+            Bonus=BonusPay,
             Round=Round,
             PartTwo=PartTwo,
             PartThree=PartThree,
-            PartFour=PartFour,
+            PartFourGive=PartFourGive,
+            PartFourReceive=PartFourReceive,
         )
 
 

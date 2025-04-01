@@ -69,16 +69,17 @@ def set_payoffs(group):
 def creating_session(subsession):
     # Establish who will be paid for Parts 2, 3 and 4
     if subsession.round_number == 1:
-        lucky_participants = random.sample(range(1, subsession.session.num_participants + 1), 3)
+        lucky_participants = random.sample(range(1, subsession.session.num_participants + 1), 4)
 
         subsession.session.vars['PartTwoPay'] = lucky_participants[0]
         subsession.session.vars['PartThreePay'] = lucky_participants[1]
-        subsession.session.vars['PartFourPay'] = lucky_participants[2]
+        subsession.session.vars['PartFourPayGive'] = lucky_participants[2]
+        subsession.session.vars['PartFourPayReceive'] = lucky_participants[2]
 
-        print("Lucky participants are: ",
-              subsession.session.vars['PartTwoPay'],
-              subsession.session.vars['PartThreePay'],
-              subsession.session.vars['PartFourPay'])
+        # print("Lucky participants are: ",
+        #       subsession.session.vars['PartTwoPay'],
+        #       subsession.session.vars['PartThreePay'],
+        #       subsession.session.vars['PartFourPay'])
 
     # Load JSON file
     with open('SubjectMatching.json', 'r') as f:
@@ -105,7 +106,7 @@ def creating_session(subsession):
 
     # Generate payoff round outside of loop:
     payRound1 = random.randint(1, C.NUM_ROUNDS)
-    payRound2 = random.randint(1, C.NUM_ROUNDS)
+    payRound2 = payRound1
 
     for player, (subject_id_str, attributes) in zip(sorted(players, key=lambda p: p.id_in_subsession),
                                                     subject_assignment.items()):

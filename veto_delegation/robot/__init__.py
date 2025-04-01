@@ -213,7 +213,7 @@ class Results(Page):
                 player.participant.vars['BonusPay'] = lucky_draw.payoff
                 print(f"Paying {player.session.vars['PartTwoPay']} a bonus of {player.participant.vars['BonusPay']}")
 
-class WaitPage(WaitPage):
+class WaitPage2(WaitPage):
     @staticmethod
     def is_displayed(player):
         return player.round_number == 3
@@ -222,4 +222,4 @@ class WaitPage(WaitPage):
 
     body_text = "Waiting for all participants to complete Part Two."
 
-page_sequence = [Intro, Instructions, robot, Results, WaitPage]
+page_sequence = [Intro, Instructions, robot, Results, WaitPage2]
