@@ -74,12 +74,13 @@ def creating_session(subsession):
         subsession.session.vars['PartTwoPay'] = lucky_participants[0]
         subsession.session.vars['PartThreePay'] = lucky_participants[1]
         subsession.session.vars['PartFourPayGive'] = lucky_participants[2]
-        subsession.session.vars['PartFourPayReceive'] = lucky_participants[2]
+        subsession.session.vars['PartFourPayReceive'] = lucky_participants[3]
 
-        # print("Lucky participants are: ",
-        #       subsession.session.vars['PartTwoPay'],
-        #       subsession.session.vars['PartThreePay'],
-        #       subsession.session.vars['PartFourPay'])
+        print("Lucky participants are: ",
+              subsession.session.vars['PartTwoPay'],
+              subsession.session.vars['PartThreePay'],
+              subsession.session.vars['PartFourPayGive'],
+              subsession.session.vars['PartFourPayReceive'])
 
     # Load JSON file
     with open('SubjectMatching.json', 'r') as f:

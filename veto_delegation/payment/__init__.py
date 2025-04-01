@@ -32,7 +32,13 @@ def creating_session(subsession):
 
 # PAGES
 class Instructions(Page):
-    pass
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        lucky_player = int(player.participant.label)
+        if lucky_player == int(player.session.vars['PartFourPayReceive']):
+            player.participant.vars['BonusPay'] = player.session.vars['GiveAmount']
+            print(
+                f"Paying {player.session.vars['PartFourPayReceive']} a bonus of {player.participant.vars['BonusPay']}")
 
 class Payment(Page):
     @staticmethod

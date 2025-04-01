@@ -62,7 +62,7 @@ Please choose the allocation that you would prefer. If you are selected for paym
   <tbody id="dictatorTableBody"></tbody>
 </table>
 
-<input type="hidden" name="dictator_choice" id="selectedDictatorInput" value="">
+<input type="hidden" name="dictator_choice" id="selectedDictatorInput" value="1">
 
 <br><br>
 {{ formfield_errors 'dictator_choice' }}
@@ -94,9 +94,9 @@ Object.entries(dictatorData).forEach(([option, values]) => {
   row.appendChild(btnCell);
 
   const yourPayoff = document.createElement("td");
-  yourPayoff.innerText = values.take;
+  yourPayoff.innerText = `$${values.take}`;
   const otherPayoff = document.createElement("td");
-  otherPayoff.innerText = values.give;
+  otherPayoff.innerText = `$${values.give}`;
 
   row.appendChild(yourPayoff);
   row.appendChild(otherPayoff);

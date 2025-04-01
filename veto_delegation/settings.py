@@ -5,10 +5,10 @@ SESSION_CONFIGS = [
          name='veto_delegation',
          display_name="Standard Treatment",
          app_sequence=[
-             # 'introduction',
+             'introduction',
              'veto_delegation',
-             # 'robot',
-             # 'lotteries',
+             'robot',
+             'lotteries',
              'dictator',
              'payment',
          ],
@@ -42,8 +42,8 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00, participation_fee=0.00, doc=""
 )
 
-PARTICIPANT_FIELDS = ['MatchingGroup', 'SubGroup', 'PayRound', 'PartOnePayoff', 'BonusPay', 'dictator_order']
-SESSION_FIELDS = ['PartTwoPay', 'PartThreePay', 'PartFourPayGive', 'PartFourPayReceive']
+PARTICIPANT_FIELDS = ['MatchingGroup', 'SubGroup', 'PayRound', 'PartOnePayoff', 'BonusPay', 'dictator_order', ]
+SESSION_FIELDS = ['PartTwoPay', 'PartThreePay', 'PartFourPayGive', 'PartFourPayReceive', 'GiveAmount']
 
 # ISO-639 code
 # for example: de, fr, ja, ko, zh-hans

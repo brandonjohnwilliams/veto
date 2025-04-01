@@ -25,7 +25,7 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    dictator_choice = models.IntegerField(initial=1)
+    dictator_choice = models.IntegerField()
     dictator_type = models.IntegerField()
 
 
@@ -160,6 +160,10 @@ class dictator(Page):
     @staticmethod
     def before_next_page(player, timeout_happened):
 
+        #for testing:
+        if timeout_happened:
+            player.dictator_choice = 1
+
         dictator = {
             3: {
                 1: {"take": 20, "give": 30},
@@ -192,17 +196,19 @@ class dictator(Page):
                 choice = lucky_draw.dictator_choice # save the choice within the type
                 mapping = lucky_draw.dictator_type # save the type mapping
                 player.participant.vars['BonusPay'] = dictator[mapping][choice]['take']
-                player.participant.vars['GiveAmount'] = dictator[mapping][choice]['give']
+                player.session.vars['GiveAmount'] = dictator[mapping][choice]['give']
+                print(
+                    f"Storing {player.session.vars['GiveAmount']} to give.")
                 print(f"Paying {player.session.vars['PartFourPayGive']} a bonus of {player.participant.vars['BonusPay']}")
-            if lucky_player == int(player.session.vars['PartFourPayReceive']):
-                player.participant.vars['BonusPay'] = player.participant.vars['GiveAmount']
-                print(f"Paying {player.session.vars['PartFourPayReceive']} a bonus of {player.participant.vars['BonusPay']}")
+
 
 
 class Waiting(WaitPage):
     @staticmethod
     def is_displayed(player):
         return player.round_number == C.NUM_ROUNDS
+
+
 
     wait_for_all_groups = True
 
