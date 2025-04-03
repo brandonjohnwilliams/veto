@@ -1,0 +1,65 @@
+{{ block title }}
+Results
+{{ endblock }}
+
+
+
+{{ block content }}
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+    </head>
+
+
+
+<p>
+    As the Seller, you offered a range of {{ player.minSlider }} to {{player.maxSlider}} widgets to the Robot Buyer.
+    The Robot Buyer had ideal value X={{player.vetoer_bias}} and chose to purchase {{ if player.robotChoice == 1 }} {{ player.robotChoice}} widget. {{ else }} {{player.robotChoice}} widgets.{{endif}}
+    Your payoff is {{ player.payoff }}.
+</p>
+<table id="gameTable">
+    <thead>
+        <tr>
+            <th>Round</th>
+            <th>Urn Type</th>
+<!--            <th>Ideal X</th>-->
+            <th>Offer</th>
+            <th>Robot Choice</th>
+            <th>Payoff</th>
+<!--            <th>Buyer Payoff</th>-->
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+    <script>
+    function generateTable() {
+        let numRows = js_vars.round;  // Assuming this is the total number of rounds
+        let roundName = js_vars.roundName;
+        let idealX = js_vars.idealX;
+        let offerMin = js_vars.offerMin;
+        let offerMax = js_vars.offerMax;
+        let choice = js_vars.choice;
+        let payoff = js_vars.payoff;
+        let tbody = document.querySelector("#gameTable tbody");
+        tbody.innerHTML = ""; // Clear previous table contents
+
+        for (let i = 0; i < numRows; i++) {  // Start loop from 0 to match array indices
+            let row = tbody.insertRow();
+
+            row.insertCell(0).textContent = i + 1; // Round number (1-based index)
+            row.insertCell(1).textContent = roundName[i].replace(/^\w/, (c) => c.toUpperCase());  // Access rounddice at index i
+            // row.insertCell(2).textContent = `${idealX[i]} widgets`;  // Access idealX at index i
+            row.insertCell(2).textContent = `${offerMin[i]} to ${offerMax[i]} widgets`;  // Access range values
+            row.insertCell(3).textContent = `${choice[i]} widgets`;  // Access choice at index i
+            row.insertCell(4).textContent = `$${payoff[i]}`;  // Access payoff at index i
+        }
+    }
+
+    // Generate default table on load
+    window.onload = generateTable;
+
+    </script>
+
+{{ endblock }}
