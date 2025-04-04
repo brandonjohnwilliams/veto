@@ -23,43 +23,27 @@
         }
         th:nth-child(1), td:nth-child(1) { width: 10%; } /* Round */
         th:nth-child(2), td:nth-child(2) { width: 20%; } /* Dice Roll */
-        th:nth-child(3), td:nth-child(3) { width: 15%; } /* Ideal X */
+        th:nth-child(3), td:nth-child(3) { width: 15%; } /* Role */
         th:nth-child(4), td:nth-child(4) { width: 15%; } /* Offer */
         th:nth-child(5), td:nth-child(5) { width: 15%; } /* Choice */
         th:nth-child(6), td:nth-child(6) { width: 15%; } /* Payoff */
+
+        .otree-timer { visibility: hidden; }
     </style>
 </head>
-Here are the results for Round {{player.round_number}}.
-
-{{ if player.id_in_group == 1}}
-
-<p>
-    As the Seller, you offered a range of {{ group.minSlider }} and {{group.maxSlider}} widgets.
-    The Buyer chose to purchase {{ if group.response == 1 }} {{ group.response}} widget. {{ else }} {{group.response}} widgets.{{endif}}
-    Your payoff is {{ player.payoff }}.
-</p>
 
 
-{{ else }}
-
-<p>
-    The Seller offered a range of {{ group.minSlider }} and {{group.maxSlider}} widgets.
-    As the Buyer, you chose to purchase {{ if group.response == 1 }} {{ group.response}} widget. {{ else }} {{group.response}} widgets.{{endif}}
-    Your payoff is {{ player.payoff }}.
-</p>
-{{endif}}
-Here is history of rounds so far:
-<br><br>
 
 <table id="gameTable">
     <thead>
         <tr>
             <th>Round</th>
             <th>Urn Type</th>
-            <th>Seller's Offer</th>
-            <th>Buyer's Choice</th>
-<!--            <th>Choice</th>-->
-            <th>Your Payoff</th>
+            <th>Role</th>
+            <th>Offer</th>
+            <th>Choice</th>
+            <th>Payoff</th>
+<!--            <th>Buyer Payoff</th>-->
         </tr>
     </thead>
     <tbody>
@@ -67,8 +51,6 @@ Here is history of rounds so far:
 </table>
 <br><br>
 
-
-    {{ next_button }}
 
     <script>
     function generateTable() {
@@ -79,6 +61,8 @@ Here is history of rounds so far:
         let offerMax = js_vars.offerMax;
         let choice = js_vars.choice;
         let payoff = js_vars.payoff;
+        let buyer_payoff = js_vars.buyer_payoff;
+        let role = js_vars.role
         let tbody = document.querySelector("#gameTable tbody");
         tbody.innerHTML = ""; // Clear previous table contents
 
@@ -87,10 +71,23 @@ Here is history of rounds so far:
 
             row.insertCell(0).textContent = i + 1; // Round number (1-based index)
             row.insertCell(1).textContent = roundName[i].replace(/^\w/, (c) => c.toUpperCase());  // Access rounddice at index i
-            // row.insertCell(2).textContent = `${idealX[i]} widgets`;  // Access idealX at index i
-            row.insertCell(2).textContent = `${offerMin[i]} to ${offerMax[i]} widgets`;  // Access range values
-            row.insertCell(3).textContent = `${choice[i]} widgets`;  // Access choice at index i
-            row.insertCell(4).textContent = `$${payoff[i]}`;  // Access payoff at index i
+            row.insertCell(2).textContent = `${role}`;  // Access idealX at index i
+            if (offerMin[i] === offerMax[i]) {
+                if (offerMin[i] === 1) {
+                    row.insertCell(3).textContent = `${offerMin[i]} widget`;
+                } else {
+                    row.insertCell(3).textContent = `${offerMin[i]} widgets`;
+                }}
+            else {
+                row.insertCell(3).textContent = `${offerMin[i]} to ${offerMax[i]} widgets`;
+            }
+            if (choice === 1) {
+                row.insertCell(4).textContent = `${choice[i]} widget`;  // Access choice at index i
+            } else {
+                row.insertCell(4).textContent = `${choice[i]} widgets`;  // Access choice at index i
+            }
+            row.insertCell(5).textContent = `$${payoff[i]}`;  // Access payoff at index i
+            // row.insertCell(5).textContent = `${buyer_payoff}`;  // Access payoff at index i
         }
     }
 

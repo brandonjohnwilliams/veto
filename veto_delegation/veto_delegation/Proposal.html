@@ -1,39 +1,67 @@
 {{ block title }}
-Proposal
+    Seller's Proposal - Round {{player.round_number}}
 {{ endblock }}
-
-
 
 {{ block content }}
 
     <head>
         <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+        <style>
+#customConfirmOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#customConfirmBox {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px black;
+  text-align: center;
+  max-width: 400px;
+}
+
+#customConfirmBox button {
+  margin: 10px;
+  padding: 6px 12px;
+  font-size: 16px;
+}
+
+#payoffTable thead th:first-child,
+#payoffTable tbody td:first-child {
+    border: 1px solid #ddd;}
+
+</style>
+
     </head>
-<div id="pageWrapper">
-                The probability that the Buyer has each value is shown to the right. You can adjust the slider to see how the probability changes.                 You can also see the corresponding payoff for the selected value (highlighted in blue) in the table below.
-
-<br><br>
-Please make your selection below.                 <br><br>
-
 
     <div class="sub-container2">
         <div class="dice-box">
-            <p>
+            <p class="centered-text">
                 The Buyer will be drawn from the <strong>
                 {{ if roundType == 1}}
-                "L" urn
+                "L" urn:
                 {{ elif roundType == 2}}
-                "M" urn
+                "M" urn:
                 {{else}}
-                "H" urn
+                "H" urn:
                 {{endif}}
-                </strong>:
+                </strong>
 
 
                 <canvas id="ballCanvas"></canvas>
 
             </p>
         </div>
+
         <div class="theta-box">
 
             <canvas id="probCanvas" width="550" height="325"></canvas>
@@ -52,9 +80,12 @@ Please make your selection below.                 <br><br>
         <div class="range_container">
             <div class="sliders_control">
                 <input id="fromSlider" type="range" value="1" min="1" max="8" name="minSlider"/>
+
+
                 <input id="toSlider" type="range" value="8" min="1" max="8" name="maxSlider"/>
-                <div class="slider_value" id="fromValue">Min: 1</div>
-                <div class="slider_value" id="toValue">Max: 8</div>
+
+                <div class="slider_value" id="fromValue">{{if player.single == 1 }}Value: 8 {{else}}Min: 1{{endif}}</div>
+                <div class="slider_value" id="toValue">{{if player.single == 1 }}{{else}}Max: 8{{endif}}</div>
             </div>
         </div>
 
@@ -93,17 +124,59 @@ Please make your selection below.                 <br><br>
             </tbody>
         </table>
     </div>
+<br>
 {{ formfield_errors 'minSlider' }}
-<br><br>
-{{ next_button }}
+<button type="button" id="customNextBtn" class="btn btn-primary">Next</button>
+
+<div id="customConfirmOverlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background-color:rgba(0,0,0,0.5); z-index:1000; justify-content:center; align-items:center;">
+    <div style="background:white; padding:30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.3); max-width:400px; text-align:center;">
+        <p id="customConfirmMessage" style="margin-bottom:20px;"></p>
+        <button id="confirmYes" class="btn btn-primary" style="margin-right: 10px;">Confirm</button>
+        <button id="confirmNo" class="btn btn-secondary" type="button">Cancel</button>
+    </div>
 </div>
-<!-- Hidden message -->
-<div id="timeoutMessage" style="display: none; text-align: center; margin-top: 30px;">
-    <p style="color: red; font-size: 20px; font-weight: bold;">Please make your selection</p>
-</div>
+
+
 
     <script src="{{ static 'veto_delegation/interface.js' }}"></script>
 <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const fromSlider = document.getElementById("fromSlider");
+    const toSlider = document.getElementById("toSlider");
+    const nextBtn = document.getElementById("customNextBtn");
+    const form = document.querySelector("form");
+
+    const overlay = document.getElementById("customConfirmOverlay");
+    const msg = document.getElementById("customConfirmMessage");
+    const yesBtn = document.getElementById("confirmYes");
+    const noBtn = document.getElementById("confirmNo");
+
+    nextBtn.addEventListener("click", function () {
+        const min = parseInt(fromSlider.value);
+        const max = parseInt(toSlider.value);
+
+        const minLabel = min === 1 ? "1 widget" : `${min} widgets`;
+        const maxLabel = max === 1 ? "1 widget" : `${max} widgets`;
+
+        if (min === max) {
+            msg.textContent = `You have offered: ${minLabel}. Confirm offer?`;
+        } else {
+            msg.textContent = `You have offered: ${minLabel} to ${maxLabel}. Confirm offer?`;
+        }
+
+        overlay.style.display = "flex";
+    });
+
+    yesBtn.addEventListener("click", function () {
+        overlay.style.display = "none";
+        form.submit(); // now submit the oTree form
+    });
+
+    noBtn.addEventListener("click", function () {
+        overlay.style.display = "none";
+    });
+});
+
 setTimeout(function() {
     document.getElementById("timeoutMessage").style.display = "block";
     document.getElementById("pageWrapper").style.outline = "2px solid red";
@@ -111,4 +184,12 @@ setTimeout(function() {
 }, 60000);  // or 3000 for testing
 
 </script>
+
+
+
+
+
 {{ endblock }}
+
+
+

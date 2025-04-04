@@ -23,18 +23,13 @@
         }
         th:nth-child(1), td:nth-child(1) { width: 10%; } /* Round */
         th:nth-child(2), td:nth-child(2) { width: 20%; } /* Dice Roll */
-        th:nth-child(3), td:nth-child(3) { width: 15%; } /* Ideal X */
+        th:nth-child(3), td:nth-child(3) { width: 15%; } /* Role */
         th:nth-child(4), td:nth-child(4) { width: 15%; } /* Offer */
         th:nth-child(5), td:nth-child(5) { width: 15%; } /* Choice */
         th:nth-child(6), td:nth-child(6) { width: 15%; } /* Payoff */
     </style>
 </head>
 
-<p>
-    Finally, at the end of the round, the computer will give you feedback on what happened. In the example screen in front of you, you are back in the role of the Seller.
-    Here you can see that the Seller learns the purchased quantity of widgets, and both Buyer and Seller will learn their round payoff. However, the Seller does not learn the ideal quantity that was shown to the Buyer.
-
-</p>
 
 
 <table id="gameTable">
@@ -42,7 +37,7 @@
         <tr>
             <th>Round</th>
             <th>Urn Type</th>
-<!--            <th>Ideal X</th>-->
+            <th>Role</th>
             <th>Offer</th>
             <th>Choice</th>
             <th>Payoff</th>
@@ -65,6 +60,7 @@
         let choice = js_vars.choice;
         let seller_payoff = js_vars.seller_payoff;
         let buyer_payoff = js_vars.buyer_payoff;
+        let role = js_vars.role
         let tbody = document.querySelector("#gameTable tbody");
         tbody.innerHTML = ""; // Clear previous table contents
 
@@ -73,10 +69,22 @@
 
             row.insertCell(0).textContent = i + 1; // Round number (1-based index)
             row.insertCell(1).textContent = roundName[i].replace(/^\w/, (c) => c.toUpperCase());  // Access rounddice at index i
-            // row.insertCell(2).textContent = `${idealX[i]} widgets`;  // Access idealX at index i
-            row.insertCell(2).textContent = `${offerMin} to ${offerMax} widgets`;  // Access range values
-            row.insertCell(3).textContent = `${choice} widgets`;  // Access choice at index i
-            row.insertCell(4).textContent = `$${seller_payoff}`;  // Access payoff at index i
+            row.insertCell(2).textContent = `${role}`;  // Access idealX at index i
+            if (offerMin === offerMax) {
+                if (offerMin === 1) {
+                    row.insertCell(3).textContent = `${offerMin} widget`;
+                } else {
+                    row.insertCell(3).textContent = `${offerMin} widgets`;
+                }}
+            else {
+                row.insertCell(3).textContent = `${offerMin} to ${offerMax} widgets`;
+            }
+            if (choice === 1) {
+                row.insertCell(4).textContent = `${choice} widget`;  // Access choice at index i
+            } else {
+                row.insertCell(4).textContent = `${choice} widgets`;  // Access choice at index i
+            }
+            row.insertCell(5).textContent = `$${seller_payoff}`;  // Access payoff at index i
             // row.insertCell(5).textContent = `${buyer_payoff}`;  // Access payoff at index i
         }
     }

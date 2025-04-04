@@ -1,5 +1,5 @@
 {{ block title }}
-Practice Screen 2
+Practice Screen 4
 {{ endblock }}
 
 
@@ -11,51 +11,10 @@ Practice Screen 2
     </head>
 <div id="pageWrapper">
 
-    <p> In addition to the information about the balls drawn from the urn we saw in the last example, the Seller can also see the range of possible payoffs for the Buyer, based on their unknown ideal quantity X. This is show in the table beneath the graph. When you move the slider on the graph, the corresponding payoff column for that possible drawn ball is highlighted in the table.</p>
-    <p>This is the complete display that the Seller will use to make their choice. To practice, please select an example of what you would offer to the Buyer below. We will use your choice for another practice on the next page.</p>
-    <div class="sub-container2">
-        <div class="dice-box">
-            <p>
-                The Buyer will be drawn from the <strong>
-                {{ if roundType == 1}}
-                "L" urn
-                {{ elif roundType == 2}}
-                "M" urn
-                {{else}}
-                "H" urn
-                {{endif}}
-                </strong>:
-
-
-                <canvas id="ballCanvas"></canvas>
-
-            </p>
-        </div>
-        <div class="theta-box">
-
-            <canvas id="probCanvas" width="550" height="325"></canvas>
-
-            <div class="theta_control">
-                <span class="thetaOut" id="thetaOut"></span><input type="range" min="1" max="6" value="1" class="slider" id="thetaRange">
-            </div>
-
-        </div>
-    </div>
-    <br>
-    <br>
-    <div class="sub-container">
-
-        <!-- Two-sided slider -->
-        <div class="range_container">
-            <div class="sliders_control">
-                <input id="fromSlider" type="range" value="1" min="1" max="8" name="minSlider"/>
-                <input id="toSlider" type="range" value="8" min="1" max="8" name="maxSlider"/>
-                <div class="slider_value" id="fromValue">Min: 1</div>
-                <div class="slider_value" id="toValue">Max: 8</div>
-            </div>
-        </div>
-
-        <!-- Payoffs Table -->
+    <p>
+        Continue to suppose you offered the following menu to the Buyer. Use the information in the table to answer the following questions:
+    </p>
+            <!-- Payoffs Table -->
         <table class="tg" id="payoffTable">
             <colgroup>
                 <col style="width: 190.2px">
@@ -89,12 +48,54 @@ Practice Screen 2
                 <!-- Table body will be populated dynamically -->
             </tbody>
         </table>
-    </div>
 
-
-
-{{ formfield_errors 'minSlider' }}
 <br>
+<!-- Quiz Question 1 -->
+    Suppose the Buyer has ideal value X={{ bias }} for the following questions:
+    <br><br>
+<label for="quiz5" style="display: inline-block; margin-bottom: 8px;">
+    What is the <b>maximum payoff</b> the Buyer can achieve based on your offer?
+</label>
+$<input type="number" id="quiz5" name="quiz5"
+       style="border: 1px solid #aaa; border-radius: 6px; padding: 6px 10px; margin-left: 10px;
+              font-size: 15px; background-color: #f9f9f9; width: 40px;">
+
+
+<!-- Quiz Question 2 -->
+<label for="quiz6" style="display: inline-block; margin-bottom: 8px;">
+    What amount of widgets purchased results in the maximum payoff the Buyer can achieve?
+</label>
+    {{ formfield_errors 'quiz5' }}
+<input type="number" id="quiz6" name="quiz6"
+       style="border: 1px solid #aaa; border-radius: 6px; padding: 6px 10px; margin-left: 11px;
+              font-size: 15px; background-color: #f9f9f9; width: 40px;">
+    {{ formfield_errors 'quiz6' }}
+<br><br>
+<!-- Quiz Question 1 -->
+<label for="quiz7" style="display: inline-block; margin-bottom: 8px;">
+    What is the <b>minimum payoff</b> the Buyer can achieve based on your offer?
+</label>
+$<input type="number" id="quiz7" name="quiz7"
+       style="border: 1px solid #aaa; border-radius: 6px; padding: 6px 10px; margin-left: 10px;
+              font-size: 15px; background-color: #f9f9f9; width: 40px;">
+    {{ formfield_errors 'quiz7' }}
+
+
+<!-- Quiz Question 2 -->
+<label for="quiz7" style="display: inline-block; margin-bottom: 8px;">
+    What amount of widgets purchased results in the minimum payoff the Buyer can achieve?
+</label>
+<input type="number" id="quiz8" name="quiz8"
+       style="border: 1px solid #aaa; border-radius: 6px; padding: 6px 10px; margin-left: 11px;
+              font-size: 15px; background-color: #f9f9f9; width: 40px;">
+
+
+
+
+{{ formfield_errors 'quiz8' }}
+<br><br>
+     Click next to submit your answers. You can only advance if the answers are correct.
+    <br><br>
 {{ next_button }}
 </div>
 

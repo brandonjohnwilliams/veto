@@ -183,6 +183,12 @@ def creating_session(subsession):
 
 
 # PAGES
+
+class Begin(Page):
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == 1
+
 class RolesIntro(Page):
     timeout_seconds = 15
 
@@ -218,7 +224,7 @@ class ChatWait(WaitPage):
     body_text = "Waiting for the participant to enter the chat"
 
 class Chat(Page):
-    # timeout_seconds = 60
+    timeout_seconds = 60
 
     @staticmethod
     def is_displayed(player):
@@ -388,6 +394,7 @@ class Results(Page):
             choice=choice_list,
             payoff=payoff_list,
             roundName=roundName_list,
+            role=player.role
         )
 
     @staticmethod
@@ -441,6 +448,7 @@ class WaitForRematch(WaitPage):
             choice=choice_list,
             payoff=payoff_list,
             roundName=roundName_list,
+            role=player.role
         )
 
-page_sequence = [RolesIntro, Roles, ChatWait, Chat, Proposal, WaitForP1, Response, WaitForP2, Results, WaitForRematch]
+page_sequence = [Begin, RolesIntro, Roles, ChatWait, Chat, Proposal, WaitForP1, Response, WaitForP2, Results, WaitForRematch]

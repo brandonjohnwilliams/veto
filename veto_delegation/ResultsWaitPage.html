@@ -24,24 +24,25 @@ Please Wait
         }
         th:nth-child(1), td:nth-child(1) { width: 10%; } /* Round */
         th:nth-child(2), td:nth-child(2) { width: 20%; } /* Dice Roll */
-        th:nth-child(3), td:nth-child(3) { width: 15%; } /* Ideal X */
+        th:nth-child(3), td:nth-child(3) { width: 15%; } /* Role */
         th:nth-child(4), td:nth-child(4) { width: 15%; } /* Offer */
         th:nth-child(5), td:nth-child(5) { width: 15%; } /* Choice */
         th:nth-child(6), td:nth-child(6) { width: 15%; } /* Payoff */
     </style>
 </head>
-While you wait for the next player to match with, here is history of rounds so far:
-<br><br>
+
+
 
 <table id="gameTable">
     <thead>
         <tr>
             <th>Round</th>
             <th>Urn Type</th>
-            <th>Seller's Offer</th>
-            <th>Buyer's Choice</th>
-<!--            <th>Choice</th>-->
-            <th>Your Payoff</th>
+            <th>Role</th>
+            <th>Offer</th>
+            <th>Choice</th>
+            <th>Payoff</th>
+<!--            <th>Buyer Payoff</th>-->
         </tr>
     </thead>
     <tbody>
@@ -49,10 +50,7 @@ While you wait for the next player to match with, here is history of rounds so f
 </table>
 <br><br>
 
-<br><br>
-<p>Please wait for the next player to match with...</p>
 
-    <!-- Include JavaScript file -->
     <script>
     function generateTable() {
         let numRows = js_vars.round;  // Assuming this is the total number of rounds
@@ -62,6 +60,8 @@ While you wait for the next player to match with, here is history of rounds so f
         let offerMax = js_vars.offerMax;
         let choice = js_vars.choice;
         let payoff = js_vars.payoff;
+        let buyer_payoff = js_vars.buyer_payoff;
+        let role = js_vars.role
         let tbody = document.querySelector("#gameTable tbody");
         tbody.innerHTML = ""; // Clear previous table contents
 
@@ -70,10 +70,23 @@ While you wait for the next player to match with, here is history of rounds so f
 
             row.insertCell(0).textContent = i + 1; // Round number (1-based index)
             row.insertCell(1).textContent = roundName[i].replace(/^\w/, (c) => c.toUpperCase());  // Access rounddice at index i
-            // row.insertCell(2).textContent = `${idealX[i]} widgets`;  // Access idealX at index i
-            row.insertCell(2).textContent = `${offerMin[i]} to ${offerMax[i]} widgets`;  // Access range values
-            row.insertCell(3).textContent = `${choice[i]} widgets`;  // Access choice at index i
-            row.insertCell(4).textContent = `$${payoff[i]}`;  // Access payoff at index i
+            row.insertCell(2).textContent = `${role}`;  // Access idealX at index i
+            if (offerMin[i] === offerMax[i]) {
+                if (offerMin[i] === 1) {
+                    row.insertCell(3).textContent = `${offerMin[i]} widget`;
+                } else {
+                    row.insertCell(3).textContent = `${offerMin[i]} widgets`;
+                }}
+            else {
+                row.insertCell(3).textContent = `${offerMin[i]} to ${offerMax[i]} widgets`;
+            }
+            if (choice === 1) {
+                row.insertCell(4).textContent = `${choice[i]} widget`;  // Access choice at index i
+            } else {
+                row.insertCell(4).textContent = `${choice[i]} widgets`;  // Access choice at index i
+            }
+            row.insertCell(5).textContent = `$${payoff[i]}`;  // Access payoff at index i
+            // row.insertCell(5).textContent = `${buyer_payoff}`;  // Access payoff at index i
         }
     }
 
@@ -81,7 +94,6 @@ While you wait for the next player to match with, here is history of rounds so f
     window.onload = generateTable;
 
     </script>
-
 
 
 {% endblock %}

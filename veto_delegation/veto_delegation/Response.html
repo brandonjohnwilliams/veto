@@ -1,62 +1,128 @@
 {{ block title }}
-Your Choice
+    Buyer's Choice
 {{ endblock }}
 
-{% block content %}
+{{ block content }}
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+        <style>
+.choice-button {
+    margin: 8px 0;
+    padding: 5px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 
-<head>
-    <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
-</head>
-<div id="pageWrapper">
+    /* NEW: prevent line break */
+    white-space: nowrap;
+
+    /* NEW: let button expand as needed */
+    width: 100%;
+    max-width: none;
+    display: inline-block;
+
+    /* Optional: prevent clipping in table cells */
+    box-sizing: border-box;
+}
 
 
-<p>You have <b>ideal value X={{selectedX}}</b> which came from the <b>{{ roundName }}</b> urn type.
-The Seller offered you the following range:
-</p>
-<ul>
-<li>Minimum amount: {{ group.minSlider }} widgets</li>
+        .choice-button:hover {
+          background: #e3e3e3;
+        }
 
-<li>Maximum amount: {{ group.maxSlider }} widgets</li>
-</ul>
+.choice-button.selected {
+          border-color: #0000ff;
+          background: #bebeff;
+}
+tr.highlighted-row td:first-child {
+  background-color: initial !important;
+}
 
-How many widgets would you like to purchase?
-</p>
-<br>
-    <div class="wrapper">
+tr.highlighted-row td:first-child .choice-button {
+  background-color: initial !important;
+  border-color: #ddd !important;
+}
+#payoffTable thead th.tg-c3ow:first-child {
+    border: 1px solid #ddd !important;
+}
+
+
+#payoffTable {
+    table-layout: fixed;
+    width: 40%;
+}
+#payoffTable td {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+#payoffTable td,
+#payoffTable th {
+    padding: 4px 8px;        /* Reduce top-bottom padding */
+    line-height: 1.2;        /* Slightly tighter line spacing */
+    vertical-align: middle;  /* Keep content vertically centered */
+}
+
+#customConfirmOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#customConfirmBox {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px black;
+  text-align: center;
+  max-width: 400px;
+}
+
+#customConfirmBox button {
+  margin: 10px;
+  padding: 6px 12px;
+  font-size: 16px;
+}
+        </style>
+    </head>
+
+    <!-- Text -->
+
+    <p>In this example you, as the Buyer, have <b>ideal value X={{selectedX}}</b> which came from the type middle urn.</p>
+
+
+
+
+<div style="display: flex; justify-content: center;">
     <div class="sub-container3">
-        <div class="choices-container">
-            <div class="choice" data-value="0">0 widgets</div>
-            <div class="choice" data-value="1">1 widget</div>
-            <div class="choice" data-value="2">2 widgets</div>
-            <div class="choice" data-value="3">3 widgets</div>
-            <div class="choice" data-value="4">4 widgets</div>
-            <div class="choice" data-value="5">5 widgets</div>
-            <div class="choice" data-value="6">6 widgets</div>
-            <div class="choice" data-value="7">7 widgets</div>
-            <div class="choice" data-value="8">8 widgets</div>
-        </div>
 
-        <!-- Hidden input field to store the selected value -->
-        <input type="hidden" name="response" id="response">
 
 
         <!-- Payoffs Table -->
         <table class="tg" id="payoffTable">
             <colgroup>
-                <col style="width: 190.2px">
-                <col style="width: 190.2px">
-                <col style="width: 190.2px">
-                <col style="width: 190.2px">
-                <col style="width: 190.2px">
-                <col style="width: 190.2px">
-                <col style="width: 190.2px">
-                <col style="width: 190.2px">
-                <col style="width: 190.2px">
-                <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
             </colgroup>
             <thead>
                 <tr>
-                    <th class="tg-c3ow" rowspan="2">Widgets <br>Purchased</th>
+                    <th class="tg-c3ow" rowspan="2" style="border: none;">Widgets Purchased</th>  <!-- Placeholder for buttons -->
                     <th class="tg-c3ow" rowspan="2">Your Payoff <br> (X=<span id="selectedX">-</span>)</th>
                     <th class="tg-c3ow" rowspan="2">Seller <br> Payoff</th>
                     <th class="tg-c3ow" colspan="6">Buyer Payoff (by ideal quantity X)</th>
@@ -70,33 +136,77 @@ How many widgets would you like to purchase?
                     <th class="tg-0lax">X=6</th>
                 </tr>
             </thead>
+
             <tbody id="tableBody">
                 <!-- Table body will be populated dynamically -->
             </tbody>
         </table>
+
     </div>
-        </div>
-
+</div>
+        <!-- Hidden input field to store the selected value -->
+        <input type="hidden" name="response" id="response">
+<br><br><br><br>
 {{ formfield_errors 'response' }}
+<button type="button" id="confirmNext" class="otree-btn-next btn btn-primary">Next</button>
+<div id="customConfirmOverlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background-color:rgba(0,0,0,0.5); z-index:1000; justify-content:center; align-items:center;">
+    <div style="background:white; padding:30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.3); max-width:400px; text-align:center;">
+        <p id="customConfirmMessage" style="margin-bottom:20px;"></p>
+        <button id="confirmYes" class="btn btn-primary" style="margin-right: 10px;">Confirm</button>
+        <button id="confirmNo" class="btn btn-secondary" type="button">Cancel</button>
+    </div>
+</div>
 
-<br><br>
-{{ next_button }}
-</div>
-<!-- Hidden message -->
-<div id="timeoutMessage" style="display: none; text-align: center; margin-top: 30px;">
-    <p style="color: red; font-size: 20px; font-weight: bold;">Please make your selection</p>
-</div>
     <!-- Include JavaScript file -->
     <script src="{{ static 'veto_delegation/interface.js' }}"></script>
-
 <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const confirmBtn = document.getElementById("confirmNext");
+    const responseInput = document.getElementById("response");
+
+    const overlay = document.getElementById("customConfirmOverlay");
+    const confirmMsg = document.getElementById("customConfirmMessage");
+    const confirmYes = document.getElementById("confirmYes");
+    const confirmNo = document.getElementById("confirmNo");
+
+    if (confirmBtn && responseInput && overlay && confirmMsg && confirmYes && confirmNo) {
+        confirmBtn.addEventListener("click", function (e) {
+            const selectedValue = responseInput.value;
+
+            if (!selectedValue) {
+                alert("Please make a selection before continuing.");
+                return;
+            }
+
+            // Format message with proper grammar
+            const widgetWord = selectedValue === "1" ? "widget" : "widgets";
+            confirmMsg.textContent = `You have selected to buy ${selectedValue} ${widgetWord}. Confirm choice?`;
+
+            overlay.style.display = "flex"; // Show the custom modal
+        });
+
+        confirmYes.addEventListener("click", function () {
+            overlay.style.display = "none";
+            document.querySelector("form").submit(); // Submit the form manually
+        });
+
+        confirmNo.addEventListener("click", function () {
+            overlay.style.display = "none"; // Just hide the modal
+        });
+    }
+});
+
     // Show message and red border after 30 seconds
     setTimeout(function() {
         document.getElementById("timeoutMessage").style.display = "block";
         document.getElementById("pageWrapper").style.outline = "2px solid red";
         document.getElementById("pageWrapper").style.outlineOffset = "100px";
-    }, 60000);  // or 3000 for testing
+    }, 30000);  // or 3000 for testing
 </script>
 
 
-{% endblock %}
+
+
+
+{{ endblock }}
+

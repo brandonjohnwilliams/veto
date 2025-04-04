@@ -30,6 +30,10 @@ class Player(BasePlayer):
     quiz2 = models.IntegerField()
     quiz3 = models.IntegerField()
     quiz4 = models.IntegerField()
+    quiz5 = models.IntegerField()
+    quiz6 = models.IntegerField()
+    quiz7 = models.IntegerField()
+    quiz8 = models.IntegerField()
 
     single = models.IntegerField()
     chat = models.IntegerField()
@@ -38,6 +42,7 @@ class Player(BasePlayer):
     maxSlider = models.IntegerField()  # defines the right side of the delegated range
 
     selectedX = models.IntegerField()
+    vetoer_bias = models.IntegerField()
 
     response = models.IntegerField()
 
@@ -45,6 +50,11 @@ class Player(BasePlayer):
     buyerPayoff = models.IntegerField()
 
 # FUNCTIONS
+def creating_session(subsession):
+    import random
+    for player in subsession.get_players():
+        player.vetoer_bias = random.randint(1, 6)
+
 # PAGES
 class Introduction(Page):
     pass
@@ -129,9 +139,85 @@ class ProposalQuestions(Page):
         if values != solutions:
             return "One or more answers were incorrect."
 
+class MinMaxQuestions(Page):
+    form_model = 'player'
+    form_fields = ['quiz5','quiz6','quiz7','quiz8']
+
+    @staticmethod
+    def js_vars(player):
+        return dict(
+            # selectedX=2, # Selecting 0 removes the column
+            fromM=player.minSlider,
+            toM=player.maxSlider,
+            round_type=3,
+            # response=1,
+        )
+
+    @staticmethod
+    def vars_for_template(player):
+        return dict(
+            # selectedX=2, # Selecting 0 removes the column
+            fromM=player.minSlider,
+            toM=player.maxSlider,
+            roundType=3,
+            bias=player.vetoer_bias
+        )
+
+    @staticmethod
+    def error_message(player: Player, values):
+        payoff_matrix = {
+            0: [8, 26, 21, 16, 13, 11, 9],
+            1: [12, 30, 25, 20, 15, 12, 10],
+            2: [16, 25, 30, 25, 20, 15, 12],
+            3: [20, 20, 25, 30, 25, 20, 15],
+            4: [24, 15, 20, 25, 30, 25, 20],
+            5: [28, 12, 15, 20, 25, 30, 25],
+            6: [32, 10, 12, 15, 20, 25, 30],
+            7: [36, 9, 10, 12, 15, 20, 25],
+            8: [40, 8, 9, 10, 12, 15, 20]
+        }
+
+        # Convert minSlider and maxSlider to integers
+        import random
+
+        min_Slider = int(player.minSlider)
+        max_Slider = int(player.maxSlider)
+
+
+        robotChoices = [payoff_matrix[0][player.vetoer_bias]]  # Start with row 0 value
+        # Iterate over all rows (1-8) and replace out-of-range values with 0
+        robotChoices.extend([
+            payoff_matrix[y][player.vetoer_bias] if min_Slider <= y <= max_Slider else 0
+            for y in range(1, len(payoff_matrix))  # Start from 1 to avoid duplicate row 0
+        ])
+
+        # print("Robot ideal X=", player.vetoer_bias, "Robot choices=", robotChoices)
+
+        robotMax = max(robotChoices)
+        robotChoice = robotChoices.index(robotMax)  # Index within X
+
+        # Filter out zero values for finding the min
+        nonzero_choices = [val for val in robotChoices if val != 0]
+
+        if nonzero_choices:
+            robotMin = min(nonzero_choices)
+            robotChoiceMin = robotChoices.index(robotMin)
+        else:
+            robotMin = 0  # Or some fallback value if all entries are zero
+            robotChoiceMin = -1  # Or some other signal indicating "no valid choice"
+
+        print(f'Min: {robotMin} at {robotChoiceMin}; Max: {robotMax} at {robotChoice}')
+
+        solutions = dict(quiz5=robotMax, quiz6=robotChoice,
+                         quiz7=robotMin, quiz8=robotChoiceMin)
+
+        if values != solutions:
+            return "One or more answers were incorrect."
+
+
 class WaitPage2(WaitPage):
     wait_for_all_groups = True
 
     body_text = "Waiting for all participants to complete the practice. Once everyone is ready, we will begin the main experiment."
 
-page_sequence = [Introduction, ProposalProbs, ProposalMenu, ProposalQuestions, WaitPage2]
+page_sequence = [Introduction, ProposalProbs, ProposalMenu, ProposalQuestions, MinMaxQuestions, WaitPage2]

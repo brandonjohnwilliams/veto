@@ -14,7 +14,7 @@ SESSION_CONFIGS = [
              'payment',
          ],
 
-         num_demo_participants=20,
+         num_demo_participants=24,
          take_it_or_leave_it=False,
          chat=True,
          Session=1,

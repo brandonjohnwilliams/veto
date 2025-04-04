@@ -1,0 +1,23 @@
+{{ block title }}
+Begin Part One
+{{ endblock }}
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+</head>
+
+<p>We will now begin the main part of the experiment. On the next screen you will learn your role for the next five rounds</p>
+
+
+
+
+{{ next_button }}
+
+    <!-- Include JavaScript file -->
+    <script src="{{ static 'veto_delegation/interface.js' }}"></script>
+
+
+
+{% endblock %}

@@ -195,6 +195,7 @@ class Results(Page):
             seller_payoff=sellerPayoff,
             buyer_payoff=buyerPayoff,
             roundName="Middle",
+            role="Seller"
         )
 
 

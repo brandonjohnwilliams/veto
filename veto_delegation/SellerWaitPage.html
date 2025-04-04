@@ -7,6 +7,93 @@ Please Wait
 
 <head>
     <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+            <style>
+.choice-button {
+    margin: 8px 0;
+    padding: 5px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    /* NEW: prevent line break */
+    white-space: nowrap;
+
+    /* NEW: let button expand as needed */
+    width: 100%;
+    max-width: none;
+    display: inline-block;
+
+    /* Optional: prevent clipping in table cells */
+    box-sizing: border-box;
+}
+
+
+        .choice-button:hover {
+          background: #e3e3e3;
+        }
+
+.choice-button.selected {
+          border-color: #0000ff;
+          background: #bebeff;
+}
+tr.highlighted-row td:first-child {
+  background-color: initial !important;
+}
+
+tr.highlighted-row td:first-child .choice-button {
+  background-color: initial !important;
+  border-color: #ddd !important;
+}
+#payoffTable thead th.tg-c3ow:first-child {
+    border: 1px solid #ddd !important;
+}
+
+
+#payoffTable {
+    table-layout: fixed;
+    width: 40%;
+}
+#payoffTable td {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+#payoffTable td,
+#payoffTable th {
+    padding: 4px 8px;        /* Reduce top-bottom padding */
+    line-height: 1.2;        /* Slightly tighter line spacing */
+    vertical-align: middle;  /* Keep content vertically centered */
+}
+
+#customConfirmOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#customConfirmBox {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px black;
+  text-align: center;
+  max-width: 400px;
+}
+
+#customConfirmBox button {
+  margin: 10px;
+  padding: 6px 12px;
+  font-size: 16px;
+}
+        </style>
 </head>
 
 <p>While you wait, here is a reminder of your offer to the Buyer.</p>
@@ -15,31 +102,17 @@ Please Wait
 <p>The Buyer will have an ideal number of widgets X, which came from the <b>{{ roundName }}</b> urn type.
     You offered you the following menu of options:
 </p>
+
 <ul>
 <li>Minimum amount: {{ group.minSlider }} widgets</li>
 
 <li>Maximum amount: {{ group.maxSlider }} widgets</li>
 </ul>
-<p>
-The Buyer will see make their choice from the following possible widget quantities:
+
 </p>
 <br>
     <div class="wrapper">
     <div class="sub-container3">
-        <div class="choices-container">
-            <div class="choice" data-value="0">0 widgets</div>
-            <div class="choice" data-value="1">1 widget</div>
-            <div class="choice" data-value="2">2 widgets</div>
-            <div class="choice" data-value="3">3 widgets</div>
-            <div class="choice" data-value="4">4 widgets</div>
-            <div class="choice" data-value="5">5 widgets</div>
-            <div class="choice" data-value="6">6 widgets</div>
-            <div class="choice" data-value="7">7 widgets</div>
-            <div class="choice" data-value="8">8 widgets</div>
-        </div>
-
-        <!-- Hidden input field to store the selected value -->
-        <input type="hidden" name="response" id="response">
 
 
         <!-- Payoffs Table -->
@@ -78,19 +151,29 @@ The Buyer will see make their choice from the following possible widget quantiti
         </table>
     </div>
         </div>
-<br><br>
-<p>Please wait for the Buyer to make their choice...</p>
 
+
+<br><br>
+
+</div>
+<!-- Hidden message -->
+<div id="timeoutMessage" style="display: none; text-align: center; margin-top: 30px;">
+    <p style="color: red; font-size: 20px; font-weight: bold;">Please make your selection</p>
+</div>
     <!-- Include JavaScript file -->
     <script src="{{ static 'veto_delegation/interface.js' }}"></script>
-    <script>
-        document.querySelectorAll('.choice').forEach(choice => {
-            choice.style.pointerEvents = "none";   // Disables click/hover
-            choice.style.cursor = "default";       // Optional: normal cursor
-        });
 
-    </script>
+
+<script>
+    document.querySelectorAll('.choice-button').forEach(button => {
+        button.style.pointerEvents = "none";   // Disables click/hover
+        button.style.cursor = "default";       // Optional: normal cursor
+        button.style.opacity = "0.6";          // Optional: visually indicate it's disabled
+    });
+</script>
 
 
 
 {% endblock %}
+
+
