@@ -59,6 +59,9 @@ def creating_session(subsession):
             player.chat = 0
 
 # PAGES
+class LandingPage(Page):
+    pass
+
 class Introduction(Page):
     pass
 
@@ -70,24 +73,7 @@ class PartOne(Page):
             chat=player.chat,
         )
 
-
-
-class Payoffs(Page):
-    @staticmethod
-    def js_vars(player):
-        return dict(
-            selectedX=C.setZero,  # Selecting 0 removes the highlighted column
-        )
-
 class PayoffsSeller(Page):
-    pass
-    @staticmethod
-    def js_vars(player):
-        return dict(
-            selectedX=0,
-        )
-
-class PayoffsBuyer(Page):
     pass
     @staticmethod
     def js_vars(player):
@@ -115,6 +101,9 @@ class RoundTiming(Page):
         )
 
 class ExampleDraws(Page):
+    timeout_seconds = 60
+
+class ChatOnly(Page):
     pass
 
 class SellersChoice(Page):
@@ -225,10 +214,11 @@ class PayoffsRecap(Page):
 
 
 page_sequence = [
-    Introduction, PartOne, PayoffsSeller, DeterminingX, RoundTiming,
+    LandingPage, Introduction, PartOne, PayoffsSeller, DeterminingX, RoundTiming,
 
     # Start here for no instructions on screen
     ExampleDraws,
+    ChatOnly,
     # SellersChoice,
     SellerView,
     SellerWait,

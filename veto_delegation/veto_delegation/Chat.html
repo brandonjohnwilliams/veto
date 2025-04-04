@@ -1,5 +1,5 @@
 {{ block title }}
-Your Role
+Chat
 {{ endblock }}
 
 {% block content %}
@@ -8,52 +8,30 @@ Your Role
     <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
 </head>
 
+
 {{ if player.id_in_group == 1}}
 
 <p>
-    You are the Seller. You will choose what options for the number of Widgets (M) that the Buyer can choose from.
-    Remember, you cannot remove 0 Widgets as an option. The Buyer can always walk away.
+As a reminder, the Buyer's ideal value (X) will come from a type <b>{{ roundName }}</b> urn, which contains these possible draws:
 </p>
-<p>The Buyer's ideal value (X) will come from <b>{{ roundName }}</b> of three dice rolls.</p>
 
+
+<div class="canvas-container">
+  <canvas id="ballCanvas"></canvas>
+</div>
 
 
 {{ else }}
 
-<p>
-    You are the Buyer. First, the Seller will choose what options for the number of widgets (M) that uou can choose from.
-    Remember, the Seller cannot remove 0 Widgets as an option. You can always walk away.
-</p>
-<p>You have <b>ideal value X={{selectedX}}</b> which came from the <b>{{ roundName }}</b> of three dice rolls.</p>
+<p>As a reminder, you have <b>ideal value X={{selectedX}}</b> which came from the type <b>{{ roundName }}</b> urn.</p>
+
+<div class="canvas-container">
+  <canvas id="ballCanvas2"></canvas>
+</div>
 
 
 {{endif}}
 
-<div style="display: flex; justify-content: center; align-items: center;">
-<div style="width: 300px; display: inline-block;">
-    <table class="tg">
-        <colgroup>
-            <col style="width: 251.2px">
-        </colgroup>
-        <thead>
-            <tr>
-                <th class="tg-7fle"><span style="font-weight:bold">Ideal Value, X</span></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="tg-baqh">
-                    <span class="die-number {% if roundType == 1 %}die-number-red{% endif %}" id="die1">{{ if player.id_in_group == 1}}{{else}}{{ drawLow }}{{endif}}</span> ≤
-                    <span class="die-number {% if roundType == 2 %}die-number-red{% endif %}" id="die2">{{ if player.id_in_group == 1}}{{else}}{{ drawMed }}{{endif}}</span> ≤
-                    <span class="die-number {% if roundType == 3 %}die-number-red{% endif %}" id="die3">{{ if player.id_in_group == 1}}{{else}}{{ drawHigh }}{{endif}}</span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-</div>
-
-<br><br>
 
 You may chat with the {{ if player.id_in_group == 1}}Buyer{{ else }}Seller{{endif}} below:
 <div style="height: 100px; display: flex; justify-content: center; align-items: center; margin: 100px;">
@@ -61,8 +39,7 @@ You may chat with the {{ if player.id_in_group == 1}}Buyer{{ else }}Seller{{endi
 </div>
 
 
-
-<p>Click next when you are ready to exit the chat and make your choice.</p>
+<p>You will have 60 seconds to chat, and then page will automatically advance. Time left to chat: <span class="otree-timer__time-left">1:00</span></p>
 {{ next_button }}
 
     <!-- Include JavaScript file -->

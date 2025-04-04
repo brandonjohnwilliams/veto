@@ -20,12 +20,15 @@ Your Role
   <canvas id="ballCanvas"></canvas>
 </div>
 
+{{ if chat == 1 }}<p> You will move to the chat page where you can communicate with the Seller.</p>
+{{ else }}
 <p>Click next when you are ready to make your choice.</p>
+{{endif}}
 
 {{ else }}
 
 <p>
-    You are the Buyer. First, the Seller will choose what options for the number of widgets (M) that uou can choose from.
+    You are the Buyer. First, the Seller will choose what options for the number of widgets (M) that you can choose from.
     Remember, the Seller cannot remove 0 Widgets as an option. You can always walk away.
 </p>
 <p>You have <b>ideal value X={{selectedX}}</b> which came from the type <b>{{ roundName }}</b> urn.</p>
@@ -34,7 +37,7 @@ Your Role
   <canvas id="ballCanvas2"></canvas>
 </div>
 
-<p>Click next when you are ready. You will move to the waiting page if the Seller has not yet made their choice. <b>You must click "Next" to learn what the Seller will offer.</b></p>
+<p>Click next when you are ready. {{ if chat == 1 }} You will move to the chat page where you can communicate with the Seller. {{ else }}You will move to the waiting page if the Seller has not yet made their choice. <b>You must click "Next" to learn what the Seller will offer.</b></p> {{endif}}
 
 {{endif}}
 

@@ -9,16 +9,43 @@ Round Timing
 
 <!-- Text -->
   <p>
-The timing of each round is a follows:
+      The timing of each round is as follows:
   </p>
+
 <ol>
-  <li>At the start of the round, the computer selects an urn type to draw a ball from, where both the Buyer and Seller will see the selected urn.</li>
-  <li>The computer then secretly draws one ball at random from the chosen urn. The Buyer learns this value, but the Seller does not.</li>
-  {{ if chat == 1 }}<li>The Buyer and Seller are then given 60 seconds to chat with one another.</li> {{endif}}
-  <li>The Seller makes their choice {{if single == 0}}over a menu of widgets to offer to the Buyer {{ else }}on the number of widgets to offer to the Buyer{{endif}}.</li>
-  <li>The Buyer then responds, making a choice between either walking away (purchasing no widgets) or {{ if single == 0 }}to purchase an amount of widgets from the Seller’s menu{{else }}purchase the amount of widgets offered by the Seller{{endif}}.</li>
-  <li>After the round concludes, the Buyer and Seller will be informed on the number of widgets purchased and the resulting round payoffs (though the Seller does not learn the Buyer’s ideal value X).</li>
+  <li>
+      At the start of the round, the computer selects an urn type to draw a ball from, where both the Buyer and Seller will see the selected urn.
+  </li>
+  <li>
+      The computer then secretly draws one ball at random from the chosen urn. This is the ideal value X for the Buyer.
+      The Buyer learns this value, but the Seller does not.
+  </li>
+
+    {{ if chat == 1 }}
+    <li>The Buyer and Seller are then given 60 seconds to chat with one another.
+    </li>
+    {{endif}}
+
+  <li>
+      The Seller makes their choice
+
+      {{if single == 0}}
+        over a menu of widgets to offer to the Buyer.
+      {{ else }}
+        on the number of widgets to offer to the Buyer.
+      {{endif}}
+  </li>
+    <li>The Buyer then responds, making a choice between either purchasing zero widgets or
+        {{ if single == 0 }}
+            to purchase an amount of widgets from the Seller’s menu.
+        {{else }}
+            purchase the amount of widgets offered by the Seller.
+        {{endif}}
+    </li>
+  <li>
+      After the round concludes, the Buyer and Seller will be informed on the number of widgets purchased and the resulting round payoffs (though the Seller does not learn the Buyer’s ideal value X).</li>
 </ol>
+For the next few screens, you will see how the timing of each round works in detail.
     <!-- Include JavaScript file -->
     <script src="{{ static 'veto_delegation/script-graph.js' }}"></script>
 {{ endblock }}

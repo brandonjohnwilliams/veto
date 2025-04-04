@@ -206,10 +206,20 @@ class Roles(Page):
             "selectedX": group.vetoer_bias,
             "roundName": group.roundName,
             "roundType": group.roundType,
+            "chat": player.session.config['chat']
         }
 
+class ChatWait(WaitPage):
+    @staticmethod
+    def is_displayed(player):
+        return player.session.config['chat'] == 1
+
+    title_text = "Please wait"
+    body_text = "Waiting for the participant to enter the chat"
 
 class Chat(Page):
+    # timeout_seconds = 60
+
     @staticmethod
     def is_displayed(player):
         return player.session.config['chat'] == True
@@ -433,4 +443,4 @@ class WaitForRematch(WaitPage):
             roundName=roundName_list,
         )
 
-page_sequence = [RolesIntro, Roles, Chat, Proposal, WaitForP1, Response, WaitForP2, Results, WaitForRematch]
+page_sequence = [RolesIntro, Roles, ChatWait, Chat, Proposal, WaitForP1, Response, WaitForP2, Results, WaitForRematch]

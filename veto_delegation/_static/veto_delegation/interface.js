@@ -4,6 +4,7 @@ let radioX = js_vars.round_type;
 let selectedX = js_vars.selectedX;
 let from = Number(js_vars.fromM);
 let to = Number(js_vars.toM)
+const response = js_vars.response
 
 // Function to hide or show radio buttons based on the value of `from`
 
@@ -103,25 +104,37 @@ function updateYourPayoffColumn(selectedX) {
 
   // Get the table body element
   var tbody = document.getElementById("tableBody");
-
-  // Loop through the dictionary and populate the table
 if (tableData && typeof tableData === "object" && tbody) {
     Object.keys(tableData).forEach(function(key) {
         var row = document.createElement("tr");
+        var numericValue = parseInt(key.split(" ")[0], 10);
+        row.setAttribute("data-value", numericValue);
 
-        // ✅ Extract just the numeric part for matching
-        var value = key.replace("M=", "").trim();
-        var numericValue = value.split(" ")[0]; // Only keep the number before "widgets"
-        row.setAttribute("data-value", numericValue); // This will match the .choice buttons
+        // First column — dynamically add either a button or just text
+        var firstCell = document.createElement("td");
 
+        if (response === 1) {
+            // Add a choice button inside the cell
+            var button = document.createElement("button");
+            button.textContent = key; // e.g., "3 widgets"
+            button.classList.add("choice-button");
+            button.setAttribute("data-value", numericValue);
+            button.type = "button"; // Prevent form submission
+            // ✅ Exception for 0
+            if (numericValue !== 0 && (numericValue < from || numericValue > to)) {
+                button.disabled = true;
+            }
+            firstCell.appendChild(button);
+        } else {
+            // Add plain label instead of button
+            firstCell.className = "tg-0pky";
+            firstCell.textContent = key;
+        }
+
+        row.appendChild(firstCell);
+
+        // Append payoff cells
         var rowData = tableData[key];
-        if (!Array.isArray(rowData)) return;
-
-        var cellM = document.createElement("td");
-        cellM.className = "tg-0pky";
-        cellM.textContent = key; // Still shows "M=3 widgets" or similar in the table
-        row.appendChild(cellM);
-
         rowData.forEach(function(value) {
             var cell = document.createElement("td");
             cell.className = "tg-0pky";
@@ -137,6 +150,7 @@ if (tableData && typeof tableData === "object" && tbody) {
 
 
 
+
   updateYourPayoffColumn(selectedX); // Initial update
 
 
@@ -144,70 +158,64 @@ if (tableData && typeof tableData === "object" && tbody) {
 
 // This function updates the 'from' input based on user input
 function controlFromSlider(fromSlider, toSlider) {
-    // Extract 'from' and 'to' values from sliders
-    const [from, to] = getParsed(fromSlider, toSlider);
-    // Fill the control slider with appropriate colors
-    fillSlider(fromSlider, toSlider, '#C6C6C6', '#25daa5', toSlider);
-    // Update 'from' input
+    let [from, to] = getParsed(fromSlider, toSlider);
+
     if (from > to) {
-        fromSlider.value = to;
-
-        // Component to control visibility of table rows
-        var rows = document.getElementById("payoffTable").rows;
-        for (var i = 1; i <= rows.length - 1; i++) {
-            if (i === to+3 || i===1 || i === 2) {
-                rows[i].classList.remove("hidden-text");
-            } else {
-                rows[i].classList.add("hidden-text");
-            }
-        }
-
-        console.log("From:", fromSlider.value, "To:", to);
-
-    } else {
-        fromSlider.value = from;
-
-        // Component to control visibility of table rows
-        var rows = document.getElementById("payoffTable").rows;
-        for (var i = 1; i <= rows.length - 1; i++) {
-            if (i >= from+2 && i <= to+2 || i===1 || i === 2) {
-                rows[i].classList.remove("hidden-text");
-            } else {
-                rows[i].classList.add("hidden-text");
-            }
-        }
-
+        toSlider.value = from;
+        to = from;
     }
-    updateTableOpacity(from,to)
+
+    fromSlider.value = from;
+
+    fromValueDisplay.textContent = "Min: " + from;
+    toValueDisplay.textContent = "Max: " + to;
+
+    fillSlider(fromSlider, toSlider, '#C6C6C6', '#25daa5', toSlider);
+
+    // Update table visibility
+    var rows = document.getElementById("payoffTable").rows;
+    for (var i = 1; i <= rows.length - 1; i++) {
+        if ((i >= from + 2 && i <= to + 2) || i === 1 || i === 2) {
+            rows[i].classList.remove("hidden-text");
+        } else {
+            rows[i].classList.add("hidden-text");
+        }
+    }
+
+    updateTableOpacity(from, to);
 }
+
 
 // This function updates the 'to' slider based on user input
 function controlToSlider(fromSlider, toSlider) {
-    // Extract 'from' and 'to' values from sliders
-    const [from, to] = getParsed(fromSlider, toSlider);
-    // Fill the control slider with appropriate colors
-    fillSlider(fromSlider, toSlider, '#C6C6C6', '#25daa5', toSlider);
-    // Make 'to' slider accessible
-    setToggleAccessible(toSlider);
-    // Update 'to' slider and input
-    if (from <= to) {
-        toSlider.value = to;
+    let [from, to] = getParsed(fromSlider, toSlider);
 
-        // Component to control visibility of table rows
-        var rows = document.getElementById("payoffTable").rows;
-        for (var i = 1; i <= rows.length - 1; i++) {
-            if (i >= from+2 && i <= to+2 || i===1 || i === 2) {
-                rows[i].classList.remove("hidden-text");
-            } else {
-                rows[i].classList.add("hidden-text");
-            }
-        }
-
-    } else {
-        toSlider.value = from;
+    if (to < from) {
+        fromSlider.value = to;
+        from = to;
     }
-    updateTableOpacity(from,to)
+
+    toSlider.value = to;
+
+    fromValueDisplay.textContent = "Min: " + from;
+    toValueDisplay.textContent = "Max: " + to;
+
+    fillSlider(fromSlider, toSlider, '#C6C6C6', '#25daa5', toSlider);
+
+    // Update table visibility
+    var rows = document.getElementById("payoffTable").rows;
+    for (var i = 1; i <= rows.length - 1; i++) {
+        if ((i >= from + 2 && i <= to + 2) || i === 1 || i === 2) {
+            rows[i].classList.remove("hidden-text");
+        } else {
+            rows[i].classList.add("hidden-text");
+        }
+    }
+
+    updateTableOpacity(from, to);
 }
+
+
 
 // This function parses values from input fields
 function getParsed(currentFrom, currentTo) {
@@ -261,13 +269,38 @@ const toValueDisplay = document.getElementById('toValue');
 // Update the displayed values when sliders are moved
 if (fromSlider && toSlider && fromValueDisplay && toValueDisplay) {
     fromSlider.addEventListener('input', function() {
-        fromValueDisplay.textContent = "Min: " + this.value;
+        controlFromSlider(fromSlider, toSlider);
+        fromValueDisplay.textContent = "Min: " + fromSlider.value;
+        toValueDisplay.textContent = "Max: " + toSlider.value;
     });
 
     toSlider.addEventListener('input', function() {
-        toValueDisplay.textContent = "Max: " + this.value;
+        controlToSlider(fromSlider, toSlider);
+        fromValueDisplay.textContent = "Min: " + fromSlider.value;
+        toValueDisplay.textContent = "Max: " + toSlider.value;
     });
 }
+
+// Prevents hiding one slider behind the other
+document.addEventListener('DOMContentLoaded', function () {
+    const fromSlider = document.getElementById('fromSlider');
+    const toSlider = document.getElementById('toSlider');
+    const fromValueDisplay = document.getElementById('fromValue');
+    const toValueDisplay = document.getElementById('toValue');
+
+    if (fromSlider && toSlider && fromValueDisplay && toValueDisplay) {
+        fromSlider.addEventListener('input', function() {
+            controlFromSlider(fromSlider, toSlider);
+        });
+
+        toSlider.addEventListener('input', function() {
+            controlToSlider(fromSlider, toSlider);
+        });
+    } else {
+        console.warn("One or more slider elements are missing from the DOM.");
+    }
+});
+
 
 
 // Initialize slider colors and accessibility
@@ -351,7 +384,7 @@ function updatePoints(basePoints, newYValues) {
 // Example usage:
 const newYValues = {
   1: [0.30, 0.25, 0.20, 0.15, 0.05, 0.05],
-  2: [0.05, 0.20, 0.25, 0.25, 0.20, 0.05],
+  2: [0.10, 0.15, 0.25, 0.25, 0.15, 0.10],
   3: [0.05, 0.05, 0.15, 0.20, 0.25, 0.30]
 };
 
@@ -387,59 +420,85 @@ function xyTranslate(x, y, setts) {
     return { cx: translatedX, cy: translatedY };
 }
 
-function drawLine(ctx,x1,y1,x2,y2,graphsettings){
-    // Function to draw a line between two points
-    const pt0=xyTranslate(x1,y1,graphsettings);
-    const pt1=xyTranslate(x2,y2,graphsettings);
+function drawLine(ctx, x1, y1, x2, y2, graphsettings) {
+    const pt0 = xyTranslate(x1, y1, graphsettings);
+    const pt1 = xyTranslate(x2, y2, graphsettings);
+
+    const inv1 = invertTranslate(pt0.cx, pt0.cy, graphsettings);
+    const inv2 = invertTranslate(pt1.cx, pt1.cy, graphsettings);
+
+    if (Math.abs(inv1.y - 0.3) < 0.0005 && Math.abs(inv2.y - 0.3) < 0.0005) {
+        console.warn("🧨 drawLine drew at y ≈ 0.3!", { x1, y1, x2, y2, inv1, inv2 });
+        console.trace();
+    }
+
     ctx.beginPath();
     ctx.moveTo(pt0.cx, pt0.cy);
     ctx.lineTo(pt1.cx, pt1.cy);
     ctx.stroke();
-};
+}
+
 
 // Function to draw left arrow
 function drawLArrow(ctx, x1, y1, x2, y2, arrowText, xOff, graphsettings) {
-    // Translate coordinates to canvas space
     const pt0 = xyTranslate(x1, y1, graphsettings);
     const pt1 = xyTranslate(x2, y2, graphsettings);
 
-    // Calculate arrowhead properties
-    var headlen = 10; // length of head in pixels
-    var dx = pt1.cx - pt0.cx;
-    var dy = pt1.cy - pt0.cy;
-    var angle = Math.atan2(dy, dx);
-    var atPT = x1 + 1;
+    const OFFSET = 5;
+    const headlen = 10;
+    const dx = pt1.cx - pt0.cx;
+    const dy = pt1.cy - pt0.cy;
+    const angle = Math.atan2(dy, dx);
+    const atPT = x1 + 1;
 
-    // Save the current context settings
     ctx.save();
 
-    // Draw the arrow lines
+    // Stem line
+    ctx.beginPath();
     ctx.moveTo(pt0.cx, pt0.cy);
-    ctx.lineTo(pt1.cx, pt1.cy);
-    ctx.lineTo(pt1.cx - headlen * Math.cos(angle - Math.PI / 6), pt1.cy - headlen * Math.sin(angle - Math.PI / 6));
-    ctx.moveTo(pt1.cx, pt1.cy);
-    ctx.lineTo(pt1.cx - headlen * Math.cos(angle + Math.PI / 6), pt1.cy - headlen * Math.sin(angle + Math.PI / 6));
-    ctx.moveTo(pt0.cx - headlen * Math.sin(angle), pt0.cy - headlen * Math.cos(angle));
-    ctx.lineTo(pt0.cx + headlen * Math.sin(angle), pt0.cy + headlen * Math.cos(angle));
-
-    // Stroke the lines
+    ctx.lineTo(pt1.cx - OFFSET, pt1.cy);
     ctx.stroke();
 
-    // Set text properties and position
+    // Arrowhead (left-facing)
+    ctx.beginPath();
+    ctx.moveTo(pt1.cx - OFFSET, pt1.cy);
+    ctx.lineTo(pt1.cx - headlen * Math.cos(angle - Math.PI / 6) - OFFSET, pt1.cy - headlen * Math.sin(angle - Math.PI / 6));
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(pt1.cx - OFFSET, pt1.cy);
+    ctx.lineTo(pt1.cx - headlen * Math.cos(angle + Math.PI / 6) - OFFSET, pt1.cy - headlen * Math.sin(angle + Math.PI / 6));
+    ctx.stroke();
+
+    // Halved crossbar at base
+    const halfLen = headlen * 0.5;
+    ctx.beginPath();
+    ctx.moveTo(pt0.cx - halfLen * Math.sin(angle), pt0.cy - halfLen * Math.cos(angle));
+    ctx.lineTo(pt0.cx + halfLen * Math.sin(angle), pt0.cy + halfLen * Math.cos(angle));
+    ctx.stroke();
+
+    // Label
     ctx.fillStyle = "black";
     ctx.font = axisTextSize;
     ctx.textAlign = "center";
-    if (x1 == 1) {
-        ctx.fillText("Probability below " + atPT + " is " + arrowText, (pt1.cx + pt0.cx) / 2 +50, (pt1.cy + pt0.cy) / 2 - xOff);
+    if (x1 === 1) {
+        ctx.fillText("Probability below " + atPT + " is " + arrowText, (pt1.cx + pt0.cx) / 2 + 50, (pt1.cy + pt0.cy) / 2 - xOff);
     } else {
         ctx.fillText("Probability below " + atPT + " is " + arrowText, (pt1.cx + pt0.cx) / 2, (pt1.cy + pt0.cy) / 2 - xOff);
     }
-    // Restore the previous context settings
+
     ctx.restore();
 }
 
+
 // Function to draw right arrow
 function drawRArrow(ctx, x1, y1, x2, y2, arrowText, xOff, graphsettings) {
+
+    if (Math.abs(y1 - 0.3) < 0.0005 || Math.abs(y2 - 0.3) < 0.0005) {
+        console.warn("🚫 BLOCKED arrow at y ≈ 0.3!", { x1, y1, x2, y2 });
+        return;
+    }
+
     // Translate coordinates to canvas space
     const pt0 = xyTranslate(x1, y1, graphsettings);
     const pt1 = xyTranslate(x2, y2, graphsettings);
@@ -455,13 +514,39 @@ function drawRArrow(ctx, x1, y1, x2, y2, arrowText, xOff, graphsettings) {
     ctx.save();
 
     // Draw the arrow lines
-    ctx.moveTo(pt0.cx, pt0.cy);
-    ctx.lineTo(pt1.cx +12, pt1.cy);
-    ctx.lineTo(pt1.cx + headlen * Math.cos(angle - Math.PI / 6) +12, pt1.cy + headlen * Math.sin(angle - Math.PI / 6));
-    ctx.moveTo(pt1.cx+12, pt1.cy);
-    ctx.lineTo(pt1.cx + headlen * Math.cos(angle + Math.PI / 6) +12, pt1.cy + headlen * Math.sin(angle + Math.PI / 6));
-    ctx.moveTo(pt0.cx - headlen * Math.sin(angle), pt0.cy - headlen * Math.cos(angle));
-    ctx.lineTo(pt0.cx + headlen * Math.sin(angle), pt0.cy + headlen * Math.cos(angle));
+ctx.beginPath();
+
+ctx.strokeStyle = "black"; // Stem
+ctx.moveTo(pt0.cx, pt0.cy);
+ctx.lineTo(pt1.cx + 12, pt1.cy);
+console.log("🔴 Line A (stem) at y =", invertTranslate(pt1.cx + 12, pt1.cy, graphsettings).y);
+
+ctx.stroke();
+
+ctx.beginPath();
+ctx.strokeStyle = "black"; // Head 1
+ctx.moveTo(pt1.cx + 12, pt1.cy);
+ctx.lineTo(pt1.cx + headlen * Math.cos(angle - Math.PI / 6) + 12, pt1.cy + headlen * Math.sin(angle - Math.PI / 6));
+console.log("🔵 Line B (arrowhead side 1)");
+
+ctx.stroke();
+
+ctx.beginPath();
+ctx.strokeStyle = "black"; // Head 2
+ctx.moveTo(pt1.cx + 12, pt1.cy);
+ctx.lineTo(pt1.cx + headlen * Math.cos(angle + Math.PI / 6) + 12, pt1.cy + headlen * Math.sin(angle + Math.PI / 6));
+console.log("🟢 Line C (arrowhead side 2)");
+
+ctx.stroke();
+
+    // Halved crossbar at base
+    const halfLen = headlen * 0.5;
+    ctx.beginPath();
+    ctx.moveTo(pt0.cx - halfLen * Math.sin(angle), pt0.cy - halfLen * Math.cos(angle));
+    ctx.lineTo(pt0.cx + halfLen * Math.sin(angle), pt0.cy + halfLen * Math.cos(angle));
+console.log("🟣 Line D (cross base?)");
+
+ctx.stroke();
 
     // Stroke the lines
     ctx.stroke();
@@ -498,6 +583,7 @@ function drawTicks(ctx,yTicks,gs,xOff){
         drawLine(ctx, gs["xMin"], tick.y, gs["xMax"], tick.y, gs);
         ctx.restore();
 
+
         // Draw labels (no dash or custom stroke bleed-over)
         ctx.fillStyle = "black";
         ctx.font = axisTextSize;
@@ -511,12 +597,56 @@ function drawTicks(ctx,yTicks,gs,xOff){
 
 };
 
+
+function invertTranslate(cx, cy, setts) {
+    const bw = setts['bw'];
+    const chb = setts['ch'] - 2 * bw;
+    const cwb = setts['cw'] - 2 * bw;
+    const originY = bw + chb;
+
+    const xMin = setts['xMin'];
+    const xMax = setts['xMax'];
+    const yMin = setts['yMin'];
+    const yMax = setts['yMax'];
+
+    const xIncrement = cwb / (xMax - xMin);
+    const yIncrement = chb / (yMax - yMin);
+
+    const x = ((cx - bw) / xIncrement) + xMin;
+    const y = ((originY - cy) / yIncrement) + yMin;
+
+    return { x: x, y: y };
+}
+
 function drawProbs(showPlot, points, yticks, redPoint) {
+
+
     // Exit if canvasProb is not available
     if (typeof canvasProb === "undefined" || !canvasProb) return;
 
     // Get the canvas context and exit if not available
     const ctx = canvasProb.getContext("2d");
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transform
+    ctx.clearRect(0, 0, canvasProb.width, canvasProb.height);
+    ctx.restore();
+
+    ctx.strokeStyle = "black"; // base line
+
+
+    if (!ctx._lineToWrapped) {
+        const originalLineTo = ctx.lineTo.bind(ctx);
+        ctx.lineTo = function(x, y) {
+            const inverse = invertTranslate(x, y, gs); // custom function below
+            if (Math.abs(inverse.y - 0.3) < 0.0001) {
+                console.warn("🚨 ctx.lineTo drawing line to approx y = 0.3!", inverse);
+                console.trace();
+            }
+            originalLineTo(x, y);
+        };
+        ctx._lineToWrapped = true;
+    }
+
     if (!ctx) return;
 
     // Exit if points or the requested showPlot layer is missing
@@ -545,6 +675,8 @@ function drawProbs(showPlot, points, yticks, redPoint) {
     // Draw the yTicks
     drawTicks(ctx, yticks, gs, xTextoffset);
 
+    ctx.setLineDash([]);       // ensure solid lines from here onward
+
     // Label the x-axis for each point in the current layer
     points[showPlot].forEach(point => {
         const ptLoc = xyTranslate(point.x, 0, gs);
@@ -554,8 +686,8 @@ function drawProbs(showPlot, points, yticks, redPoint) {
         ctx.fillText(point.x, ptLoc.cx, ptLoc.cy + xTextoffset);
     });
 
-    // Remove dashing
-    ctx.setLineDash([]);
+    // // Remove dashing
+    // ctx.setLineDash([]);
 
     // Plot each point for the showPlot layer
     points[showPlot].forEach(point => {
@@ -566,8 +698,9 @@ function drawProbs(showPlot, points, yticks, redPoint) {
         if (point.x == redPoint) {
             let yArrow = yRange + 0.01;
             if (redPoint == 1) {
+                console.log("🎯 Calling drawRArrow with yArrow =", yArrow, "redPoint =", redPoint, "point.yADJ =", point.yADJ);
                 drawRArrow(ctx, parseInt(redPoint) + 1, yArrow, xRange, yArrow, point.yADJ, xTextoffset, gs);
-                console.log("Point", point.x, "Highlight?", point.x == redPoint);
+
             } else if (redPoint == 6) {
                 drawLArrow(ctx, parseInt(redPoint) - 1, yArrow, 0.9, yArrow, point.yCDF, xTextoffset, gs);
             } else {
@@ -856,24 +989,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    const choices = document.querySelectorAll(".choice");
     const response = document.getElementById("response");
 
-    choices.forEach(choice => {
-        choice.addEventListener("click", function () {
-            // Remove 'selected' class from all choices
-            choices.forEach(c => c.classList.remove("selected"));
-
-            // Add 'selected' class to the clicked choice
+    document.querySelectorAll(".choice-button").forEach(button => {
+        button.addEventListener("click", function () {
+            // Remove 'selected' from all buttons
+            document.querySelectorAll(".choice-button").forEach(b => b.classList.remove("selected"));
             this.classList.add("selected");
 
-            // Get the selected value and update the hidden input field
-            let selectedValue = this.getAttribute("data-value");
+            const selectedValue = this.getAttribute("data-value");
             response.value = selectedValue;
 
+            // Clear previous highlights from all rows
+            document.querySelectorAll("#tableBody tr").forEach(row => {
+                row.querySelectorAll("td").forEach((cell, index) => {
+                    cell.classList.remove("highlighted-cell");
+                });
+            });
+
+            // Highlight only non-first cells of the selected row
+            const selectedRow = document.querySelector(`#tableBody tr[data-value="${selectedValue}"]`);
+            if (selectedRow) {
+                selectedRow.querySelectorAll("td").forEach((cell, index) => {
+                    if (index !== 0) {
+                        cell.classList.add("highlighted-cell");
+                    }
+                });
+            }
         });
     });
 });
+
 
 
 // Hides the back columns on the buyer page
@@ -904,7 +1050,7 @@ function adjustTableColumns(pageType) {
     }
 }
 
-const response = js_vars.response
+
 if (response === 1) {
     adjustTableColumns("limited"); // Change "limited" dynamically based on the page type
 }

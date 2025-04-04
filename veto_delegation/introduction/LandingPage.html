@@ -1,0 +1,34 @@
+{{ block title }}
+Welcome to the Study
+{{ endblock }}
+
+{{ block content }}
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+    </head>
+
+<!-- Text -->
+  <p>
+The purpose of this research study is to understand how people make decisions.
+    The study involves questions and tasks.
+    It should take less than 75 minutes to do the study.
+    You must be at least 18 years old.
+The instructions will describe your task, the payoff schedule, and how it depends on your decisions, the decisions of others, and chance.
+Your minimum possible earnings for completing the experiment are $16.
+    Your additional earnings may be affected by your individual decisions, decisions of others, and chance.
+    On average you could get another $15 in earnings, but it could be more or less.
+
+    <p>
+
+    Your responses will be anonymous and will not be identifiable in any way.
+    Your participation is completely voluntary.
+  You may discontinue participation at any time during the research activity.
+  If you choose not to participate, you still receive the show up payment of $8.
+Your current and future status with the University of Pittsburgh and any other benefits for which you qualify will be the same whether you participate in this study or not.
+  </p>
+<p>This study is being conducted by Brandon Williams who can be reached at brandon.williams@pitt.edu.</p>
+
+
+    <!-- Include JavaScript file -->
+    <script src="{{ static 'veto_delegation/script-graph.js' }}"></script>
+{{ endblock }}

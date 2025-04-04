@@ -10,15 +10,15 @@ Part One: Main Task
 <!-- Text -->
     <p>Part one consists of 15 rounds, where one of the 15 rounds will be randomly selected for payment. In each round, you will either be a <b>Buyer</b> or a <b>Seller</b></p>
     <ul>
-        <li>If you are the <b>Seller</b>, your job is to choose the
+        <li>If you are the <b>Seller</b>, your job is to
 
             <!--   This determines which text to show based on the treatment, change this if the method of selecting treatment changes    -->
             {{ if single == 0 }}
-                minimum and maximum number of widgets
+                chose a menu of options for the Buyer, minimum and maximum number of widgets,
             {{else}}
-                the number of widgets
+                choose the number of widgets
             {{endif}}
-            you are making available for purchase to the Buyer.
+            that you are making available for purchase to the Buyer.
         </li>
         <li>If you are a <b>Buyer</b>, your job is
             {{ if single == 0 }}
@@ -26,9 +26,12 @@ Part One: Main Task
             {{else}}
                 to decide if you want to purchase the offered number of widgets
             {{endif}}
-            or to walk away and purchase zero widgets.</li>
+            or to purchase zero widgets.
+            Regardless of the option that the Seller offers to the Buyer, the Buyer always has the option to “walk away” and purchase zero widgets.</li>
         <li>
-            Buyers have an ideal number of widgets <b>X</b> that they want to purchase, drawn at random from an urn. Buyers will know the value of X before they make their decisions; however, Sellers will not know the Buyer’s ideal quantity X, only the urn it was drawn from.
+            Buyers have an ideal number of widgets <b>X</b> that they want to purchase, drawn at random from an urn.
+            Buyers will know the value of X before they make their decisions; however, Sellers will not know the Buyer’s ideal quantity X, only the urn it was drawn from.
+            You will see an example of the urn and the draw in a moment.
         </li>
 
         {{ if chat == 0 }}

@@ -6,6 +6,41 @@
 
     <head>
         <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+        <style>
+#customConfirmOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#customConfirmBox {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px black;
+  text-align: center;
+  max-width: 400px;
+}
+
+#customConfirmBox button {
+  margin: 10px;
+  padding: 6px 12px;
+  font-size: 16px;
+}
+
+#payoffTable thead th:first-child,
+#payoffTable tbody td:first-child {
+    border: 1px solid #ddd;}
+
+</style>
+
     </head>
 <p>
 The Sellers task in each round is to select
@@ -77,7 +112,7 @@ The Sellers task in each round is to select
             </colgroup>
             <thead>
                 <tr>
-                    <th class="tg-c3ow" rowspan="2">Widgets <br>Purchased, M</th>
+                    <th class="tg-c3ow" rowspan="2">Widgets <br>Purchased</th>
                     <th class="tg-c3ow" rowspan="2">Your Payoff <br> (X=<span id="selectedX">-</span>)</th>
                     <th class="tg-c3ow" rowspan="2">Your <br> Payoff</th>
                     <th class="tg-c3ow" colspan="6">Buyer Payoff (by ideal quantity X)</th>
@@ -96,10 +131,62 @@ The Sellers task in each round is to select
             </tbody>
         </table>
     </div>
-<br><br>
+<br>
 {{ formfield_errors 'minSlider' }}
-{{ next_button }}
+<button type="button" id="customNextBtn" class="btn btn-primary">Next</button>
+
+<div id="customConfirmOverlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background-color:rgba(0,0,0,0.5); z-index:1000; justify-content:center; align-items:center;">
+    <div style="background:white; padding:30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.3); max-width:400px; text-align:center;">
+        <p id="customConfirmMessage" style="margin-bottom:20px;"></p>
+        <button id="confirmYes" class="btn btn-primary" style="margin-right: 10px;">Confirm</button>
+        <button id="confirmNo" class="btn btn-secondary" type="button">Cancel</button>
+    </div>
+</div>
+
+
 
     <script src="{{ static 'veto_delegation/interface.js' }}"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const fromSlider = document.getElementById("fromSlider");
+    const toSlider = document.getElementById("toSlider");
+    const nextBtn = document.getElementById("customNextBtn");
+    const form = document.querySelector("form");
+
+    const overlay = document.getElementById("customConfirmOverlay");
+    const msg = document.getElementById("customConfirmMessage");
+    const yesBtn = document.getElementById("confirmYes");
+    const noBtn = document.getElementById("confirmNo");
+
+    nextBtn.addEventListener("click", function () {
+        const min = parseInt(fromSlider.value);
+        const max = parseInt(toSlider.value);
+
+        const minLabel = min === 1 ? "1 widget" : `${min} widgets`;
+        const maxLabel = max === 1 ? "1 widget" : `${max} widgets`;
+
+        if (min === max) {
+            msg.textContent = `You have offered: ${minLabel}. Confirm offer?`;
+        } else {
+            msg.textContent = `You have offered: ${minLabel} to ${maxLabel}. Confirm offer?`;
+        }
+
+        overlay.style.display = "flex";
+    });
+
+    yesBtn.addEventListener("click", function () {
+        overlay.style.display = "none";
+        form.submit(); // now submit the oTree form
+    });
+
+    noBtn.addEventListener("click", function () {
+        overlay.style.display = "none";
+    });
+});
+</script>
+
+
+
+
 
 {{ endblock }}

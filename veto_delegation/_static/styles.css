@@ -3,6 +3,7 @@
     grid-template-columns: 1fr 7fr; /* Adjust column widths as needed */
     gap: 0px; /* Adjust gap between columns as needed */
     margin-left: 80px;
+    margin-top: -20px;
 }
 
 .sub-container2 {
@@ -70,6 +71,7 @@ canvas {
 #probCanvas{
     border: 1px solid #ccc;
   border-radius: 5px;
+    padding: 0;
 }
 input[type="range"] {
     width: 80%;
@@ -90,9 +92,10 @@ p {
         align-items: center;
         height: 300px;
     width: 500px;
-        margin-top: 35px;
+        margin-top: 30px;
     /*border: 1px solid #e81919;*/
   border-radius: 5px;
+
 }
 
 .dice-box {
@@ -160,17 +163,19 @@ p {
         align-items: center;
         height: 460px;
         margin-top: 90px;
+        padding-top: 50px;
         /*border: 1px solid #ff0000;*/
     }
 
     .choice {
-        margin: 8px 0;
-        padding: 5px 20px;
+        margin: 10px 0;
+        padding: 8px 20px;
         border: 1px solid #ccc;
         border-radius: 5px;
         background-color: #f9f9f9;
         cursor: pointer;
         transition: background-color 0.3s ease;
+        width: 120px;
     }
 
     .choice:hover {
@@ -196,6 +201,11 @@ p {
       margin-top: 0px; /* Shift down */
     margin-left: -35px;
 }
+.highlighted-cell {
+    background-color: #bebeff !important;  /* Light blue highlight */
+    transition: background-color 0.2s ease;
+}
+
 
 .highlight {
     font-weight: bold; /* Keeps the bold font */
@@ -234,12 +244,18 @@ p {
 input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   pointer-events: all;
+    z-index: 1;
   width: 24px;
   height: 24px;
   background-color: #fff;
   border-radius: 50%;
   box-shadow: 0 0 0 1px #C6C6C6;
   cursor: pointer;
+    position: relative;
+}
+
+input[type=range].active::-webkit-slider-thumb {
+    z-index: 2;
 }
 
 input[type=range]::-moz-range-thumb {

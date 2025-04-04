@@ -16,7 +16,7 @@ SESSION_CONFIGS = [
 
          num_demo_participants=20,
          take_it_or_leave_it=False,
-         chat=False,
+         chat=True,
          Session=1,
          doc="""Set the session number to the total number in the treatment""",
          ),
