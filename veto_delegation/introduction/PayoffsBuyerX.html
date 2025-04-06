@@ -1,0 +1,105 @@
+{{ block title }}
+  Payoffs
+{{ endblock }}
+
+{{ block content }}
+<head>
+  <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+</head>
+
+<p>To incentivize your choices, the amount you can earn are determined by the decisions of both the Buyer and the Seller, as given in the table below (also printed out at your desks):</p>
+<!-- Payoffs Table -->
+<table class="tg" id="payoffTable">
+  <colgroup>
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+    <col style="width: 190.2px">
+  </colgroup>
+  <thead>
+    <tr>
+      <th class="tg-c3ow" rowspan="2">Widgets <br>Purchased, M</th>
+      <th class="tg-c3ow" rowspan="2">Your Payoff <br> (X=<span id="selectedX">-</span>)</th>
+      <th class="tg-c3ow" rowspan="2">Seller <br> Payoff</th>
+      <th class="tg-c3ow" colspan="6">Buyer Payoff (by ideal quantity X)</th>
+    </tr>
+    <tr>
+      <th class="tg-0lax">X=1</th>
+      <th class="tg-0lax">X=2</th>
+      <th class="tg-0lax">X=3</th>
+      <th class="tg-0lax">X=4</th>
+      <th class="tg-0lax">X=5</th>
+      <th class="tg-0lax">X=6</th>
+    </tr>
+  </thead>
+  <tbody id="tableBody">
+    <!-- Table body will be populated dynamically -->
+  </tbody>
+</table>
+
+<!-- Text -->
+<br>
+
+<ul>
+  <li>Sellers always make $4 plus $4 per widget sold to the Buyer. So the amount a buyer can earn increases with the number of widgets they sell.</li>
+  <li>
+    Buyers have an ideal quantity of widgets that they wish to purchase, X, determined by a six-sided die roll. The buyer’s payoff is determined by how far away M is from the ideal quantity X.
+  </li>
+      <li>Buyers earn $30 if they purchase their ideal amount (M=X), but lose $5 for each widget purchased above or below their ideal quantity (with the additional loss falling to $1 once below $5).</li>
+
+</ul>
+
+
+
+<!-- Include JavaScript file -->
+<script src="{{ static 'veto_delegation/payoff-table.js' }}"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  function highlightColumns(startIndex, endIndex, color = "lightblue") {
+        var tableRows = document.querySelectorAll("#payoffTable tbody tr");
+
+        // Highlight table body cells
+        tableRows.forEach(function(row) {
+            for (let i = startIndex; i <= endIndex; i++) {
+                var cell = row.children[i]; // Select the column in range
+                if (cell) {
+                    cell.style.backgroundColor = color; // Apply background color
+                }
+            }
+        });
+
+        // Highlight main table headers (1st row of headers)
+        for (let i = startIndex; i <= endIndex; i++) {
+            var headerCell = document.querySelector(`#payoffTable thead tr:first-child th:nth-child(${i + 1})`);
+            if (headerCell) {
+                headerCell.style.backgroundColor = color;
+            }
+        }
+
+        // Highlight buyer payoff headers (2nd row of headers)
+        var buyerHeaderRow = document.querySelector("#payoffTable thead tr:nth-child(2)");
+        // Loop through and apply highlights
+        if (buyerHeaderRow) {
+            let columnIndex = startIndex - 3; // Change to the column index you want to highlight
+            let buyerHeaderCell = buyerHeaderRow.children[columnIndex];
+            if (buyerHeaderCell) {
+                buyerHeaderCell.style.backgroundColor = color;
+            }
+        }
+    }
+
+    // Execute
+    highlightColumns(5, 5, "rgba(0, 0, 255, .42)"); // Adjust the indices as needed
+});
+
+</script>
+
+
+{{ endblock }}

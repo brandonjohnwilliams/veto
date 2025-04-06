@@ -198,11 +198,15 @@ class RolesIntro(Page):
 
 
 class Roles(Page):
+    timeout_seconds = 20
     @staticmethod
     def js_vars(player):
         group = player.group
         return dict(
             selectedX=group.vetoer_bias,
+            roundName=group.roundName,
+            roundType=group.roundType,
+            round_type=player.group.roundType,
         )
 
     @staticmethod
@@ -235,6 +239,9 @@ class Chat(Page):
         group = player.group
         return dict(
             selectedX=group.vetoer_bias,
+            roundName=group.roundName,
+            roundType=group.roundType,
+            round_type=player.group.roundType,
         )
 
     @staticmethod
@@ -371,6 +378,7 @@ class Results(Page):
         offerMax_list = []
         choice_list = []
         payoff_list = []
+        role_list = []
 
         # Loop through each round
         for i in range(1, player.round_number + 1):  # Assuming num_rounds is defined
@@ -383,6 +391,7 @@ class Results(Page):
             offerMax_list.append(prev_player.group.maxSlider)
             choice_list.append(prev_player.group.response)
             payoff_list.append(prev_player.payoff)
+            role_list.append(prev_player.role)
 
         return dict(
             round=player.round_number,
@@ -394,7 +403,7 @@ class Results(Page):
             choice=choice_list,
             payoff=payoff_list,
             roundName=roundName_list,
-            role=player.role
+            role=role_list,
         )
 
     @staticmethod
@@ -418,6 +427,7 @@ class WaitForRematch(WaitPage):
 
     @staticmethod
     def js_vars(player):
+
         # Initialize empty lists
         roundName_list = []
         idealX_list = []
@@ -425,6 +435,7 @@ class WaitForRematch(WaitPage):
         offerMax_list = []
         choice_list = []
         payoff_list = []
+        role_list = []
 
         # Loop through each round
         for i in range(1, player.round_number + 1):  # Assuming num_rounds is defined
@@ -437,6 +448,7 @@ class WaitForRematch(WaitPage):
             offerMax_list.append(prev_player.group.maxSlider)
             choice_list.append(prev_player.group.response)
             payoff_list.append(prev_player.payoff)
+            role_list.append(prev_player.role)
 
         return dict(
             round=player.round_number,
@@ -448,7 +460,7 @@ class WaitForRematch(WaitPage):
             choice=choice_list,
             payoff=payoff_list,
             roundName=roundName_list,
-            role=player.role
+            role=role_list,
         )
 
 page_sequence = [Begin, RolesIntro, Roles, ChatWait, Chat, Proposal, WaitForP1, Response, WaitForP2, Results, WaitForRematch]

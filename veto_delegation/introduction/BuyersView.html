@@ -91,12 +91,23 @@ tr.highlighted-row td:first-child .choice-button {
   padding: 6px 12px;
   font-size: 16px;
 }
+
+
         </style>
     </head>
 
     <!-- Text -->
 
-    <p>In this example you, as the Buyer, have <b>ideal value X={{selectedX}}</b> which came from the type middle urn.</p>
+    <p>In this example you, as the Buyer, have <b>ideal value X={{selectedX}}</b> which came from the type middle urn.
+    When you were acting as the Seller in this example, you offered the following options:
+</p>
+
+<ul>
+<li>Minimum amount: {{ player.minSlider }} widgets</li>
+
+<li>Maximum amount: {{ player.maxSlider }} widgets</li>
+</ul>
+<p>Please make your example choice below:</p>
 
 
 
@@ -112,18 +123,18 @@ tr.highlighted-row td:first-child .choice-button {
     <col style="width: 190.2px">
     <col style="width: 190.2px">
     <col style="width: 190.2px">
-    <col style="width: 190.2px">
-    <col style="width: 190.2px">
-    <col style="width: 190.2px">
-    <col style="width: 190.2px">
-    <col style="width: 190.2px">
-    <col style="width: 190.2px">
-    <col style="width: 190.2px">
+    <col style="width: .2px">
+    <col style="width: .2px">
+    <col style="width: .2px">
+    <col style="width: .2px">
+    <col style="width: .2px">
+    <col style="width: .2px">
+    <col style="width: .2px">
             </colgroup>
             <thead>
                 <tr>
                     <th class="tg-c3ow" rowspan="2" style="border: none;">Widgets Purchased</th>  <!-- Placeholder for buttons -->
-                    <th class="tg-c3ow" rowspan="2">Your Payoff <br> (X=<span id="selectedX">-</span>)</th>
+                    <th class="tg-c3ow" rowspan="2">Your Payoff <br> as Buyer (X=<span id="selectedX">-</span>)</th>
                     <th class="tg-c3ow" rowspan="2">Seller <br> Payoff</th>
                     <th class="tg-c3ow" colspan="6">Buyer Payoff (by ideal quantity X)</th>
                 </tr>
@@ -174,7 +185,10 @@ document.addEventListener("DOMContentLoaded", function () {
             const selectedValue = responseInput.value;
 
             if (!selectedValue) {
-                alert("Please make a selection before continuing.");
+                confirmMsg.textContent = "Please make a selection before continuing.";
+                confirmYes.style.display = "none";
+                confirmNo.textContent = "OK";
+                overlay.style.display = "flex";
                 return;
             }
 
@@ -182,8 +196,11 @@ document.addEventListener("DOMContentLoaded", function () {
             const widgetWord = selectedValue === "1" ? "widget" : "widgets";
             confirmMsg.textContent = `You have selected to buy ${selectedValue} ${widgetWord}. Confirm choice?`;
 
+            confirmYes.style.display = "inline-block";
+            confirmNo.textContent = "Cancel";
             overlay.style.display = "flex"; // Show the custom modal
         });
+
 
         confirmYes.addEventListener("click", function () {
             overlay.style.display = "none";
@@ -193,6 +210,7 @@ document.addEventListener("DOMContentLoaded", function () {
         confirmNo.addEventListener("click", function () {
             overlay.style.display = "none"; // Just hide the modal
         });
+
     }
 });
 </script>

@@ -1,5 +1,5 @@
 {{ block title }}
-Proposal
+Robot Buyer - {{ roundName }} Urn
 {{ endblock }}
 
 
@@ -10,12 +10,10 @@ Proposal
         <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
     </head>
 
-Please make your selection below.
-
     <div class="sub-container2">
         <div class="dice-box">
             <p>
-                The Robot Buyer's X will be drawn from the <strong>
+                The Robot Buyer's X drawn from the <strong>
                 {{ if roundType == 1}}
                 "L" urn
                 {{ elif roundType == 2}}

@@ -1,5 +1,5 @@
 {{ block title }}
-Chat
+Round {{ player.round_number }} - Chat
 {{ endblock }}
 
 {% block content %}
@@ -12,7 +12,7 @@ Chat
 {{ if player.id_in_group == 1}}
 
 <p>
-As a reminder, the Buyer's ideal value (X) will come from a type <b>{{ roundName }}</b> urn, which contains these possible draws:
+You are the {{ player.role }}. The Buyer's ideal value (X) will come from a type <b>{{ roundName }}</b> urn, which contains these possible draws:
 </p>
 
 
@@ -23,7 +23,7 @@ As a reminder, the Buyer's ideal value (X) will come from a type <b>{{ roundName
 
 {{ else }}
 
-<p>As a reminder, you have <b>ideal value X={{selectedX}}</b> which came from the type <b>{{ roundName }}</b> urn.</p>
+<p>You are the {{ player.role }}. Tou have <b>ideal value X={{selectedX}}</b> which came from the type <b>{{ roundName }}</b> urn.</p>
 
 <div class="canvas-container">
   <canvas id="ballCanvas2"></canvas>

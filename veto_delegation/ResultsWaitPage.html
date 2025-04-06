@@ -32,7 +32,7 @@ Please Wait
 </head>
 
 
-
+<p>Please wait for other Buyer-Seller groups to complete Round {{ player.round_number}}.</p>
 <table id="gameTable">
     <thead>
         <tr>
@@ -70,7 +70,7 @@ Please Wait
 
             row.insertCell(0).textContent = i + 1; // Round number (1-based index)
             row.insertCell(1).textContent = roundName[i].replace(/^\w/, (c) => c.toUpperCase());  // Access rounddice at index i
-            row.insertCell(2).textContent = `${role}`;  // Access idealX at index i
+            row.insertCell(2).textContent = `${role[i]}`;  // Access idealX at index i
             if (offerMin[i] === offerMax[i]) {
                 if (offerMin[i] === 1) {
                     row.insertCell(3).textContent = `${offerMin[i]} widget`;

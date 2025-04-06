@@ -1,5 +1,5 @@
 {{ block title }}
-Practice Screen 3
+Comprehension Screen 3
 {{ endblock }}
 
 
@@ -8,11 +8,18 @@ Practice Screen 3
 
     <head>
         <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+            <style>
+
+.otree-form-errors {
+    display: none;
+}
+
+        </style>
     </head>
 <div id="pageWrapper">
 
     <p>
-        You offered the following menu to the Buyer. Use the information in the table to answer the following questions:
+        You offered the following options to the Buyer. Use the information in the table to answer the following questions:
     </p>
             <!-- Payoffs Table -->
         <table class="tg" id="payoffTable">
@@ -50,14 +57,16 @@ Practice Screen 3
         </table>
 
 <br><br>
+    {{ if form.errors }} <p style="color: red">One or more answers is incorrect.</p> {{ endif }}
+
 <!-- Quiz Question 1 -->
 <label for="quiz3" style="display: inline-block; margin-bottom: 8px;">
-    What is the <b>minimum</b> number of widgets the Buyer can buy based on your offer?
+    What is the <b>minimum</b> number of widgets the Buyer can choose based on your offer?
 </label>
 <input type="number" id="quiz3" name="quiz3"
        style="border: 1px solid #aaa; border-radius: 6px; padding: 6px 10px; margin-left: 10px;
               font-size: 15px; background-color: #f9f9f9; width: 40px;">
-
+{{ formfield_errors 'quiz3' }}
 <br><br>
 
 <!-- Quiz Question 2 -->
@@ -69,11 +78,12 @@ Practice Screen 3
               font-size: 15px; background-color: #f9f9f9; width: 40px;">
 
 
-{{ formfield_errors 'quiz3' }}
+
 {{ formfield_errors 'quiz4' }}
 <br><br>
      Click next to submit your answers. You can only advance if the answers are correct.
     <br><br>
+
 {{ next_button }}
 </div>
 
@@ -83,12 +93,5 @@ Practice Screen 3
 </div>
 
     <script src="{{ static 'veto_delegation/interface.js' }}"></script>
-<script>
-// setTimeout(function() {
-//     document.getElementById("timeoutMessage").style.display = "block";
-//     document.getElementById("pageWrapper").style.outline = "2px solid red";
-//     document.getElementById("pageWrapper").style.outlineOffset = "100px";
-// }, 60000);  // or 3000 for testing
 
-</script>
 {{ endblock }}

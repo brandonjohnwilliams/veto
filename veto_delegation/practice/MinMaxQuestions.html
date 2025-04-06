@@ -1,5 +1,5 @@
 {{ block title }}
-Practice Screen 4
+Comprehension Screen 4
 {{ endblock }}
 
 
@@ -8,6 +8,13 @@ Practice Screen 4
 
     <head>
         <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+                <style>
+
+.otree-form-errors {
+    display: none;
+}
+
+        </style>
     </head>
 <div id="pageWrapper">
 
@@ -50,8 +57,10 @@ Practice Screen 4
         </table>
 
 <br>
+    {{ if form.errors }} <p style="color: red">One or more answers is incorrect.</p> {{ endif }}
+
 <!-- Quiz Question 1 -->
-    Suppose the Buyer has ideal value X={{ bias }} for the following questions:
+    Suppose the Buyer has ideal value <b>X={{ bias }}</b> for the following questions:
     <br><br>
 <label for="quiz5" style="display: inline-block; margin-bottom: 8px;">
     What is the <b>maximum payoff</b> the Buyer can achieve based on your offer?
@@ -59,13 +68,13 @@ Practice Screen 4
 $<input type="number" id="quiz5" name="quiz5"
        style="border: 1px solid #aaa; border-radius: 6px; padding: 6px 10px; margin-left: 10px;
               font-size: 15px; background-color: #f9f9f9; width: 40px;">
-
+    {{ formfield_errors 'quiz5' }}
 
 <!-- Quiz Question 2 -->
 <label for="quiz6" style="display: inline-block; margin-bottom: 8px;">
     What amount of widgets purchased results in the maximum payoff the Buyer can achieve?
 </label>
-    {{ formfield_errors 'quiz5' }}
+
 <input type="number" id="quiz6" name="quiz6"
        style="border: 1px solid #aaa; border-radius: 6px; padding: 6px 10px; margin-left: 11px;
               font-size: 15px; background-color: #f9f9f9; width: 40px;">
@@ -97,6 +106,7 @@ $<input type="number" id="quiz7" name="quiz7"
      Click next to submit your answers. You can only advance if the answers are correct.
     <br><br>
 {{ next_button }}
+
 </div>
 
 <!-- Hidden message -->
@@ -105,12 +115,5 @@ $<input type="number" id="quiz7" name="quiz7"
 </div>
 
     <script src="{{ static 'veto_delegation/interface.js' }}"></script>
-<script>
-// setTimeout(function() {
-//     document.getElementById("timeoutMessage").style.display = "block";
-//     document.getElementById("pageWrapper").style.outline = "2px solid red";
-//     document.getElementById("pageWrapper").style.outlineOffset = "100px";
-// }, 60000);  // or 3000 for testing
 
-</script>
 {{ endblock }}

@@ -1,5 +1,5 @@
 {{ block title }}
-Your Role
+Round {{player.round_number}} - Your Role: {{player.role}}
 {{ endblock }}
 
 {% block content %}
@@ -11,16 +11,16 @@ Your Role
 {{ if player.id_in_group == 1}}
 
 <p>
-    You are the Seller. You will choose what options for the number of Widgets (M) that the Buyer can choose from.
-    Remember, you cannot remove 0 Widgets as an option. The Buyer can always walk away.
+    You are the Seller. You will choose what options for the number of Widgets that the Buyer can choose from.
+    Remember, you cannot remove 0 Widgets as an option. The Buyer can always walk away and purchase zero Widgets.
 </p>
-<p>The Buyer's ideal value (X) will come from a type <b>{{ roundName }}</b> urn, which contains these possible draws:</p>
+<p>The Buyer's ideal value (X) will come from the <b>{{ roundName }}</b> urn, which contains these possible ideal quantities:</p>
 
 <div class="canvas-container">
   <canvas id="ballCanvas"></canvas>
 </div>
 
-{{ if chat == 1 }}<p> You will move to the chat page where you can communicate with the Seller.</p>
+{{ if chat == 1 }}<p> Click next to move to the chat page where you can communicate with the Seller.</p>
 {{ else }}
 <p>Click next when you are ready to make your choice.</p>
 {{endif}}
@@ -31,16 +31,18 @@ Your Role
     You are the Buyer. First, the Seller will choose what options for the number of widgets (M) that you can choose from.
     Remember, the Seller cannot remove 0 Widgets as an option. You can always walk away.
 </p>
-<p>You have <b>ideal value X={{selectedX}}</b> which came from the type <b>{{ roundName }}</b> urn.</p>
+<p>You have <b>ideal value X={{selectedX}}</b> which came from the <b>{{ roundName }}</b> urn.</p>
 
 <div class="canvas-container">
   <canvas id="ballCanvas2"></canvas>
 </div>
 
-<p>Click next when you are ready. {{ if chat == 1 }} You will move to the chat page where you can communicate with the Seller. {{ else }}You will move to the waiting page if the Seller has not yet made their choice. <b>You must click "Next" to learn what the Seller will offer.</b></p> {{endif}}
+<p>{{ if chat == 1 }} Click next to move to the chat page where you can communicate with the Seller.
+    {{ else }} Click next to move to the waiting page if the Seller has not yet made their choice. {{endif}} </p>
 
 {{endif}}
 
+<p>This page will automatically advance in <span class="otree-timer__time-left">0:20</span>.</p>
 
 
 

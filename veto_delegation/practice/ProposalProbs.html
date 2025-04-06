@@ -1,5 +1,5 @@
 {{ block title }}
-Practice Screen 1
+Comprehension Screen 1
 {{ endblock }}
 
 
@@ -8,12 +8,19 @@ Practice Screen 1
 
     <head>
         <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+        <style>
+
+.otree-form-errors {
+    display: none;
+}
+
+        </style>
     </head>
 <div id="pageWrapper">
-
     <p> When the Seller makes their choice, they will be shown the following information. The image on the left shows the type of urn that Buyer's Ideal value X will be drawn from. Inside, you can see the total number of balls in the urn, and the amount of each type of ball.</p>
-    <p>On the right, there is a chart showing the type of ball on the x-axis and the probability that type of ball is shown along the y-axis. The shape of this probability plot will change based on the urn type. You can manipulate the slider under the graph to reveal detailed information about each ball type.</p>
+    <p>On the right, there is a chart showing the ideal quantity on the x-axis and the probability of drawing that ideal quantity is shown along the y-axis. The values on this probability plot will change based on the type of urn. You can manipulate the slider under the graph to reveal detailed information about each ball type.</p>
     <p>Please use the information in these figures to answer the questions below.</p>
+    <br><br>
     <div class="sub-container2">
         <div class="dice-box">
             <p>
@@ -44,6 +51,7 @@ Practice Screen 1
     </div>
     <br>
     <br>
+{{ if form.errors }} <p style="color: red">One or more answers is incorrect.</p> {{ endif }}
 
 <!-- Quiz Question 1 -->
 <label for="quiz1" style="display: inline-block; margin-bottom: 8px;">
@@ -52,7 +60,7 @@ Practice Screen 1
 <input type="number" id="quiz1" name="quiz1"
        style="border: 1px solid #aaa; border-radius: 6px; padding: 6px 10px; margin-left: 10px;
               font-size: 15px; background-color: #f9f9f9;">
-
+    {{ formfield_errors 'quiz1' }}
 <br><br>
 
 <!-- Quiz Question 2 -->
@@ -62,12 +70,13 @@ Practice Screen 1
 <input type="number" id="quiz2" name="quiz2"
        style="border: 1px solid #aaa; border-radius: 6px; padding: 6px 10px; margin-left: 10px;
               font-size: 15px; background-color: #f9f9f9; width: 80px;"> %
-
-<br><br>
-{{ formfield_errors 'quiz1' }}
 {{ formfield_errors 'quiz2' }}
+<br><br>
+
+
  Click next to submit your answers. You can only advance if the answers are correct.
 <br><br>
+
 {{ next_button }}
 </div>
 <!-- Hidden message -->
@@ -76,12 +85,5 @@ Practice Screen 1
 </div>
 
     <script src="{{ static 'veto_delegation/interface.js' }}"></script>
-<script>
-// setTimeout(function() {
-//     document.getElementById("timeoutMessage").style.display = "block";
-//     document.getElementById("pageWrapper").style.outline = "2px solid red";
-//     document.getElementById("pageWrapper").style.outlineOffset = "100px";
-// }, 60000);  // or 3000 for testing
 
-</script>
 {{ endblock }}

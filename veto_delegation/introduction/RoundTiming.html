@@ -17,8 +17,9 @@ Round Timing
       At the start of the round, the computer selects an urn type to draw a ball from, where both the Buyer and Seller will see the selected urn.
   </li>
   <li>
-      The computer then secretly draws one ball at random from the chosen urn. This is the ideal value X for the Buyer.
-      The Buyer learns this value, but the Seller does not.
+      The computer then secretly draws one ball at random from the chosen urn. 
+	The label on the drawn ball is the ideal quantity X for the Buyer.
+      The Buyer learns this, but the Seller does not.
   </li>
 
     {{ if chat == 1 }}
@@ -43,7 +44,7 @@ Round Timing
         {{endif}}
     </li>
   <li>
-      After the round concludes, the Buyer and Seller will be informed on the number of widgets purchased and the resulting round payoffs (though the Seller does not learn the Buyer’s ideal value X).</li>
+      After the round concludes, the Buyer and Seller will be informed on the number of widgets purchased and the resulting round payoffs (though the Seller will not learn the Buyer’s ideal quantity X).</li>
 </ol>
 For the next few screens, you will see how the timing of each round works in detail.
     <!-- Include JavaScript file -->

@@ -14,9 +14,10 @@ SESSION_CONFIGS = [
              'payment',
          ],
 
-         num_demo_participants=24,
+         num_demo_participants=20,
          take_it_or_leave_it=False,
          chat=True,
+         use_browser_bots=True,
          Session=1,
          doc="""Set the session number to the total number in the treatment""",
          ),
@@ -52,7 +53,7 @@ LANGUAGE_CODE = 'en'
 
 # e.g. EUR, GBP, CNY, JPY
 REAL_WORLD_CURRENCY_CODE = 'USD'
-USE_POINTS = True
+USE_POINTS = False
 
 ADMIN_USERNAME = 'admin'
 # for security, best to set admin password in an environment variable

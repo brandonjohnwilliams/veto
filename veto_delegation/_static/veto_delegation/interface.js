@@ -35,12 +35,35 @@ toggleRadioButtons();
 "4 widgets": ["$24", "$15", "$20", "$25", "$30", "$25", "$20"],
 "5 widgets": ["$28", "$12", "$15", "$20", "$25", "$30", "$25"],
 "6 widgets": ["$32", "$10", "$12", "$15", "$20", "$25", "$30"],
-"7 widgets": ["$36", "$9", "$10", "12", "$15", "$20", "$25"],
+"7 widgets": ["$36", "$9", "$10", "$12", "$15", "$20", "$25"],
 "8 widgets": ["$40", "$8", "$9", "$10", "$12", "$15", "$20"]
 };
+function swapColumnsIfNeeded() {
+    if (response !== 1) return;
+
+    const table = document.getElementById("payoffTable");
+    if (!table) return;
+
+    // Swap <thead> rows
+    const theadRows = table.tHead?.rows || [];
+    for (let row of theadRows) {
+        if (row.cells.length >= 3) {
+            row.insertBefore(row.cells[2], row.cells[1]);
+        }
+    }
+
+    // Swap <tbody> rows
+    const tbodyRows = table.tBodies[0]?.rows || [];
+    for (let row of tbodyRows) {
+        if (row.cells.length >= 3) {
+            row.insertBefore(row.cells[2], row.cells[1]);
+        }
+    }
+}
 
   // Function to update the Your Payoff column based on selectedX
 function updateYourPayoffColumn(selectedX) {
+    console.log("Running update your payoff column with ", selectedX)
     var yourPayoffColumnHeader = document.querySelector("#payoffTable th:nth-child(2)");
     var tableBody = document.getElementById("tableBody");
     var yourPayoffColumn = document.getElementById("selectedX");
@@ -57,6 +80,7 @@ function updateYourPayoffColumn(selectedX) {
 
         // Copy the corresponding Buyer Payoff column
         var buyerPayoffColumnIndex = selectedX + 1; // Buyer Payoff columns start from index 2
+        console.log("Buyer Payoff column: ", buyerPayoffColumnIndex)
         var tableRows = document.querySelectorAll("#tableBody tr");
 
         tableRows.forEach(function(row) {
@@ -102,8 +126,8 @@ function updateYourPayoffColumn(selectedX) {
 
 
 
-  // Get the table body element
-  var tbody = document.getElementById("tableBody");
+// Get the table body element
+var tbody = document.getElementById("tableBody");
 if (tableData && typeof tableData === "object" && tbody) {
     Object.keys(tableData).forEach(function(key) {
         var row = document.createElement("tr");
@@ -151,7 +175,8 @@ if (tableData && typeof tableData === "object" && tbody) {
 
 
 
-  updateYourPayoffColumn(selectedX); // Initial update
+updateYourPayoffColumn(selectedX); // Initial update
+// swapColumnsIfNeeded()
 
 
 
@@ -1144,7 +1169,7 @@ function shuffleArray(array) {
 function drawLabeledBalls(canvas, ballSpecs) {
     // Check if canvas exists and supports 2D context
     if (!canvas || !canvas.getContext) {
-        console.warn("Canvas element not found or unsupported.");
+        console.warn("Labeled balls canvas element not found or unsupported.");
         return;
     }
 

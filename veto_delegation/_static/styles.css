@@ -3,13 +3,14 @@
     grid-template-columns: 1fr 7fr; /* Adjust column widths as needed */
     gap: 0px; /* Adjust gap between columns as needed */
     margin-left: 80px;
-    margin-top: -20px;
+    margin-top: -40px;
 }
 
 .sub-container2 {
     display: grid;
     grid-template-columns: 1fr 1fr; /* Adjust column widths as needed */
     gap: 0px; /* Adjust gap between columns as needed */
+    margin-top: -30px;
 }
 
 /* Wrapper: Center contents horizontally */
@@ -106,7 +107,7 @@ p {
   margin-right: 20px;
       display: flex;
     justify-content: center;
-    border: 1px solid #ccc;
+    /*border: 1px solid #ccc;*/
   border-radius: 5px;
 }
 

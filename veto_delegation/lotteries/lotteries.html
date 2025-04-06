@@ -1,5 +1,5 @@
 {{ block title }}
-Lottery
+Choice Problem {{ player.round_number }}
 {{ endblock }}
 
 {{ block content }}
@@ -53,17 +53,23 @@ Lottery
           background: #bebeff;
         }
 
+        .faded-cell {
+  color: #999;
+  opacity: 0.4;
+}
+
+
         </style>
     </head>
 
 <div style="position: relative; width: fit-content; margin-left: 129px">
   <canvas id="canvasProb" width="800" height="400"></canvas>
   <div style="position: absolute; top: 50%; left: -50px; transform: rotate(-90deg) translateY(+10%) translateX(-50%); transform-origin: left center; font-family: Arial; font-size: 16px;">
-    <b>Percent chance to win amount</b>
+    <b>Percent chance to win prize</b>
   </div>
 </div>
 <div style="text-align: center; margin-top: 4px; font-family: Arial; transform: translateX(+5%); font-size: 16px;">
-  <b>Winning amount</b>
+  <b>Prize</b>
 </div>
 
 
@@ -86,7 +92,7 @@ Lottery
 </table>
 
 <input type="hidden" name="lottery" id="selectedLotteryInput" value="">
-
+<br>
 {{ formfield_errors 'lottery' }}
 {{ next_button }}
 
@@ -207,23 +213,36 @@ function drawProbs(showPlot, points, yticks) {
 
   points[showPlot].forEach((point, i) => {
     const ptLoc = xyTranslate(point.x, 0, gs);
-    ctx.fillStyle = "black";
+    const prizeLabel = `$${Object.keys(lotteries[showPlot].lot)[i]}`;
+
+    // Fade label if probability is 0
+    ctx.fillStyle = point.y === 0 ? "rgba(0, 0, 0, 0.3)" : "black";
     ctx.font = axisTextSize;
     ctx.textAlign = "center";
-    ctx.fillText(Object.keys(lotteries[showPlot].lot)[i], ptLoc.cx, ptLoc.cy + xTextoffset);
+    ctx.fillText(prizeLabel, ptLoc.cx, ptLoc.cy + xTextoffset);
   });
+
 
   ctx.setLineDash([]);
 
   points[showPlot].forEach(point => {
     const pt = xyTranslate(point.x, point.y, gs);
     ctx.save();
-    ctx.strokeStyle = "gray";
-    ctx.fillStyle = "blue";
+
+    if (point.y === 0) {
+      ctx.strokeStyle = "rgba(128, 128, 128, 0.3)";
+      ctx.fillStyle = "rgba(0, 0, 255, 0.3)";
+    } else {
+      ctx.strokeStyle = "gray";
+      ctx.fillStyle = "blue";
+    }
+
     drawLine(ctx, point.x, 0, point.x, point.y, gs);
     drawPoint(ctx, point.x, point.y, 7, gs);
+
     ctx.restore();
   });
+
 }
 
 let pointsx = {};
@@ -260,11 +279,16 @@ Object.entries(lotteries).forEach(([name, details]) => {
   btnCell.appendChild(btn);
   row.appendChild(btnCell);
 
-  [8, 12, 16, 20, 24, 28, 32, 36, 40].forEach(val => {
-    const td = document.createElement("td");
-    td.innerText = details.lot[val] + "%";
-    row.appendChild(td);
-  });
+[8, 12, 16, 20, 24, 28, 32, 36, 40].forEach(val => {
+  const td = document.createElement("td");
+  const prob = details.lot[val];
+  td.innerText = prob + "%";
+  if (prob === 0) {
+    td.classList.add("faded-cell");
+  }
+  row.appendChild(td);
+});
+
 
   tableBody.appendChild(row);
 });

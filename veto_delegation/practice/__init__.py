@@ -35,6 +35,10 @@ class Player(BasePlayer):
     quiz7 = models.IntegerField()
     quiz8 = models.IntegerField()
 
+    attempts1 = models.IntegerField(initial=1)
+    attempts2 = models.IntegerField(initial=1)
+    attempts3 = models.IntegerField(initial=1)
+
     single = models.IntegerField()
     chat = models.IntegerField()
 
@@ -88,7 +92,9 @@ class ProposalProbs(Page):
         solutions = dict(quiz1=5, quiz2=15)
 
         if values != solutions:
+            player.attempts1 = player.attempts1 + 1
             return "One or more answers were incorrect."
+
 
 class ProposalMenu(Page):
     form_model = 'player'
@@ -137,6 +143,7 @@ class ProposalQuestions(Page):
         solutions = dict(quiz3=0, quiz4=player.maxSlider)
 
         if values != solutions:
+            player.attempts2 = player.attempts2 + 1
             return "One or more answers were incorrect."
 
 class MinMaxQuestions(Page):
@@ -212,12 +219,13 @@ class MinMaxQuestions(Page):
                          quiz7=robotMin, quiz8=robotChoiceMin)
 
         if values != solutions:
+            player.attempts3 = player.attempts3 + 1
             return "One or more answers were incorrect."
 
 
 class WaitPage2(WaitPage):
     wait_for_all_groups = True
 
-    body_text = "Waiting for all participants to complete the practice. Once everyone is ready, we will begin the main experiment."
+    body_text = "Waiting for all participants to complete the comprehension questions. Once everyone is ready, we will begin the main experiment."
 
 page_sequence = [Introduction, ProposalProbs, ProposalMenu, ProposalQuestions, MinMaxQuestions, WaitPage2]

@@ -1,5 +1,5 @@
 {{ block title }}
-    Buyer's Choice
+    Round {{ player.round_number }} - Buyer's Choice
 {{ endblock }}
 
 {{ block content }}
@@ -96,9 +96,13 @@ tr.highlighted-row td:first-child .choice-button {
 
     <!-- Text -->
 
-    <p>In this example you, as the Buyer, have <b>ideal value X={{selectedX}}</b> which came from the type middle urn.</p>
+    <p>In this round you (as the Buyer) have <b>ideal value X={{selectedX}}</b> which was drawn from the {{ roundName }} urn. The Seller offered you the following option: </p>
+<ul>
+<li>Minimum amount: {{ group.minSlider }} widgets</li>
 
-
+<li>Maximum amount: {{ group.maxSlider }} widgets</li>
+</ul>
+<p>Choose how many widgets you would like to purchase:</p>
 
 
 <div style="display: flex; justify-content: center;">
@@ -123,8 +127,8 @@ tr.highlighted-row td:first-child .choice-button {
             <thead>
                 <tr>
                     <th class="tg-c3ow" rowspan="2" style="border: none;">Widgets Purchased</th>  <!-- Placeholder for buttons -->
-                    <th class="tg-c3ow" rowspan="2">Your Payoff <br> (X=<span id="selectedX">-</span>)</th>
-                    <th class="tg-c3ow" rowspan="2">Seller <br> Payoff</th>
+                    <th class="tg-c3ow" rowspan="2">Your Payoff <br> as Buyer (X=<span id="selectedX">-</span>)</th>
+                    <th class="tg-c3ow" rowspan="2">Seller (Matched <br> Participant) Payoff</th>
                     <th class="tg-c3ow" colspan="6">Buyer Payoff (by ideal quantity X)</th>
                 </tr>
                 <tr>
@@ -174,7 +178,10 @@ document.addEventListener("DOMContentLoaded", function () {
             const selectedValue = responseInput.value;
 
             if (!selectedValue) {
-                alert("Please make a selection before continuing.");
+                confirmMsg.textContent = "Please make a selection before continuing.";
+                confirmYes.style.display = "none";
+                confirmNo.textContent = "OK";
+                overlay.style.display = "flex";
                 return;
             }
 
@@ -182,8 +189,11 @@ document.addEventListener("DOMContentLoaded", function () {
             const widgetWord = selectedValue === "1" ? "widget" : "widgets";
             confirmMsg.textContent = `You have selected to buy ${selectedValue} ${widgetWord}. Confirm choice?`;
 
+            confirmYes.style.display = "inline-block";
+            confirmNo.textContent = "Cancel";
             overlay.style.display = "flex"; // Show the custom modal
         });
+
 
         confirmYes.addEventListener("click", function () {
             overlay.style.display = "none";

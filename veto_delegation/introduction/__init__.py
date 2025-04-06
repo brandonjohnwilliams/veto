@@ -217,13 +217,10 @@ class PayoffsRecap(Page):
 page_sequence = [
     LandingPage, Introduction, PartOne, PayoffsSeller, DeterminingX, RoundTiming,
 
-    # Start here for no instructions on screen
     ExampleDraws,
     ChatOnly,
-    # SellersChoice,
     SellerView,
     SellerWait,
-    # BuyersChoice,
     BuyersView,
     BuyerWait,
     Results,

@@ -1,6 +1,6 @@
 
 {{ block title }}
-    Examples: Different Draws of X
+    Examples: Different Draws of the Buyer's Ideal Quantity X
 {{ endblock }}
 
 
@@ -350,6 +350,7 @@ function setRadioX(value) {
   // Redraw canvases with updated data
   drawLabeledBallsWithHighlight(canvas2, ballData, selectedX);
   drawLabeledBalls(canvas1, ballData);
+  drawSelectedX();
 }
 
 function drawSelectedX() {

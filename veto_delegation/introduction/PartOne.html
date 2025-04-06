@@ -1,5 +1,5 @@
 {{ block title }}
-Part One: Main Task
+Part One: Summary of the Main Task
 {{ endblock }}
 
 {{ block content }}
@@ -8,13 +8,13 @@ Part One: Main Task
     </head>
 
 <!-- Text -->
-    <p>Part one consists of 15 rounds, where one of the 15 rounds will be randomly selected for payment. In each round, you will either be a <b>Buyer</b> or a <b>Seller</b></p>
+    <p>Part one consists of 15 rounds, where one of the 15 rounds will be randomly selected for payment. In each round, you will either be a <b>Buyer</b> or a <b>Seller</b>.</p>
     <ul>
         <li>If you are the <b>Seller</b>, your job is to
 
             <!--   This determines which text to show based on the treatment, change this if the method of selecting treatment changes    -->
             {{ if single == 0 }}
-                chose a menu of options for the Buyer, minimum and maximum number of widgets,
+                choose a menu of options for the Buyer, a minimum and maximum number of widgets,
             {{else}}
                 choose the number of widgets
             {{endif}}
@@ -27,7 +27,7 @@ Part One: Main Task
                 to decide if you want to purchase the offered number of widgets
             {{endif}}
             or to purchase zero widgets.
-            Regardless of the option that the Seller offers to the Buyer, the Buyer always has the option to “walk away” and purchase zero widgets.</li>
+            Regardless of the option that the Seller offers to the Buyer, the Buyer always has the option to walk away and purchase zero widgets.</li>
         <li>
             Buyers have an ideal number of widgets <b>X</b> that they want to purchase, drawn at random from an urn.
             Buyers will know the value of X before they make their decisions; however, Sellers will not know the Buyer’s ideal quantity X, only the urn it was drawn from.
