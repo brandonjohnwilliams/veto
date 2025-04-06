@@ -10,8 +10,8 @@ Payment
         <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
     </head>
 
-<p>You are participant number {{ player.participant.label }}. Please write this number down on the green slip.</p>
-<p>Your total earnings today: ${{ TotalPay }}. Please write down your total earnings on your receipt. Here is a summary of your earnings</p>
+<p>You are <b>participant number {{ player.participant.label }}</b>. Please write this number down on the green slip.</p>
+<p><b>Your total earnings today: ${{ TotalPay }}.</b> Please write down your total earnings on your receipt. Here is a summary of your earnings</p>
 
 <ul>
     <li>You earned $8 from the show-up fee.</li>
@@ -26,7 +26,7 @@ Payment
     {% elif PartFourGive %}
         Four, where you chose to allocate ${{ Bonus }} to yourself.
     {% elif PartFourReceive %}
-        Four, where another participant in the room chose to allocate ${{ Bonus }} to you.
+        Four, where another participant in the room chose to allocate ${{ Bonus }} to you as beneficiary.
     {% endif %}
 {% else %}
     You were not one of the participants randomly selected for bonus payments in Parts Two, Three or Four.
@@ -35,7 +35,7 @@ Payment
 </li>
 </ul>
 
-<p>Once you have recorded your earnings, please click next. This ensures the privacy of all participants and their earnings.</p>
+<p><b>You must record your earnings of ${{ TotalPay }} on your receipt to ensure timely payment.</b> Once you have recorded your earnings, please click next. This ensures the privacy of all participants and their earnings.</p>
 
 <button class="o-tree-btn-next btn btn-primary" id="Next" style="visibility:hidden;">Next</button>
 

@@ -102,11 +102,18 @@ tr.highlighted-row td:first-child .choice-button {
     When you were acting as the Seller in this example, you offered the following options:
 </p>
 
-<ul>
-<li>Minimum amount: {{ player.minSlider }} widgets</li>
 
-<li>Maximum amount: {{ player.maxSlider }} widgets</li>
+{{if player.single == 1}}
+<ul>
+    <li>Seller's offer: {{ player.minSlider }}</li>
 </ul>
+{{else}}
+<ul>
+<li>Seller's minimum offer: {{ player.minSlider }} widgets</li>
+
+<li>Seller's maximum offer: {{ player.maxSlider }} widgets</li>
+</ul>
+{{endif}}
 <p>Please make your example choice below:</p>
 
 

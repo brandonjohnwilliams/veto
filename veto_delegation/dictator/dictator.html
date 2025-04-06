@@ -46,6 +46,9 @@ Part Four - Round {{ player.round_number }}
     border-color: #0000ff;
     background-color: #bebeff;
   }
+  .otree-form-errors {
+    display: none
+  }
 </style>
 
 Please choose the allocation that you would prefer. If you are selected for payment, than one of your choices will be implemented and we will allocate the amount you choose between yourself and another participant in the room.
@@ -56,13 +59,13 @@ Please choose the allocation that you would prefer. If you are selected for paym
     <tr>
       <th></th>
       <th>Your Payoff</th>
-      <th>Other Person Payoff</th>
+      <th>Other Participant Payoff</th>
     </tr>
   </thead>
   <tbody id="dictatorTableBody"></tbody>
 </table>
 
-<input type="hidden" name="dictator_choice" id="selectedDictatorInput" value="1">
+<input type="hidden" name="dictator_choice" id="selectedDictatorInput">
 
 <br><br>
 {{ formfield_errors 'dictator_choice' }}

@@ -38,6 +38,9 @@ class Group(BaseGroup):
     roundType = models.IntegerField()
     roundName = models.StringField()
 
+    # Distribution slider on screen submit
+    thetaRange = models.IntegerField(blank=True)
+
 
 class Player(BasePlayer):
     single = models.IntegerField()
@@ -256,7 +259,7 @@ class Chat(Page):
 
 class Proposal(Page):
     form_model = 'group'
-    form_fields = ['minSlider', 'maxSlider']
+    form_fields = ['minSlider', 'maxSlider', 'thetaRange']
 
     @staticmethod
     def is_displayed(player):

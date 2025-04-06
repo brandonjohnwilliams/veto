@@ -5,6 +5,7 @@ let selectedX = js_vars.selectedX;
 let from = Number(js_vars.fromM);
 let to = Number(js_vars.toM)
 const response = js_vars.response
+const single = js_vars.single;
 
 // Function to hide or show radio buttons based on the value of `from`
 
@@ -191,8 +192,12 @@ function controlFromSlider(fromSlider, toSlider) {
     }
 
     fromSlider.value = from;
+    if (single === 1) {
+        fromValueDisplay.textContent = "Value: " + from;
+    } else {
+        fromValueDisplay.textContent = "Min: " + from;
+    }
 
-    fromValueDisplay.textContent = "Min: " + from;
     toValueDisplay.textContent = "Max: " + to;
 
     fillSlider(fromSlider, toSlider, '#C6C6C6', '#25daa5', toSlider);
@@ -221,8 +226,11 @@ function controlToSlider(fromSlider, toSlider) {
     }
 
     toSlider.value = to;
-
-    fromValueDisplay.textContent = "Min: " + from;
+    if (single === 1) {
+        fromValueDisplay.textContent = "Value: " + from;
+    } else {
+        fromValueDisplay.textContent = "Min: " + from;
+    }
     toValueDisplay.textContent = "Max: " + to;
 
     fillSlider(fromSlider, toSlider, '#C6C6C6', '#25daa5', toSlider);
@@ -1082,12 +1090,22 @@ if (response === 1) {
 
 updateTableOpacity(from,to)
 
-const single = js_vars.single;
 
 function updateSliders() {
-    if (single === 1) {
-        // Fully hide fromSlider and remove it from pointer interactions
-        fromSlider.disabled = true;
+    if (typeof single !== "undefined" && single === 1) {
+        const fromSlider = document.getElementById("fromSlider");
+        const toSlider = document.getElementById("toSlider");
+        const fromValueDisplay = document.getElementById("fromValue");
+        const toValueDisplay = document.getElementById("toValue");
+
+        // Check for essential elements before proceeding
+        if (!fromSlider || !toSlider || !fromValueDisplay) {
+            console.warn("Slider elements missing. updateSliders() skipped.");
+            return;
+        }
+
+        // Hide fromSlider
+        fromSlider.readOnly = true;
         fromSlider.style.opacity = "0";
         fromSlider.style.pointerEvents = "none";
         fromSlider.style.visibility = "hidden";
@@ -1096,27 +1114,35 @@ function updateSliders() {
         fromSlider.style.position = "absolute";
         fromSlider.style.zIndex = "-1";
 
-        toValueDisplay.style.display = "none"; // Hide max value label
+        // Hide label if it exists
+        if (toValueDisplay) {
+            toValueDisplay.style.display = "none";
+        }
 
-        console.log("single")
+        console.log("single");
+        fromSlider.value = toSlider.value = 8;
+        fromValueDisplay.textContent = "Value: 8";
 
-        updateTableOpacity(8, 8);
+        if (typeof updateTableOpacity === "function") {
+            updateTableOpacity(8, 8);
+        }
 
-        // Ensure toSlider moves alone, and fromSlider follows it
         toSlider.oninput = function () {
             const to = parseInt(toSlider.value, 10);
-            fromSlider.value = to; // Sync fromSlider with toSlider
+            fromSlider.value = to;
             fromValueDisplay.textContent = "Value: " + to;
 
-            // Ensure the slider bar is filled correctly
-            fillSlider(fromSlider, toSlider, '#C6C6C6', '#25daa5', toSlider);
+            if (typeof fillSlider === "function") {
+                fillSlider(fromSlider, toSlider, '#C6C6C6', '#25daa5', toSlider);
+            }
 
-            // Call updateTableOpacity with from = to
-            updateTableOpacity(to, to);
+            if (typeof updateTableOpacity === "function") {
+                updateTableOpacity(to, to);
+            }
         };
-
     }
 }
+
 
 // Call function on page load
 updateSliders();
@@ -1388,7 +1414,10 @@ const canvas2 = document.getElementById('ballCanvas2');
 drawLabeledBallsWithHighlight(canvas2, ballData, selectedX);  // randomly highlights one "3" ball
 
 
-
+function zoom() {
+    document.body.style.zoom = "100%"
+}
+zoom()
 
 
 

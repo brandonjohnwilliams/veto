@@ -97,11 +97,17 @@ tr.highlighted-row td:first-child .choice-button {
     <!-- Text -->
 
     <p>In this round you (as the Buyer) have <b>ideal value X={{selectedX}}</b> which was drawn from the {{ roundName }} urn. The Seller offered you the following option: </p>
+{{ if player.single == 1 }}
 <ul>
-<li>Minimum amount: {{ group.minSlider }} widgets</li>
-
-<li>Maximum amount: {{ group.maxSlider }} widgets</li>
+    <li>Seller's offer: {{ group.minSlider }} widgets</li>
 </ul>
+{{ else }}
+<ul>
+<li>Seller's minimum offer: {{ group.minSlider }} widgets</li>
+
+<li>Seller's maximum offer: {{ group.maxSlider }} widgets</li>
+</ul>
+{{ endif }}
 <p>Choose how many widgets you would like to purchase:</p>
 
 

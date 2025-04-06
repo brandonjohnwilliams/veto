@@ -100,15 +100,21 @@ tr.highlighted-row td:first-child .choice-button {
 
 
 <p>The Buyer will have an ideal number of widgets X, which came from the <b>{{ roundName }}</b> urn type.
-    You offered you the following menu of options:
+    You offered you the following
+    {{ if player.single == 1}} option: {{ else }}menu of options:{{endif}}
 </p>
 
+{{ if player.single == 1}}
 <ul>
-<li>Minimum amount: {{ group.minSlider }} widgets</li>
-
-<li>Maximum amount: {{ group.maxSlider }} widgets</li>
+    <li>Seller's offer: {{ group.minSlider}}</li>
 </ul>
+{{ else }}
+<ul>
+<li>Seller's minimum offer: {{ group.minSlider }} widgets</li>
 
+<li>Seller's maximum offer: {{ group.maxSlider }} widgets</li>
+</ul>
+{{ endif }}
 </p>
 <br>
     <div class="wrapper">

@@ -104,7 +104,9 @@ class ExampleDraws(Page):
     timeout_seconds = 60
 
 class ChatOnly(Page):
-    pass
+    @staticmethod
+    def is_displayed(player):
+        return player.session.config['chat'] == 1
 
 class SellersChoice(Page):
     @staticmethod
@@ -148,7 +150,7 @@ class BuyersView(Page):
     @staticmethod
     def js_vars(player):
         return dict(
-            selectedX=2, # Selecting 0 removes the column
+            selectedX=3, # Selecting 0 removes the column
             fromM=player.minSlider,
             toM=player.maxSlider,
             round_type=2,
@@ -158,7 +160,7 @@ class BuyersView(Page):
     @staticmethod
     def vars_for_template(player):
         return dict(
-            selectedX=2, # Selecting 0 removes the column
+            selectedX=3, # Selecting 0 removes the column
             fromM=player.minSlider,
             toM=player.maxSlider,
         )

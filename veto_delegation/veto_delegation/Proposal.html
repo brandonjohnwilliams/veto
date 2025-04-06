@@ -42,7 +42,7 @@
 </style>
 
     </head>
-
+<div id="pageWrapper">
     <div class="sub-container2">
         <div class="dice-box">
             <p class="centered-text">
@@ -67,7 +67,9 @@
             <canvas id="probCanvas" width="550" height="325"></canvas>
 
             <div class="theta_control">
-                <span class="thetaOut" id="thetaOut"></span><input type="range" min="1" max="6" value="1" class="slider" id="thetaRange">
+                <span class="thetaOut" id="thetaOut"></span><input type="range" value="1" min="1" max="6" class="slider" id="thetaRange"><!-- Hidden form field that gets submitted -->
+                <input type="hidden" name="thetaRange" id="thetaRangeValue">
+
             </div>
 
         </div>
@@ -127,7 +129,10 @@
 <br>
 {{ formfield_errors 'minSlider' }}
 <button type="button" id="customNextBtn" class="btn btn-primary">Next</button>
-
+<div id="timeoutMessage" style="display: none; text-align: center; margin-top: 20px; color: red; font-weight: bold; font-size: 18px;">
+    Please choose your offer.
+</div>
+</div>
 <div id="customConfirmOverlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background-color:rgba(0,0,0,0.5); z-index:1000; justify-content:center; align-items:center;">
     <div style="background:white; padding:30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.3); max-width:400px; text-align:center;">
         <p id="customConfirmMessage" style="margin-bottom:20px;"></p>
@@ -177,11 +182,23 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-// setTimeout(function() {
-//     document.getElementById("timeoutMessage").style.display = "block";
-//     document.getElementById("pageWrapper").style.outline = "2px solid red";
-//     document.getElementById("pageWrapper").style.outlineOffset = "100px";
-// }, 60000);  // or 3000 for testing
+document.addEventListener("DOMContentLoaded", function () {
+    const realInput = document.getElementById("thetaRangeValue");
+    const visualSlider = document.getElementById("thetaRange");
+
+    let moved = false;
+
+    visualSlider.addEventListener("input", function () {
+        realInput.value = visualSlider.value;
+        moved = true;
+    });
+});
+
+setTimeout(function() {
+    document.getElementById("timeoutMessage").style.display = "block";
+    document.getElementById("pageWrapper").style.outline = "2px solid red";
+    document.getElementById("pageWrapper").style.outlineOffset = "25px";
+}, 60000);  // or 3000 for testing
 
 </script>
 
