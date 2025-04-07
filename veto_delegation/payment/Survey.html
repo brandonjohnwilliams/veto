@@ -1,0 +1,39 @@
+
+
+{% block content %}
+    <br>
+    <h3> Questionnaire </h3>
+<p>Before payment, please take a moment to fill out the following questionnaire. </p>
+
+<div class="wrapper">
+    {% formfield player.age %}
+    {% formfield player.gender %}
+    {% formfield player.race %}
+    {% formfield player.language %}
+    {% formfield player.year %}
+    {% formfield player.major %}
+{{ next_button }}
+</div>
+
+<p></p>
+
+
+{% endblock %}
+
+
+{% block styles %}
+
+<style type="text/css">
+
+    div.wrapper {
+        border-style: ridge;
+        text-align: left;
+        width: 80%;
+        margin: auto;
+        padding: 10px 75px 10px;
+         top: 0;
+    }
+
+</style>
+
+{% endblock %}

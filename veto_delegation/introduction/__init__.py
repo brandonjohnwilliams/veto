@@ -101,7 +101,7 @@ class RoundTiming(Page):
         )
 
 class ExampleDraws(Page):
-    timeout_seconds = 60
+    timeout_seconds = 80
 
 class ChatOnly(Page):
     @staticmethod

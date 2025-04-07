@@ -36,10 +36,39 @@ class Player(BasePlayer):
     PartFourGive = models.IntegerField()
     PartFourReceive = models.IntegerField()
 
+    # survey variables
+
+    age = models.IntegerField(label='What is your age?', min=0, max=100)
+    gender = models.IntegerField(
+        choices=[[0, 'Male'], [1, 'Female'], [2, 'Other']],
+        label='Please select the gender you identify as',
+        widget=widgets.RadioSelect,
+
+    )
+    year = models.IntegerField(
+        choices=[[0, 'Freshman'], [1, 'Sophomore'], [2, 'Junior'], [3, 'Senior'], [4, 'Graduate Student']],
+        label='Please select your year in college',
+        widget=widgets.RadioSelect,
+
+    )
+    major = models.StringField(
+        label='What is your major?'
+    )
+    race = models.IntegerField(label="What is your race/ethnicity?", widget=widgets.RadioSelectHorizontal,
+                               choices=[[0, 'Asian'], [1, 'Black'], [2, 'Caucasian'], [3, 'Hispanic'], [4, 'Other']],
+                               )
+    language = models.IntegerField(label='What is your native language?', widget=widgets.RadioSelectHorizontal,
+                                   choices=[[0, 'English'], [1, 'Other']],
+                                   )
+
 def creating_session(subsession):
     pass
 
 # PAGES
+class Survey(Page):
+    form_model = 'player'
+    form_fields = ['race', 'gender', 'age', 'language', 'year', 'major']
+
 class Instructions(Page):
     @staticmethod
     def before_next_page(player, timeout_happened):
@@ -125,7 +154,7 @@ class Payment(Page):
         )
 
 
-class Conclusion(WaitPage):
+class Conclusion(Page):
     pass
 
-page_sequence = [Instructions, Payment, Conclusion]
+page_sequence = [Survey, Instructions, Payment, Conclusion]
