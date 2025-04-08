@@ -30,6 +30,8 @@ class Player(BasePlayer):
 
     robotChoice = models.IntegerField()  # numerical response of the robot buyer
 
+    single = models.IntegerField()
+
     # dice rolls
     vetoer_bias = models.IntegerField()
     drawLow = models.IntegerField()
@@ -141,6 +143,9 @@ def creating_session(subsession):
             player.roundType = 3
             player.roundName = "High"
 
+        # Step 6: Confirm menu or take-it-or-leave-it
+        player.single = 1 if player.subsession.session.config['take_it_or_leave_it'] else 0
+
 # PAGES
 class Intro(Page):
     @staticmethod
@@ -160,7 +165,7 @@ class robot(Page):
     def js_vars(player):
         return dict(
             round_type=player.roundType,
-            single_treat=C.single,
+            single=player.single,
             fromM=1,
             toM=8,
             roundType=player.roundType,
