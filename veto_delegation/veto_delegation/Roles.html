@@ -11,7 +11,7 @@ Round {{player.round_number}} - Your Role: {{player.role}}
 {{ if player.id_in_group == 1}}
 
 <p>
-    You are the Seller. You will choose what options for the number of Widgets that the Buyer can choose from.
+    You are the Seller. You will propose what {{ if player.single == 1}} option{{ else }}menu of options{{endif}} for the number of Widgets that the Buyer can choose to buy.
     Remember, you cannot remove 0 Widgets as an option. The Buyer can always walk away and purchase zero Widgets.
 </p>
 <p>The Buyer's ideal value (X) will come from the <b>{{ roundName }}</b> urn, which contains these possible ideal quantities:</p>
@@ -28,7 +28,7 @@ Round {{player.round_number}} - Your Role: {{player.role}}
 {{ else }}
 
 <p>
-    You are the Buyer. First, the Seller will choose what options for the number of widgets that you can choose from.
+    You are the Buyer. First, the Seller will propose a {{ if player.single == 1}} number of {{ else }}menu of options for the number of {{endif}}  widgets that you can choose to buy.
     Remember, the Seller cannot remove 0 Widgets as an option. You can always walk away.
 </p>
 <p>You have <b>ideal value X={{selectedX}}</b> which came from the <b>{{ roundName }}</b> urn.</p>

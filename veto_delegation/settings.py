@@ -15,7 +15,7 @@ SESSION_CONFIGS = [
          ],
 
          num_demo_participants=20,
-         take_it_or_leave_it=True,
+         take_it_or_leave_it=False,
          chat=False,
          use_browser_bots=False,
          Session=1,
