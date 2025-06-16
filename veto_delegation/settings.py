@@ -5,8 +5,8 @@ SESSION_CONFIGS = [
          name='veto_delegation',
          display_name="Standard Treatment",
          app_sequence=[
-             'introduction',
-             'practice',
+             # 'introduction',
+             # 'practice',
              'veto_delegation',
              'robot',
              'lotteries',
@@ -16,7 +16,7 @@ SESSION_CONFIGS = [
 
          num_demo_participants=20,
          take_it_or_leave_it=False,
-         chat=False,
+         chat=True,
          use_browser_bots=False,
          Session=1,
          doc="""Set the session number to the total number in the treatment""",
