@@ -2,7 +2,7 @@
 title: "Delegation_Analysis"
 author: "Brandon Williams"
 date: "2025-07-08"
-output: html_document
+output: pdf_document
 ---
 
 # Access packages and data
@@ -27,7 +27,9 @@ cran_packages <- c(
   "ggplot2", 
   "svglite", 
   "AER",
-  "estimatr"
+  "estimatr",
+  "ggrepel",
+  "modelsummary"
 )
 
 # Load all packages
@@ -84,6 +86,17 @@ subject_counts <- data %>%
   summarise(n_subjects = n(), .groups = 'drop')
 
 as.data.frame(subject_counts)
+```
+
+Average choices
+
+```{r}
+avg_data <- data %>% 
+  group_by(delegation, chat, urn) %>% 
+  summarise(
+    avg_choice = mean(minX)
+  )
+avg_data
 ```
 
 Plots (No Chat)
@@ -245,10 +258,39 @@ ggplot(ineff_long, aes(x = interaction(Mech, Comm), y = Rate, fill = Outcome)) +
   theme_classic(base_size = 13) +
   scale_x_discrete(labels = function(x) gsub("\\.", "\n", x))
 ```
+Breakdowns 
+
+```{r}
+breakdown_data <- data %>%
+  filter(role == "Buyer", t > 10) %>%
+  group_by(delegation, chat, urn) %>%
+  summarise(
+    n = n(),
+    breakdowns = sum(y == 0),
+    breakdowns_rate = mean(y == 0),
+    breakdowns_se = sqrt(breakdowns_rate * (1 - breakdowns_rate) / n),
+    inefficiencies = sum(y < theta, na.rm = TRUE),
+    inefficiency_rate = mean(y < theta, na.rm = TRUE),
+    .groups = "drop"
+  )
+breakdown_data$urn <- factor(breakdown_data$urn, levels = c("High", "Middle", "Low"))
+
+breakdown_data$Mech <- ifelse(breakdown_data$delegation, "Delegation", "TIOLI")
+breakdown_data$Comm <- ifelse(breakdown_data$chat, "Chat", "NoChat")
+
+breakdown_table <- pivot_wider(breakdown_data[, c("Mech","Comm",'urn','breakdowns_rate')], names_from = urn, values_from = breakdowns_rate)
+
+breakdown_table[, c("Mech","Comm",'Low','Middle','High')]
+```
 
 Efficiency by urn x mechanism
 
 ```{r}
+
+ineff_table<- pivot_wider(breakdown_data[, c("Mech","Comm",'urn','inefficiency_rate')], names_from = urn, values_from = inefficiency_rate)
+
+ineff_table[, c("Mech","Comm",'Low','Middle','High')]
+
 # Reshape the inefficiency data to long format
 ineff_long <- ineff_table[, c("Mech", "Comm", "Low", "Middle", "High")] %>%
   pivot_longer(cols = c("Low", "Middle", "High"),
@@ -349,35 +391,382 @@ Lottery data
 ```{r}
 # Average lottery selection by 
 
-lottery %>%
-  group_by(lotteryType) %>%
+lottery_avg <- lottery %>%
+  group_by(delegation, chat, urn) %>%
   summarise(
-    avgMinX = mean(lotteryMinX, na.rm = TRUE),
-    neutralMinX = mean(neutralMinX)
+    avgLotteryX = mean(lotteryMinX[ifelse(type == "Delegation", delegation, !delegation)], na.rm = TRUE),
+    neutralMinX = mean(neutralMinX),
+    .groups = "drop"
   )
-
+lottery_avg
 
 ```
+Robot optimization data
 
 ```{r}
 
-robot %>%
-  group_by(urn, delegation) %>%
+robot_avg <- robot %>%
+  group_by(urn, chat, delegation) %>%
   summarise(
-    avgMinX = mean(minX, na.rm = TRUE),
+    avgRobotX = mean(minX, na.rm = TRUE),
   )
-
+robot_avg
 
 ```
 
+Other regarding choices
+
 ```{r}
 
-dictator %>%
-  group_by(type) %>%
+dictator_avg <- dictator %>%
+  group_by(delegation, chat, urn) %>%
   summarise(
-    avgMinX = mean(action, na.rm = TRUE),
+    avgDictatorX = mean(action, na.rm = TRUE),
     selfish = mean(maxAction)
   )
 
+dictator_avg
+
 ```
+
+Comparison of averages 
+
+```{r}
+merged_data <- avg_data %>%
+  left_join(robot_avg %>% select(delegation, chat, urn, avgRobotX), 
+            by = c("delegation", "chat", "urn")) %>%
+  left_join(lottery_avg %>% select(delegation, chat, urn, avgLotteryX), 
+            by = c("delegation", "chat", "urn")) %>%
+  left_join(dictator_avg %>% select(delegation, chat, urn, avgDictatorX), 
+            by = c("delegation", "chat", "urn")) %>%
+  mutate(
+    urn = factor(urn, levels = c("Low", "Middle", "High"))
+  ) %>%
+  arrange(delegation, chat, urn)
+merged_data
+
+```
+
+```{r}
+# 1. Filter chat == FALSE
+filtered_data <- merged_data %>%
+  filter(chat == FALSE)
+
+# 2. Reshape to long format
+long_data <- filtered_data %>%
+  pivot_longer(
+    cols = c(avg_choice, avgRobotX, avgLotteryX, avgDictatorX),
+    names_to = "source",
+    values_to = "value"
+  ) %>%
+  mutate(
+    source = factor(source, levels = c("avg_choice", "avgRobotX", "avgLotteryX", "avgDictatorX"))
+  )
+
+# 3. Plot with facet for delegation
+ggplot(long_data, aes(x = source, y = value, group = urn, color = urn)) +
+  geom_line(size = 1) +
+  geom_point(size = 2) +
+  facet_wrap(~ delegation, labeller = label_both) +
+  labs(
+    title = "Average (Minimum) Offers (No chat only)",
+    x = "Source",
+    y = "(Minimum) Offer"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+Regression analysis of offers
+
+```{r results='asis', message=FALSE, warning=FALSE}
+
+
+
+seller <- subset(data, role == "Seller")
+seller$dist <- as.factor(seller$urn)
+
+lm_minX <- lm_robust(minX ~ dist + delegation * chat, data = seller, cluster = i)
+
+modelsummary(lm_minX, stars = TRUE)
+
+# LATEX output 
+# modelsummary(lm_minX, stars = TRUE, output = "latex")
+
+# Obsididan ouput
+
+# Create human-readable names
+pretty_names <- c(
+  "(Intercept)" = "Intercept",
+  "distLow" = "Low Urn",
+  "distMiddle" = "Middle Urn",
+  "delegationTRUE" = "Delegation",
+  "chatTRUE" = "Chat",
+  "delegationTRUE:chatTRUE" = "Delegation × Chat"
+)
+
+# Tidy + stars + label mapping
+tidy_lm <- tidy(lm_minX) %>%
+  mutate(
+    stars = case_when(
+      p.value < 0.001 ~ "***",
+      p.value < 0.01  ~ "**",
+      p.value < 0.05  ~ "*",
+      p.value < 0.1   ~ "+",
+      TRUE            ~ ""
+    ),
+    estimate_star = paste0(round(estimate, 3), stars),
+    std.error = round(std.error, 3),
+    p.value = signif(p.value, 3),
+    term = pretty_names[term]  # rename terms
+  ) %>%
+  select(term, estimate_star, std.error, p.value)
+
+# Print table to Obsidian-compatible markdown
+kable(
+  tidy_lm,
+  format = "markdown",
+  col.names = c("Term", "Estimate", "Std. Error", "p-value")
+)
+
+
+
+
+```
+
+
+Include full interaction
+
+```{r results='asis', message=FALSE, warning=FALSE}
+
+seller <- subset(data, role == "Seller")
+seller$dist <- as.factor(seller$urn)
+
+lm_minX_full <- lm_robust(minX ~ dist * delegation * chat, data = seller, cluster = i)
+
+modelsummary(lm_minX_full, stars = TRUE)
+
+# LATEX output 
+# modelsummary(lm_minX, stars = TRUE, output = "latex")
+
+# Obsididan ouput
+
+# Create human-readable names
+pretty_names <- c(
+  "(Intercept)" = "Intercept",
+  "distLow" = "Low Urn",
+  "distMiddle" = "Middle Urn",
+  "delegationTRUE" = "Delegation",
+  "chatTRUE" = "Chat",
+  "distLow:delegationTRUE" = "Low Urn x Delegation",
+  "distMiddle:delegationTRUE" = "Middle Urn x Delegation",
+  "distLow:chatTRUE" = "Low Urn x Chat",
+  "distMiddle:chatTRUE" = "Middle Urn x Chat",
+  "delegationTRUE:chatTRUE" = "Delegation × Chat",
+  "distLow:delegationTRUE:chatTRUE" = "Low Urn x Delegation × Chat",
+  "distMiddle:delegationTRUE:chatTRUE" = "Middle Urn x Delegation × Chat"
+)
+
+# Tidy + stars + label mapping
+tidy_lm <- tidy(lm_minX_full) %>%
+  mutate(
+    stars = case_when(
+      p.value < 0.001 ~ "***",
+      p.value < 0.01  ~ "**",
+      p.value < 0.05  ~ "*",
+      p.value < 0.1   ~ "+",
+      TRUE            ~ ""
+    ),
+    estimate_star = paste0(round(estimate, 3), stars),
+    std.error = round(std.error, 3),
+    p.value = signif(p.value, 3),
+    term = pretty_names[term]  # rename terms
+  ) %>%
+  select(term, estimate_star, std.error, p.value)
+
+# Print table to Obsidian-compatible markdown
+kable(
+  tidy_lm,
+  format = "markdown",
+  col.names = c("Term", "Estimate", "Std. Error", "p-value")
+)
+
+
+
+
+```
+
+
+Fitted values
+
+```{r}
+
+new_data <- expand.grid(
+  dist = factor(c("Low", "Middle", "High"), levels = levels(seller$dist)),
+  delegation = c(TRUE, FALSE),
+  chat = c(TRUE, FALSE)
+)
+
+preds <- predict(lm_minX_full, newdata = new_data, se.fit = TRUE)
+
+new_data <- new_data %>%
+  mutate(
+    fit = preds$fit,
+    se = preds$se.fit,
+    lower = fit - 1.96 * se,
+    upper = fit + 1.96 * se
+  )
+
+new_data
+
+new_data$dist <- factor(new_data$dist, levels = c("Low", "Middle", "High"))
+
+ggplot(new_data, aes(x = dist, y = fit, color = as.factor(delegation), group = delegation)) +
+  geom_point(size = 3) +
+  geom_line() +
+  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.2) +
+  facet_wrap(~ chat, labeller = label_both) +
+  labs(
+    x = "Urn Type",
+    y = "Predicted minX",
+    color = "Delegation",
+    title = "Predicted minX by Urn and Delegation (Faceted by Chat)"
+  ) +
+  theme_minimal()
+```
+
+Regression on outcome choices
+
+```{r results='asis', message=FALSE, warning=FALSE}
+
+lm_y <- lm_robust(y ~ dist + delegation * chat, data = seller, cluster = i)
+
+modelsummary(lm_y, stars = TRUE)
+
+# LATEX output 
+# modelsummary(lm_y, stars = TRUE, output = "latex")
+
+# Obsididan ouput
+
+# Create human-readable names
+pretty_names <- c(
+  "(Intercept)" = "Intercept",
+  "distLow" = "Low Urn",
+  "distMiddle" = "Middle Urn",
+  "delegationTRUE" = "Delegation",
+  "chatTRUE" = "Chat",
+  "delegationTRUE:chatTRUE" = "Delegation × Chat"
+)
+
+# Tidy + stars + label mapping
+tidy_lm <- tidy(lm_y) %>%
+  mutate(
+    stars = case_when(
+      p.value < 0.001 ~ "***",
+      p.value < 0.01  ~ "**",
+      p.value < 0.05  ~ "*",
+      p.value < 0.1   ~ "+",
+      TRUE            ~ ""
+    ),
+    estimate_star = paste0(round(estimate, 3), stars),
+    std.error = round(std.error, 3),
+    p.value = signif(p.value, 3),
+    term = pretty_names[term]  # rename terms
+  ) %>%
+  select(term, estimate_star, std.error, p.value)
+
+# Print table to Obsidian-compatible markdown
+kable(
+  tidy_lm,
+  format = "markdown",
+  col.names = c("Term", "Estimate", "Std. Error", "p-value")
+)
+
+
+
+
+```
+See who optimizes based on their lottery answer
+
+```{r}
+
+# Create two different data sets, one for each delegation treatment
+
+robot_del <- robot %>% 
+  filter(delegation == TRUE) %>% 
+  select(i, urn, minX) %>%
+  rename(robotX = minX)
+robot_tioli <- robot %>% 
+  filter(delegation == FALSE) %>% 
+  select(i, urn, minX) %>%
+  rename(robotX = minX)
+
+# Split the pool of lottery choices by delegation type
+# (this will have people from both delegation treatments)
+
+lottery_del <- lottery %>% 
+  filter(type == "Delegation") %>%
+  select(i, lotteryMinX, urn)
+  
+lottery_tioli <- lottery %>% 
+  filter(type == "TIOLI") %>%
+  select(i, lotteryMinX, urn)
+
+
+# Join (confirmed this matches the subject count times three observations each)
+
+join_del <- inner_join(lottery_del, robot_del, by = c("i", "urn"))
+join_tioli <- inner_join(lottery_tioli, robot_tioli, by = c("i", "urn"))
+
+# How many match their risk preferences?
+
+join_del <- join_del %>%
+  mutate(
+    diff = robotX - lotteryMinX,
+    match = robotX == lotteryMinX)
+
+join_tioli <- join_tioli %>%
+  mutate(
+    diff = robotX - lotteryMinX,
+    match = robotX == lotteryMinX)
+
+robot_vs_lottery <- bind_rows(
+  join_del %>% mutate(type = "Delegation"),
+  join_tioli %>% mutate(type = "TIOLI")
+)
+
+
+ggplot(robot_vs_lottery, aes(x = diff, fill = type)) +
+  geom_histogram(
+    aes(y = after_stat(count / sum(count))),
+    binwidth = 1,
+    position = "dodge",
+    color = "black"
+  ) +
+  labs(
+    title = "Proportion of Differences Between robotX and lotteryMinX",
+    x = "robotX - lotteryMinX",
+    y = "Proportion",
+    fill = "Condition"
+  ) +
+  theme_minimal()
+
+match_summary <- robot_vs_lottery %>%
+  group_by(i) %>%
+  summarise(
+    match_count = sum(match, na.rm = TRUE),
+    total_urns = n_distinct(urn)
+  ) %>%
+  filter(total_urns == 3)  # Only include those with all 3 urns
+
+# 3. Create summary table of 0/1/2/3 matches
+match_table <- match_summary %>%
+  count(match_count) %>%
+  arrange(match_count)
+
+# View the table
+match_table
+```
+
+
+
 

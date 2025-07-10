@@ -301,6 +301,22 @@ lottery <- lottery %>%
     )
   )
 
+# Add urn_type column based on the lotteryType
+lottery <- lottery %>%
+  mutate(
+    urn = case_when(
+      grepl("Low", lotteryType) ~ "Low",
+      grepl("Mid", lotteryType) ~ "Middle",
+      grepl("High", lotteryType) ~ "High",
+      TRUE ~ NA_character_
+    ),
+    type = case_when(
+      grepl("Del", lotteryType) ~ "Delegation",
+      grepl("TIOLI", lotteryType) ~ "TIOLI",
+      TRUE ~ NA_character_
+    )
+  )
+
 # Save
 saveRDS(lottery, file = "Data/deleg_lottery.rds")
 
@@ -311,13 +327,18 @@ dictatorData$t <- dictatorData$subsession.round_number
 dictatorData$round_number <- dictatorData$subsession.round_number
 dictatorData$i <- dictatorData$participant_id
 dictatorData$type <- dictatorData$player.dictator_type
-dictatorData$X <- dictatorData$player.dictator_choiced
+dictatorData$X <- dictatorData$player.dictator_choice
 dictatorData$delegation <- ifelse(dictatorData$offer.treat, FALSE,TRUE)
 dictatorData$chat <- ifelse(dictatorData$chat.treat, TRUE,FALSE)
 dictator <- dictatorData[, c('i','t','type', 'X', "delegation","chat")]
 
 dictator <- dictator %>% 
   mutate(
+    urn = case_when(
+      type == 1 ~ 'Low',
+      type == 3 ~ "Middle",
+      type == 6 ~ "High"
+    ),
     action = case_when(
       # Middle alignment (type == 3)
       type == 3 & X == 1 ~ 3,
