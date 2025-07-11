@@ -490,45 +490,45 @@ lm_minX <- lm_robust(minX ~ dist + delegation * chat, data = seller, cluster = i
 modelsummary(lm_minX, stars = TRUE)
 
 # LATEX output 
-# modelsummary(lm_minX, stars = TRUE, output = "latex")
+modelsummary(lm_minX, stars = TRUE, output = "latex")
 
 # Obsididan ouput
-
-# Create human-readable names
-pretty_names <- c(
-  "(Intercept)" = "Intercept",
-  "distLow" = "Low Urn",
-  "distMiddle" = "Middle Urn",
-  "delegationTRUE" = "Delegation",
-  "chatTRUE" = "Chat",
-  "delegationTRUE:chatTRUE" = "Delegation × Chat"
-)
-
-# Tidy + stars + label mapping
-tidy_lm <- tidy(lm_minX) %>%
-  mutate(
-    stars = case_when(
-      p.value < 0.001 ~ "***",
-      p.value < 0.01  ~ "**",
-      p.value < 0.05  ~ "*",
-      p.value < 0.1   ~ "+",
-      TRUE            ~ ""
-    ),
-    estimate_star = paste0(round(estimate, 3), stars),
-    std.error = round(std.error, 3),
-    p.value = signif(p.value, 3),
-    term = pretty_names[term]  # rename terms
-  ) %>%
-  select(term, estimate_star, std.error, p.value)
-
-# Print table to Obsidian-compatible markdown
-kable(
-  tidy_lm,
-  format = "markdown",
-  col.names = c("Term", "Estimate", "Std. Error", "p-value")
-)
-
-
+# 
+# # Create human-readable names
+# pretty_names <- c(
+#   "(Intercept)" = "Intercept",
+#   "distLow" = "Low Urn",
+#   "distMiddle" = "Middle Urn",
+#   "delegationTRUE" = "Delegation",
+#   "chatTRUE" = "Chat",
+#   "delegationTRUE:chatTRUE" = "Delegation × Chat"
+# )
+# 
+# # Tidy + stars + label mapping
+# tidy_lm <- tidy(lm_minX) %>%
+#   mutate(
+#     stars = case_when(
+#       p.value < 0.001 ~ "***",
+#       p.value < 0.01  ~ "**",
+#       p.value < 0.05  ~ "*",
+#       p.value < 0.1   ~ "+",
+#       TRUE            ~ ""
+#     ),
+#     estimate_star = paste0(round(estimate, 3), stars),
+#     std.error = round(std.error, 3),
+#     p.value = signif(p.value, 3),
+#     term = pretty_names[term]  # rename terms
+#   ) %>%
+#   select(term, estimate_star, std.error, p.value)
+# 
+# # Print table to Obsidian-compatible markdown
+# kable(
+#   tidy_lm,
+#   format = "markdown",
+#   col.names = c("Term", "Estimate", "Std. Error", "p-value")
+# )
+# 
+# 
 
 
 ```
@@ -685,6 +685,23 @@ kable(
 
 
 ```
+Inefficiency regression
+
+```{r}
+seller <- seller %>% 
+  mutate(
+    inefficient = ifelse(y < theta, 1, 0)
+  )
+
+lm_inefficient <- lm_robust(inefficient ~ dist + delegation * chat, data = seller, cluster = i)
+
+modelsummary(lm_inefficient, stars = TRUE)
+
+# LATEX output 
+modelsummary(lm_inefficient, stars = TRUE, output = "latex")
+```
+
+
 See who optimizes based on their lottery answer
 
 ```{r}
@@ -767,6 +784,192 @@ match_table <- match_summary %>%
 match_table
 ```
 
+Scatter plot robot x vs lottery x
+```{r}
+
+combo_counts <- robot_vs_lottery %>%
+  count(type, lotteryMinX, robotX) %>%
+  group_by(type) %>%
+  mutate(prop = n / sum(n)) %>%
+  ungroup()
 
 
+# 2. Plot with point size by proportion
+
+ggplot(combo_counts, aes(x = lotteryMinX, y = robotX)) +
+  geom_point(aes(size = prop, color = prop), alpha = 0.8) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "gray40") +
+  scale_size_continuous(name = "Proportion", range = c(1, 10), guide = "legend") +
+  scale_color_viridis_c(name = "Proportion", option = "D", guide = "legend") +
+  labs(
+    title = "robotX vs lotteryMinX (Faceted by Delegation Condition)",
+    x = "Lottery MinX",
+    y = "Robot MinX"
+  ) +
+  facet_wrap(~ type, labeller = label_both) +
+  theme_minimal() +
+  theme(
+    panel.spacing = unit(2, "lines")  # Increase spacing between facets
+  ) +
+  guides(
+    color = guide_legend(order = 1),
+    size = guide_legend(order = 1)
+  )
+
+
+```
+Heatmap style
+
+```{r}
+ggplot(combo_counts, aes(x = lotteryMinX, y = robotX)) +
+  geom_tile(aes(alpha = prop), fill = "#377eb8", color = "white") +
+  facet_wrap(~ type, labeller = label_both) +
+  scale_alpha_continuous(name = "Proportion", range = c(0.1, 1)) +
+  labs(
+    title = "RobotX (Optimization) vs LotterMinX ",
+    x = "LotterMinX",
+    y = "Robot MinX"
+  ) +
+  theme_minimal() +
+  theme(
+    panel.spacing = unit(2, "lines"),
+    legend.position = "right"
+  ) + 
+  geom_text(aes(label = ifelse(prop > 0.01, round(prop, 2), "")), color = "black", size = 3)
+
+
+
+```
+
+See how close the final round choices were to robotX
+
+```{r}
+# Create two different data sets, one for each delegation treatment
+
+data_del <- data %>% 
+  filter(delegation == TRUE, t>10) %>% 
+  select(i, urn, minX)
+data_tioli <- data %>% 
+  filter(delegation == FALSE, t>10) %>% 
+  select(i, urn, minX) 
+
+# Split the pool of lottery choices by delegation type
+# (this will have people from both delegation treatments)
+
+
+
+
+# Join (confirmed this matches the subject count times three observations each)
+
+join_data_del <- inner_join(data_del, robot_del, by = c("i", "urn"))
+join_data_tioli <- inner_join(data_tioli, robot_tioli, by = c("i", "urn"))
+
+# How many match their optimization?
+
+join_data_del <- join_data_del %>%
+  mutate(
+    diff = robotX - minX,
+    match = robotX == minX)
+
+join_data_tioli <- join_data_tioli %>%
+  mutate(
+    diff = robotX - minX,
+    match = robotX == minX)
+
+robot_vs_data <- bind_rows(
+  join_data_del %>% mutate(type = "Delegation"),
+  join_data_tioli %>% mutate(type = "TIOLI")
+)
+
+ggplot(robot_vs_data, aes(x = diff, fill = type)) +
+  geom_histogram(
+    aes(y = after_stat(count / sum(count))),
+    binwidth = 1,
+    position = "dodge",
+    color = "black"
+  ) +
+  labs(
+    title = "Proportion of Differences Between robotX and minX",
+    x = "robotX - minX",
+    y = "Proportion",
+    fill = "Condition"
+  ) +
+  theme_minimal()
+
+match_summary <- robot_vs_data %>%
+  group_by(i) %>%
+  summarise(
+    match_count = sum(match, na.rm = TRUE),
+    total_urns = n_distinct(urn)
+  ) %>%
+  filter(total_urns == 3)  # Only include those with all 3 urns
+
+# 3. Create summary table of 0/1/2/3 matches
+match_table <- match_summary %>%
+  count(match_count) %>%
+  arrange(match_count)
+
+# View the table
+match_table
+
+```
+
+Scatter plot robot x vs min x
+```{r}
+
+combo_counts <- robot_vs_data %>%
+  count(type, minX, robotX) %>%
+  group_by(type) %>%
+  mutate(prop = n / sum(n)) %>%
+  ungroup()
+
+
+# 2. Plot with point size by proportion
+
+ggplot(combo_counts, aes(x = minX, y = robotX)) +
+  geom_point(aes(size = prop, color = prop), alpha = 0.8) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "gray40") +
+  scale_size_continuous(name = "Proportion", range = c(1, 10), guide = "legend") +
+  scale_color_viridis_c(name = "Proportion", option = "D", guide = "legend") +
+  labs(
+    title = "robotX vs minX (Faceted by Delegation Condition)",
+    x = "MinX",
+    y = "Robot MinX"
+  ) +
+  facet_wrap(~ type, labeller = label_both) +
+  theme_minimal() +
+  theme(
+    panel.spacing = unit(2, "lines")  # Increase spacing between facets
+  ) +
+  guides(
+    color = guide_legend(order = 1),
+    size = guide_legend(order = 1)
+  )
+
+
+```
+
+
+Heatmap style
+
+```{r}
+ggplot(combo_counts, aes(x = minX, y = robotX)) +
+  geom_tile(aes(alpha = prop), fill = "#377eb8", color = "white") +
+  facet_wrap(~ type, labeller = label_both) +
+  scale_alpha_continuous(name = "Proportion", range = c(0.1, 1)) +
+  labs(
+    title = "RobotX (Optimization) vs minX (Two-Player)",
+    x = "MinX (vs Player)",
+    y = "Robot MinX"
+  ) +
+  theme_minimal() +
+  theme(
+    panel.spacing = unit(2, "lines"),
+    legend.position = "right"
+  ) + 
+  geom_text(aes(label = ifelse(prop > 0.01, round(prop, 2), "")), color = "black", size = 3)
+
+
+
+```
 
