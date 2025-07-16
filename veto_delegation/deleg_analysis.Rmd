@@ -857,8 +857,6 @@ data_tioli <- data %>%
 # (this will have people from both delegation treatments)
 
 
-
-
 # Join (confirmed this matches the subject count times three observations each)
 
 join_data_del <- inner_join(data_del, robot_del, by = c("i", "urn"))
