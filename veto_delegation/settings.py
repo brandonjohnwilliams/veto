@@ -5,8 +5,8 @@ SESSION_CONFIGS = [
          name='veto_delegation',
          display_name="Standard Treatment",
          app_sequence=[
-             # 'introduction',
-             # 'practice',
+             'introduction',
+             'practice',
              'veto_delegation',
              'robot',
              'lotteries',
@@ -43,6 +43,9 @@ SESSION_CONFIGS = [
 SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00, participation_fee=0.00, doc=""
 )
+
+OTREE_PRODUCTION=1
+DEBUG=False
 
 PARTICIPANT_FIELDS = ['MatchingGroup', 'SubGroup', 'PayRound', 'PartOnePayoff', 'BonusPay', 'dictator_order', ]
 SESSION_FIELDS = ['PartTwoPay', 'PartThreePay', 'PartFourPayGive', 'PartFourPayReceive', 'GiveAmount']
