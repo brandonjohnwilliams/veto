@@ -1,0 +1,546 @@
+{{ block title }}
+Part Four
+{{ endblock }}
+
+{% block content %}
+
+<head>
+<style>
+  .mpl-wrap {
+    max-width: 980px;
+    margin: 24px auto;
+    padding: 0 12px;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  .mpl-title {
+    font-size: 18px;
+    font-weight: 650;
+    margin: 0 0 10px 0;
+  }
+
+  .mpl-subtitle {
+    margin: 0 0 16px 0;
+    color: #444;
+    line-height: 1.35;
+    font-size: 14px;
+  }
+
+  .mpl-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+
+  .mpl-table thead th {
+    text-align: left;
+    font-size: 13px;
+    letter-spacing: 0.2px;
+    color: #222;
+    background: #f7f7f8;
+    padding: 14px 16px;
+    border-bottom: 1px solid #e6e6e6;
+  }
+
+  .mpl-table tbody td {
+    padding: 14px 16px;
+    font-size: 14px;
+    line-height: 1.25;
+    vertical-align: middle;
+    transition: background 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .mpl-table tbody tr + tr td {
+    border-top: 1px solid #f0f0f0;
+  }
+
+  /* column sizing + subtle dividers */
+  .mpl-table colgroup col:nth-child(1) { width: 42%; }
+  .mpl-table colgroup col:nth-child(2) { width: 42%; }
+  .mpl-table colgroup col:nth-child(3) { width: 16%; }
+
+  .mpl-table tbody td + td,
+  .mpl-table thead th + th {
+    border-left: 1px solid #ededed;
+  }
+
+  /* zebra striping */
+  .mpl-table tbody tr:nth-child(even) td {
+    background: #fcfcfd;
+  }
+
+  .delta {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    font-weight: 600;
+  }
+
+  .switch-col {
+    text-align: center;
+  }
+
+  /* Make the radio easier to click */
+  .radio-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .radio-wrap input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+  }
+
+  /* Highlighting rules (applied by JS) */
+  .cell-green {
+    background: #e9f8ee !important;
+    box-shadow: inset 0 0 0 1px #bfe8c8;
+  }
+
+  .row-selected td {
+    box-shadow: inset 0 0 0 9999px rgba(0,0,0,0.02);
+  }
+
+  /* Special last row (merged instruction cell) */
+  .always-row td {
+    background: #fbfbfc;
+  }
+  .always-row td {
+    border-left: none !important;
+  }
+
+  @media (max-width: 700px) {
+    .mpl-table,
+    .mpl-table thead,
+    .mpl-table tbody,
+    .mpl-table th,
+    .mpl-table td,
+    .mpl-table tr {
+      display: block;
+    }
+
+    .mpl-table thead {
+      position: absolute;
+      left: -9999px;
+      top: -9999px;
+    }
+
+    .mpl-table {
+      border-radius: 12px;
+      overflow: visible;
+    }
+
+    .mpl-table tbody tr {
+      border: 1px solid #e6e6e6;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    .mpl-table tbody td {
+      border: none !important;
+      padding: 12px 14px;
+      background: #fff;
+      text-align: left;
+    }
+
+    .mpl-table tbody td:nth-child(1)::before {
+      content: "Option A";
+      display: block;
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .mpl-table tbody td:nth-child(2)::before {
+      content: "Option B";
+      display: block;
+      font-size: 12px;
+      color: #666;
+      margin: 10px 0 6px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .mpl-table tbody td:nth-child(3)::before {
+      content: "Switching point";
+      display: block;
+      font-size: 12px;
+      color: #666;
+      margin: 10px 0 6px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .mpl-table tbody tr:nth-child(even) td {
+      background: #fff;
+    }
+
+    .switch-col {
+      text-align: left;
+    }
+
+    /* On mobile, colspan doesn't matter since cells become blocks.
+       We'll just make the merged cell look like a card line. */
+    .always-row td {
+      background: #fbfbfc !important;
+      border-top: 1px solid #f0f0f0 !important;
+    }
+    .always-row td::before {
+      content: "Note";
+      display: block;
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+  }
+</style>
+
+
+
+
+
+</head>
+
+<p>
+    We are interested in knowing which of these two types of sessions you think was better for the Sellers.
+    Your task in Part Four is to indicate how much better or worse the menu session was for Sellers, using the table below for each of the urn types.
+</p>
+<p>
+    In the table, you will choose your preferred option between a payoff from the average of two different sessions.
+    On the left side of the table, you can choose to earn the average Seller payoff from a previous session that used a single offer, just as in your session.
+    This amount is always the same.
+</p>
+<p>
+    On the right side of the table, you can choose to earn the average Seller payoff from a previous session that used the menu offer.
+    You will notice that this amount changes, as we add or subtract additional money from the average payoff of the menu session.
+    For example, at the top of the table, the right side of the table starts with "average payment from menu offer session - $5."
+    If you choose the right side on this row, you believe that the menu session Sellers earned at least $5 more on average.
+    The amount added to the right side then increases with each row, until no money is subtracted from the amount in the middle of the table.
+    Then money is added to the average menu payoff, until the last row is "average payment from menu offer session + $5."
+    If you choose the right side on this row, you believe that the menu session Sellers earned considerably less money on average, and you would need to be compensated at least $5 more to choose the right side.
+</p>
+<p>
+    The computer will randomly draw one of the rows for payment.
+    If you are selected for payment this round, whichever side of the selected row you chose will be added to your total pay.
+</p>
+<p>
+    Presumably, there is a row where you would switch from the right side of the table to the left.
+    To make your selection easier, you need only select the row where you would switch.
+    The interface will automatically select the options that correspond to your switching point.
+    If you would <strong>always</strong> choose the right side, simply select the last row of the table:" Always choose the average payment from the single offer session."
+</p>
+
+
+<div class="mpl-wrap">
+  <div class="mpl-title">Choice List</div>
+  <p class="mpl-subtitle">
+    Select exactly one row to indicate your switching point. After you select a row, the table highlights
+    the implied choices.
+  </p>
+
+  <table class="mpl-table" aria-label="Multiple Price List table with radio switching point column">
+    <colgroup>
+      <col />
+      <col />
+      <col />
+    </colgroup>
+    <thead>
+      <tr>
+        <th scope="col">Option A</th>
+        <th scope="col">Option B</th>
+        <th scope="col" class="switch-col">Switching point</th>
+      </tr>
+    </thead>
+
+    <tbody id="mplBody">
+      <!-- Main MPL rows: X from -5 to +5 -->
+      <tr data-x="-5">
+        <td class="cell-a">Single offer average  <span class="delta">+ $5</span></td>
+        <td class="cell-b">Menu offer average</td>
+        <td class="switch-col">
+          <label class="radio-wrap">
+            <input type="radio" name="switch_point" value="-5" />
+
+          </label>
+        </td>
+      </tr>
+
+      <tr data-x="-4">
+        <td class="cell-a">Single offer average <span class="delta">+ $4</span></td>
+        <td class="cell-b">Menu offer average</td>
+        <td class="switch-col">
+          <label class="radio-wrap">
+            <input type="radio" name="switch_point" value="-4" />
+          </label>
+        </td>
+      </tr>
+
+      <tr data-x="-3">
+        <td class="cell-a">Single offer average <span class="delta">+ $3</span></td>
+        <td class="cell-b">Menu offer average</td>
+        <td class="switch-col">
+          <label class="radio-wrap">
+            <input type="radio" name="switch_point" value="-3" />
+
+          </label>
+        </td>
+      </tr>
+
+      <tr data-x="-2">
+        <td class="cell-a">Single offer average <span class="delta">+ $2</span></td>
+        <td class="cell-b">Menu offer average </td>
+        <td class="switch-col">
+          <label class="radio-wrap">
+            <input type="radio" name="switch_point" value="-2" />
+
+          </label>
+        </td>
+      </tr>
+
+      <tr data-x="-1">
+        <td class="cell-a">Single offer average <span class="delta">+ $1</span></td>
+        <td class="cell-b">Menu offer average </td>
+        <td class="switch-col">
+          <label class="radio-wrap">
+            <input type="radio" name="switch_point" value="-1" />
+
+          </label>
+        </td>
+      </tr>
+
+      <tr data-x="0">
+        <td class="cell-a">Single offer average</td>
+        <td class="cell-b">Menu offer average</td>
+        <td class="switch-col">
+          <label class="radio-wrap">
+            <input type="radio" name="switch_point" value="0" />
+
+          </label>
+        </td>
+      </tr>
+
+      <tr data-x="1">
+        <td class="cell-a">Single offer average</td>
+        <td class="cell-b">Menu offer average <span class="delta">+ $1</span></td>
+        <td class="switch-col">
+          <label class="radio-wrap">
+            <input type="radio" name="switch_point" value="1" />
+
+          </label>
+        </td>
+      </tr>
+
+      <tr data-x="2">
+        <td class="cell-a">Single offer average</td>
+        <td class="cell-b">Menu offer average<span class="delta">+ $2</span></td>
+        <td class="switch-col">
+          <label class="radio-wrap">
+            <input type="radio" name="switch_point" value="2" />
+
+          </label>
+        </td>
+      </tr>
+
+      <tr data-x="3">
+        <td class="cell-a">Single offer average</td>
+        <td class="cell-b">Menu offer average <span class="delta">+ $3</span></td>
+        <td class="switch-col">
+          <label class="radio-wrap">
+            <input type="radio" name="switch_point" value="3" />
+
+          </label>
+        </td>
+      </tr>
+
+      <tr data-x="4">
+        <td class="cell-a">Single offer average</td>
+        <td class="cell-b">Menu offer average <span class="delta">+ $4</span></td>
+        <td class="switch-col">
+          <label class="radio-wrap">
+            <input type="radio" name="switch_point" value="4" />
+
+          </label>
+        </td>
+      </tr>
+
+      <tr data-x="5">
+        <td class="cell-a">Single offer average</td>
+        <td class="cell-b">Menu offer average <span class="delta">+ $5</span></td>
+        <td class="switch-col">
+          <label class="radio-wrap">
+            <input type="radio" name="switch_point" value="5" />
+
+          </label>
+        </td>
+      </tr>
+
+      <!-- Special last row: merged cell across first two columns -->
+      <tr class="always-row" data-x="ALWAYS_A">
+        <td colspan="2">Always choose the single offer average</td>
+        <td class="switch-col">
+          <label class="radio-wrap">
+            <input type="radio" name="switch_point" value="ALWAYS_A" />
+
+          </label>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+<p id="switch-explain" style="margin: 14px 2px 0; font-size: 14px; color: #333;"></p>
+
+</div>
+
+
+
+    <!-- Include JavaScript file -->
+
+
+<script>
+  (function () {
+    const body = document.getElementById("mplBody");
+    const rows = Array.from(body.querySelectorAll("tr"));
+    const radios = Array.from(document.querySelectorAll('input[name="switch_point"]'));
+
+    function clearHighlights() {
+      rows.forEach((row) => {
+        row.classList.remove("row-selected");
+
+        const a = row.querySelector(".cell-a");
+        const b = row.querySelector(".cell-b");
+
+        if (a) a.classList.remove("cell-green");
+        if (b) b.classList.remove("cell-green");
+
+        // If a row doesn't have cell-a/cell-b (e.g., merged row), nothing to clear there.
+      });
+    }
+
+
+const explainEl = document.getElementById("switch-explain");
+
+function setExplanation(selectedValue) {
+  if (!explainEl) return;
+
+  if (selectedValue === "ALWAYS_A") {
+    explainEl.textContent =
+      "You chose to always select the single offer average (Option A) for every row.";
+    return;
+  }
+
+  const x = Number(selectedValue);
+
+  if (x === -5) {
+    explainEl.textContent =
+      "You chose to always select the menu offer average (Option B) for every row.";
+    return;
+  }
+
+
+  if (x === 0) {
+    explainEl.textContent =
+      "Your switching point is when we no longer add money to the single offer session: you would choose the menu offer session (Option B) unless we add money to the single session.";
+    return;
+  }
+
+  var sign = x >= 0 ? "+" : "−";
+  var absx = Math.abs(x);
+  var addx = Math.abs(x)+1;
+
+  if (x >-5 && x <0) {
+
+    explainEl.textContent =
+      `Your switching point is +$${absx} to the single offer: you would choose the menu offer session (Option B) unless we add at least +$${addx} to the single offer average. `;
+    return;
+  }
+
+  if (x >0 && x <=5) {
+
+    explainEl.textContent =
+      `Your switching point is ${sign}$${absx} to the menu offer: you would choose the menu offer session (Option B) only if we add at least $${absx} to it. Otherwise, you would choose the single offer average.`;
+    return;
+  }
+
+
+  explainEl.textContent =
+    `Your switching point is ${sign}$${absx}: you would choose the single offer session (Option A) for rows below ${sign}$${absx}, ` +
+    `and the menu offer session (Option B) starting at ${sign}$${absx} and for all higher rows.`;
+}
+
+
+    function highlightAllA() {
+      clearHighlights();
+      rows.forEach((row) => {
+        const a = row.querySelector(".cell-a");
+        if (a) a.classList.add("cell-green");
+      });
+
+      // Emphasize the ALWAYS row
+      const alwaysRow = rows.find(r => r.dataset.x === "ALWAYS_A");
+      if (alwaysRow) alwaysRow.classList.add("row-selected");
+    }
+
+    function applyHighlights(selectedValue) {
+      if (selectedValue === "ALWAYS_A") {
+        highlightAllA();
+        return;
+      }
+
+      const selectedX = Number(selectedValue);
+      clearHighlights();
+
+      rows.forEach((row) => {
+        const xRaw = row.dataset.x;
+
+        // Skip the ALWAYS row for numeric highlighting
+        if (xRaw === "ALWAYS_A") return;
+
+        const x = Number(xRaw);
+        const a = row.querySelector(".cell-a");
+        const b = row.querySelector(".cell-b");
+
+        // Convention:
+        // - X < selectedX  => Option A highlighted
+        // - X >= selectedX => Option B highlighted
+        if (x < selectedX) {
+          if (a) a.classList.add("cell-green");
+        } else {
+          if (b) b.classList.add("cell-green");
+        }
+
+        if (x === selectedX) row.classList.add("row-selected");
+      });
+    }
+
+    radios.forEach((r) => {
+
+r.addEventListener("change", () => {
+  applyHighlights(r.value);
+  setExplanation(r.value);
+});
+
+    });
+
+    // If pre-checked (reload), reflect it
+    const pre = radios.find(r => r.checked);
+    if (pre) applyHighlights(pre.value);
+  })();
+</script>
+
+
+
+
+{% endblock %}

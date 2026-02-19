@@ -16,23 +16,32 @@ SESSION_CONFIGS = [
 
          num_demo_participants=20,
          take_it_or_leave_it=False,
-         chat=True,
+         chat=False,
          use_browser_bots=False,
          Session=1,
          doc="""Set the session number to the total number in the treatment""",
          ),
-    # dict(
-    #      name='veto_delegation_cheap',
-    #      display_name="Cheap Talk",
-    #      app_sequence=['practice','veto_delegation_cheap'],
-    #      num_demo_participants=2,
-    # ),
-    # dict(
-    #     name='veto_delegation_single',
-    #     display_name="Single Point",
-    #     app_sequence=['practice', 'veto_delegation_single'],
-    #     num_demo_participants=2,
-    # ),
+    dict(
+        name='mech_choice',
+        display_name="Mechanism Choice",
+        app_sequence=[
+            # 'introduction',
+            # 'practice',
+            # 'veto_delegation',
+            # 'robot',
+            # 'lotteries',
+            'mech_choice',
+            # 'payment',
+        ],
+
+        num_demo_participants=20,
+        take_it_or_leave_it=False,
+        chat=False,
+        use_browser_bots=False,
+        Session=1,
+        doc="""Set the session number to the total number in the treatment""",
+    ),
+
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
