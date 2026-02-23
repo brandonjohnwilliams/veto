@@ -14,6 +14,8 @@ class C(BaseConstants):
 
     round_type = 2 # defined only explicitly for the practice round
 
+    # adding a comment here for version control
+
 class Subsession(BaseSubsession):
     pass
 
