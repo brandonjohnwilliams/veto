@@ -1,0 +1,704 @@
+{
+  "Low": {
+    "1": {
+      "1": {
+        "BuyerD": 22.12,
+        "SellerD": 11.32,
+        "BuyerT": 21.82,
+        "SellerT": 11
+      },
+      "2": {
+        "BuyerD": 25.1,
+        "SellerD": 14.32,
+        "BuyerT": 24.52,
+        "SellerT": 13.91
+      },
+      "3": {
+        "BuyerD": 27.08,
+        "SellerD": 16.4,
+        "BuyerT": 26.34,
+        "SellerT": 16.08
+      },
+      "4": {
+        "BuyerD": 28.25,
+        "SellerD": 17.62,
+        "BuyerT": 27.38,
+        "SellerT": 17.43
+      },
+      "5": {
+        "BuyerD": 28.71,
+        "SellerD": 18.08,
+        "BuyerT": 27.76,
+        "SellerT": 18.04
+      },
+      "6": {
+        "BuyerD": 28.95,
+        "SellerD": 18.29,
+        "BuyerT": 27.94,
+        "SellerT": 18.33
+      },
+      "7": {
+        "BuyerD": 28.95,
+        "SellerD": 18.3,
+        "BuyerT": 27.9,
+        "SellerT": 18.38
+      },
+      "8": {
+        "BuyerD": 28.95,
+        "SellerD": 18.3,
+        "BuyerT": 27.89,
+        "SellerT": 18.39
+      }
+    },
+    "2": {
+      "2": {
+        "BuyerD": 24.34,
+        "SellerD": 14.62,
+        "BuyerT": 24.11,
+        "SellerT": 14.29
+      },
+      "3": {
+        "BuyerD": 26.09,
+        "SellerD": 16.73,
+        "BuyerT": 25.65,
+        "SellerT": 16.53
+      },
+      "4": {
+        "BuyerD": 27.22,
+        "SellerD": 17.91,
+        "BuyerT": 26.58,
+        "SellerT": 17.86
+      },
+      "5": {
+        "BuyerD": 27.68,
+        "SellerD": 18.37,
+        "BuyerT": 26.92,
+        "SellerT": 18.47
+      },
+      "6": {
+        "BuyerD": 27.92,
+        "SellerD": 18.58,
+        "BuyerT": 27.1,
+        "SellerT": 18.76
+      },
+      "7": {
+        "BuyerD": 27.91,
+        "SellerD": 18.58,
+        "BuyerT": 27.06,
+        "SellerT": 18.81
+      },
+      "8": {
+        "BuyerD": 27.91,
+        "SellerD": 18.58,
+        "BuyerT": 27.04,
+        "SellerT": 18.83
+      }
+    },
+    "3": {
+      "3": {
+        "BuyerD": 25.16,
+        "SellerD": 16.64,
+        "BuyerT": 24.88,
+        "SellerT": 16.45
+      },
+      "4": {
+        "BuyerD": 26.14,
+        "SellerD": 17.81,
+        "BuyerT": 25.55,
+        "SellerT": 17.9
+      },
+      "5": {
+        "BuyerD": 26.58,
+        "SellerD": 18.26,
+        "BuyerT": 25.81,
+        "SellerT": 18.55
+      },
+      "6": {
+        "BuyerD": 26.83,
+        "SellerD": 18.47,
+        "BuyerT": 25.96,
+        "SellerT": 18.85
+      },
+      "7": {
+        "BuyerD": 26.82,
+        "SellerD": 18.47,
+        "BuyerT": 25.91,
+        "SellerT": 18.93
+      },
+      "8": {
+        "BuyerD": 26.82,
+        "SellerD": 18.47,
+        "BuyerT": 25.88,
+        "SellerT": 18.96
+      }
+    },
+    "4": {
+      "4": {
+        "BuyerD": 24.67,
+        "SellerD": 16.86,
+        "BuyerT": 24.45,
+        "SellerT": 17.18
+      },
+      "5": {
+        "BuyerD": 25.05,
+        "SellerD": 17.32,
+        "BuyerT": 24.5,
+        "SellerT": 18.04
+      },
+      "6": {
+        "BuyerD": 25.29,
+        "SellerD": 17.53,
+        "BuyerT": 24.58,
+        "SellerT": 18.42
+      },
+      "7": {
+        "BuyerD": 25.28,
+        "SellerD": 17.53,
+        "BuyerT": 24.5,
+        "SellerT": 18.54
+      },
+      "8": {
+        "BuyerD": 25.28,
+        "SellerD": 17.53,
+        "BuyerT": 24.46,
+        "SellerT": 18.6
+      }
+    },
+    "5": {
+      "5": {
+        "BuyerD": 23.32,
+        "SellerD": 16.03,
+        "BuyerT": 23.11,
+        "SellerT": 16.78
+      },
+      "6": {
+        "BuyerD": 23.52,
+        "SellerD": 16.26,
+        "BuyerT": 23.01,
+        "SellerT": 17.46
+      },
+      "7": {
+        "BuyerD": 23.52,
+        "SellerD": 16.27,
+        "BuyerT": 22.86,
+        "SellerT": 17.7
+      },
+      "8": {
+        "BuyerD": 23.52,
+        "SellerD": 16.27,
+        "BuyerT": 22.79,
+        "SellerT": 17.84
+      }
+    },
+    "6": {
+      "6": {
+        "BuyerD": 21.81,
+        "SellerD": 13.64,
+        "BuyerT": 21.69,
+        "SellerT": 15.55
+      },
+      "7": {
+        "BuyerD": 21.79,
+        "SellerD": 13.68,
+        "BuyerT": 21.42,
+        "SellerT": 16.23
+      },
+      "8": {
+        "BuyerD": 21.79,
+        "SellerD": 13.69,
+        "BuyerT": 21.29,
+        "SellerT": 16.56
+      }
+    },
+    "7": {
+      "7": {
+        "BuyerD": 20.4,
+        "SellerD": 10.95,
+        "BuyerT": 20.39,
+        "SellerT": 13.86
+      },
+      "8": {
+        "BuyerD": 20.39,
+        "SellerD": 10.99,
+        "BuyerT": 20.19,
+        "SellerT": 14.7
+      }
+    },
+    "8": {
+      "8": {
+        "BuyerD": 19.69,
+        "SellerD": 9.57,
+        "BuyerT": 19.69,
+        "SellerT": 12.3
+      }
+    }
+  },
+  "Middle": {
+    "1": {
+      "1": {
+        "BuyerD": 17.83,
+        "SellerD": 11.13,
+        "BuyerT": 17.61,
+        "SellerT": 10.84
+      },
+      "2": {
+        "BuyerD": 21.47,
+        "SellerD": 14.78,
+        "BuyerT": 20.92,
+        "SellerT": 14.29
+      },
+      "3": {
+        "BuyerD": 24.97,
+        "SellerD": 18.11,
+        "BuyerT": 24.23,
+        "SellerT": 17.57
+      },
+      "4": {
+        "BuyerD": 27.42,
+        "SellerD": 20.45,
+        "BuyerT": 26.56,
+        "SellerT": 20.02
+      },
+      "5": {
+        "BuyerD": 28.61,
+        "SellerD": 21.56,
+        "BuyerT": 27.65,
+        "SellerT": 21.35
+      },
+      "6": {
+        "BuyerD": 29.09,
+        "SellerD": 21.98,
+        "BuyerT": 28.04,
+        "SellerT": 21.91
+      },
+      "7": {
+        "BuyerD": 29.09,
+        "SellerD": 21.99,
+        "BuyerT": 27.96,
+        "SellerT": 22
+      },
+      "8": {
+        "BuyerD": 29.09,
+        "SellerD": 21.99,
+        "BuyerT": 27.93,
+        "SellerT": 22.03
+      }
+    },
+    "2": {
+      "2": {
+        "BuyerD": 21.48,
+        "SellerD": 15.13,
+        "BuyerT": 21.2,
+        "SellerT": 14.77
+      },
+      "3": {
+        "BuyerD": 24.74,
+        "SellerD": 18.33,
+        "BuyerT": 24.23,
+        "SellerT": 17.96
+      },
+      "4": {
+        "BuyerD": 27.12,
+        "SellerD": 20.6,
+        "BuyerT": 26.42,
+        "SellerT": 20.31
+      },
+      "5": {
+        "BuyerD": 28.3,
+        "SellerD": 21.69,
+        "BuyerT": 27.46,
+        "SellerT": 21.6
+      },
+      "6": {
+        "BuyerD": 28.78,
+        "SellerD": 22.11,
+        "BuyerT": 27.84,
+        "SellerT": 22.16
+      },
+      "7": {
+        "BuyerD": 28.77,
+        "SellerD": 22.12,
+        "BuyerT": 27.76,
+        "SellerT": 22.25
+      },
+      "8": {
+        "BuyerD": 28.77,
+        "SellerD": 22.12,
+        "BuyerT": 27.74,
+        "SellerT": 22.28
+      }
+    },
+    "3": {
+      "3": {
+        "BuyerD": 24.37,
+        "SellerD": 18.68,
+        "BuyerT": 24.13,
+        "SellerT": 18.4
+      },
+      "4": {
+        "BuyerD": 26.54,
+        "SellerD": 20.84,
+        "BuyerT": 25.99,
+        "SellerT": 20.69
+      },
+      "5": {
+        "BuyerD": 27.7,
+        "SellerD": 21.92,
+        "BuyerT": 26.94,
+        "SellerT": 21.95
+      },
+      "6": {
+        "BuyerD": 28.18,
+        "SellerD": 22.34,
+        "BuyerT": 27.29,
+        "SellerT": 22.52
+      },
+      "7": {
+        "BuyerD": 28.17,
+        "SellerD": 22.35,
+        "BuyerT": 27.2,
+        "SellerT": 22.62
+      },
+      "8": {
+        "BuyerD": 28.17,
+        "SellerD": 22.35,
+        "BuyerT": 27.17,
+        "SellerT": 22.65
+      }
+    },
+    "4": {
+      "4": {
+        "BuyerD": 25.15,
+        "SellerD": 20.96,
+        "BuyerT": 24.98,
+        "SellerT": 21
+      },
+      "5": {
+        "BuyerD": 26.2,
+        "SellerD": 22.01,
+        "BuyerT": 25.62,
+        "SellerT": 22.36
+      },
+      "6": {
+        "BuyerD": 26.67,
+        "SellerD": 22.42,
+        "BuyerT": 25.89,
+        "SellerT": 22.98
+      },
+      "7": {
+        "BuyerD": 26.66,
+        "SellerD": 22.43,
+        "BuyerT": 25.78,
+        "SellerT": 23.11
+      },
+      "8": {
+        "BuyerD": 26.66,
+        "SellerD": 22.43,
+        "BuyerT": 25.74,
+        "SellerT": 23.16
+      }
+    },
+    "5": {
+      "5": {
+        "BuyerD": 23.72,
+        "SellerD": 21.74,
+        "BuyerT": 23.59,
+        "SellerT": 22.23
+      },
+      "6": {
+        "BuyerD": 24.13,
+        "SellerD": 22.18,
+        "BuyerT": 23.6,
+        "SellerT": 23.14
+      },
+      "7": {
+        "BuyerD": 24.12,
+        "SellerD": 22.19,
+        "BuyerT": 23.41,
+        "SellerT": 23.4
+      },
+      "8": {
+        "BuyerD": 24.12,
+        "SellerD": 22.19,
+        "BuyerT": 23.33,
+        "SellerT": 23.52
+      }
+    },
+    "6": {
+      "6": {
+        "BuyerD": 21.19,
+        "SellerD": 19.3,
+        "BuyerT": 21.12,
+        "SellerT": 21.55
+      },
+      "7": {
+        "BuyerD": 21.15,
+        "SellerD": 19.36,
+        "BuyerT": 20.73,
+        "SellerT": 22.42
+      },
+      "8": {
+        "BuyerD": 21.15,
+        "SellerD": 19.37,
+        "BuyerT": 20.56,
+        "SellerT": 22.8
+      }
+    },
+    "7": {
+      "7": {
+        "BuyerD": 18.33,
+        "SellerD": 14.97,
+        "BuyerT": 18.48,
+        "SellerT": 19.47
+      },
+      "8": {
+        "BuyerD": 18.32,
+        "SellerD": 15.04,
+        "BuyerT": 18.17,
+        "SellerT": 20.67
+      }
+    },
+    "8": {
+      "8": {
+        "BuyerD": 16.56,
+        "SellerD": 11.27,
+        "BuyerT": 16.8,
+        "SellerT": 16.76
+      }
+    }
+  },
+  "High": {
+    "1": {
+      "1": {
+        "BuyerD": 14.31,
+        "SellerD": 10.8,
+        "BuyerT": 14.18,
+        "SellerT": 10.62
+      },
+      "2": {
+        "BuyerD": 17.22,
+        "SellerD": 14.36,
+        "BuyerT": 16.83,
+        "SellerT": 13.97
+      },
+      "3": {
+        "BuyerD": 21.12,
+        "SellerD": 18.42,
+        "BuyerT": 20.44,
+        "SellerT": 17.79
+      },
+      "4": {
+        "BuyerD": 25.04,
+        "SellerD": 22.06,
+        "BuyerT": 24.15,
+        "SellerT": 21.39
+      },
+      "5": {
+        "BuyerD": 27.8,
+        "SellerD": 24.41,
+        "BuyerT": 26.87,
+        "SellerT": 23.98
+      },
+      "6": {
+        "BuyerD": 29.28,
+        "SellerD": 25.65,
+        "BuyerT": 28.26,
+        "SellerT": 25.42
+      },
+      "7": {
+        "BuyerD": 29.26,
+        "SellerD": 25.67,
+        "BuyerT": 28.1,
+        "SellerT": 25.62
+      },
+      "8": {
+        "BuyerD": 29.26,
+        "SellerD": 25.67,
+        "BuyerT": 28.04,
+        "SellerT": 25.67
+      }
+    },
+    "2": {
+      "2": {
+        "BuyerD": 17.41,
+        "SellerD": 14.77,
+        "BuyerT": 17.19,
+        "SellerT": 14.46
+      },
+      "3": {
+        "BuyerD": 21.12,
+        "SellerD": 18.69,
+        "BuyerT": 20.64,
+        "SellerT": 18.24
+      },
+      "4": {
+        "BuyerD": 24.92,
+        "SellerD": 22.16,
+        "BuyerT": 24.17,
+        "SellerT": 21.63
+      },
+      "5": {
+        "BuyerD": 27.64,
+        "SellerD": 24.48,
+        "BuyerT": 26.81,
+        "SellerT": 24.12
+      },
+      "6": {
+        "BuyerD": 29.12,
+        "SellerD": 25.71,
+        "BuyerT": 28.18,
+        "SellerT": 25.55
+      },
+      "7": {
+        "BuyerD": 29.1,
+        "SellerD": 25.73,
+        "BuyerT": 28.01,
+        "SellerT": 25.75
+      },
+      "8": {
+        "BuyerD": 29.1,
+        "SellerD": 25.73,
+        "BuyerT": 27.96,
+        "SellerT": 25.8
+      }
+    },
+    "3": {
+      "3": {
+        "BuyerD": 21.26,
+        "SellerD": 19.02,
+        "BuyerT": 21.03,
+        "SellerT": 18.72
+      },
+      "4": {
+        "BuyerD": 24.8,
+        "SellerD": 22.26,
+        "BuyerT": 24.25,
+        "SellerT": 21.94
+      },
+      "5": {
+        "BuyerD": 27.48,
+        "SellerD": 24.54,
+        "BuyerT": 26.74,
+        "SellerT": 24.32
+      },
+      "6": {
+        "BuyerD": 28.95,
+        "SellerD": 25.77,
+        "BuyerT": 28.07,
+        "SellerT": 25.72
+      },
+      "7": {
+        "BuyerD": 28.93,
+        "SellerD": 25.79,
+        "BuyerT": 27.9,
+        "SellerT": 25.93
+      },
+      "8": {
+        "BuyerD": 28.93,
+        "SellerD": 25.79,
+        "BuyerT": 27.84,
+        "SellerT": 25.98
+      }
+    },
+    "4": {
+      "4": {
+        "BuyerD": 24.28,
+        "SellerD": 22.67,
+        "BuyerT": 24.11,
+        "SellerT": 22.54
+      },
+      "5": {
+        "BuyerD": 26.77,
+        "SellerD": 24.82,
+        "BuyerT": 26.22,
+        "SellerT": 24.81
+      },
+      "6": {
+        "BuyerD": 28.22,
+        "SellerD": 26.05,
+        "BuyerT": 27.45,
+        "SellerT": 26.19
+      },
+      "7": {
+        "BuyerD": 28.2,
+        "SellerD": 26.07,
+        "BuyerT": 27.26,
+        "SellerT": 26.41
+      },
+      "8": {
+        "BuyerD": 28.2,
+        "SellerD": 26.07,
+        "BuyerT": 27.2,
+        "SellerT": 26.47
+      }
+    },
+    "5": {
+      "5": {
+        "BuyerD": 25.18,
+        "SellerD": 25.23,
+        "BuyerT": 25.1,
+        "SellerT": 25.38
+      },
+      "6": {
+        "BuyerD": 26.52,
+        "SellerD": 26.41,
+        "BuyerT": 26,
+        "SellerT": 26.85
+      },
+      "7": {
+        "BuyerD": 26.5,
+        "SellerD": 26.43,
+        "BuyerT": 25.74,
+        "SellerT": 27.14
+      },
+      "8": {
+        "BuyerD": 26.5,
+        "SellerD": 26.44,
+        "BuyerT": 25.66,
+        "SellerT": 27.24
+      }
+    },
+    "6": {
+      "6": {
+        "BuyerD": 23.75,
+        "SellerD": 25.37,
+        "BuyerT": 23.72,
+        "SellerT": 26.7
+      },
+      "7": {
+        "BuyerD": 23.69,
+        "SellerD": 25.44,
+        "BuyerT": 23.22,
+        "SellerT": 27.45
+      },
+      "8": {
+        "BuyerD": 23.69,
+        "SellerD": 25.45,
+        "BuyerT": 23.04,
+        "SellerT": 27.74
+      }
+    },
+    "7": {
+      "7": {
+        "BuyerD": 19.54,
+        "SellerD": 22.82,
+        "BuyerT": 19.76,
+        "SellerT": 26.43
+      },
+      "8": {
+        "BuyerD": 19.5,
+        "SellerD": 22.9,
+        "BuyerT": 19.34,
+        "SellerT": 27.49
+      }
+    },
+    "8": {
+      "8": {
+        "BuyerD": 15.76,
+        "SellerD": 17.11,
+        "BuyerT": 16.47,
+        "SellerT": 24.26
+      }
+    }
+  }
+}
