@@ -206,6 +206,10 @@ class SellerWait(WaitPage):
     wait_for_all_groups = True
     body_text = "Waiting for all participants to make their choice."
 
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == 1 & player.session.config['test'] == 0
+
 class BuyersView(Page):
     form_model = 'player'
     form_fields = ['response']
@@ -235,6 +239,10 @@ class BuyersView(Page):
 class BuyerWait(WaitPage):
     wait_for_all_groups = True
     body_text = "Waiting for all participants to make their choice."
+
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == 1 & player.session.config['test'] == 0
 
 class Intermediate(Page):
     @staticmethod
@@ -299,7 +307,7 @@ class robot(Page):
 class WaitPage2(WaitPage):
     @staticmethod
     def is_displayed(player):
-        return player.round_number == 3
+        return player.round_number == 3 & player.session.config['test'] == 0
 
     wait_for_all_groups = True
 

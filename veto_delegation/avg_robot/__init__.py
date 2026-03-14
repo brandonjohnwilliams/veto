@@ -234,7 +234,7 @@ class robot(Page):
 class WaitPage2(WaitPage):
     @staticmethod
     def is_displayed(player):
-        return player.round_number == 3
+        return player.round_number == 3 & player.session.config['test'] == 0
 
     wait_for_all_groups = True
 
