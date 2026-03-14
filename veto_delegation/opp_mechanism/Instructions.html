@@ -1,5 +1,5 @@
 {{ block title }}
-Part Two
+Part Three
 {{ endblock }}
 
 
@@ -11,16 +11,32 @@ Part Two
     </head>
 
 <p>
-[Placeholder text for full explanation]
-    </p>
-<p>
-    Next screen will show practice for
+    In previous sessions of this study, rather than choosing
     {{ if single == 1 }}
-    an amount of widgets
+    a menu of widgets to offer, Sellers instead made an offer of a single amount of widgets to the Buyer.
+    That means that rather than a minimum and maximum quantity to offer,
+    Sellers offered a single number of widgets that they made available for purchase to the Buyer.
+    Buyers could choose to purchase the number of Widgets, or purchase zero Widgets.
+    The Seller's could choose their Widget quantity from 1 to 8.
+    Notice that just as in your session, the Seller could never remove the option for the Buyer to purchase zero Widgets.
+
     {{ else }}
-    a menu of widgets
+
+    an amount of widgets to offer, Sellers instead made an offer of a menu of widgets to the Buyer.
+    That means that rather than a single offer, Sellers offered a minimum and maximum number of widgets,
+    that they made available for purchase to the Buyer.
+    Buyers could choose to purchase a number of Widgets from the offered menu, or purchase zero Widgets.
+    The Seller's menu could have a minimum and maximum down to 1 and up to 8, or any value in between.
+    The menu available to the Buyer was any number between the minimum and maximum selection of the menu,
+    and the option to purchase zero Widgets.
+    Notice that just as in your session, the Seller could never remove the option for the Buyer to purchase zero Widgets.
+
     {{ endif }}
-    to offer to the Buyer.
+
+</p>
+<p>
+    On the next page, you will be able to explore the interface that the Sellers used in those sessions.
+    You will also receive additional instructions about how the Seller could make their choice.
 </p>
 
 {{ if test == 1 }}

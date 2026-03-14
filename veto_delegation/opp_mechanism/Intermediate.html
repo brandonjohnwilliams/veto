@@ -1,5 +1,5 @@
 {{ block title }}
-Part Two
+Part Three
 {{ endblock }}
 
 
@@ -11,14 +11,75 @@ Part Two
     </head>
 
 <p>
-You will now make your choice,
+<p>
+    Just as in Part Two, for Part Three you will again be matched to a large number of Robot Buyers,
+    and paid the average Seller payment across those matches.
+    However, in Part Three you will instead use the different method used in the other sessions,
+    so your task is to make
     {{ if single == 1 }}
-    an amount of widgets,
+    an offer of a single quantity of Widgets
     {{ else }}
-    a menu of widgets,
+    an offer of a menu of Widgets to make available
     {{ endif }}
-    to offer to the trained robot Buyer.
+    to the Robot Buyer.
+    Each Robot Buyer has been trained to reflect our best guess for behavior across
+    [56] different Buyer participants in earlier sessions,
+    where those participants made choices in a Part One using this same offer method.
+    Because of this training, for any
+    {{ if single == 1 }}
+    offer
+    {{ else }}
+    menu
+    {{ endif }}
+    you select and any ideal quantity drawn from the urn,
+    the distribution of decisions across the different Robot Buyers reflects our best guess
+    of the distribution of decisions across the [56] prior participants in that situation.
 </p>
+
+<p>
+    As in Part Two, for any
+    {{ if single == 1 }}
+    offer
+    {{ else }}
+    menu
+    {{ endif }}
+    you select in the Part Two decisions,
+    you can think of your payment as the average outcome across millions of different Robot Buyers.
+    Each Robot Buyer represents a fair draw of an ideal quantity from the given urn and
+    a fair draw from the behavior of one of the [56] participants in the prior sessions.
+</p>
+
+<p>
+    Because the payment rule averages across such a large number of Robot Buyers,
+    there is no longer any randomness in payment for any Seller choice.
+    Any possible
+    {{ if single == 1 }}
+    offer
+    {{ else }}
+    menu
+    {{ endif }}
+    you might choose leads to a fixed payment,
+    where that payment reflects our best guess on the average outcome for the Seller payment across
+    the [56] prior participants and the 20 different balls that could be drawn from the urn to determine the Buyer’s ideal quantity.
+</p>
+
+<p>
+    Given this rule, your role in Part Three is to choose the
+    {{ if single == 1 }}
+    offer
+    {{ else }}
+    menu
+    {{ endif }}
+    that you think leads to the highest expected Seller payment.
+    You will make a separate decision over a
+    {{ if single == 1 }}
+    offer to make
+    {{ else }}
+    menu to offer
+    {{ endif }}
+    for each of the three urns: Low, Middle, and High.
+</p>
+
 
 {{ if test == 1 }}
 
