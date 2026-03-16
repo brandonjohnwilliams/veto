@@ -1,0 +1,355 @@
+{{ block title }}
+Buyer's Choice
+{{ endblock }}
+
+{{ block content }}
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+    </head>
+
+<!-- Text -->
+    <p> The Seller will know their randomly determined ideal location:
+
+<br>
+
+<div style="display: flex; justify-content: center; width: 100%;">
+<div style="display: flex; justify-content: center; width: 50%;">
+<table class="tg">
+    <colgroup>
+        <col style="width: 251.2px">
+    </colgroup>
+    <thead>
+        <tr>
+            <th class="tg-7fle"><span style="font-weight:bold">Buyer Sees</span></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><canvas id="ballCanvas" width="280" height="250"></canvas></td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>
+
+
+<button type="button" id="roll-button">Draw X</button>
+
+Given the Seller's choice, the Buyer will have to select a quantity:
+
+    <ul>
+        <li>   Either walking away (0 Widgets purchased). </li>
+        <li> Or
+
+        <!--   This determines which text to show based on the treatment, change this if the method of selecting treatment changes    -->
+            {{ if player.single == 0 }}
+                an amount between the minimum and maximum quantity.
+            {{else}}
+                the offered quantity.
+            {{endif}}
+    </li>
+    </ul>
+
+To help you in this decision, for each of the possible quantity choices, the interface will display the payoffs to the Buyer and Seller.
+When you click the button to Draw X above, one drawn ball will be highlighted in red.
+This is the Buyer's ideal value, which is then highlighed in red in the table below.
+If you are able to choose the number to purchase, M, that matches your ideal value, X, you will receive the highest possible payoff.
+
+<br><br>
+
+<div class="small-table">
+<!-- Payoffs Table -->
+<table id="payoffTable">
+<colgroup>
+<col style="width: 97.2px">
+<col style="width: 90.2px">
+<col style="width: 61.2px">
+<col style="width: 61.2px">
+<col style="width: 61.2px">
+<col style="width: 61.2px">
+<col style="width: 61.2px">
+<col style="width: 61.2px">
+</colgroup>
+<thead>
+  <tr>
+    <th class="tg-c3ow" rowspan="2">Widgets <br>Purchased, M</th>
+    <th class="tg-c3ow" rowspan="2">Seller <br> Payoff</th>
+    <th class="tg-c3ow" colspan="6">Buyer Payoff (by ideal quantity X)</th>
+  </tr>
+  <tr>
+    <th class="tg-0lax">X=1</th>
+    <th class="tg-0lax">X=2</th>
+    <th class="tg-0lax">X=3</th>
+    <th class="tg-0lax">X=4</th>
+    <th class="tg-0lax">X=5</th>
+    <th class="tg-0lax">X=6</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-0pky">M=0</td>
+    <td class="tg-0pky">$4</td>
+    <td class="tg-0pky">$27</td>
+    <td class="tg-0pky">$22</td>
+    <td class="tg-0pky">$17</td>
+    <td class="tg-0pky">$12</td>
+    <td class="tg-0pky">$7</td>
+    <td class="tg-0pky">$4</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">M=1</td>
+    <td class="tg-0pky">$8</td>
+    <td class="tg-0pky">$30</td>
+    <td class="tg-0pky">$25</td>
+    <td class="tg-0pky">$20</td>
+    <td class="tg-0pky">$15</td>
+    <td class="tg-0pky">$10</td>
+    <td class="tg-0pky">$5</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">M=2</td>
+    <td class="tg-0pky">$12</td>
+    <td class="tg-0pky">$25</td>
+    <td class="tg-0pky">$30</td>
+    <td class="tg-0pky">$25</td>
+    <td class="tg-0pky">$20</td>
+    <td class="tg-0pky">$15</td>
+    <td class="tg-0pky">$10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">M=3</td>
+    <td class="tg-0pky">$16</td>
+    <td class="tg-0pky">$20</td>
+    <td class="tg-0pky">$25</td>
+    <td class="tg-0pky">$30</td>
+    <td class="tg-0pky">$25</td>
+    <td class="tg-0pky">$20</td>
+    <td class="tg-0pky">$15</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">M=4</td>
+    <td class="tg-0pky">$20</td>
+    <td class="tg-0pky">$15</td>
+    <td class="tg-0pky">$20</td>
+    <td class="tg-0pky">$25</td>
+    <td class="tg-0pky">$30</td>
+    <td class="tg-0pky">$25</td>
+    <td class="tg-0pky">$20</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">M=5</td>
+    <td class="tg-0pky">$24</td>
+    <td class="tg-0pky">$10</td>
+    <td class="tg-0pky">$15</td>
+    <td class="tg-0pky">$20</td>
+    <td class="tg-0pky">$25</td>
+    <td class="tg-0pky">$30</td>
+    <td class="tg-0pky">$25</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">M=6</td>
+    <td class="tg-0pky">$28</td>
+    <td class="tg-0pky">$5</td>
+    <td class="tg-0pky">$10</td>
+    <td class="tg-0pky">$15</td>
+    <td class="tg-0pky">$20</td>
+    <td class="tg-0pky">$25</td>
+    <td class="tg-0pky">$30</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">M=7</td>
+    <td class="tg-0pky">$32</td>
+    <td class="tg-0pky">$4</td>
+    <td class="tg-0pky">$5</td>
+    <td class="tg-0pky">$10</td>
+    <td class="tg-0pky">$15</td>
+    <td class="tg-0pky">$20</td>
+    <td class="tg-0pky">$25</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">M=8</td>
+    <td class="tg-0pky">$36</td>
+    <td class="tg-0pky">$3</td>
+    <td class="tg-0pky">$4</td>
+    <td class="tg-0pky">$5</td>
+    <td class="tg-0pky">$10</td>
+    <td class="tg-0pky">$15</td>
+    <td class="tg-0pky">$20</td>
+  </tr>
+  </tbody>
+</table>
+</div>
+<br><br>
+Note that the precise payoffs will depend on your ideal quantity, X. While X will be fixed in each round in the experiment, you can see how this will affect payoffs by clicking the "Draw X" button above.
+    <!-- Include JavaScript file -->
+    <script>
+        // Dice Roll Section (for Practice Rounds)
+
+document.getElementById("roll-button").addEventListener("click", rollFromUrnCanvas);
+let radioX = 2;
+function rollFromUrnCanvas() {
+  // Use the middle urn: radioX = 2
+  let radioX = 2;
+  const ballData = getBallDataForUrn(radioX);
+
+  // Create weighted pool from ballData
+  const pool = [];
+  ballData.forEach(spec => {
+    for (let i = 0; i < spec.count; i++) {
+      pool.push(parseInt(spec.label));
+    }
+  });
+
+  // Draw one number at random
+  const randomIndex = Math.floor(Math.random() * pool.length);
+  const selectedX = pool[randomIndex];
+
+  console.log("Drawn value from middle urn:", selectedX);
+
+  // Get the canvas and draw it with the highlight
+  const canvas = document.getElementById("ballCanvas");
+  drawLabeledBallsWithHighlight(canvas, ballData, selectedX);
+
+  // Highlight corresponding column in table
+    const columnToHighlight = selectedX + 2; // offset for 3rd column
+    document.querySelectorAll(".highlight").forEach(cell => {
+        cell.classList.remove("highlight");
+    });
+    document.querySelectorAll("tbody td:nth-child(" + columnToHighlight + ")").forEach(cell => {
+        cell.classList.add("highlight");
+    });
+}
+
+
+function drawLabeledBallsWithHighlight(canvas, ballSpecs, highlightLabel) {
+    // Safety checks
+    if (!canvas || !canvas.getContext) {
+        console.warn("Canvas element not found or unsupported.");
+        return;
+    }
+    if (!Array.isArray(ballSpecs) || ballSpecs.length === 0) {
+        console.warn("ballSpecs is missing or not a valid array.");
+        return;
+    }
+
+    const ctx = canvas.getContext("2d");
+    const bw = 20;
+
+    const columns = 5;
+    const rows = 4;
+    const ballCount = ballSpecs.reduce((sum, spec) => sum + spec.count, 0);
+    const maxBalls = columns * rows;
+
+    if (ballCount > maxBalls) {
+        console.warn("Too many balls for the grid layout!");
+        return;
+    }
+
+    const canvasWidth = 350;
+    const canvasHeight = 300;
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+
+    // Draw background
+    ctx.beginPath();
+    ctx.fillStyle = "#C8C9C7";
+    ctx.roundRect(bw, bw, canvasWidth - 2 * bw, canvasHeight - 2 * bw, bw / 2);
+    ctx.fill();
+    ctx.stroke();
+
+    const cW = (canvasWidth - 2 * bw) / columns;
+    const cH = (canvasHeight - 2 * bw) / rows;
+    const radius = Math.min(cW, cH) / 2.5;
+
+    // Generate grid positions
+    const positions = [];
+    for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < columns; x++) {
+            positions.push({ x, y });
+        }
+    }
+
+    // Build a flat array of ball instances
+    const flatBalls = [];
+    ballSpecs.forEach(spec => {
+        for (let i = 0; i < spec.count; i++) {
+            flatBalls.push({ label: spec.label, color: spec.color });
+        }
+    });
+
+    // Find all indices matching the highlightLabel
+    const highlightIndices = flatBalls
+        .map((ball, index) => (ball.label === String(highlightLabel) ? index : -1))
+        .filter(index => index !== -1);
+
+
+    // Pick one at random to highlight (if any)
+    let highlightIndex = null;
+    if (highlightIndices.length > 0) {
+        highlightIndex = highlightIndices[Math.floor(Math.random() * highlightIndices.length)];
+    }
+
+    // Draw each ball
+    flatBalls.forEach((ball, index) => {
+        const pos = positions[index];
+        if (!pos) return;
+
+        const centerX = bw + cW / 2 + pos.x * cW;
+        const centerY = bw + cH / 2 + pos.y * cH;
+
+        // Draw ball
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = ball.color || "gray";
+        ctx.fill();
+
+        // Border color: red if this is the highlighted one
+        ctx.strokeStyle = (index === highlightIndex) ? "red" : "black";
+        ctx.lineWidth = (index === highlightIndex) ? 4 : 2;
+        ctx.stroke();
+
+        // Label
+        ctx.fillStyle = (index === highlightIndex) ? "red" : "black";
+        ctx.font = `${radius}px sans-serif`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(ball.label ?? "", centerX, centerY);
+    });
+}
+
+
+function getBallDataForUrn(radioX) {
+  if (radioX === 3) {
+    return [
+      { count: 1, color: "white", label: "1" },
+      { count: 1, color: "#eaeded", label: "2" },
+      { count: 3, color: "#d5dbdb", label: "3" },
+      { count: 4, color: "#bfc9ca", label: "4" },
+      { count: 5, color: "#aab7b8", label: "5" },
+      { count: 6, color: "#95a5a6", label: "6" }
+    ];
+  } else if (radioX === 2) {
+    return [
+      { count: 1, color: "white", label: "1" },
+      { count: 4, color: "#eaeded", label: "2" },
+      { count: 5, color: "#d5dbdb", label: "3" },
+      { count: 5, color: "#bfc9ca", label: "4" },
+      { count: 4, color: "#aab7b8", label: "5" },
+      { count: 1, color: "#95a5a6", label: "6" }
+    ];
+  } else {
+    return [
+      { count: 6, color: "white", label: "1" },
+      { count: 5, color: "#eaeded", label: "2" },
+      { count: 4, color: "#d5dbdb", label: "3" },
+      { count: 3, color: "#bfc9ca", label: "4" },
+      { count: 1, color: "#aab7b8", label: "5" },
+      { count: 1, color: "#95a5a6", label: "6" }
+    ];
+  }
+}
+
+rollFromUrnCanvas();
+
+    </script>
+{{ endblock }}

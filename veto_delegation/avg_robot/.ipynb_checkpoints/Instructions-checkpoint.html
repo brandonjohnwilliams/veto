@@ -10,20 +10,91 @@ Part Two
         <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
     </head>
 
-
-
 <p>
-For Part two we will ask you to make a decision as a Seller, with a separate decision for each of the three types of urn. 
-However, in each of the three decisions, you will be matched with a Robot Buyer. The Robot Buyer will draw a value of X from the relevant urn, but has been programmed to purchase the number of widgets that gives the Robot Buyer the highest possible payoff. 
+    In Part Two of the experiment you will make decisions as the Seller, choosing
+    {{ if single == 1 }}
+    an amount of widgets
+    {{ else }}
+    a menu of widgets
+    {{ endif }}
+    to offer to the Buyer.
+    In Part One there was some randomness in your round payoff as the
+    Seller, affected by the ideal quantity drawn, and the particular Buyer participant you were matched to. In contrast, in Part Two we will remove this randomness, paying you a certain amount for any particular choice you might make. This certain amount of money on offer is the <b>average expected payment</b> from your choice over the {{ if single == 1 }}
+    offer
+    {{ else }}
+    menu
+    {{ endif }}.
 </p>
 <p>
- If you are selected for Payment in Part Two, one of your three decisions will be randomly selected. We will fairly draw an ideal value X for the Robot Buyer from the given urn, and the Robot Buyer will then make a purchase choice from the widget options you selected that maximizes the Robot Buyer's payoff. Your payoff if selected for payment in Part Two will be $8 plus $4 for every widget purchased by the Robot Buyer.
-
+    To generate this payment amount, instead of being matched to another participant in this room,
+    you will be matched to a large number of Robot Buyers,
+    and paid the average Seller payment across those matches.
+    Each Robot Buyer has been trained to reflect a best guess for the choices across
+    [56] different Buyer participants that completed earlier sessions of this experiment,
+    making choices in an identical Part One.
+    Because of this training, for any
+    {{ if single == 1 }}
+    offer
+    {{ else }}
+    menu
+    {{ endif }}
+    you select, and any ideal quantity drawn from the urn,
+    the Robot Buyers' decisions reflect our best guess
+    over the distribution of decisions you could expect playing against each of the [56] prior participants.
 </p>
+
 <p>
-Taking on the role of the Seller, please make a decision for each type of urn. 
+    For any
+    {{ if single == 1 }}
+    offer
+    {{ else }}
+    menu
+    {{ endif }}
+    you select in the Part Two decisions,
+    you can think of your payment as being calculated by averaging the Seller's payoff across millions of different Robot Buyers.
+    Each separate Robot Buyer represents a fair draw over both an ideal quantity <b>from the given urn</b> and
+    and of the likely choices from of one of the [56] prior participants.
 </p>
 
+<p>
+    Because the payment rule averages across a large number of Robot Buyers,
+    there is no longer any randomness in the payment for any specific {{ if single == 1 }}
+    offer
+    {{ else }}
+    menu
+    {{ endif }} you select as the Seller.
+    Any choice you make will lead to a fixed additional payment. 
+    where that payment reflects our best guess on the average outcome for the Seller payment across
+    the [56] prior participants and the 20 different balls that could be drawn from the urn to determine the Buyer’s ideal quantity.
+</p>
 
+<p>
+    Given this rule, your role in Part Two is to choose whichever
+    {{ if single == 1 }}
+    offer
+    {{ else }}
+    menu
+    {{ endif }}
+    you think will generate the highest average payment for the Seller.
+    You will make a separate decision over a
+    {{ if single == 1 }}
+    offer to make
+    {{ else }}
+    menu to offer
+    {{ endif }}
+    for each of the three separate urns (Low, Middle, and High), where the different urns affect the chances for each Robot Buyer's ideal quantity.
+</p>
+
+{{ if test == 1 }}
+
+(Next button for testing purposes.)
+
+<div style="text-align: right;">
+
+        <button class="otree-btn-next btn btn-primary">Next</button>
+
+</div>
+
+{{ endif }}
 
 {{ endblock }}

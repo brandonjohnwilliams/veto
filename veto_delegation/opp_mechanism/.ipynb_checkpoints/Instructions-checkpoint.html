@@ -1,5 +1,5 @@
 {{ block title }}
-Part Two
+Part Three
 {{ endblock }}
 
 
@@ -10,20 +10,41 @@ Part Two
         <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
     </head>
 
-
-
 <p>
-For Part two we will ask you to make a decision as a Seller, with a separate decision for each of the three types of urn. 
-However, in each of the three decisions, you will be matched with a Robot Buyer. The Robot Buyer will draw a value of X from the relevant urn, but has been programmed to purchase the number of widgets that gives the Robot Buyer the highest possible payoff. 
+    Part three will be very similar to Part two, where we will pay you the average outcome across a very large number of robot buyers. However, the Part Three payments are based on <b>a different version of this experiment</b>.  
+    
+    In previous sessions of this study, rather than choosing
+    {{ if single == 1 }}
+    a menu of widgets to offer the Buyer, Sellers instead chose a fixed number of widgets to offer.
+    Where in your session you chose a minimum and maximum quantity to offer, in the other version of this experiment the
+    Sellers offered <b>a fixed number of widgets</b> to the Buyer.
+    Buyers could choose between the offered amount of widgets or to walk away (zero widgets).
+    The Seller's choice was therefore any single widget quantity to offer from 1 to 8.
+    Notice that just as in your session, the Seller could never remove the option for the Buyer to walk away (zero widgets).
+    {{ else }}
+    a fixed number of widgets to offer the Buyer, Sellers instead chose a menu of widgets to offer.
+    Where in your session you chose a single amount to offer, in the other version of this experiment the 
+    Sellers offered <b>a minimum and maximum number of widgets</b> to the Buyer.
+    Buyers could choose between any amount of widgets on the offered menu or to walk away (zero widgets).
+    The Seller's choice was therefore both a minimum and a maximum amount of widgets to offer from 1 to 8.
+    Notice that just as in your session, the Seller could never remove the option for the Buyer to walk away (zero widgets).
+    {{ endif }}
+
 </p>
 <p>
- If you are selected for Payment in Part Two, one of your three decisions will be randomly selected. We will fairly draw an ideal value X for the Robot Buyer from the given urn, and the Robot Buyer will then make a purchase choice from the widget options you selected that maximizes the Robot Buyer's payoff. Your payoff if selected for payment in Part Two will be $8 plus $4 for every widget purchased by the Robot Buyer.
-
-</p>
-<p>
-Taking on the role of the Seller, please make a decision for each type of urn. 
+    On the next page, you will be able to explore the interface that the Sellers and Buyers saw in the alternate version of this experiment.
 </p>
 
+{{ if test == 1 }}
 
+(Next button for testing purposes.)
+
+<div style="text-align: right;">
+
+        <button class="otree-btn-next btn btn-primary">Next</button>
+
+</div>
+
+{{ endif }}
 
 {{ endblock }}
