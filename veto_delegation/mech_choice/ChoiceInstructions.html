@@ -5,208 +5,220 @@ Part Four
 {% block content %}
 
 <head>
-<style>
-  .mpl-wrap {
-    max-width: 980px;
-    margin: 24px auto;
-    padding: 0 12px;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  }
-
-  .mpl-title {
-    font-size: 18px;
-    font-weight: 650;
-    margin: 0 0 10px 0;
-  }
-
-  .mpl-subtitle {
-    margin: 0 0 16px 0;
-    color: #444;
-    line-height: 1.35;
-    font-size: 14px;
-  }
-
-  .mpl-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    background: #fff;
-    border: 1px solid #e6e6e6;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-  }
-
-  .mpl-table thead th {
-    text-align: left;
-    font-size: 13px;
-    letter-spacing: 0.2px;
-    color: #222;
-    background: #f7f7f8;
-    padding: 14px 16px;
-    border-bottom: 1px solid #e6e6e6;
-  }
-
-  .mpl-table tbody td {
-    padding: 14px 16px;
-    font-size: 14px;
-    line-height: 1.25;
-    vertical-align: middle;
-    transition: background 0.15s ease, box-shadow 0.15s ease;
-  }
-
-  .mpl-table tbody tr + tr td {
-    border-top: 1px solid #f0f0f0;
-  }
-
-  /* column sizing + subtle dividers */
-  .mpl-table colgroup col:nth-child(1) { width: 42%; }
-  .mpl-table colgroup col:nth-child(2) { width: 42%; }
-  .mpl-table colgroup col:nth-child(3) { width: 16%; }
-
-  .mpl-table tbody td + td,
-  .mpl-table thead th + th {
-    border-left: 1px solid #ededed;
-  }
-
-  /* zebra striping */
-  .mpl-table tbody tr:nth-child(even) td {
-    background: #fcfcfd;
-  }
-
-  .delta {
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
-    font-weight: 600;
-  }
-
-  .switch-col {
-    text-align: center;
-  }
-
-  /* Make the radio easier to click */
-  .radio-wrap {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    user-select: none;
-  }
-  .radio-wrap input[type="radio"] {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-  }
-
-  /* Highlighting rules (applied by JS) */
-  .cell-green {
-    background: #e9f8ee !important;
-    box-shadow: inset 0 0 0 1px #bfe8c8;
-  }
-
-  .row-selected td {
-    box-shadow: inset 0 0 0 9999px rgba(0,0,0,0.02);
-  }
-
-  /* Special last row (merged instruction cell) */
-  .always-row td {
-    background: #fbfbfc;
-  }
-  .always-row td {
-    border-left: none !important;
-  }
-
-  @media (max-width: 700px) {
-    .mpl-table,
-    .mpl-table thead,
-    .mpl-table tbody,
-    .mpl-table th,
-    .mpl-table td,
-    .mpl-table tr {
-      display: block;
+  <style>
+    .mpl-wrap {
+      max-width: 980px;
+      margin: 24px auto;
+      padding: 0 12px;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
-    .mpl-table thead {
-      position: absolute;
-      left: -9999px;
-      top: -9999px;
+    .mpl-title {
+      font-size: 18px;
+      font-weight: 650;
+      margin: 0 0 10px 0;
+    }
+
+    .mpl-subtitle {
+      margin: 0 0 16px 0;
+      color: #444;
+      line-height: 1.35;
+      font-size: 14px;
     }
 
     .mpl-table {
-      border-radius: 12px;
-      overflow: visible;
-    }
-
-    .mpl-table tbody tr {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: #fff;
       border: 1px solid #e6e6e6;
       border-radius: 12px;
-      margin-bottom: 12px;
       overflow: hidden;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+
+    .mpl-table thead th {
+      text-align: left;
+      font-size: 13px;
+      letter-spacing: 0.2px;
+      color: #222;
+      background: #f7f7f8;
+      padding: 14px 16px;
+      border-bottom: 1px solid #e6e6e6;
     }
 
     .mpl-table tbody td {
-      border: none !important;
-      padding: 12px 14px;
-      background: #fff;
-      text-align: left;
+      padding: 14px 16px;
+      font-size: 14px;
+      line-height: 1.25;
+      vertical-align: middle;
+      transition: background 0.15s ease, box-shadow 0.15s ease;
     }
 
-    .mpl-table tbody td:nth-child(1)::before {
-      content: "Option A";
-      display: block;
-      font-size: 12px;
-      color: #666;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
+    .mpl-table tbody tr+tr td {
+      border-top: 1px solid #f0f0f0;
     }
 
-    .mpl-table tbody td:nth-child(2)::before {
-      content: "Option B";
-      display: block;
-      font-size: 12px;
-      color: #666;
-      margin: 10px 0 6px 0;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
+    /* column sizing + subtle dividers */
+    .mpl-table colgroup col:nth-child(1) {
+      width: 42%;
     }
 
-    .mpl-table tbody td:nth-child(3)::before {
-      content: "Switching point";
-      display: block;
-      font-size: 12px;
-      color: #666;
-      margin: 10px 0 6px 0;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
+    .mpl-table colgroup col:nth-child(2) {
+      width: 42%;
     }
 
+    .mpl-table colgroup col:nth-child(3) {
+      width: 16%;
+    }
+
+    .mpl-table tbody td+td,
+    .mpl-table thead th+th {
+      border-left: 1px solid #ededed;
+    }
+
+    /* zebra striping */
     .mpl-table tbody tr:nth-child(even) td {
-      background: #fff;
+      background: #fcfcfd;
+    }
+
+    .delta {
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      font-weight: 600;
     }
 
     .switch-col {
-      text-align: left;
+      text-align: center;
     }
 
-    /* On mobile, colspan doesn't matter since cells become blocks.
-       We'll just make the merged cell look like a card line. */
+    /* Make the radio easier to click */
+    .radio-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .radio-wrap input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    /* Highlighting rules (applied by JS) */
+    .cell-green {
+      background: #e9f8ee !important;
+      box-shadow: inset 0 0 0 1px #bfe8c8;
+    }
+
+    .row-selected td {
+      box-shadow: inset 0 0 0 9999px rgba(0, 0, 0, 0.02);
+    }
+
+    /* Special last row (merged instruction cell) */
     .always-row td {
-      background: #fbfbfc !important;
-      border-top: 1px solid #f0f0f0 !important;
+      background: #fbfbfc;
     }
-    .always-row td::before {
-      content: "Note";
-      display: block;
-      font-size: 12px;
-      color: #666;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
+
+    .always-row td {
+      border-left: none !important;
     }
-  }
-</style>
+
+    @media (max-width: 700px) {
+
+      .mpl-table,
+      .mpl-table thead,
+      .mpl-table tbody,
+      .mpl-table th,
+      .mpl-table td,
+      .mpl-table tr {
+        display: block;
+      }
+
+      .mpl-table thead {
+        position: absolute;
+        left: -9999px;
+        top: -9999px;
+      }
+
+      .mpl-table {
+        border-radius: 12px;
+        overflow: visible;
+      }
+
+      .mpl-table tbody tr {
+        border: 1px solid #e6e6e6;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        overflow: hidden;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+      }
+
+      .mpl-table tbody td {
+        border: none !important;
+        padding: 12px 14px;
+        background: #fff;
+        text-align: left;
+      }
+
+      .mpl-table tbody td:nth-child(1)::before {
+        content: "Option A";
+        display: block;
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+      }
+
+      .mpl-table tbody td:nth-child(2)::before {
+        content: "Option B";
+        display: block;
+        font-size: 12px;
+        color: #666;
+        margin: 10px 0 6px 0;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+      }
+
+      .mpl-table tbody td:nth-child(3)::before {
+        content: "Switching point";
+        display: block;
+        font-size: 12px;
+        color: #666;
+        margin: 10px 0 6px 0;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+      }
+
+      .mpl-table tbody tr:nth-child(even) td {
+        background: #fff;
+      }
+
+      .switch-col {
+        text-align: left;
+      }
+
+      /* On mobile, colspan doesn't matter since cells become blocks.
+       We'll just make the merged cell look like a card line. */
+      .always-row td {
+        background: #fbfbfc !important;
+        border-top: 1px solid #f0f0f0 !important;
+      }
+
+      .always-row td::before {
+        content: "Note";
+        display: block;
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+      }
+    }
+  </style>
 
 
 
@@ -215,33 +227,44 @@ Part Four
 </head>
 
 <p>
-    We are interested in knowing which of these two types of sessions you think was better for the Sellers.
-    Your task in Part Four is to indicate how much better or worse the menu session was for Sellers, using the table below for each of the urn types.
+  We are interested in your relative valuation of the two versions of this experiment for the Sellers: the <b>single
+    offer</b> version, and the <b>menu</b> version.
+  Your task in Part Four is to indicate how much more or less you value each version.
 </p>
 <p>
-    In the table, you will choose your preferred option between a payoff from the average of two different sessions.
-    On the left side of the table, you can choose to earn the average Seller payoff from a previous session that used a single offer, just as in your session.
-    This amount is always the same.
+  In the table below, you will choose your preferred option between the average Seller payoff from the two different
+  types of sessions. <b>Crucially, the average payoffs shown in the table are exactly the fixed payments derived from your own Seller choices in Part Two and Part Three.</b>
 </p>
 <p>
-    On the right side of the table, you can choose to earn the average Seller payoff from a previous session that used the menu offer.
-    You will notice that this amount changes, as we add or subtract additional money from the average payoff of the menu session.
-    For example, at the top of the table, the left side of the table starts with "Single offer average + $5."
-    The amount added to the left side then decreases with each row, until no money is added to the single offer average at the midpoint of the table.
-    From there, money is added to the average menu payoff, until the last row is "menu offer average + $5."
+  <b>Option A (Left Side)</b> will always give you the average Seller payoff from your choice in the <b>single offer</b>
+  mechanism{{ if single == 1 }} (your choice from Part Two){{ else }} (your choice from Part Three){{ endif }}.
+  This average payment amount is fixed across all rows.
 </p>
 <p>
-    The computer will randomly draw one of the rows for payment.
-    If you are selected for payment this round, whichever side of the selected row you chose will be added to your total pay.
+  <b>Option B (Right Side)</b> will give you the average Seller payoff from your choice in the <b>menu</b>
+  mechanism{{ if single == 0 }} (your choice from Part Two){{ else }} (your choice from Part Three){{ endif }}.
+  However, you will notice that this amount changes: in each row, we add or subtract additional money from this menu payoff average.
 </p>
 <p>
-    Presumably, there is a row where you would switch from the right side of the table to the left.
-    To make your selection easier, you need only select the row where you would switch.
-    The interface will automatically select the options that correspond to your switching point.
-    If you would <strong>always</strong> choose the left side, simply select the last row of the table: "Always choose the single offer average."
+  For example, at the top of the table, Option A is "Single offer average + $5".
+  The amount added to Option A decreases with each row until the midpoint.
+  From there, money is instead added to the menu average (Option B) until the last row reaches "Menu offer average +
+  $5."
 </p>
 <p>
-    Text at the bottom of the page will automatically update what your choice means in words.
+  The computer will randomly draw one of the rows for payment.
+  If you are selected for payment in this round, whichever side of the selected row you chose will be added to your
+  total pay.
+</p>
+<p>
+  Presumably, there is a row where your preferred choice switches between the two options based on the added money.
+  To make your selection easier, you need only select the row where you would switch.
+  The interface will automatically select the options that correspond to your switching point.
+  If you exclusively value the single offer average regardless of the additional money offered on the menu side, simply
+  select the last row of the table: "Always choose the single offer average."
+</p>
+<p>
+  Text at the bottom of the page will automatically update what your choice means in words.
 </p>
 
 <div class="mpl-wrap">
@@ -268,7 +291,7 @@ Part Four
     <tbody id="mplBody">
       <!-- Main MPL rows: X from -5 to +5 -->
       <tr data-x="-5">
-        <td class="cell-a">Single offer average  <span class="delta">+ $5</span></td>
+        <td class="cell-a">Single offer average <span class="delta">+ $5</span></td>
         <td class="cell-b">Menu offer average</td>
         <td class="switch-col">
           <label class="radio-wrap">
@@ -400,13 +423,13 @@ Part Four
     </tbody>
   </table>
 
-<p id="switch-explain" style="margin: 14px 2px 0; font-size: 14px; color: #333;"></p>
-{{ formfield_errors 'switch_point' }}
+  <p id="switch-explain" style="margin: 14px 2px 0; font-size: 14px; color: #333;"></p>
+  {{ formfield_errors 'switch_point' }}
 </div>
 
 {{ next_button }}
 
-    <!-- Include JavaScript file -->
+<!-- Include JavaScript file -->
 
 
 <script>
@@ -430,55 +453,55 @@ Part Four
     }
 
 
-const explainEl = document.getElementById("switch-explain");
+    const explainEl = document.getElementById("switch-explain");
 
-function setExplanation(selectedValue) {
-  if (!explainEl) return;
+    function setExplanation(selectedValue) {
+      if (!explainEl) return;
 
-  if (selectedValue === "ALWAYS_A") {
-    explainEl.textContent =
-      "You chose to always select the single offer average (Option A) for every row.";
-    return;
-  }
+      if (selectedValue === "ALWAYS_A") {
+        explainEl.textContent =
+          "You chose to always select the single offer average (Option A) for every row.";
+        return;
+      }
 
-  const x = Number(selectedValue);
+      const x = Number(selectedValue);
 
-  if (x === -5) {
-    explainEl.textContent =
-      "You chose to always select the menu offer average (Option B) for every row.";
-    return;
-  }
-
-
-  if (x === 0) {
-    explainEl.textContent =
-      "Your switching point is when we no longer add money to the single offer session: you would choose the menu offer session (Option B) unless we add money to the single session.";
-    return;
-  }
-
-  var sign = x >= 0 ? "+" : "−";
-  var absx = Math.abs(x);
-  var addx = Math.abs(x)+1;
-
-  if (x >-5 && x <0) {
-
-    explainEl.textContent =
-      `Your switching point is +$${absx} to the single offer: you would choose the menu offer session (Option B) unless we add at least +$${addx} to the single offer average. `;
-    return;
-  }
-
-  if (x >0 && x <=5) {
-
-    explainEl.textContent =
-      `Your switching point is ${sign}$${absx} to the menu offer: you would choose the menu offer session (Option B) only if we add at least $${absx} to it. Otherwise, you would choose the single offer average.`;
-    return;
-  }
+      if (x === -5) {
+        explainEl.textContent =
+          "You chose to always select the menu offer average (Option B) for every row.";
+        return;
+      }
 
 
-  explainEl.textContent =
-    `Your switching point is ${sign}$${absx}: you would choose the single offer session (Option A) for rows below ${sign}$${absx}, ` +
-    `and the menu offer session (Option B) starting at ${sign}$${absx} and for all higher rows.`;
-}
+      if (x === 0) {
+        explainEl.textContent =
+          "Your switching point is when we no longer add money to the single offer session: you would choose the menu offer session (Option B) unless we add money to the single session.";
+        return;
+      }
+
+      var sign = x >= 0 ? "+" : "−";
+      var absx = Math.abs(x);
+      var addx = Math.abs(x) + 1;
+
+      if (x > -5 && x < 0) {
+
+        explainEl.textContent =
+          `Your switching point is +$${absx} to the single offer: you would choose the menu offer session (Option B) unless we add at least +$${addx} to the single offer average. `;
+        return;
+      }
+
+      if (x > 0 && x <= 5) {
+
+        explainEl.textContent =
+          `Your switching point is ${sign}$${absx} to the menu offer: you would choose the menu offer session (Option B) only if we add at least $${absx} to it. Otherwise, you would choose the single offer average.`;
+        return;
+      }
+
+
+      explainEl.textContent =
+        `Your switching point is ${sign}$${absx}: you would choose the single offer session (Option A) for rows below ${sign}$${absx}, ` +
+        `and the menu offer session (Option B) starting at ${sign}$${absx} and for all higher rows.`;
+    }
 
 
     function highlightAllA() {
@@ -527,10 +550,10 @@ function setExplanation(selectedValue) {
 
     radios.forEach((r) => {
 
-r.addEventListener("change", () => {
-  applyHighlights(r.value);
-  setExplanation(r.value);
-});
+      r.addEventListener("change", () => {
+        applyHighlights(r.value);
+        setExplanation(r.value);
+      });
 
     });
 

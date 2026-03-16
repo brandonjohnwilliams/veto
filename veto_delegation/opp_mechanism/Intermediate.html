@@ -19,11 +19,11 @@ Part Three
     {{ if single == 1 }}
     a single number of Widgets
     {{ else }}
-    an menu of Widgets
+    a menu of Widgets
     {{ endif }}
     to offer the Robot Buyers.
     Similar to Part Two, each Robot Buyer has been trained to reflect our best guess for the behavior of
-    [60] different Buyer participants from sessions with the different version of this experiment in Part One.
+    {{ if single == 1 }}64{{ else }}66{{ endif }} different Buyer participants from sessions with the different version of this experiment in Part One.
     Because of this training, for any
     {{ if single == 1 }}
     offer
@@ -32,7 +32,7 @@ Part Three
     {{ endif }}
     you select and any ideal quantity drawn from the urn,
     the distribution of decisions across the different Robot Buyers reflects our best guess
-    of the distribution of decisions across the [60] prior participants in that situation.
+    of the distribution of decisions across the {{ if single == 1 }}64{{ else }}66{{ endif }} prior participants in that situation.
 </p>
 
 <p>
@@ -42,10 +42,10 @@ Part Three
     {{ else }}
     menu
     {{ endif }}
-    you select in the Part Two decisions,
+    you select in your <b>Part Three</b> decisions,
     you can think of your payment as the average outcome across millions of different Robot Buyers.
     Each Robot Buyer represents a fair draw of an ideal quantity from the given urn and
-    a fair draw from the behavior of one of the [56] participants in the prior sessions.
+    a fair draw from the behavior of one of the <b>{{ if single == 1 }}64{{ else }}66{{ endif }}</b> participants in the prior sessions.
 </p>
 
 <p>
@@ -59,7 +59,7 @@ Part Three
     {{ endif }}
     you might choose leads to a fixed payment,
     where that payment reflects our best guess on the average outcome for the Seller payment across
-    the [56] prior participants and the 20 different balls that could be drawn from the urn to determine the Buyer’s ideal quantity.
+    the <b>{{ if single == 1 }}64{{ else }}66{{ endif }}</b> prior participants and the 20 different balls that could be drawn from the urn to determine the Buyer’s ideal quantity.
 </p>
 
 <p>

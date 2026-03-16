@@ -30,7 +30,7 @@ Part Two
     you will be matched to a large number of Robot Buyers,
     and paid the average Seller payment across those matches.
     Each Robot Buyer has been trained to reflect a best guess for the choices across
-    [56] different Buyer participants that completed earlier sessions of this experiment,
+    {{ if single == 1 }}66{{ else }}64{{ endif }} different Buyer participants that completed earlier sessions of this experiment,
     making choices in an identical Part One.
     Because of this training, for any
     {{ if single == 1 }}
@@ -40,7 +40,7 @@ Part Two
     {{ endif }}
     you select, and any ideal quantity drawn from the urn,
     the Robot Buyers' decisions reflect our best guess
-    over the distribution of decisions you could expect playing against each of the [56] prior participants.
+    over the distribution of decisions you could expect playing against each of the {{ if single == 1 }}66{{ else }}64{{ endif }} prior participants.
 </p>
 
 <p>
@@ -53,7 +53,7 @@ Part Two
     you select in the Part Two decisions,
     you can think of your payment as being calculated by averaging the Seller's payoff across millions of different Robot Buyers.
     Each separate Robot Buyer represents a fair draw over both an ideal quantity <b>from the given urn</b> and
-    and of the likely choices from of one of the [56] prior participants.
+    and of the likely choices from one of the {{ if single == 1 }}66{{ else }}64{{ endif }} prior participants.
 </p>
 
 <p>
@@ -65,7 +65,7 @@ Part Two
     {{ endif }} you select as the Seller.
     Any choice you make will lead to a fixed additional payment. 
     where that payment reflects our best guess on the average outcome for the Seller payment across
-    the [56] prior participants and the 20 different balls that could be drawn from the urn to determine the Buyer’s ideal quantity.
+    the {{ if single == 1 }}66{{ else }}64{{ endif }} prior participants and the 20 different balls that could be drawn from the urn to determine the Buyer’s ideal quantity.
 </p>
 
 <p>
