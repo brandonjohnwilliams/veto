@@ -171,8 +171,8 @@ def creating_session(subsession):
 
             group.vetoer_bias = match[urn_key]
             # Debug
-            print(
-                f"✅ Group {group.id_in_subsession}: proposer {proposer_subject_id}, urn {urn_type}, selectedX = {group.vetoer_bias}")
+            # print(
+            #     f"✅ Group {group.id_in_subsession}: proposer {proposer_subject_id}, urn {urn_type}, selectedX = {group.vetoer_bias}")
     else:
 
         # do the entire matching again with a re-indexed round number (round - 3)
@@ -257,9 +257,8 @@ def creating_session(subsession):
 
             group.vetoer_bias = match[urn_key]
             # Debug
-            print(
-                f"✅ Group {group.id_in_subsession}: proposer {proposer_subject_id}, urn {urn_type}, selectedX = {group.vetoer_bias}")
-
+            # print(
+            #     f"✅ Group {group.id_in_subsession}: proposer {proposer_subject_id}, urn {urn_type}, selectedX = {group.vetoer_bias}")
 
 # PAGES
 class Intro(Page):
@@ -298,9 +297,6 @@ class RolesIntro(Page):
     @staticmethod
     def is_displayed(player):
         return player.round_number == 1
-
-
-
 
 class Roles(Page):
     timeout_seconds = 20
@@ -354,17 +350,15 @@ class Proposal(Page):
 
     @staticmethod
     def before_next_page(player, timeout_happened):
-        group = player.group
         participant = player.participant
-        if player.role == 'Seller':
-            participant.sliders.append(player.minSlider)
-            participant.sliders.append(player.maxSlider)
-            group.minSlider = player.minSlider
-            group.maxSlider = player.maxSlider
+        participant.sliders.append(player.minSlider)
+        participant.sliders.append(player.maxSlider)
+
+
 
 
 class Response(Page):
-    form_model = 'group'
+    form_model = 'player'
     form_fields = ['response']
 
     @staticmethod
@@ -372,30 +366,37 @@ class Response(Page):
         return player.round_number > 3
 
     @staticmethod
-    def after_all_players_arrive(group):
-        seller = group.get_player_by_id(1)  # or however you identify Seller
-
-        if seller.role == 'Seller':  # use seller.role() if role is a method
-            group.minSlider = seller.participant.sliders[group.round_number - 4]
-            group.maxSlider = seller.participant.sliders[group.round_number - 3]
-
-    @staticmethod
     def js_vars(player):
-        group = player.group
+        partner = player.get_others_in_group()[0]
+        partner_history = partner.participant.vars.get('sliders')
+        Minidx = player.round_number - 4
+        Maxidx = player.round_number - 3
+        minSlider = partner_history[Minidx]
+        maxSlider = partner_history[Maxidx]
+        print(minSlider, maxSlider)
         return dict(
             selectedX=player.group.vetoer_bias,
-            fromM=group.minSlider,
-            toM=group.maxSlider,
+            fromM=minSlider,
+            toM=maxSlider,
             response=1,
         )
 
     @staticmethod
     def vars_for_template(player):
         group = player.group
+        partner = player.get_others_in_group()[0]
+        partner_history = partner.participant.vars.get('sliders')
+        Minidx = player.round_number - 4
+        Maxidx = player.round_number - 3
+        minSlider = partner_history[Minidx]
+        maxSlider = partner_history[Maxidx]
+        print(minSlider, maxSlider)
         return {
             "selectedX": group.vetoer_bias,
             "roundName": group.roundName,
             "roundType": group.roundType,
+            "minSlider": minSlider,
+            "maxSlider": maxSlider,
         }
 
 
