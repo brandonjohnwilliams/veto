@@ -1,0 +1,24 @@
+{{ block title }}
+Your Role: Seller
+{{ endblock }}
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+</head>
+
+<p>
+    You are the Seller. You will propose what {{ if player.single == 1}} option{{ else }}menu of options{{endif}} for the number of Widgets that the Buyer can choose to buy.
+    Remember, the Buyer <strong>will not</strong> have the option to walk away and purchase zero Widgets.
+</p>
+
+
+<p>This page will automatically advance in <span class="otree-timer__time-left">0:15</span>.</p>
+
+<!-- Include JavaScript file -->
+<script src="{{ static 'veto_delegation/interface.js' }}"></script>
+
+
+
+{% endblock %}

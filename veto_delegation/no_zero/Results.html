@@ -1,0 +1,103 @@
+{{ block title }}
+    Results - Round {{player.round_number}}
+{{ endblock }}
+
+
+{{ block content }}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Table</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        th:nth-child(1), td:nth-child(1) { width: 10%; } /* Round */
+        th:nth-child(2), td:nth-child(2) { width: 20%; } /* Dice Roll */
+        th:nth-child(3), td:nth-child(3) { width: 15%; } /* Role */
+        th:nth-child(4), td:nth-child(4) { width: 15%; } /* Offer */
+        th:nth-child(5), td:nth-child(5) { width: 15%; } /* Choice */
+        th:nth-child(6), td:nth-child(6) { width: 15%; } /* Payoff */
+
+        .otree-timer { display: none; }
+    </style>
+</head>
+
+
+
+<table id="gameTable">
+    <thead>
+        <tr>
+            <th>Round</th>
+            <th>Urn Type</th>
+            <th>Role</th>
+            <th>Offer</th>
+            <th>Choice</th>
+            <th>Payoff</th>
+<!--            <th>Buyer Payoff</th>-->
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<br>
+<p>This page will automatically advance in <span class="otree-timer__time-left">0:20</span>.</p>
+
+
+
+    <script>
+    function generateTable() {
+        let numRows = js_vars.round;  // Assuming this is the total number of rounds
+        let roundName = js_vars.roundName;
+        let idealX = js_vars.idealX;
+        let offerMin = js_vars.offerMin;
+        let offerMax = js_vars.offerMax;
+        let choice = js_vars.choice;
+        let payoff = js_vars.payoff;
+        let buyer_payoff = js_vars.buyer_payoff;
+        let role = js_vars.role
+        let tbody = document.querySelector("#gameTable tbody");
+        tbody.innerHTML = ""; // Clear previous table contents
+
+        for (let i = 0; i < numRows; i++) {  // Start loop from 0 to match array indices
+            let row = tbody.insertRow();
+
+            row.insertCell(0).textContent = i + 1; // Round number (1-based index)
+            row.insertCell(1).textContent = roundName[i].replace(/^\w/, (c) => c.toUpperCase());  // Access rounddice at index i
+            row.insertCell(2).textContent = `${role[i]}`;  // Access idealX at index i
+            if (offerMin[i] === offerMax[i]) {
+                if (offerMin[i] === 1) {
+                    row.insertCell(3).textContent = `${offerMin[i]} widget`;
+                } else {
+                    row.insertCell(3).textContent = `${offerMin[i]} widgets`;
+                }}
+            else {
+                row.insertCell(3).textContent = `${offerMin[i]} to ${offerMax[i]} widgets`;
+            }
+            if (choice === 1) {
+                row.insertCell(4).textContent = `${choice[i]} widget`;  // Access choice at index i
+            } else {
+                row.insertCell(4).textContent = `${choice[i]} widgets`;  // Access choice at index i
+            }
+            row.insertCell(5).textContent = `$${payoff[i]}`;  // Access payoff at index i
+            // row.insertCell(5).textContent = `${buyer_payoff}`;  // Access payoff at index i
+        }
+    }
+
+    // Generate default table on load
+    window.onload = generateTable;
+
+    </script>
+
+{{ endblock }}
+
+

@@ -28,12 +28,13 @@ SESSION_CONFIGS = [
             # 'introduction',
             # 'practice',
             # 'veto_delegation',
+            'no_zero',
             'avg_robot',
             'opp_mechanism',
             'mech_choice',
             # 'payment',
         ],
-        num_demo_participants=1,
+        num_demo_participants=20,
         take_it_or_leave_it=False,
         chat=False,
         use_browser_bots=False,
@@ -56,7 +57,7 @@ SESSION_CONFIG_DEFAULTS = dict(
 OTREE_PRODUCTION=1
 DEBUG=False
 
-PARTICIPANT_FIELDS = ['MatchingGroup', 'SubGroup', 'PayRound', 'PartOnePayoff', 'BonusPay', 'dictator_order', ]
+PARTICIPANT_FIELDS = ['MatchingGroup', 'SubGroup', 'PayRound', 'PartOnePayoff', 'BonusPay', 'dictator_order', 'sliders']
 SESSION_FIELDS = ['PartTwoPay', 'PartThreePay', 'PartFourPayGive', 'PartFourPayReceive', 'GiveAmount']
 
 # ISO-639 code

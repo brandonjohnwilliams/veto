@@ -1,0 +1,50 @@
+{{ block title }}
+Round {{ player.round_number }} - Chat
+{{ endblock }}
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+</head>
+
+
+{{ if player.id_in_group == 1}}
+
+<p>
+You are the {{ player.role }}. The Buyer's ideal value (X) will come from a type <b>{{ roundName }}</b> urn, which contains these possible draws:
+</p>
+
+
+<div class="canvas-container">
+  <canvas id="ballCanvas"></canvas>
+</div>
+
+
+{{ else }}
+
+<p>You are the {{ player.role }}. Tou have <b>ideal value X={{selectedX}}</b> which came from the type <b>{{ roundName }}</b> urn.</p>
+
+<div class="canvas-container">
+  <canvas id="ballCanvas2"></canvas>
+</div>
+
+
+{{endif}}
+
+
+You may chat with the {{ if player.id_in_group == 1}}Buyer{{ else }}Seller{{endif}} below:
+<div style="height: 100px; display: flex; justify-content: center; align-items: center; margin: 100px;">
+    <div style="justify-content: center; width: 600px; margin-left: 180px;">{{ chat nickname=player.role }}</div>
+</div>
+
+
+<p>You will have 60 seconds to chat, and then page will automatically advance. Time left to chat: <span class="otree-timer__time-left">1:00</span></p>
+
+
+    <!-- Include JavaScript file -->
+    <script src="{{ static 'veto_delegation/interface.js' }}"></script>
+
+
+
+{% endblock %}
