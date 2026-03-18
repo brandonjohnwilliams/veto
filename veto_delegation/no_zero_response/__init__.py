@@ -3,12 +3,12 @@ import json
 import random
 
 doc = """
-No walk away threat point
+No walk away threat point (responses)
 """
 
 
 class C(BaseConstants):
-    NAME_IN_URL = 'no_zero'
+    NAME_IN_URL = 'no_zero_response'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 3
 
@@ -29,26 +29,42 @@ class Player(BasePlayer):
 
     minSlider = models.IntegerField()  # defines the left side of the delegated range
     maxSlider = models.IntegerField()  # defines the right side of the delegated range
+    selectedX = models.IntegerField()
+
+    response = models.IntegerField()
 
     # Distributions
     roundType = models.IntegerField()
     roundName = models.StringField()
 
-    # matching infor
+    # matching info
     responder = models.IntegerField()
 
     thetaRange = models.IntegerField(blank=True)
 
 
+# FUNCTIONS
+def set_payoffs(player):
+    # do: redefine at the player level
+    payoff_matrix = {
+        0: [8, 26, 21, 16, 13, 11, 9],
+        1: [12, 30, 25, 20, 15, 12, 10],
+        2: [16, 25, 30, 25, 20, 15, 12],
+        3: [20, 20, 25, 30, 25, 20, 15],
+        4: [24, 15, 20, 25, 30, 25, 20],
+        5: [28, 12, 15, 20, 25, 30, 25],
+        6: [32, 10, 12, 15, 20, 25, 30],
+        7: [36, 9, 10, 12, 15, 20, 25],
+        8: [40, 8, 9, 10, 12, 15, 20]
+    }
+
+
 
 
 def creating_session(subsession):
-
-
     with open('SubjectMatching2.json', 'r') as f:
         subject_matching = json.load(f)
 
-    # Load relevant sections
     num_participants = str(subsession.session.num_participants)
     matching_dict = subject_matching[num_participants]
     subject_assignment_dict = matching_dict['subjectAssignment']
@@ -60,39 +76,14 @@ def creating_session(subsession):
 
     # start at round 16 in JSON
     round_num = str(subsession.round_number + 15)
-    # print("JSON round number: ", round_num)
-
 
     for player in subsession.get_players():
 
         # assign group and subgroup
-        player.participant.label_id = player.id_in_subsession
         label_key = str(player.participant.label_id)
 
         subject_assignment = subject_assignment_dict[label_key]
         matching_group = subject_assignment['MatchingGroup']
-        player.participant.MatchingGroupZero = matching_group
-        sub_group = subject_assignment['SubGroup']
-        player.participant.SubGroupZero = sub_group
-
-        # print("Assigning to: ", subject_assignment)
-
-        # assign urn
-
-        urn_type = urn_assignment_dict[session_key][f"MatchingGroup{matching_group}"][round_num]['urn']
-        urn_key = urn_type.split()[-1]  # "L", "M", or "H"
-
-        if urn_key == "M":
-            player.roundType = 2
-            player.roundName = "Middle"
-
-        elif urn_key == "L":
-            player.roundType = 1
-            player.roundName = "Low"
-
-        else:
-            player.roundType = 3
-            player.roundName = "High"
 
         period_match = period_matching_dict[round_num]
 
@@ -110,49 +101,35 @@ def creating_session(subsession):
         if match is None:
             raise ValueError(f"No proposer match found for player_id={player_id}")
 
-        proposer = int(match["proposer"])
+        L = int(match["L"])
+        M = int(match["M"])
+        H = int(match["H"])
 
-        # print("Player", player.id_in_subsession, "matched to", player.responder)
+        # assign urn
 
-        if player.roundType == 1:
-            player.participant.proposer = []
+        urn_type = urn_assignment_dict[session_key][f"MatchingGroup{matching_group}"][round_num]['urn']
+        urn_key = urn_type.split()[-1]  # "L", "M", or "H"
 
-        player.participant.proposer.append(proposer)
-        # print(player.participant.proposer)
+        if urn_key == "M":
+            player.roundType = 2
+            player.roundName = "Middle"
+            player.selectedX = M
+
+
+        elif urn_key == "L":
+            player.roundType = 1
+            player.roundName = "Low"
+            player.selectedX = L
+
+        else:
+            player.roundType = 3
+            player.roundName = "High"
+            player.selectedX = H
 
         player.single = 1 if player.subsession.session.config['take_it_or_leave_it'] else 0
 
 
 # PAGES
-class Intro(Page):
-    @staticmethod
-    def is_displayed(player):
-        return player.round_number == 1
-
-    @staticmethod
-    def vars_for_template(player):
-        test = player.session.config['test']
-        return dict(
-            test = test
-        )
-
-class Instructions(Page):
-    @staticmethod
-    def is_displayed(player):
-        return player.round_number == 1
-
-    @staticmethod
-    def vars_for_template(player):
-        test = player.session.config['test']
-        single = 1 if player.subsession.session.config['take_it_or_leave_it'] else 0
-        return dict(
-            test = test,
-            single = single
-        )
-
-    @staticmethod
-    def before_next_page(player, timeout_happened):
-        player.participant.sliders = []
 
 class RolesIntro(Page):
     timeout_seconds = 15
@@ -161,52 +138,24 @@ class RolesIntro(Page):
     def is_displayed(player):
         return player.round_number == 1
 
-class Roles(Page):
-    timeout_seconds = 20
-    @staticmethod
-    def js_vars(player):
-        return dict(
-            roundName=player.roundName,
-            roundType=player.roundType,
-            round_type=player.roundType,
-        )
-
-    @staticmethod
-    def vars_for_template(player):
-        return {
-            "roundName": player.roundName,
-            "roundType": player.roundType,
-            "chat": player.session.config['chat']
-        }
-
-class Proposal(Page):
-    form_model = 'player'
-    form_fields = ['minSlider', 'maxSlider', 'thetaRange']
-
-
-    @staticmethod
-    def js_vars(player):
-        return dict(
-            round_type=player.roundType,
-            selectedX=C.setZero,
-            fromM=1,
-            toM=8,
-            single=player.single
-        )
-
-    @staticmethod
-    def vars_for_template(player):
-        return {
-            "roundName": player.roundName,
-            "roundType": player.roundType,
-        }
-
-
     @staticmethod
     def before_next_page(player, timeout_happened):
-        participant = player.participant
-        participant.sliders.append(player.minSlider)
-        participant.sliders.append(player.maxSlider)
+        proposer_list = player.participant.proposer
+        proposer_id = proposer_list[player.round_number - 1]
+
+        matched_player = next(
+            p for p in player.subsession.get_players()
+            if p.participant.label_id == proposer_id
+        )
+
+        print(matched_player.participant.sliders)
+
+        i = 2 * (player.round_number - 4)
+        player.minSlider = matched_player.participant.sliders[i]
+        player.maxSlider = matched_player.participant.sliders[i + 1]
+
+        # print(player.minSlider)
+        # print(player.maxSlider)
 
 
 
@@ -215,42 +164,25 @@ class Response(Page):
     form_model = 'player'
     form_fields = ['response']
 
-    @staticmethod
-    def is_displayed(player):
-        return player.round_number > 3
 
     @staticmethod
     def js_vars(player):
-        partner = player.get_others_in_group()[0]
-        partner_history = partner.participant.vars.get('sliders')
-        Minidx = player.round_number - 4
-        Maxidx = player.round_number - 3
-        minSlider = partner_history[Minidx]
-        maxSlider = partner_history[Maxidx]
-        print(minSlider, maxSlider)
+
         return dict(
-            selectedX=player.group.vetoer_bias,
-            fromM=minSlider,
-            toM=maxSlider,
+            selectedX=player.selectedX,
+            fromM=player.minSlider,
+            toM=player.maxSlider,
             response=1,
         )
 
     @staticmethod
     def vars_for_template(player):
-        group = player.group
-        partner = player.get_others_in_group()[0]
-        partner_history = partner.participant.vars.get('sliders')
-        Minidx = player.round_number - 4
-        Maxidx = player.round_number - 3
-        minSlider = partner_history[Minidx]
-        maxSlider = partner_history[Maxidx]
-        print(minSlider, maxSlider)
         return {
-            "selectedX": group.vetoer_bias,
-            "roundName": group.roundName,
-            "roundType": group.roundType,
-            "minSlider": minSlider,
-            "maxSlider": maxSlider,
+            "selectedX": player.selectedX,
+            "roundName": player.roundName,
+            "roundType": player.roundType,
+            "minSlider": player.minSlider,
+            "maxSlider": player.maxSlider,
         }
 
 
@@ -325,4 +257,4 @@ class NoZeroWait(WaitPage):
     template_name = 'NoZeroWait.html'
 
 
-page_sequence = [Intro, Instructions, RolesIntro, Roles, Proposal, NoZeroWait]
+page_sequence = [RolesIntro, Response, NoZeroWait]
