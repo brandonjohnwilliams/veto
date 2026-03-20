@@ -242,4 +242,4 @@ class WaitPage2(WaitPage):
 
 
 
-page_sequence = [Intro, Instructions, robot, WaitPage2]
+page_sequence = [Instructions, robot, WaitPage2]

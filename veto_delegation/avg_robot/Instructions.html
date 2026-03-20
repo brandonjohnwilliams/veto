@@ -1,5 +1,5 @@
 {{ block title }}
-Part Two
+Part Three
 {{ endblock }}
 
 
@@ -11,7 +11,7 @@ Part Two
     </head>
 
 <p>
-    In Part Two of the experiment you will make decisions as the Seller, choosing
+    In Part Three of the experiment you will make decisions as the Seller, choosing
     {{ if single == 1 }}
     an amount of widgets
     {{ else }}
@@ -19,7 +19,7 @@ Part Two
     {{ endif }}
     to offer to the Buyer.
     In Part One there was some randomness in your round payoff as the
-    Seller, affected by the ideal quantity drawn, and the particular Buyer participant you were matched to. In contrast, in Part Two we will remove this randomness, paying you a certain amount for any particular choice you might make. This certain amount of money on offer is the <b>average expected payment</b> from your choice over the {{ if single == 1 }}
+    Seller, affected by the ideal quantity drawn, and the particular Buyer participant you were matched to. In contrast, in Part Three we will remove this randomness, paying you a certain amount for any particular choice you might make. This certain amount of money on offer is the <b>average expected payment</b> from your choice over the {{ if single == 1 }}
     offer
     {{ else }}
     menu
@@ -50,10 +50,10 @@ Part Two
     {{ else }}
     menu
     {{ endif }}
-    you select in the Part Two decisions,
+    you select in the Part Three decisions,
     you can think of your payment as being calculated by averaging the Seller's payoff across millions of different Robot Buyers.
     Each separate Robot Buyer represents a fair draw over both an ideal quantity <b>from the given urn</b> and
-    and of the likely choices from one of the {{ if single == 1 }}66{{ else }}64{{ endif }} prior participants.
+    of the likely choices from one of the {{ if single == 1 }}66{{ else }}64{{ endif }} prior participants.
 </p>
 
 <p>
@@ -69,7 +69,7 @@ Part Two
 </p>
 
 <p>
-    Given this rule, your role in Part Two is to choose whichever
+    Given this rule, your role in Part Three is to choose whichever
     {{ if single == 1 }}
     offer
     {{ else }}

@@ -42,6 +42,8 @@ def creating_session(subsession):
         else:
             player.chat = 0
 
+        player.single = 1 if player.subsession.session.config['take_it_or_leave_it'] else 0
+
 # PAGES
 
 
@@ -49,5 +51,11 @@ def creating_session(subsession):
 class ChoiceInstructions(Page):
     form_model = 'player'
     form_fields = ['switch_point']
+
+    @staticmethod
+    def vars_for_template(player):
+        return dict(
+            single = player.single
+        )
 
 page_sequence = [ChoiceInstructions]

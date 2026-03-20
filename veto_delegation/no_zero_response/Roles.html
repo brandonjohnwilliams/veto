@@ -1,5 +1,5 @@
 {{ block title }}
-Part Two Round {{player.round_number}} - Your Role: Seller
+Part Two Round {{player.round_number}} - Your Role: Buyer
 {{ endblock }}
 
 {% block content %}
@@ -10,19 +10,10 @@ Part Two Round {{player.round_number}} - Your Role: Seller
 
 
 <p>
-    You are the Seller. You will propose what {{ if player.single == 1}} option{{ else }}menu of options{{endif}} for the number of Widgets that the Buyer can choose to buy.
-    Remember, the Buyer <strong>will not</strong> have the option to walk away and purchase zero Widgets.
+    You are the Buyer. You will respond to an offer from a Seller made in the previous three rounds.
+    The Seller has proposed a {{ if player.single == 1}} number of {{ else }}menu of options for the number of {{endif}}  widgets that you can choose to buy.
+    Remember in this Part, there is no option to walk away (buy zero Widgets).
 </p>
-<p>The Buyer's ideal value (X) will come from the <b>{{ roundName }}</b> urn, which contains these possible ideal quantities:</p>
-
-<div class="canvas-container">
-  <canvas id="ballCanvas"></canvas>
-</div>
-
-{{ if chat == 1 }}<p> Click next to move to the chat page where you can communicate with the Seller.</p>
-{{ else }}
-<p>Click next when you are ready to make your choice.</p>
-{{endif}}
 
 
 <p>This page will automatically advance in <span class="otree-timer__time-left">0:20</span>.</p>

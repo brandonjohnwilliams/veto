@@ -1,5 +1,5 @@
 {{ block title }}
-    Round {{ player.round_number }} - Buyer's Choice
+    Round {{ player.round_number }} - Buyer
 {{ endblock }}
 
 {{ block content }}
@@ -91,6 +91,8 @@ tr.highlighted-row td:first-child .choice-button {
   padding: 6px 12px;
   font-size: 16px;
 }
+
+
         </style>
     </head>
 
@@ -168,7 +170,7 @@ tr.highlighted-row td:first-child .choice-button {
 </div>
 
     <!-- Include JavaScript file -->
-    <script src="{{ static 'veto_delegation/interface.js' }}"></script>
+    <script src="{{ static 'veto_delegation/interfaceZero.js' }}"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const confirmBtn = document.getElementById("confirmNext");

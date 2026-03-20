@@ -1,5 +1,5 @@
 {{ block title }}
-Your Role: Seller
+Your Role: Buyer
 {{ endblock }}
 
 {% block content %}
@@ -9,8 +9,11 @@ Your Role: Seller
 </head>
 
 <p>
-    You are the Seller. You will propose what {{ if player.single == 1}} option{{ else }}menu of options{{endif}} for the number of Widgets that the Buyer can choose to buy.
-    Remember, the Buyer <strong>will not</strong> have the option to walk away and purchase zero Widgets.
+    For the next three rounds, you are the Buyer.
+
+    You will respond to three offers from Sellers made in the previous three rounds.
+    The Seller has proposed a {{ if player.single == 1}} number of {{ else }}menu of options for the number of {{endif}}  widgets that you can choose to buy.
+    Remember in this Part, there is no option to walk away (buy zero Widgets).
 </p>
 
 

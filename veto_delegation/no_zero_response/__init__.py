@@ -138,6 +138,10 @@ class RolesIntro(Page):
     def is_displayed(player):
         return player.round_number == 1
 
+
+class Roles(Page):
+    timeout_seconds = 15
+
     @staticmethod
     def before_next_page(player, timeout_happened):
         proposer_list = player.participant.proposer
@@ -156,9 +160,6 @@ class RolesIntro(Page):
 
         # print(player.minSlider)
         # print(player.maxSlider)
-
-
-
 
 class Response(Page):
     form_model = 'player'
@@ -257,4 +258,4 @@ class NoZeroWait(WaitPage):
     template_name = 'NoZeroWait.html'
 
 
-page_sequence = [RolesIntro, Response, NoZeroWait]
+page_sequence = [RolesIntro, Roles, Response, NoZeroWait]
