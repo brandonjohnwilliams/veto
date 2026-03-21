@@ -144,22 +144,27 @@ class Roles(Page):
 
     @staticmethod
     def before_next_page(player, timeout_happened):
-        proposer_list = player.participant.proposer
-        proposer_id = proposer_list[player.round_number - 1]
+        if player.subsession.session.config['test'] == 1:
+            player.minSlider = 3
+            player.maxSlider = 3
+        else:
 
-        matched_player = next(
-            p for p in player.subsession.get_players()
-            if p.participant.label_id == proposer_id
-        )
+            proposer_list = player.participant.proposer
+            proposer_id = proposer_list[player.round_number - 1]
 
-        print(matched_player.participant.sliders)
+            matched_player = next(
+                p for p in player.subsession.get_players()
+                if p.participant.label_id == proposer_id
+            )
 
-        i = 2 * (player.round_number - 4)
-        player.minSlider = matched_player.participant.sliders[i]
-        player.maxSlider = matched_player.participant.sliders[i + 1]
+            print(matched_player.participant.sliders)
 
-        # print(player.minSlider)
-        # print(player.maxSlider)
+            i = 2 * (player.round_number - 4)
+            player.minSlider = matched_player.participant.sliders[i]
+            player.maxSlider = matched_player.participant.sliders[i + 1]
+
+            # print(player.minSlider)
+            # print(player.maxSlider)
 
 class Response(Page):
     form_model = 'player'
@@ -253,7 +258,8 @@ class NoZeroWait(WaitPage):
 
     @staticmethod
     def is_displayed(player):
-        return player.round_number == 3
+        test = player.subsession.session.config['test']
+        return player.round_number == 3 and test == 0
 
     template_name = 'NoZeroWait.html'
 

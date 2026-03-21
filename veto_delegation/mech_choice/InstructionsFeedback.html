@@ -1,0 +1,25 @@
+{{ block title }}
+Part Five Practice
+{{ endblock }}
+
+
+
+{{ block content }}
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+    </head>
+
+
+<p>
+    In the practice you chose: {{ choice_text }}
+</p>
+<p>
+    (add any feedback we want here)
+</p>
+<p>
+    Click next when you are ready to make your choices for the three urns.
+</p>
+{{ next_button }}
+
+{{ endblock }}

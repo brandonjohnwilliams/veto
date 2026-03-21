@@ -320,7 +320,8 @@ class NoZeroWait(WaitPage):
 
     @staticmethod
     def is_displayed(player):
-        return player.round_number == 3
+        test = player.subsession.session.config['test']
+        return player.round_number == 3 and test == 0
 
     template_name = 'NoZeroWait.html'
 

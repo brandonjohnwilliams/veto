@@ -1,5 +1,5 @@
 {{ block title }}
-Part Five
+Part Five - {{ urn_name }} Urn
 {{ endblock }}
 
 {% block content %}
@@ -227,48 +227,9 @@ Part Five
 </head>
 
 <p>
-  We are interested in your relative valuation of the two versions of this experiment for the Sellers: the <b>single
-    offer</b> version, and the <b>menu</b> version.
-  Your task in Part Five is to indicate how much more or less you value each version.
-</p>
-<p>
-  In the table below, you will choose your preferred option between the average Seller payoff from the two different
-  types of sessions. <b>Crucially, the average payoffs shown in the table are exactly the fixed payments derived from your own Seller choices in Part Two and Part Three.</b>
-</p>
-<p>
-  <b>Option A (Left Side)</b> will always give you the average Seller payoff from your choice in the <b>single offer</b>
-  mechanism{{ if single == 1 }} (your choice from Part Two){{ else }} (your choice from Part Three){{ endif }}.
-  This average payment amount is fixed across all rows.
-</p>
-<p>
-  <b>Option B (Right Side)</b> will give you the average Seller payoff from your choice in the <b>menu</b>
-  mechanism{{ if single == 0 }} (your choice from Part Two){{ else }} (your choice from Part Three){{ endif }}.
-  However, you will notice that this amount changes: in each row, we add or subtract additional money from this menu payoff average.
-</p>
-<p>
-  For example, at the top of the table, Option A is "Single offer average + $5".
-  The amount added to Option A decreases with each row until the midpoint.
-  From there, money is instead added to the menu average (Option B) until the last row reaches "Menu offer average +
-  $5."
-</p>
-<p>
-  The computer will randomly draw one of the rows for payment.
-  If you are selected for payment in this round, whichever side of the selected row you chose will be added to your
-  total pay.
-</p>
-<p>
-  Presumably, there is a row where your preferred choice switches between the two options based on the added money.
-  To make your selection easier, you need only select the row where you would switch.
-  The interface will automatically select the options that correspond to your switching point.
-  If you exclusively value the single offer average regardless of the additional money offered on the menu side, simply
-  select the last row of the table: "Always choose the single offer average."
-</p>
-<p>
-  Text at the bottom of the page will automatically update what your choice means in words.
-</p>
-
-<p>
-  Please test the interface and make an example choice now.
+  Please select your valuation for the two versions of the experiment (single offer and menu) for the <strong>Low Urn</strong>.
+  Use the right column to select your "switch point."
+  The computer will randomly draw one of the rows for payment. If you are selected for payment in this round, whichever side of the selected row you chose will be added to your total pay.
 </p>
 
 <div class="mpl-wrap">
@@ -299,7 +260,7 @@ Part Five
         <td class="cell-b">Menu offer average</td>
         <td class="switch-col">
           <label class="radio-wrap">
-            <input type="radio" name="switch_point_practice" value="-5" />
+            <input type="radio" name="switch_point" value="-5" />
 
           </label>
         </td>
@@ -310,7 +271,7 @@ Part Five
         <td class="cell-b">Menu offer average</td>
         <td class="switch-col">
           <label class="radio-wrap">
-            <input type="radio" name="switch_point_practice" value="-4" />
+            <input type="radio" name="switch_point" value="-4" />
           </label>
         </td>
       </tr>
@@ -320,7 +281,7 @@ Part Five
         <td class="cell-b">Menu offer average</td>
         <td class="switch-col">
           <label class="radio-wrap">
-            <input type="radio" name="switch_point_practice" value="-3" />
+            <input type="radio" name="switch_point" value="-3" />
 
           </label>
         </td>
@@ -331,7 +292,7 @@ Part Five
         <td class="cell-b">Menu offer average </td>
         <td class="switch-col">
           <label class="radio-wrap">
-            <input type="radio" name="switch_point_practice" value="-2" />
+            <input type="radio" name="switch_point" value="-2" />
 
           </label>
         </td>
@@ -342,7 +303,7 @@ Part Five
         <td class="cell-b">Menu offer average </td>
         <td class="switch-col">
           <label class="radio-wrap">
-            <input type="radio" name="switch_point_practice" value="-1" />
+            <input type="radio" name="switch_point" value="-1" />
 
           </label>
         </td>
@@ -353,7 +314,7 @@ Part Five
         <td class="cell-b">Menu offer average</td>
         <td class="switch-col">
           <label class="radio-wrap">
-            <input type="radio" name="switch_point_practice" value="0" />
+            <input type="radio" name="switch_point" value="0" />
 
           </label>
         </td>
@@ -364,7 +325,7 @@ Part Five
         <td class="cell-b">Menu offer average <span class="delta">+ $1</span></td>
         <td class="switch-col">
           <label class="radio-wrap">
-            <input type="radio" name="switch_point_practice" value="1" />
+            <input type="radio" name="switch_point" value="1" />
 
           </label>
         </td>
@@ -375,7 +336,7 @@ Part Five
         <td class="cell-b">Menu offer average<span class="delta">+ $2</span></td>
         <td class="switch-col">
           <label class="radio-wrap">
-            <input type="radio" name="switch_point_practice" value="2" />
+            <input type="radio" name="switch_point" value="2" />
 
           </label>
         </td>
@@ -386,7 +347,7 @@ Part Five
         <td class="cell-b">Menu offer average <span class="delta">+ $3</span></td>
         <td class="switch-col">
           <label class="radio-wrap">
-            <input type="radio" name="switch_point_practice" value="3" />
+            <input type="radio" name="switch_point" value="3" />
 
           </label>
         </td>
@@ -397,7 +358,7 @@ Part Five
         <td class="cell-b">Menu offer average <span class="delta">+ $4</span></td>
         <td class="switch-col">
           <label class="radio-wrap">
-            <input type="radio" name="switch_point_practice" value="4" />
+            <input type="radio" name="switch_point" value="4" />
 
           </label>
         </td>
@@ -408,7 +369,7 @@ Part Five
         <td class="cell-b">Menu offer average <span class="delta">+ $5</span></td>
         <td class="switch-col">
           <label class="radio-wrap">
-            <input type="radio" name="switch_point_practice" value="5" />
+            <input type="radio" name="switch_point" value="5" />
 
           </label>
         </td>
@@ -419,7 +380,7 @@ Part Five
         <td colspan="2">Always choose the single offer average</td>
         <td class="switch-col">
           <label class="radio-wrap">
-            <input type="radio" name="switch_point_practice" value="ALWAYS_A" />
+            <input type="radio" name="switch_point" value="ALWAYS_A" />
 
           </label>
         </td>
@@ -428,7 +389,7 @@ Part Five
   </table>
 
   <p id="switch-explain" style="margin: 14px 2px 0; font-size: 14px; color: #333;"></p>
-  {{ formfield_errors 'switch_point_practice' }}
+  {{ formfield_errors 'switch_point' }}
 </div>
 
 {{ next_button }}
