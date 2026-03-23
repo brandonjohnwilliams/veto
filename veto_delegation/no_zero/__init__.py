@@ -132,8 +132,11 @@ class Intro(Page):
     @staticmethod
     def vars_for_template(player):
         test = player.session.config['test']
+        num_participants = player.session.num_participants
+        percentage_chance = round((11 / num_participants) * 100) if num_participants > 0 else 0
         return dict(
-            test = test
+            test = test,
+            percentage_chance = percentage_chance
         )
 
 class Instructions(Page):
