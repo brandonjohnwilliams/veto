@@ -6,57 +6,60 @@ Part Two
 
 {{ block content }}
 
-    <head>
-        <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
-    </head>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+</head>
 
 <p>
     In Part Two of the study you will make decisions as the Seller, choosing
     {{ if single == 1 }}
-    an amount of widgets
+    the number of widgets
     {{ else }}
-    a menu of widgets
+    a menu of options for the Buyer, a minimum and maximum number of widgets,
     {{ endif }}
     to offer to the Buyer as you did in Part One.
-    However, in Part Two, the Buyer will no longer have the option to walk away and buy zero Widgets.
+    However, in Part Two, the Buyer will no longer have the option to walk away and purchase zero widgets.
 
-    Therefore, the Buyer will have only the option to select
+    Therefore, the Buyer will have
     {{ if single == 1 }}
-    the offer
+    to purchase the amount of Widgets you offer them.
     {{ else }}
-    from the menu, not including zero Widgets,
+    to purchase an amount of Widgets between the minimum and maximum you offer them.
     {{ endif }}
-    that you make as the Seller.
-    The Buyer's payment will still depend on their ideal quantity X, and the Seller will only know the urn that the ideal quantity is drawn from (Low, Middle, or High).
-    The Seller's payment is determined by
-    {{ if single == 1 }}
-    the offer.
-    {{ else }}
-    the Buyer's choice from the menu that the Seller makes available.
-    {{ endif }}
+    The Buyer's payment will depend on their ideal number of widgets drawn from the urn, just as before, where the
+    Seller will only know the urn that that this was drawn from (Low, Middle, or High).
 </p>
 <p>
     For Part Two, you will first make your choices as the Seller.
-    You will make three choices, one for each urn type (Low, Middle, and High).
-    Each choice will be an offer made to a different Buyer in the room.
+    You will make three choices, {{ if single == 1 }}an offer{{ else }}a menu{{ endif }} to send to the Buyer for each
+    urn type (Low, Middle, and High).
+    Each choice will then be sent to a different participant in the room to act as a Buyer (without an option to walk
+    away).
 </p>
 
 <p>
-    Then you will make three choices as the Buyer.
-    Your task as the Buyer is to
+    Then you will make act as a Buyer in Part Two, where you will be matched to the choices from three Seller
+    participants in Part Two
+
     {{ if single == 1 }}
-    accept the offer, with no option to walk away.
+    As the Buyer, because you have no option to walk away, your only role here is to view your ideal quantity and the
+    Seller's selected offer
     {{ else }}
-    accept a quantity from the menu offer, with no option to walk away.
+    As the Buyer, because you have no option to walk away, your only role here is to view your ideal quantity, and
+    choose an amount between the minimum and maximum selected by the Seller
     {{ endif }}
-    You will make this choice for each urn type across the three rounds.
+    You will act as a Buyer for each of the three types of urn.
 </p>
 
 <p>
     Two participants will be selected for payment in Part Two.
-    First, the computer will select one of the three rounds to pay.
-    Then the computer will select a matched Seller and Buyer for that round.
-    The Seller and Buyer will then be paid the accepted offer.
+    For Part Two payment the computer will randomly select one a Seller participant in the room and one of the three
+    urns.
+    Whichever participant was matched to that Seller and urn will then be selected for payment as the Buyer.
+    {{ if single == 1 }}
+    The drawn ideal quantity and Seller offer will then be used for payment.
+    {{ else }}
+    The drawn ideal quantity and the offer selected from the Seller's menu will then be used for payment.
 </p>
 
 {{ if test == 1 }}
@@ -65,7 +68,7 @@ Part Two
 
 <div style="text-align: right;">
 
-        <button class="otree-btn-next btn btn-primary">Next</button>
+    <button class="otree-btn-next btn btn-primary">Next</button>
 
 </div>
 
