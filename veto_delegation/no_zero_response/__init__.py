@@ -138,6 +138,13 @@ class RolesIntro(Page):
     def is_displayed(player):
         return player.round_number == 1
 
+    @staticmethod
+    def vars_for_template(player):
+        test = player.subsession.session.config['test']
+        return dict (
+            test = test,
+        )
+
 
 class Roles(Page):
     timeout_seconds = 15
