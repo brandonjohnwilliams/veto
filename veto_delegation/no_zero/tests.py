@@ -20,18 +20,9 @@ class PlayerBot(Bot):
         # Randomize slider inputs
         max_slider = random.randint(1, 8)
         min_slider = random.randint(1, max_slider)
-        if self.player.role == C.SELLER_ROLE:
-            yield Proposal, {
-                'minSlider': min_slider,
-                'maxSlider': max_slider,
-            }
 
-        # Random response: 0 or between min and max
-        possible_responses = [0] + list(range(min_slider, max_slider + 1))
-        response = random.choice(possible_responses)
-        if self.player.role == C.BUYER_ROLE:
-            yield Response, {
-                'response': response,
-            }
+        yield Proposal, {
+            'minSlider': min_slider,
+            'maxSlider': max_slider,
+        }
 
-        yield Submission(Results, check_html=False)

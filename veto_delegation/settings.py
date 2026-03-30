@@ -25,9 +25,9 @@ SESSION_CONFIGS = [
         name='mech_choice',
         display_name="Mechanism Choice",
         app_sequence=[
-            # 'introduction',
-            # 'practice',
-            # 'veto_delegation',
+            'introduction',
+            'practice',
+            'veto_delegation',
             'no_zero',
             'no_zero_response',
             'avg_robot',
@@ -69,6 +69,7 @@ SESSION_FIELDS = ['PartTwoPay', 'PartTwoPayProposer', 'PartTwoPayResponder',
                   'PartFourPay1', 'PartFourPay2', 'PartFourPay3',
                   'part4round1', 'part4round2', 'part4round3',
                   'MPLResults',
+                  'PartFivePay1', 'PartFivePay2', 'PartFivePay3',
                   'GiveAmount']
 
 # ISO-639 code

@@ -36,6 +36,8 @@ class Player(BasePlayer):
 
     single = models.IntegerField()
 
+    mpl_draw = models.StringField()
+
 
 # FUNCTIONS
 MPL_ROWS = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 'ALWAYS_A']
@@ -52,12 +54,13 @@ def mpl_choice(switch_point, drawn_row):
     """
     if switch_point == 'ALWAYS_A':
         return 'A'
+    # Cast to int now that we've ruled out 'ALWAYS_A'
+    switch_point = int(switch_point)
     if drawn_row == 'ALWAYS_A':
-        # The drawn row is the ALWAYS_A row; player chose A for this row
-        # only if their switch_point is also ALWAYS_A (handled above),
-        # otherwise they have already switched to B before this row.
+        # Player has already switched to B before this row if switch_point <= 5
         return 'B' if switch_point <= 5 else 'A'
-    return 'A' if drawn_row < int(switch_point) else 'B'
+    return 'A' if int(drawn_row) < switch_point else 'B'
+
 
 
 def mpl_payoff(choice, drawn_row, option_a_payoff, option_b_payoff):
@@ -96,6 +99,8 @@ def creating_session(subsession):
             player.urn_name = "High"
 
         player.single = 1 if player.subsession.session.config['take_it_or_leave_it'] else 0
+
+
 
 def switch_point_to_text(choice):
     if choice == "ALWAYS_A":
@@ -164,43 +169,53 @@ class Choice(Page):
 
     @staticmethod
     def before_next_page(player, timeout_happened):
-        # Draw one row per round and store in session.vars
-        for round_num in range(1, C.NUM_ROUNDS + 1):
-            key = f'Part5{round_num}'
-            if key not in player.session.vars:
-                player.session.vars[key] = random.choice(MPL_ROWS)
+
+        # Draw one row per round independently for each player
+        # player.mpl_draw = str(random.choice(MPL_ROWS))
+
+        player.mpl_draw = '-3'
 
         # Determine this player's choice and payoff for each round
         player.participant.vars['MPLResults'] = []
 
-        for round_num in range(1, C.NUM_ROUNDS + 1):
-            drawn_row = player.session.vars[f'MPLDraw_round{round_num}']
-            round_player = player.in_round(round_num)
-            switch_point = round_player.switch_point
 
-            choice = mpl_choice(switch_point, drawn_row)
+        drawn_row    = player.mpl_draw
+        switch_point = player.switch_point
 
-            # Retrieve the base robot payoffs stored from Part Three / Part Four
-            option_a_payoff = round_player.PartFourPayoff  # single offer average
-            option_b_payoff = round_player.PartThreePayoff  # menu offer average
+        choice = mpl_choice(switch_point, drawn_row)
 
-            payoff = mpl_payoff(choice, drawn_row, option_a_payoff, option_b_payoff)
+        # Retrieve the base robot payoffs stored from Part Three / Part Four
+        # Option A = single offer, Option B = menu offer
+        # The part order depends on session config: single==1 means single came first (Part Three),
+        # menu came second (Part Four); single==0 reverses this.
+        if player.session.config['take_it_or_leave_it']:
+            option_a_payoff = player.participant.vars[f'part3round{player.round_number}']  # single
+            option_b_payoff = player.participant.vars[f'part4round{player.round_number}']  # menu
+            print("Single: ", option_a_payoff, "Menu: ", option_b_payoff)
+        else:
+            option_a_payoff = player.participant.vars[f'part4round{player.round_number}']  # single
+            option_b_payoff = player.participant.vars[f'part3round{player.round_number}']  # menu
+            print("Single: ", option_a_payoff, "Menu: ", option_b_payoff)
 
-            player.participant.vars['MPLResults'].append({
-                'round': round_num,
-                'drawn_row': drawn_row,
-                'switch_point': switch_point,
-                'choice': choice,
-                'payoff': payoff,
-            })
 
-            print(
-                f"[MPL Round {round_num}] "
-                f"Player {player.participant.label_id} | "
-                f"Switch point: {switch_point} | "
-                f"Drawn row: {drawn_row} | "
-                f"Choice: {choice} | "
-                f"Payoff: {payoff}"
-            )
+
+        payoff = mpl_payoff(choice, drawn_row, option_a_payoff, option_b_payoff)
+
+        player.participant.vars['MPLResults'].append({
+            'round': player.round_number,
+            'drawn_row': drawn_row,
+            'switch_point': switch_point,
+            'choice': choice,
+            'payoff': payoff,
+        })
+
+        print(
+            f"[MPL Round {player.round_number}] "
+            f"Player {player.participant.label_id} | "
+            f"Switch point: {switch_point} | "
+            f"Drawn row: {drawn_row} | "
+            f"Choice: {choice} | "
+            f"Payoff: {payoff}"
+        )
 
 page_sequence = [ChoiceInstructions, InstructionsFeedback, Choice]
