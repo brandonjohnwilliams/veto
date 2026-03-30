@@ -6,28 +6,32 @@ Parts Two, Three, Four and Five
 
 {{ block content }}
 
-    <head>
-        <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
-    </head>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+</head>
 
 
-<p>That concludes Part One.</p>
+<p>That concludes Part One. </p>
+<p>In Parts Two to Five, we will offer you additional opportunities for payment across a number of variations of
+    the task in Part One.
+</p>
+<p>
+    For payment in Parts Two to Five the computer will randomly select <b>eleven different participants</b> in this
+    room:
+</p>
 <ul>
-    <li>
-        In Parts Two, Three, Four, and Five, we will offer you addition opportunities for payment (further payments of $8 to $40).
-    </li>
-    <li>
-        The computer will randomly select <b>eleven different participants</b> in this room (a {{ percentage_chance }}% chance of being selected).
-    </li>
     <ul>
-        <li>Two participants will be selected for payment in Part Two</li>
-        <li>Three participants will be selected for payment in Part Three</li>
-        <li>Three participants will be selected for payment in Part Four</li>
-        <li>Three participants will be selected for payment in Part Five</li>
+        <li>Two participants in Part Two</li>
+        <li>Three participants in Part Three</li>
+        <li>Three participants in Part Four</li>
+        <li>Three participants in Part Five</li>
     </ul>
 </ul>
-
-<p>We will give you instructions for your decisions in each Part in turn.</p>
+<p>Because of this there is a {{ percentage_chance }}% chance of you being selected for payment in one of the tasks in
+    Parts Two to Five,
+    where your decisions could add an amount from $8 to $40 to your earnings in this session, so you should think
+    carefully about each decision.</p>
+<p>We will give you instructions for each Part in turn.</p>
 
 {{ if test == 1 }}
 
@@ -35,7 +39,7 @@ Parts Two, Three, Four and Five
 
 <div style="text-align: right;">
 
-        <button class="otree-btn-next btn btn-primary">Next</button>
+    <button class="otree-btn-next btn btn-primary">Next</button>
 
 </div>
 

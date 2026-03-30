@@ -149,11 +149,19 @@ if (tableData && typeof tableData === "object" && tbody) {
             if (numericValue < from || numericValue > to) {
                 button.disabled = true;
             }
+            if (numericValue === 0) {
+                button.style.textDecoration = "line-through";
+                button.style.color = "red";
+            }
             firstCell.appendChild(button);
         } else {
             // Add plain label instead of button
             firstCell.className = "tg-0pky";
             firstCell.textContent = key;
+            if (numericValue === 0) {
+                firstCell.style.textDecoration = "line-through";
+                firstCell.style.color = "red";
+            }
         }
 
         row.appendChild(firstCell);

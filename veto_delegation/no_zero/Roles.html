@@ -1,5 +1,5 @@
 {{ block title }}
-Part Two Round {{player.round_number}} - Your Role: Seller
+Part Two - Seller choice from {{ roundName }} urn
 {{ endblock }}
 
 {% block content %}
@@ -8,15 +8,12 @@ Part Two Round {{player.round_number}} - Your Role: Seller
     <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
 </head>
 
-
-<p>
-    You are the Seller. You will propose what {{ if player.single == 1}} option{{ else }}menu of options{{endif}} for the number of Widgets that the Buyer can choose to buy.
-    Remember, the Buyer <strong>will not</strong> have the option to walk away and purchase zero Widgets.
-</p>
-<p>The Buyer's ideal value (X) will come from the <b>{{ roundName }}</b> urn, which contains these possible ideal quantities:</p>
+<p>The matched Buyer participant's ideal value (X) will come from the <b>{{ roundName }}</b> urn, which contains these
+    possible
+    ideal quantities:</p>
 
 <div class="canvas-container">
-  <canvas id="ballCanvas"></canvas>
+    <canvas id="ballCanvas"></canvas>
 </div>
 
 {{ if chat == 1 }}<p> Click next to move to the chat page where you can communicate with the Seller.</p>
@@ -32,8 +29,8 @@ Part Two Round {{player.round_number}} - Your Role: Seller
 
 {{ next_button }}
 
-    <!-- Include JavaScript file -->
-    <script src="{{ static 'veto_delegation/interface.js' }}"></script>
+<!-- Include JavaScript file -->
+<script src="{{ static 'veto_delegation/interface.js' }}"></script>
 
 
 
