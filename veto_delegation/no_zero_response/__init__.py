@@ -13,8 +13,8 @@ class C(BaseConstants):
     NUM_ROUNDS = 3
 
     single = 0
+    setZero = 0
 
-    setZero = 0  # define as such to remove buyer payoff column
 
 class Subsession(BaseSubsession):
     pass
@@ -27,38 +27,32 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     single = models.IntegerField()
 
-    minSlider = models.IntegerField()  # defines the left side of the delegated range
-    maxSlider = models.IntegerField()  # defines the right side of the delegated range
+    minSlider = models.IntegerField()
+    maxSlider = models.IntegerField()
     selectedX = models.IntegerField()
 
     response = models.IntegerField()
 
-    # Distributions
     roundType = models.IntegerField()
     roundName = models.StringField()
 
-    # matching info
     responder = models.IntegerField()
 
     thetaRange = models.IntegerField(blank=True)
 
 
 # FUNCTIONS
-def set_payoffs(player):
-    # do: redefine at the player level
-    payoff_matrix = {
-        0: [8, 26, 21, 16, 13, 11, 9],
-        1: [12, 30, 25, 20, 15, 12, 10],
-        2: [16, 25, 30, 25, 20, 15, 12],
-        3: [20, 20, 25, 30, 25, 20, 15],
-        4: [24, 15, 20, 25, 30, 25, 20],
-        5: [28, 12, 15, 20, 25, 30, 25],
-        6: [32, 10, 12, 15, 20, 25, 30],
-        7: [36, 9, 10, 12, 15, 20, 25],
-        8: [40, 8, 9, 10, 12, 15, 20]
-    }
-
-
+payoff_matrix = {
+    0: [8,  26, 21, 16, 13, 11,  9],
+    1: [12, 30, 25, 20, 15, 12, 10],
+    2: [16, 25, 30, 25, 20, 15, 12],
+    3: [20, 20, 25, 30, 25, 20, 15],
+    4: [24, 15, 20, 25, 30, 25, 20],
+    5: [28, 12, 15, 20, 25, 30, 25],
+    6: [32, 10, 12, 15, 20, 25, 30],
+    7: [36,  9, 10, 12, 15, 20, 25],
+    8: [40,  8,  9, 10, 12, 15, 20],
+}
 
 
 def creating_session(subsession):
@@ -71,33 +65,22 @@ def creating_session(subsession):
     urn_assignment_dict = matching_dict['urnAssignment']
     period_matching_dict = matching_dict['PeriodMatching']
 
-    # Get session key
     session_key = f"Session{subsession.session.config['Session']}"
-
-    # start at round 16 in JSON
     round_num = str(subsession.round_number + 15)
 
     for player in subsession.get_players():
 
-        # assign group and subgroup
         label_key = str(player.participant.label_id)
-
         subject_assignment = subject_assignment_dict[label_key]
         matching_group = subject_assignment['MatchingGroup']
 
         period_match = period_matching_dict[round_num]
-
         player_id = str(player.participant.label_id)
 
         match = next(
-            (
-                row
-                for row in period_match
-                if str(row["responder"]) == player_id
-            ),
+            (row for row in period_match if str(row["responder"]) == player_id),
             None
         )
-
         if match is None:
             raise ValueError(f"No proposer match found for player_id={player_id}")
 
@@ -105,22 +88,17 @@ def creating_session(subsession):
         M = int(match["M"])
         H = int(match["H"])
 
-        # assign urn
-
         urn_type = urn_assignment_dict[session_key][f"MatchingGroup{matching_group}"][round_num]['urn']
-        urn_key = urn_type.split()[-1]  # "L", "M", or "H"
+        urn_key = urn_type.split()[-1]
 
         if urn_key == "M":
             player.roundType = 2
             player.roundName = "Middle"
             player.selectedX = M
-
-
         elif urn_key == "L":
             player.roundType = 1
             player.roundName = "Low"
             player.selectedX = L
-
         else:
             player.roundType = 3
             player.roundName = "High"
@@ -141,9 +119,7 @@ class RolesIntro(Page):
     @staticmethod
     def vars_for_template(player):
         test = player.subsession.session.config['test']
-        return dict (
-            test = test,
-        )
+        return dict(test=test)
 
 
 class Roles(Page):
@@ -155,7 +131,6 @@ class Roles(Page):
             player.minSlider = 3
             player.maxSlider = 3
         else:
-
             proposer_list = player.participant.proposer
             proposer_id = proposer_list[player.round_number - 1]
 
@@ -166,21 +141,17 @@ class Roles(Page):
 
             print(matched_player.participant.sliders)
 
-            i = 2 * (player.round_number - 4)
+            i = 2 * (player.round_number - 1)
             player.minSlider = matched_player.participant.sliders[i]
             player.maxSlider = matched_player.participant.sliders[i + 1]
 
-            # print(player.minSlider)
-            # print(player.maxSlider)
 
 class Response(Page):
     form_model = 'player'
     form_fields = ['response']
 
-
     @staticmethod
     def js_vars(player):
-
         return dict(
             selectedX=player.selectedX,
             fromM=player.minSlider,
@@ -198,7 +169,44 @@ class Response(Page):
             "maxSlider": player.maxSlider,
         }
 
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        # Initialize on first round
+        if player.round_number == 1:
+            player.participant.responses = []
 
+        # Responder payoff: payoff_matrix[response][selectedX]
+        player.payoff = payoff_matrix[player.response][player.selectedX]
+        player.participant.responses.append(player.response)
+
+        # Look up proposer and write their payoff back to their participant.vars
+        proposer_id = player.participant.proposer[player.round_number - 1]
+        proposer = next(
+            p for p in player.subsession.get_players()
+            if p.participant.label_id == proposer_id
+        )
+
+        if 'received_responses' not in proposer.participant.vars:
+            proposer.participant.received_responses = []
+
+        # Proposer payoff: payoff_matrix[response][0]
+        proposer_payoff = payoff_matrix[player.response][0]
+
+        proposer.participant.received_responses.append({
+            'round': player.round_number,
+            'responder_id': player.participant.label_id,
+            'response': player.response,
+            'proposer_payoff': proposer_payoff,
+        })
+
+        print(
+            f"[Round {player.round_number}] "
+            f"Responder {player.participant.label_id} (selectedX={player.selectedX}) → "
+            f"Proposer {proposer_id} | "
+            f"Response: {player.response} | "
+            f"Responder payoff: {player.payoff} | "
+            f"Proposer payoff: {proposer_payoff}"
+        )
 
 
 class Results(Page):
@@ -206,12 +214,10 @@ class Results(Page):
 
     @staticmethod
     def is_displayed(player):
-        return player.round_number == 6
+        return player.round_number == 3
 
     @staticmethod
     def js_vars(player):
-
-        # Initialize empty lists
         roundName_list = []
         idealX_list = []
         offerMin_list = []
@@ -220,23 +226,35 @@ class Results(Page):
         payoff_list = []
         role_list = []
 
-        # Loop through each round
-        for i in range(1, player.round_number + 1):  # Assuming num_rounds is defined
-            prev_player = player.in_round(i)
+        # --- Proposer (Seller) rounds ---
+        sliders = player.participant.sliders
+        received = player.participant.vars.get('received_responses', [])
 
-            # Append values from the respective round
-            roundName_list.append(prev_player.group.roundName)
-            idealX_list.append(prev_player.group.vetoer_bias)
-            offerMin_list.append(prev_player.group.minSlider)
-            offerMax_list.append(prev_player.group.maxSlider)
-            choice_list.append(prev_player.group.response)
-            payoff_list.append(prev_player.payoff)
-            role_list.append(prev_player.role)
+        for i in range(3):
+            prev_player = player.in_round(i + 1)
+            roundName_list.append(prev_player.roundName)
+            idealX_list.append("Unknown")
+            offerMin_list.append(sliders[2 * i])
+            offerMax_list.append(sliders[2 * i + 1])
+
+            match = next((r for r in received if r['round'] == i + 1), None)
+            choice_list.append(match['response'] if match else None)
+            payoff_list.append(match['proposer_payoff'] if match else None)
+            role_list.append("Seller")
+
+        # --- Responder (Buyer) rounds ---
+        for i in range(1, player.round_number + 1):
+            prev_player = player.in_round(i)
+            roundName_list.append(prev_player.roundName)
+            idealX_list.append(prev_player.selectedX)
+            offerMin_list.append(prev_player.minSlider)
+            offerMax_list.append(prev_player.maxSlider)
+            choice_list.append(prev_player.response)
+            payoff_list.append(float(prev_player.payoff))
+            role_list.append("Buyer")
 
         return dict(
-            round=player.round_number,
-
-            # loop these variables
+            round=6,
             idealX=idealX_list,
             offerMin=offerMin_list,
             offerMax=offerMax_list,
@@ -246,21 +264,9 @@ class Results(Page):
             role=role_list,
         )
 
-    @staticmethod
-    def before_next_page(player: Player, timeout_happened):
-        import random
 
-        participant = player.participant
-
-        # if it's the round to pay
-        if player.round_number == player.participant.vars['PayRound']:
-            player_in_selected_round = player.in_round(player.participant.vars['PayRound'])
-            player.participant.PartOnePayoff = float(player_in_selected_round.payoff)
-            # print("Paying for part one: ", player.participant.PartOnePayoff)
 
 class NoZeroWait(WaitPage):
-    # title_text = "Please wait"
-    # body_text = "Waiting for the Buyer to make his or her choice"
     wait_for_all_groups = True
 
     @staticmethod
@@ -270,5 +276,36 @@ class NoZeroWait(WaitPage):
 
     template_name = 'NoZeroWait.html'
 
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        # Draw the pay round once for the session; all other players reuse it
+        if 'PartTwoPayRound' not in player.session.vars:
+            player.session.vars['PartTwoPayRound'] = random.randint(1, 3)
 
-page_sequence = [RolesIntro, Roles, Response, NoZeroWait]
+        pay_round = player.session.vars['PartTwoPayRound']
+
+        # --- Responder (Buyer) payoff in the selected round ---
+        responder_player = player.in_round(pay_round)
+        player.participant.PartTwoResponderPayoff = float(responder_player.payoff)
+
+        # --- Proposer (Seller) payoff in the selected round ---
+        received = player.participant.vars.get('received_responses', [])
+        match = next((r for r in received if r['round'] == pay_round), None)
+        player.participant.PartTwoProposerPayoff = float(match['proposer_payoff']) if match else 0.0
+
+        # --- Total part two payoff ---
+        player.participant.PartTwoPayoff = (
+            player.participant.PartTwoResponderPayoff +
+            player.participant.PartTwoProposerPayoff
+        )
+
+        print(
+            f"[Payment] Player {player.participant.label_id} | "
+            f"Pay round: {pay_round} | "
+            f"Proposer payoff: {player.participant.PartTwoProposerPayoff} | "
+            f"Responder payoff: {player.participant.PartTwoResponderPayoff} | "
+            f"Total part two payoff: {player.participant.PartTwoPayoff}"
+        )
+
+
+page_sequence = [RolesIntro, Roles, Response, Results, NoZeroWait]

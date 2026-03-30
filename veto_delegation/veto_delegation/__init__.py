@@ -72,21 +72,24 @@ def set_payoffs(group):
 def creating_session(subsession):
     # Establish who will be paid for Parts 2, 3 and 4
     if subsession.round_number == 1:
-        lucky_participants = random.sample(range(1, subsession.session.num_participants + 1), 4)
+        lucky_participants = random.sample(range(1, subsession.session.num_participants + 1), 11)
 
-        subsession.session.vars['PartTwoPay'] = lucky_participants[0]
-        subsession.session.vars['PartThreePay'] = lucky_participants[1]
-        subsession.session.vars['PartFourPayGive'] = lucky_participants[2]
-        subsession.session.vars['PartFourPayReceive'] = lucky_participants[3]
+        subsession.session.vars['PartTwoPayProposer'] = lucky_participants[0]
+        subsession.session.vars['PartTwoPayResponder'] = lucky_participants[1]
+        subsession.session.vars['PartThreePay1'] = lucky_participants[2]
+        subsession.session.vars['PartThreePay2'] = lucky_participants[3]
+        subsession.session.vars['PartThreePay3'] = lucky_participants[4]
+        subsession.session.vars['PartFourPay1'] = lucky_participants[5]
+        subsession.session.vars['PartFourPay2'] = lucky_participants[6]
+        subsession.session.vars['PartFourPay3'] = lucky_participants[7]
+        subsession.session.vars['PartFivePay1'] = lucky_participants[8]
+        subsession.session.vars['PartFivePay2'] = lucky_participants[9]
+        subsession.session.vars['PartFivePay3'] = lucky_participants[10]
 
-        print("Lucky participants are: ",
-              subsession.session.vars['PartTwoPay'],
-              subsession.session.vars['PartThreePay'],
-              subsession.session.vars['PartFourPayGive'],
-              subsession.session.vars['PartFourPayReceive'])
+
 
     # Load JSON file
-    with open('SubjectMatching.json', 'r') as f:
+    with open('SubjectMatching2.json', 'r') as f:
         subject_matching = json.load(f)
 
     # Load relevant sections

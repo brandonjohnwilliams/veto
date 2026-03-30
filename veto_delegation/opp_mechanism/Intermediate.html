@@ -12,7 +12,7 @@ Part Four
 
 <p>
 <p>
-    Just as in Part Two, for Part Four you will again be matched to a large number of Robot Buyers,
+    Just as in Part Three, for Part Four you will again be matched to a large number of Robot Buyers,
     and paid the average Seller payment across those matches.
     However, in Part Four you will enter a Seller choice for the different version of this experiment.
     Your task as the Seller is to choose
@@ -22,48 +22,47 @@ Part Four
     a menu of Widgets
     {{ endif }}
     to offer the Robot Buyers.
-    Similar to Part Two, each Robot Buyer has been trained to reflect our best guess for the behavior of
-    {{ if single == 1 }}64{{ else }}66{{ endif }} different Buyer participants from sessions with the different version of this experiment in Part One.
+</p>
+<p>
+    Similar to Part Three, each Robot Buyer has been trained using choices made by
+    {{ if single == 0 }}64{{ else }}66{{ endif }}
+    different Buyer participants from sessions with the alternative version of this experiment in Part One.
     Because of this training, for any
     {{ if single == 1 }}
     offer
     {{ else }}
     menu
     {{ endif }}
-    you select and any ideal quantity drawn from the urn,
-    the distribution of decisions across the different Robot Buyers reflects our best guess
-    of the distribution of decisions across the {{ if single == 1 }}64{{ else }}66{{ endif }} prior participants in that situation.
+    that you select,
+    the Robot Buyers' decisions represent our best guess about how each of those
+    {{ if single == 0 }}64{{ else }}66{{ endif }} prior participants would respond,
+    across every ideal quantity that could be drawn from the urn.
 </p>
 
 <p>
-    As in Part Two, for any
+    As in Part Three, for any
     {{ if single == 1 }}
     offer
     {{ else }}
     menu
     {{ endif }}
-    you select in your <b>Part Four</b> decisions,
+    you select in your Part Four decisions,
     you can think of your payment as the average outcome across millions of different Robot Buyers.
     Each Robot Buyer represents a fair draw of an ideal quantity from the given urn and
-    a fair draw from the behavior of one of the <b>{{ if single == 1 }}64{{ else }}66{{ endif }}</b> participants in the prior sessions.
+    a fair draw from the behavior of one of the {{ if single == 0 }}64{{ else }}66{{ endif }} participants in the prior sessions.
 </p>
 
 <p>
     Because the payment rule averages across such a large number of Robot Buyers,
     there is no longer any randomness in payment for any Seller choice.
-    Any possible
-    {{ if single == 1 }}
-    offer
-    {{ else }}
-    menu
-    {{ endif }}
-    you might choose leads to a fixed payment,
-    where that payment reflects our best guess on the average outcome for the Seller payment across
-    the <b>{{ if single == 1 }}64{{ else }}66{{ endif }}</b> prior participants and the 20 different balls that could be drawn from the urn to determine the Buyer’s ideal quantity.
+    Any choice you make will lead to a fixed additional payment,
+    based on the 20 different balls that could be drawn from the urn to determine the Buyer’s ideal quantity
+    and our best guess on the average outcome for the Seller payment across
+    the {{ if single == 1 }}66{{ else }}64{{ endif }} prior participants responding to your offer.
 </p>
 
 <p>
-    Given this rule, your role in Part Four is to choose the
+    Given this rule, your task in Part Four is to choose the
     {{ if single == 1 }}
     offer
     {{ else }}
@@ -79,6 +78,7 @@ Part Four
     for each of the three urns: Low, Middle, and High.
 </p>
 
+<p>You will make your choices as Seller for each urn now.</p>
 
 {{ if test == 1 }}
 

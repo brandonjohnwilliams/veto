@@ -209,26 +209,42 @@ class robot(Page):
     def before_next_page(player, timeout_happened):
         set_payoffs(player)
 
-        # Run at the end
-        if player.round_number == C.NUM_ROUNDS:
-            if player.session.config['test']:
-                # for testing, pay any demo player:
-                lucky_round = random.randint(1, C.NUM_ROUNDS)
-                lucky_draw = player.in_round(lucky_round)
-                player.participant.vars['BonusPay'] = lucky_draw.payoff
-            else:
-                # only pay lucky winner in deployment
 
-                    # Check if the player is the lucky one
-                    lucky_player = int(player.participant.label)
-                    if lucky_player == int(player.session.vars['PartTwoPay']):
-                        # Draw one of the rounds to pay
-                        lucky_round = random.randint(1, C.NUM_ROUNDS)
-                        lucky_draw = player.in_round(lucky_round)
-                        player.participant.vars['BonusPay'] = lucky_draw.payoff
-                        print(f"Part Two: Paying {player.session.vars['PartTwoPay']} a bonus of {player.participant.vars['BonusPay']}")
-                    else:
-                        print("No robot award.")
+        player.participant.vars[f"part3round{player.round_number}"] = player.payoff
+
+        if player.session.config['test']:
+            lucky_player = int(player.participant.label_id)
+
+            for round_num in range(1, C.NUM_ROUNDS + 1):
+                winner = round_num + 1
+                if lucky_player == int(winner):
+                    lucky_draw = player.in_round(round_num)
+                    player.participant.vars['BonusPay'] = lucky_draw.payoff
+                    print(
+                        f"Part Three Round {round_num}: "
+                        f"Paying player {lucky_player} a bonus of {player.participant.vars['BonusPay']}"
+                    )
+                    break  # a player can only win once, no need to check remaining rounds
+                else:
+                    print(f"Part Three Round {round_num}: Player {lucky_player} is not the winner.")
+        else:
+
+
+            # Check if the player is the lucky one
+            lucky_player = int(player.participant.label_id)
+
+            for round_num in range(1, C.NUM_ROUNDS + 1):
+                winner = player.session.vars.get(f'PartThreePay{round_num}')
+                if lucky_player == int(winner):
+                    lucky_draw = player.in_round(round_num)
+                    player.participant.vars['BonusPay'] = lucky_draw.payoff
+                    print(
+                        f"Part Three Round {round_num}: "
+                        f"Paying player {lucky_player} a bonus of {player.participant.vars['BonusPay']}"
+                    )
+                    break  # a player can only win once, no need to check remaining rounds
+                else:
+                    print(f"Part Three Round {round_num}: Player {lucky_player} is not the winner.")
 
 
 class WaitPage2(WaitPage):

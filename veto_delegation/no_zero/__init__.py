@@ -44,28 +44,20 @@ class Player(BasePlayer):
 
 def creating_session(subsession):
 
-
     with open('SubjectMatching2.json', 'r') as f:
         subject_matching = json.load(f)
 
-    # Load relevant sections
     num_participants = str(subsession.session.num_participants)
     matching_dict = subject_matching[num_participants]
     subject_assignment_dict = matching_dict['subjectAssignment']
     urn_assignment_dict = matching_dict['urnAssignment']
     period_matching_dict = matching_dict['PeriodMatching']
 
-    # Get session key
     session_key = f"Session{subsession.session.config['Session']}"
-
-    # start at round 16 in JSON
     round_num = str(subsession.round_number + 15)
-    # print("JSON round number: ", round_num)
-
 
     for player in subsession.get_players():
 
-        # assign group and subgroup
         player.participant.label_id = player.id_in_subsession
         label_key = str(player.participant.label_id)
 
@@ -75,50 +67,55 @@ def creating_session(subsession):
         sub_group = subject_assignment['SubGroup']
         player.participant.SubGroupZero = sub_group
 
-        # print("Assigning to: ", subject_assignment)
-
-        # assign urn
-
         urn_type = urn_assignment_dict[session_key][f"MatchingGroup{matching_group}"][round_num]['urn']
-        urn_key = urn_type.split()[-1]  # "L", "M", or "H"
+        urn_key = urn_type.split()[-1]
 
         if urn_key == "M":
             player.roundType = 2
             player.roundName = "Middle"
-
         elif urn_key == "L":
             player.roundType = 1
             player.roundName = "Low"
-
         else:
             player.roundType = 3
             player.roundName = "High"
 
         period_match = period_matching_dict[round_num]
-
         player_id = str(player.participant.label_id)
 
-        match = next(
-            (
-                row
-                for row in period_match
-                if str(row["responder"]) == player_id
-            ),
+        # Find the row where this player is the responder → get their proposer
+        proposer_match = next(
+            (row for row in period_match if str(row["responder"]) == player_id),
             None
         )
-
-        if match is None:
+        if proposer_match is None:
             raise ValueError(f"No proposer match found for player_id={player_id}")
+        proposer = int(proposer_match["proposer"])
 
-        proposer = int(match["proposer"])
+        # Find the row where this player is the proposer → get their responder
+        responder_match = next(
+            (row for row in period_match if str(row["proposer"]) == player_id),
+            None
+        )
+        if responder_match is None:
+            raise ValueError(f"No responder match found for player_id={player_id}")
+        responder = int(responder_match["responder"])
 
-        # print("Player", player.id_in_subsession, "matched to", player.responder)
-
+        # Initialize lists on first round
         if player.roundType == 1:
             player.participant.proposer = []
+            player.participant.responder = []  # <-- initialize responder list too
 
         player.participant.proposer.append(proposer)
-        # print(player.participant.proposer)
+        player.participant.responder.append(responder)  # <-- store responder
+
+        # debugging / print
+        # print(
+        #     f"[Round {subsession.round_number}] "
+        #     f"Player {player_id} | "
+        #     f"Proposer (who proposed to me): {proposer} | "
+        #     f"Responder (who I proposed to): {responder}"
+        # )
 
         player.single = 1 if player.subsession.session.config['take_it_or_leave_it'] else 0
 
@@ -312,18 +309,6 @@ class Results(Page):
             roundName=roundName_list,
             role=role_list,
         )
-
-    @staticmethod
-    def before_next_page(player: Player, timeout_happened):
-        import random
-
-        participant = player.participant
-
-        # if it's the round to pay
-        if player.round_number == player.participant.vars['PayRound']:
-            player_in_selected_round = player.in_round(player.participant.vars['PayRound'])
-            player.participant.PartOnePayoff = float(player_in_selected_round.payoff)
-            # print("Paying for part one: ", player.participant.PartOnePayoff)
 
 class NoZeroWait(WaitPage):
     # title_text = "Please wait"
