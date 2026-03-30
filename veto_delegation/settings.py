@@ -33,7 +33,7 @@ SESSION_CONFIGS = [
             'avg_robot',
             'opp_mechanism',
             'mech_choice',
-            # 'payment_zero',
+            'payment_zero',
         ],
         num_demo_participants=20,
         take_it_or_leave_it=False,

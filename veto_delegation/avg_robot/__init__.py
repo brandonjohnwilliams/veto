@@ -250,11 +250,11 @@ class robot(Page):
 class WaitPage2(WaitPage):
     @staticmethod
     def is_displayed(player):
-        return player.round_number == 3 & player.session.config['test'] == 0
+        return player.round_number == C.NUM_ROUNDS & player.session.config['test'] == 0
 
     wait_for_all_groups = True
 
-    body_text = "Waiting for all participants to complete Part Two."
+    body_text = "Waiting for all participants to complete Part Three."
 
 
 

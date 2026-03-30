@@ -10,7 +10,7 @@ Payment
 
 
 class C(BaseConstants):
-    NAME_IN_URL = 'payment'
+    NAME_IN_URL = 'payment_zero'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
 
@@ -40,6 +40,10 @@ class Player(BasePlayer):
     PartFourPay1 = models.IntegerField()
     PartFourPay2 = models.IntegerField()
     PartFourPay3 = models.IntegerField()
+    PartFivePay1 = models.IntegerField()
+    PartFivePay2 = models.IntegerField()
+    PartFivePay3 = models.IntegerField()
+
 
     # survey variables
 
@@ -75,13 +79,7 @@ class Survey(Page):
     form_fields = ['race', 'gender', 'age', 'language', 'year', 'major']
 
 class Instructions(Page):
-    @staticmethod
-    def before_next_page(player, timeout_happened):
-        lucky_player = int(player.participant.label)
-        if lucky_player == int(player.session.vars['PartFourPayReceive']):
-            player.participant.vars['BonusPay'] = player.session.vars['GiveAmount']
-            print(
-                f"Paying {player.session.vars['PartFourPayReceive']} a bonus of {player.participant.vars['BonusPay']}")
+    pass
 
 class Payment(Page):
     @staticmethod
@@ -101,6 +99,9 @@ class Payment(Page):
         PartFour1 = 1 if label == player.session.vars.get('PartFourPay1') else 0
         PartFour2 = 1 if label == player.session.vars.get('PartFourPay2') else 0
         PartFour3 = 1 if label == player.session.vars.get('PartFourPay3') else 0
+        PartFive1 = 1 if label == player.session.vars.get('PartFivePay1') else 0
+        PartFive2 = 1 if label == player.session.vars.get('PartFivePay2') else 0
+        PartFive3 = 1 if label == player.session.vars.get('PartFivePay3') else 0
 
         player.label = label
         player.PartOnePay = PartOnePay
@@ -111,14 +112,17 @@ class Payment(Page):
         if PartTwo_Responder == 1:
             player.PartTwoResponderPay = int(player.participant.vars.get('PartTwoResponderPayoff'))
 
+
         if PartThree1 == 1:
             player.PartThreePay = int(player.participant.vars.get('BonusPay'))
+
 
         if PartThree2 == 1:
             player.PartThreePay = int(player.participant.vars.get('BonusPay'))
 
         if PartThree3 == 1:
             player.PartThreePay = int(player.participant.vars.get('BonusPay'))
+
 
         # if PartFourGive == 1:
         #     player.PartFourGive = int(player.participant.vars.get('BonusPay'))
@@ -135,6 +139,15 @@ class Payment(Page):
         if PartFour3 == 1:
             player.PartFourPay = int(player.participant.vars.get('BonusPay'))
 
+        if PartFive1 == 1:
+            player.PartFivePay = int(player.participant.vars.get('BonusPay'))
+
+        if PartFour2 == 1:
+            player.PartFivePay = int(player.participant.vars.get('BonusPay'))
+
+        if PartFive3 == 1:
+            player.PartFivePay = int(player.participant.vars.get('BonusPay'))
+
 
         player.totalPay = int(
             PartOnePay
@@ -142,7 +155,7 @@ class Payment(Page):
             + 8
         )
         #
-        # print("------ DEBUGGING PAYOFF LOGIC ------")
+        print("------ DEBUGGING PAYOFF LOGIC ------")
         #
         # # Participant vars
         # print("participant.vars:")
@@ -182,10 +195,11 @@ class Payment(Page):
             PartOnePay=PartOnePay,
             Bonus=BonusPay,
             Round=Round,
-            PartTwo=PartTwo,
-            PartThree=PartThree,
-            PartFourGive=PartFourGive,
-            PartFourReceive=PartFourReceive,
+            PartTwoProposer=player.PartTwoProposerPay,
+            PartTwoResponder=player.PartTwoResponderPay,
+            PartThree=player.PartThreePay,
+            PartFour=player.PartFourPay,
+            PartFive=player.PartFivePay,
             TotalPay=player.totalPay
         )
 
