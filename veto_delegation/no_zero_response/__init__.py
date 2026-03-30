@@ -140,8 +140,9 @@ class RolesIntro(Page):
 
     @staticmethod
     def vars_for_template(player):
-        return dict(
-            test=player.session.config['test']
+        test = player.subsession.session.config['test']
+        return dict (
+            test = test,
         )
 
 

@@ -75,6 +75,10 @@ ROOMS = [
     dict(
         name='test_room',
         display_name='Test Room',
+    ),
+    dict(
+        name='test_room2',
+        display_name='Test Room',
     )
 ]
 
