@@ -1,5 +1,5 @@
 {{ block title }}
-Your Role: Seller
+Part Two: Seller decisions
 {{ endblock }}
 
 {% block content %}
@@ -9,8 +9,11 @@ Your Role: Seller
 </head>
 
 <p>
-    You are the Seller. You will propose what {{ if player.single == 1}} option{{ else }}menu of options{{endif}} for the number of Widgets that the Buyer can choose to buy.
-    Remember, the Buyer <strong>will not</strong> have the option to walk away and purchase zero Widgets.
+    You will now make three decisions as a Seller. For each of the three urns you will propose {{ if player.single == 1
+    }}an amount of widgets to offer
+    {{ else }}a menu of Widgets to offer{{ endif }}
+    to the Buyer.
+    In Part Two, the Buyer <strong>will not</strong> have the option to walk away and purchase zero Widgets.
 </p>
 
 
@@ -22,7 +25,7 @@ Your Role: Seller
 
 <div style="text-align: right;">
 
-        <button class="otree-btn-next btn btn-primary">Next</button>
+    <button class="otree-btn-next btn btn-primary">Next</button>
 
 </div>
 

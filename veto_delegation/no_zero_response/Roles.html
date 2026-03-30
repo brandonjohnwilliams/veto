@@ -1,5 +1,5 @@
 {{ block title }}
-Part Two Round {{player.round_number}} - Your Role: Buyer
+Part Two - Buyer choice for {{ player.roundName }} urn
 {{ endblock }}
 
 {% block content %}
@@ -10,11 +10,8 @@ Part Two Round {{player.round_number}} - Your Role: Buyer
 
 
 <p>
-    You are the Buyer. You will respond to an offer from a Seller made in the previous three rounds.
-    The Seller has proposed a {{ if player.single == 1}} number of {{ else }}menu of options for the number of {{endif}}  widgets that you can choose to buy.
-    Remember in this Part, there is no option to walk away (buy zero Widgets).
+    You will now respond to a decision made by a Seller participant for the <b>{{ player.roundName }}</b> urn.
 </p>
-
 
 <p>This page will automatically advance in <span class="otree-timer__time-left">0:20</span>.</p>
 
@@ -23,8 +20,8 @@ Part Two Round {{player.round_number}} - Your Role: Buyer
 
 {{ next_button }}
 
-    <!-- Include JavaScript file -->
-    <script src="{{ static 'veto_delegation/interface.js' }}"></script>
+<!-- Include JavaScript file -->
+<script src="{{ static 'veto_delegation/interface.js' }}"></script>
 
 
 

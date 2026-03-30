@@ -1,5 +1,5 @@
 {{ block title }}
-Your Role: Buyer
+Part Two: Buyer decisions
 {{ endblock }}
 
 {% block content %}
@@ -9,22 +9,22 @@ Your Role: Buyer
 </head>
 
 <p>
-    For the next three rounds, you are the Buyer.
-
-    You will respond to three offers from Sellers made in the previous three rounds.
-    The Seller has proposed a {{ if player.single == 1}} number of {{ else }}menu of options for the number of {{endif}}  widgets that you can choose to buy.
-    Remember in this Part, there is no option to walk away (buy zero Widgets).
+    You will now act as a Buyer for each of the three urns, where you will respond to the decisions made by a different
+    Seller participant in each.
+    Each Seller chose {{ if player.single == 1}} an amount of Widgets to offer{{ else }}a menu of Widgets to
+    offer{{ endif }} you.
+    Remember in Part Two you have no option to walk away as Buyer.
 </p>
 
 
 <p>This page will automatically advance in <span class="otree-timer__time-left">0:15</span>.</p>
-{{ if test == 1 }}
 
+{{ if test == 1 }}
 (Next button for testing purposes.)
 
 <div style="text-align: right;">
 
-        <button class="otree-btn-next btn btn-primary">Next</button>
+    <button class="otree-btn-next btn btn-primary">Next</button>
 
 </div>
 
