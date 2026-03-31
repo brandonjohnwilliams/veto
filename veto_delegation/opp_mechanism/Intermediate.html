@@ -6,76 +6,71 @@ Part Four
 
 {{ block content }}
 
-    <head>
-        <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
-    </head>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+</head>
 
 <p>
 <p>
-    Just as in Part Three, for Part Four you will again be matched to a large number of Robot Buyers,
-    and paid the average Seller payment across those matches.
-    However, in Part Four you will enter a Seller choice for the different version of this experiment.
+    Just as in Part Three, in Part Four you will again receive the average expected payment for your choice by being
+    matched to Robot Buyers.
+    However, in Part Four you will make a Seller decisions for the different version of this experiment.
     Your task as the Seller is to choose
     {{ if single == 1 }}
-    a single number of Widgets
+    a single offer (a fixed amount of Widgets)
     {{ else }}
-    a menu of Widgets
+    a menu of Widgets (a minimum and maximum amount of Widgets)
     {{ endif }}
-    to offer the Robot Buyers.
-</p>
-<p>
-    Similar to Part Three, each Robot Buyer has been trained using choices made by
-    {{ if single == 0 }}64{{ else }}66{{ endif }}
-    different Buyer participants from sessions with the alternative version of this experiment in Part One.
-    Because of this training, for any
+    to offer to the Robot Buyers.
+    The Robot Buyers in Part Four have been trained to reflect our best guess for how
+    {{ if single == 1 }}64{{ else }}66{{ endif }} different Buyer participants made decisions in the alternative
+    sessions.
+    Because of this training, for any particular urn the payment for the
     {{ if single == 1 }}
-    offer
+    single offer
     {{ else }}
     menu
     {{ endif }}
-    that you select,
-    the Robot Buyers' decisions represent our best guess about how each of those
-    {{ if single == 0 }}64{{ else }}66{{ endif }} prior participants would respond,
-    across every ideal quantity that could be drawn from the urn.
+    you select is fixed.
+    The average across the Robot Buyers' decisions reflects:
+<ul>
+    <li>How each of the {{ if single == 1 }}66{{ else }}64{{
+        endif }} prior participants may have responded to your
+        {{ if single == 1 }}
+        offer, by walking away or accepting the offered quantity.
+        {{ else }}
+        menu, by walking away or accepting some amount betwen the miniumum and maximum quanity offered.
+        {{ endif }}
+    <li>The different decisions taken for different ideal quantities X for the Buyer drawn from the urn;</li>
+</ul>
+
+<p>
+    Each separate Robot Buyer represents a fair draw over an ideal quantity <b>from the given urn</b> and
+    the likely choices from one of the {{ if single == 1 }}66{{ else }}64{{ endif }} prior participants. Therefore, by
+    taking averages across a large number of Robot Buyers we can remove any randomness in the Seller's payment for any
+    {{ if single == 1 }}
+    single offer
+    {{ else }}
+    menu
+    {{ endif }}.
 </p>
 
 <p>
-    As in Part Three, for any
+    Using your experience from Part One on how Buyers respond, your role in Part Four is to choose
     {{ if single == 1 }}
+    an offer
+    {{ else }}
+    a menu
+    {{ endif }}
+    that you think generates the highest average expected payment for the Seller in the alternate version of the
+    experiment.
+    You will make three separate decisions, one for each of the three urns (Low, Middle, and High).
+    The different urns affect the chances for each Robot Buyer's ideal quantity X, and therefore the average
+    expected payment from any {{ if single == 1 }}
     offer
     {{ else }}
     menu
-    {{ endif }}
-    you select in your Part Four decisions,
-    you can think of your payment as the average outcome across millions of different Robot Buyers.
-    Each Robot Buyer represents a fair draw of an ideal quantity from the given urn and
-    a fair draw from the behavior of one of the {{ if single == 0 }}64{{ else }}66{{ endif }} participants in the prior sessions.
-</p>
-
-<p>
-    Because the payment rule averages across such a large number of Robot Buyers,
-    there is no longer any randomness in payment for any Seller choice.
-    Any choice you make will lead to a fixed additional payment,
-    based on the 20 different balls that could be drawn from the urn to determine the Buyer’s ideal quantity
-    and our best guess on the average outcome for the Seller payment across
-    the {{ if single == 1 }}66{{ else }}64{{ endif }} prior participants responding to your offer.
-</p>
-
-<p>
-    Given this rule, your task in Part Four is to choose the
-    {{ if single == 1 }}
-    offer
-    {{ else }}
-    menu
-    {{ endif }}
-    that you think leads to the highest expected Seller payment.
-    You will make a separate decision over a
-    {{ if single == 1 }}
-    offer to make
-    {{ else }}
-    menu to offer
-    {{ endif }}
-    for each of the three urns: Low, Middle, and High.
+    {{ endif }} you select.
 </p>
 
 <p>You will make your choices as Seller for each urn now.</p>
@@ -86,7 +81,7 @@ Part Four
 
 <div style="text-align: right;">
 
-        <button class="otree-btn-next btn btn-primary">Next</button>
+    <button class="otree-btn-next btn btn-primary">Next</button>
 
 </div>
 

@@ -6,32 +6,40 @@ Part Four
 
 {{ block content }}
 
-    <head>
-        <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
-    </head>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+</head>
 
 <p>
-    In Part Four, your payment will again be calculated as the average outcome across a very large number of Robot Buyers, just like in Part Two.
-</p>
-<p>
-    However, there is one key difference: your choices in Part Four are based on <b>a different version of this experiment</b>.
+    In Part Four, your payment will again be calculated aagain using the average expected outcome across a very large
+    number of Robot Buyers, just like in Part Three. However, your decisions in Part Four are based on <b>a different
+        version of
+        this experiment</b>.
 </p>
 <p>
     {{ if single == 1 }}
-    Where you previously chose a minimum and maximum quantity to offer (a menu), in this alternate version <b>you will offer a single, fixed number of widgets</b> to the Buyer.
-    <br><br>
-    As before, the Buyer can either choose the offered amount or walk away (zero widgets). Your choice as the Seller is simply which quantity to offer, from 1 to 8.
+    Where you previously chose a minimum and maximum quantity to offer (a menu), in this alternate version <b>you will
+        offer a single, fixed number of widgets</b> to the Buyer.
     {{ else }}
-    Where you previously chose a single, fixed amount of widgets to offer, in this alternate version <b>you will offer a minimum and maximum number of widgets</b> to the Buyer (a menu).
-    <br><br>
-    As before, the Buyer can choose any amount of widgets within your offered menu, or walk away (zero widgets). Your choice as the Seller is to set both the minimum and maximum quantity of the offer, from 1 to 8.
+    Where you previously chose a single, fixed amount of widgets to offer, in this alternate version <b>you will
+        offer a minimum and maximum number of widgets</b> to the Buyer (a menu).
     {{ endif }}
-</p>
+<ul>
+    <li>The Buyer draws an ideal quantity X from the given urn just as before.</li>
+    <li>Just like in Part One, the Buyer can always choose to walk away (purchase zero widgets) regardless of your
+        choice.</li>
+    <li> However {{ if single == 1 }}, rather than any choice from your selected menu, the Buyer will only be able
+        choose the quantity that
+
+        {{ else }}
+        Where you previously chose a single, fixed amount of widgets to offer, in this alternate version <b>you will
+            offer a minimum and maximum number of widgets</b> to the Buyer (a menu).
+        {{ endif }}
+    </li>
+</ul>
 <p>
-    Notice that just as in your session, you can never remove the option for the Buyer to walk away (zero widgets).
-</p>
-<p>
-    On the next page, you will be able to explore the interface that the Sellers and Buyers saw in the alternate version of this experiment.
+    On the next page, you will be able to experiment with the interface used by the Sellers and Buyers in the alternate
+    version of the experiment.
 </p>
 
 {{ if test == 1 }}
@@ -40,7 +48,7 @@ Part Four
 
 <div style="text-align: right;">
 
-        <button class="otree-btn-next btn btn-primary">Next</button>
+    <button class="otree-btn-next btn btn-primary">Next</button>
 
 </div>
 
