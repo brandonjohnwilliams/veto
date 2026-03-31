@@ -101,8 +101,8 @@ def creating_session(subsession):
     for player in subsession.get_players():
         # Step 1: Select a distribution
         if subsession.round_number == 1:
-            # Generate a single random permutation of [1, 2, 3] and store it
-            player.participant.sample = random.sample([1, 2, 3], k=3)
+
+            player.participant.sample = [1, 2, 3]
 
         dist = player.participant.sample[subsession.round_number-1]
 
@@ -257,6 +257,24 @@ class Intermediate(Page):
             test=test,
         )
 
+class Roles(Page):
+    timeout_seconds = 20
+    @staticmethod
+    def js_vars(player):
+        group = player.group
+        return dict(
+            roundName=player.roundName,
+            roundType=player.roundType,
+
+        )
+
+    @staticmethod
+    def vars_for_template(player):
+        return {
+            "roundName": player.roundName,
+            "roundType": player.roundType,
+        }
+
 class robot(Page):
     form_model = 'player'
     form_fields = ['minSlider','maxSlider']
@@ -282,26 +300,40 @@ class robot(Page):
     def before_next_page(player, timeout_happened):
         set_payoffs(player)
 
-        # Run at the end
-        if player.round_number == C.NUM_ROUNDS:
-            if player.session.config['test']:
-                # for testing, pay any demo player:
-                lucky_round = random.randint(1, C.NUM_ROUNDS)
-                lucky_draw = player.in_round(lucky_round)
-                player.participant.vars['BonusPay'] = lucky_draw.payoff
-            else:
-                # only pay lucky winner in deployment
+        player.participant.vars[f"part4round{player.round_number}"] = player.payoff
 
-                    # Check if the player is the lucky one
-                    lucky_player = int(player.participant.label)
-                    if lucky_player == int(player.session.vars['PartTwoPay']):
-                        # Draw one of the rounds to pay
-                        lucky_round = random.randint(1, C.NUM_ROUNDS)
-                        lucky_draw = player.in_round(lucky_round)
-                        player.participant.vars['BonusPay'] = lucky_draw.payoff
-                        print(f"Part Two: Paying {player.session.vars['PartTwoPay']} a bonus of {player.participant.vars['BonusPay']}")
-                    else:
-                        print("No robot award.")
+        if player.session.config['test']:
+            lucky_player = int(player.participant.label_id)
+
+            for round_num in range(1, C.NUM_ROUNDS + 4):
+                winner = round_num + 1
+                if lucky_player == int(winner):
+                    lucky_draw = player.in_round(round_num)
+                    player.participant.vars['BonusPay'] = lucky_draw.payoff
+                    print(
+                        f"Part Four Round {round_num}: "
+                        f"Paying player {lucky_player} a bonus of {player.participant.vars['BonusPay']}"
+                    )
+                    break  # a player can only win once, no need to check remaining rounds
+                else:
+                    print(f"Part Four Round {round_num}: Player {lucky_player} is not the winner.")
+        else:
+
+            # Check if the player is the lucky one
+            lucky_player = int(player.participant.label_id)
+
+            for round_num in range(1, C.NUM_ROUNDS + 1):
+                winner = player.session.vars.get(f'PartFourPay{round_num}')
+                if lucky_player == int(winner):
+                    lucky_draw = player.in_round(round_num)
+                    player.participant.vars['BonusPay'] = lucky_draw.payoff
+                    print(
+                        f"Part Four Round {round_num}: "
+                        f"Paying player {lucky_player} a bonus of {player.participant.vars['BonusPay']}"
+                    )
+                    break  # a player can only win once, no need to check remaining rounds
+                else:
+                    print(f"Part Four Round {round_num}: Player {lucky_player} is not the winner.")
 
 
 class WaitPage2(WaitPage):
@@ -315,9 +347,11 @@ class WaitPage2(WaitPage):
 
 
 
-page_sequence = [Instructions, SellerView,
+page_sequence = [Instructions,
+                 SellerView,
     SellerWait,
     BuyersView,
     BuyerWait,
     Intermediate,
+    Roles,
     robot, WaitPage2]

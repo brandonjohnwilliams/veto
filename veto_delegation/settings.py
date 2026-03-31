@@ -25,23 +25,33 @@ SESSION_CONFIGS = [
         name='mech_choice',
         display_name="Mechanism Choice",
         app_sequence=[
-            # 'introduction',
-            # 'practice',
-            # 'veto_delegation',
+            'introduction',
+            'practice',
+            'veto_delegation',
             'no_zero',
             'no_zero_response',
             'avg_robot',
             'opp_mechanism',
             'mech_choice',
-            # 'payment',
+            'payment_zero',
         ],
         num_demo_participants=20,
         take_it_or_leave_it=False,
         chat=False,
         use_browser_bots=False,
         Session=1,
-        test=1,
+        test=0,
         doc="""Set the session number to the total number in the treatment""",
+    ),
+    dict(
+        name='opener',
+        display_name="opener",
+        app_sequence=[
+            'opener',
+        ],
+        num_demo_participants=1,
+        hispanic_names=False,
+        random_order=False,
     ),
 
 ]
@@ -60,8 +70,17 @@ DEBUG=False
 
 PARTICIPANT_FIELDS = ['MatchingGroup', 'SubGroup', 'PayRound', 'PartOnePayoff', 'BonusPay', 'dictator_order', 'sliders',
                       'label_id', 'MatchingGroupZero', 'SubGroupZero',
-                      'proposer']
-SESSION_FIELDS = ['PartTwoPay', 'PartThreePay', 'PartFourPayGive', 'PartFourPayReceive', 'GiveAmount']
+                      'proposer', 'responder', 'responses', 'received_responses',
+                      'PartTwoPayoff', 'PartTwoResponderPayoff', 'PartTwoProposerPayoff',]
+SESSION_FIELDS = ['PartTwoPay', 'PartTwoPayProposer', 'PartTwoPayResponder',
+                  'PartThreePay', 'PartThreePay1', 'PartThreePay2', 'PartThreePay3',
+                  'part3round1', 'part3round2', 'part3round3',
+                  'PartFourPayGive', 'PartFourPayReceive',
+                  'PartFourPay1', 'PartFourPay2', 'PartFourPay3',
+                  'part4round1', 'part4round2', 'part4round3',
+                  'MPLResults',
+                  'PartFivePay1', 'PartFivePay2', 'PartFivePay3',
+                  'GiveAmount']
 
 # ISO-639 code
 # for example: de, fr, ja, ko, zh-hans
