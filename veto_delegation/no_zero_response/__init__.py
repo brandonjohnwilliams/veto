@@ -126,6 +126,24 @@ class Roles(Page):
     timeout_seconds = 15
 
     @staticmethod
+    def vars_for_template(player):
+        return dict(
+            round_type=player.roundType,
+            single=player.single,
+            selectedX=player.selectedX,
+            roundName=player.roundName,
+        )
+
+    @staticmethod
+    def js_vars(player):
+        return dict(
+            round_type=player.roundType,
+            single=player.single,
+            selectedX=player.selectedX,
+            roundName=player.roundName,
+        )
+
+    @staticmethod
     def before_next_page(player, timeout_happened):
         if player.subsession.session.config['test'] == 1:
             player.minSlider = 3

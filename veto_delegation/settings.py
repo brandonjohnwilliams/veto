@@ -25,12 +25,12 @@ SESSION_CONFIGS = [
         name='mech_choice',
         display_name="Mechanism Choice",
         app_sequence=[
-            'introduction',
-            'practice',
-            'veto_delegation',
-            'no_zero',
-            'no_zero_response',
-            'avg_robot',
+            # 'introduction',
+            # 'practice',
+            # 'veto_delegation',
+            # 'no_zero',
+            # 'no_zero_response',
+            # 'avg_robot',
             'opp_mechanism',
             'mech_choice',
             'payment_zero',
@@ -42,6 +42,16 @@ SESSION_CONFIGS = [
         Session=1,
         test=1,
         doc="""Set the session number to the total number in the treatment""",
+    ),
+    dict(
+        name='opener',
+        display_name="opener",
+        app_sequence=[
+            'opener',
+        ],
+        num_demo_participants=1,
+        hispanic_names=False,
+        random_order=False,
     ),
 
 ]

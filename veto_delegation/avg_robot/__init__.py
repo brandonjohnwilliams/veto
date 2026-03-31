@@ -99,7 +99,7 @@ def creating_session(subsession):
         # Step 1: Select a distribution
         if subsession.round_number == 1:
             # Generate a single random permutation of [1, 2, 3] and store it
-            player.participant.sample = random.sample([1, 2, 3], k=3)
+            player.participant.sample = [1, 2, 3]
 
         dist = player.participant.sample[subsession.round_number-1]
 
@@ -184,6 +184,24 @@ class Instructions(Page):
             test=test,
         )
 
+class Roles(Page):
+    timeout_seconds = 20
+    @staticmethod
+    def js_vars(player):
+        group = player.group
+        return dict(
+            roundName=player.roundName,
+            roundType=player.roundType,
+
+        )
+
+    @staticmethod
+    def vars_for_template(player):
+        return {
+            "roundName": player.roundName,
+            "roundType": player.roundType,
+        }
+
 class robot(Page):
     form_model = 'player'
     form_fields = ['minSlider','maxSlider']
@@ -258,4 +276,4 @@ class WaitPage2(WaitPage):
 
 
 
-page_sequence = [Instructions, robot, WaitPage2]
+page_sequence = [Instructions, Roles, robot, WaitPage2]
