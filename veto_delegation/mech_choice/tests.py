@@ -11,14 +11,14 @@ class PlayerBot(Bot):
             response = random.choice(possible_responses)
 
             yield ChoiceInstructions, {
-                'response': response,
+                'switch_point_practice': response,
             }
 
-        yield Submission(InstructionsFeedback, check_html=False)
+            yield Submission(InstructionsFeedback, check_html=False)
 
         possible_responses = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 'ALWAYS_A']
         response = random.choice(possible_responses)
 
-        yield ChoiceInstructions, {
-            'response': response,
+        yield Choice, {
+            'switch_point': response,
         }

@@ -25,9 +25,11 @@ class PlayerBot(Bot):
             possible_responses = [0] + list(range(min_slider, max_slider + 1))
             response = random.choice(possible_responses)
 
-            yield BuyerView, {
+            yield BuyersView, {
                 'response': response,
             }
+
+            yield Submission(Intermediate, check_html=False)
 
         yield Submission(Roles, check_html=False)
 

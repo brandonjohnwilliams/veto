@@ -32,6 +32,8 @@ class Player(BasePlayer):
     # store payment values for quick access
     PartOnePay = models.IntegerField()
     PartTwoPay = models.IntegerField()
+    PartTwoProposerPay = models.IntegerField()
+    PartTwoResponderPay = models.IntegerField()
     PartThreePay1 = models.IntegerField()
     PartThreePay2 = models.IntegerField()
     PartThreePay3 = models.IntegerField()
@@ -43,6 +45,9 @@ class Player(BasePlayer):
     PartFivePay1 = models.IntegerField()
     PartFivePay2 = models.IntegerField()
     PartFivePay3 = models.IntegerField()
+    PartThreePay = models.IntegerField()
+    PartFourPay = models.IntegerField()
+    PartFivePay = models.IntegerField()
 
 
     # survey variables
@@ -85,111 +90,61 @@ class Payment(Page):
     @staticmethod
     def vars_for_template(player):
 
-        PartOnePay = int(player.participant.vars.get('PartOnePayoff'))
-        BonusPay = int(player.participant.vars.get('BonusPay'))
-        Round = player.participant.vars.get('PayRound')
+        # Helper: safely convert participant.vars values to int, defaulting to 0
+        def safe_get(key):
+            val = player.participant.vars.get(key)
+            return int(val) if val is not None else 0
 
-        label = int(player.participant.label)
+        PartOnePay = safe_get('PartOnePayoff')
+        BonusPay   = safe_get('BonusPay')
+        Round      = player.participant.vars.get('PayRound')
+        label      = int(player.participant.label)
 
-        PartTwo_Proposer  = 1 if label == player.session.vars.get('PartTwoPayProposer')  else 0
-        PartTwo_Responder = 1 if label == player.session.vars.get('PartTwoPayResponder') else 0
-        PartThree1         = 1 if label == player.session.vars.get('PartThreePay1')         else 0
-        PartThree2 = 1 if label == player.session.vars.get('PartThreePay2') else 0
-        PartThree3 = 1 if label == player.session.vars.get('PartThreePay3') else 0
-        PartFour1 = 1 if label == player.session.vars.get('PartFourPay1') else 0
-        PartFour2 = 1 if label == player.session.vars.get('PartFourPay2') else 0
-        PartFour3 = 1 if label == player.session.vars.get('PartFourPay3') else 0
-        PartFive1 = 1 if label == player.session.vars.get('PartFivePay1') else 0
-        PartFive2 = 1 if label == player.session.vars.get('PartFivePay2') else 0
-        PartFive3 = 1 if label == player.session.vars.get('PartFivePay3') else 0
-
-        player.label = label
+        player.label     = label
         player.PartOnePay = PartOnePay
 
-        if PartTwo_Proposer == 1:
-            player.PartTwoProposerPay = int(player.participant.vars.get('PartTwoProposerPayoff'))
+        # Initialize all payoff fields to 0 so oTree never reads an unset IntegerField
+        player.PartTwoProposerPay = 0
+        player.PartTwoResponderPay = 0
+        player.PartThreePay1 = 0
+        player.PartThreePay2 = 0
+        player.PartThreePay3 = 0
+        player.PartFourPay1  = 0
+        player.PartFourPay2  = 0
+        player.PartFourPay3  = 0
+        player.PartFivePay1  = 0
+        player.PartFivePay2  = 0
+        player.PartFivePay3  = 0
+        player.PartThreePay  = 0
+        player.PartFourPay   = 0
+        player.PartFivePay   = 0
 
-        if PartTwo_Responder == 1:
-            player.PartTwoResponderPay = int(player.participant.vars.get('PartTwoResponderPayoff'))
+        # Part Two
+        if label == player.session.vars.get('PartTwoPayProposer'):
+            player.PartTwoProposerPay = safe_get('PartTwoProposerPayoff')
 
+        if label == player.session.vars.get('PartTwoPayResponder'):
+            player.PartTwoResponderPay = safe_get('PartTwoResponderPayoff')
 
-        if PartThree1 == 1:
-            player.PartThreePay = int(player.participant.vars.get('BonusPay'))
+        # Part Three
+        for key in ('PartThreePay1', 'PartThreePay2', 'PartThreePay3'):
+            if label == player.session.vars.get(key):
+                player.PartThreePay = safe_get('BonusPay')
+                break
 
+        # Part Four
+        for key in ('PartFourPay1', 'PartFourPay2', 'PartFourPay3'):
+            if label == player.session.vars.get(key):
+                player.PartFourPay = safe_get('BonusPay')
+                break
 
-        if PartThree2 == 1:
-            player.PartThreePay = int(player.participant.vars.get('BonusPay'))
+        # Part Five
+        for key in ('PartFivePay1', 'PartFivePay2', 'PartFivePay3'):
+            if label == player.session.vars.get(key):
+                player.PartFivePay = safe_get('BonusPay')
+                break
 
-        if PartThree3 == 1:
-            player.PartThreePay = int(player.participant.vars.get('BonusPay'))
-
-
-        # if PartFourGive == 1:
-        #     player.PartFourGive = int(player.participant.vars.get('BonusPay'))
-        #
-        # if PartFourReceive == 1:
-        #     player.PartFourReceive = int(player.participant.vars.get('BonusPay'))
-
-        if PartFour1 == 1:
-            player.PartFourPay = int(player.participant.vars.get('BonusPay'))
-
-        if PartFour2 == 1:
-            player.PartFourPay = int(player.participant.vars.get('BonusPay'))
-
-        if PartFour3 == 1:
-            player.PartFourPay = int(player.participant.vars.get('BonusPay'))
-
-        if PartFive1 == 1:
-            player.PartFivePay = int(player.participant.vars.get('BonusPay'))
-
-        if PartFive2 == 1:
-            player.PartFivePay = int(player.participant.vars.get('BonusPay'))
-
-        if PartFive3 == 1:
-            player.PartFivePay = int(player.participant.vars.get('BonusPay'))
-
-
-        player.totalPay = int(
-            PartOnePay
-            + BonusPay
-            + 8
-        )
-        #
-        print("------ DEBUGGING PAYOFF LOGIC ------")
-        #
-        # # Participant vars
-        # print("participant.vars:")
-        # for k, v in player.participant.vars.items():
-        #     print(f"  {k}: {v}")
-        #
-        # # Session vars
-        # print("\nsession.vars:")
-        # for k, v in player.session.vars.items():
-        #     print(f"  {k}: {v}")
-        #
-        # # Player attributes
-        # print("\nplayer fields:")
-        # print(f"  label: {player.participant.label}")
-        # print(f"  round_number: {player.round_number}")
-        # print(f"  minSlider: {getattr(player, 'minSlider', None)}")
-        # print(f"  maxSlider: {getattr(player, 'maxSlider', None)}")
-        # print(f"  vetoer_bias: {getattr(player, 'vetoer_bias', None)}")
-        # print(f"  payoff: {player.payoff}")
-        #
-        # # Calculated variables
-        # print("\nCalculated fields:")
-        # try:
-        #     label_int = int(player.participant.label)
-        # except (TypeError, ValueError):
-        #     label_int = None
-        # print(f"  label_int: {label_int}")
-        # print(f"  PartTwoPay: {player.session.vars.get('PartTwoPay')}")
-        # print(f"  PartThreePay: {player.session.vars.get('PartThreePay')}")
-        # print(f"  PartFourPayGive: {player.session.vars.get('PartFourPayGive')}")
-        # print(f"  PartFourPayReceive: {player.session.vars.get('PartFourPayReceive')}")
-        # print(f"  BonusPay: {player.participant.vars.get('BonusPay')}")
-        # print(f"  PartOnePayoff: {player.participant.vars.get('PartOnePayoff')}")
-        # print("------ END DEBUG ------\n")
+        player.totalPay = PartOnePay + BonusPay + 8
 
         return dict(
             PartOnePay=PartOnePay,
@@ -197,10 +152,10 @@ class Payment(Page):
             Round=Round,
             PartTwoProposer=player.PartTwoProposerPay,
             PartTwoResponder=player.PartTwoResponderPay,
-            PartThree=player.PartThreePay,
+            PartThree=player.field_maybe_none('PartThreePay') or 0,
             PartFour=player.PartFourPay,
             PartFive=player.PartFivePay,
-            TotalPay=player.totalPay
+            TotalPay=player.totalPay,
         )
 
 
