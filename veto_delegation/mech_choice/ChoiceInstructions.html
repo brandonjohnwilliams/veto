@@ -225,7 +225,29 @@ Part Five
 
 
 </head>
-
+<p>
+  In the last two parts you made decisions to maximize the average expected payement for the Seller for:
+<ul>
+  {{ if single == 1 }}
+  <li>
+    Part Three: <b> A Single offer</b>
+  </li>
+  <li>
+    Part Four: <b> A Menu of offers</b>
+  </li>
+  {{ else }}
+  <li>
+    Part Three: <b> A Menu of offers</b>
+  </li>
+  <li>
+    Part Four: <b> A Single offer</b>
+  </li>
+  {{ endif }}
+</ul>
+We are interested in your relative valuation of the two versions of this experiment for the Sellers: the <b>single
+  offer</b> version, and the <b>menu</b> version.
+Your task in Part Five is to indicate how much more or less you value each version.
+</p>
 <p>
   We are interested in your relative valuation of the two versions of this experiment for the Sellers: the <b>single
     offer</b> version, and the <b>menu</b> version.
@@ -233,7 +255,8 @@ Part Five
 </p>
 <p>
   In the table below, you will choose your preferred option between the average Seller payoff from the two different
-  types of sessions. <b>Crucially, the average payoffs shown in the table are exactly the fixed payments derived from your own Seller choices in Part Two and Part Three.</b>
+  types of sessions. <b>Crucially, the average payoffs shown in the table are exactly the fixed payments derived from
+    your own Seller choices in Part Two and Part Three.</b>
 </p>
 <p>
   <b>Option A (Left Side)</b> will always give you the average Seller payoff from your choice in the <b>single offer</b>
@@ -243,7 +266,8 @@ Part Five
 <p>
   <b>Option B (Right Side)</b> will give you the average Seller payoff from your choice in the <b>menu</b>
   mechanism{{ if single == 0 }} (your choice from Part Two){{ else }} (your choice from Part Three){{ endif }}.
-  However, you will notice that this amount changes: in each row, we add or subtract additional money from this menu payoff average.
+  However, you will notice that this amount changes: in each row, we add or subtract additional money from this menu
+  payoff average.
 </p>
 <p>
   For example, at the top of the table, Option A is "Single offer average + $5".
