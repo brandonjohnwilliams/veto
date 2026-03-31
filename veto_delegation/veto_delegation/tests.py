@@ -27,6 +27,9 @@ class PlayerBot(Bot):
             }
 
         # Random response: 0 or between min and max
+
+        min_slider = self.player.group.minSlider
+        max_slider = self.player.group.maxSlider
         possible_responses = [0] + list(range(min_slider, max_slider + 1))
         response = random.choice(possible_responses)
         if self.player.role == C.BUYER_ROLE:

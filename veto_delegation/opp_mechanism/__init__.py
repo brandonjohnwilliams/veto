@@ -347,7 +347,8 @@ class WaitPage2(WaitPage):
 
 
 
-page_sequence = [Instructions, SellerView,
+page_sequence = [Instructions,
+                 SellerView,
     SellerWait,
     BuyersView,
     BuyerWait,

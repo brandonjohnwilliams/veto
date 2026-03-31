@@ -142,7 +142,7 @@ class Payment(Page):
         if PartFive1 == 1:
             player.PartFivePay = int(player.participant.vars.get('BonusPay'))
 
-        if PartFour2 == 1:
+        if PartFive2 == 1:
             player.PartFivePay = int(player.participant.vars.get('BonusPay'))
 
         if PartFive3 == 1:
