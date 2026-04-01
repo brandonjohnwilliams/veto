@@ -1,102 +1,94 @@
 {{ block title }}
-Part Three
+Part Three: Overview
 {{ endblock }}
-
-
 
 {{ block content }}
 
 <head>
     <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
 </head>
-<p>In Part Three we restore the option to walk away for the Buyer. However, we will now replace Buyer participants you
-    interacted with in Part One with Robot Buyers trained to act like those participants.
-    By matching you to a very large number of these robots and taking averages, for any decision you will make we can
-    remove any randomness and offer you a fixed payment. Your role in Part Three is to make the decisions that you think
-    will maximize your payment.
 
 <p>
-    In Part Three of the experiment you will only make decisions as the Seller, choosing
-    {{ if single == 1 }}
-    an amount of widgets
-    {{ else }}
-    a menu of widgets
-    {{ endif }}
-    to offer to the Buyer just as in Part One.
-    In Part One for any decision you made there was a degree of randomness in your round payoff as the
-    Seller. This randomness was driven by:
-<ul>
-    <li>the ideal quantity X drawn by the Buyer from the urn</li>
-    <li>the particular Buyer decisions made by the participant in the room you were matched to</li>
-</ul>
-In Part Three we remove this randomness. If selected for Payment in a Part Three decision, each specific decision you
-make will yield a fixed additional payment amount.
-This fixed payment amount is the <b>average expected payment</b> from your decision over the {{ if single == 1 }}
-offer you make for the given urn.
-{{ else }}
-menu you offer for the given urn.
-{{ endif }}
+    In Part Three, we restore the Buyer's option to walk away and purchase zero widgets. However, you will not interact
+    with human participants in this room.
+    Instead, you will be matched with a large number of <b>Robot Buyers</b> trained to act like those participants.
 </p>
 <p>
-    To generate this average expected payment, instead of being matched to a single participant in this room,
-    you will be matched to a large number of Robot Buyers, and paid the average.
-    Each Robot Buyer has been trained using the Buyer decisions from {{ if single == 1 }}66{{ else }}64{{ endif }}
-    participants that completed Part One in earlier sessions of this experiment.
-    Because the robots are trained on the prior participant decisions, for any
-    {{ if single == 1 }}
-    offer you select
-    {{ else }}
-    menu you offer
-    {{ endif }}
-    the average Robot Buyers' decisions reflects:
+    By matching you to many of these robots and taking averages across their actions, we can eliminate randomness and
+    offer you a fixed payment for any decision.
+    Your role in Part Three is use your experience from Part One to make decisions that you think will maximize this
+    fixed payment.
+</p>
+
+<h4>Your Role as the Seller</h4>
+<p>
+    You will act as the <b>Seller</b> in Part Three. Just like in Part One, you will make three choices, one for each
+    urn type (Low, Middle, and High).
+</p>
 <ul>
-    <li>How each of the {{ if single == 1 }}66{{ else }}64{{
-        endif }} prior participants may have responded to your
+    <li>
         {{ if single == 1 }}
-        offer, by walking away or accepting the offered quantity.
+        You will choose an <b>offer</b> (a specific number of widgets) to propose to the Robot Buyers.
         {{ else }}
-        menu, by walking away or accepting some amount betwen the miniumum and maximum quanity offered.
+        You will choose a <b>menu</b> (a minimum and maximum number of widgets) to propose to the Robot Buyers.
         {{ endif }}
-    <li>The different decisions taken for different ideal quantities X for the Buyer drawn from the urn;</li>
+    </li>
+</ul>
+
+<h4>The Robot Buyers</h4>
+<p>
+    In Part One, there was a degree of randomness in your payoff driven by:
+<ul>
+    <li>the ideal quantity (X) drawn by the Buyer.</li>
+    <li>the specific decisions of the participant you were matched with.</li>
 </ul>
 </p>
-
 <p>
-    Each separate Robot Buyer represents a fair draw over an ideal quantity <b>from the given urn</b> and
-    the likely choices from one of the {{ if single == 1 }}66{{ else }}64{{ endif }} prior participants. Therefore, by
-    taking
-    averages across a large number of Robot Buyers we can remove any randomness in the Seller's payment for any
-    decision.
+    In Part Three, the Robot Buyers you will match with have been trained using the actual decisions of {{ if single ==
+    1 }}66{{ else }}64{{ endif }} participants who completed Part One in prior sessions.
+    For any {{ if single == 1 }} offer {{ else }} menu {{ endif }} you propose, the Robot Buyers' response will average
+    across:
+</p>
+<ul>
+    <li>The different ideal quantities (X) each Robot Buyer draws from the selected urn.</li>
+    <li>The different decisions for how the {{ if single == 1 }}66{{ else }}64{{ endif }} prior participants might
+        respond, {{ if single == 1 }} in taking your offer {{ else }} in choosing an option from your menu {{ endif }},
+        or walking away.</li>
+
+</ul>
+<p>
+    Each separate Robot Buyer evaluates a fair draw of an ideal quantity from the given urn against the likely choices
+    of these prior participants.
+    By taking the average across a large number of Robot Buyers, we remove all randomness.
 </p>
 
-
+<h4>Your Task</h4>
 <p>
-    Using your experience from Part One on how Buyers responded, your role in Part Three is to choose the
-    {{ if single == 1 }}
-    offer
-    {{ else }}
-    menu
-    {{ endif }}
-    that you think generates the highest average expected payment for the Seller.
-    You will make three separate decisions, one for each of the three urns (Low, Middle, and High).
-    The different urns affect the chances for each Robot Buyer's ideal quantity X, and therefore the average
-    expected payment from any {{ if single == 1 }}
-    offer
-    {{ else }}
-    menu
-    {{ endif }}
+    Using your experience from Part One, your task is to choose the {{ if single == 1 }} offer {{ else }} menu {{ endif
+    }} for each type of urn that you believe will generate the highest <b>average expected payment</b> for the Seller.
+    Note that the different urns affect how likely each ideal quantity is for the Robot Buyers, and will therefore
+    affect the average payment you receive.
 </p>
+
+<h4>Payment for Part Three</h4>
+<p>
+    Three different participants in the room will be selected for payment in Part Three, one for each of the three types
+    of urn.
+</p>
+<ul>
+    <li>
+        <b>Payment Amount:</b> If selected, your payment will be the <b>average expected payment</b> generated by your
+        chosen
+        {{ if single == 1 }} offer {{ else }} menu {{ endif }} against Robot Buyers drawing ideal quantities from the
+        given urn.
+    </li>
+</ul>
 
 {{ if test == 1 }}
-
-(Next button for testing purposes.)
-
-<div style="text-align: right;">
-
+<div style="text-align: right; margin-top: 20px;">
+    (Next button for testing purposes.)
     <button class="otree-btn-next btn btn-primary">Next</button>
-
 </div>
-
 {{ endif }}
 
 {{ endblock }}

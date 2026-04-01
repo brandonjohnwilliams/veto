@@ -226,73 +226,78 @@ Part Five
 
 </head>
 <p>
-  In the last two parts you made decisions to maximize the average expected payement for the Seller for:
+  In the last two parts, you made Seller decisions for each type of urn to maximize your average expected payment:
+</p>
 <ul>
   {{ if single == 1 }}
-  <li>
-    Part Three: <b> A Single offer</b>
-  </li>
-  <li>
-    Part Four: <b> A Menu of offers</b>
-  </li>
+  <li>Part Three: The experiment where you proposed <b>a single offer</b>.</li>
+  <li>Part Four: The experiment where you proposed <b>a menu of offers</b>.</li>
   {{ else }}
-  <li>
-    Part Three: <b> A Menu of offers</b>
-  </li>
-  <li>
-    Part Four: <b> A Single offer</b>
-  </li>
+  <li>Part Three: The experiment where you proposed <b>a menu of offers</b>.</li>
+  <li>Part Four: The experiment where you proposed <b>a single offer</b>.</li>
   {{ endif }}
 </ul>
-We are interested in your relative valuation of the two versions of this experiment for the Sellers: the <b>single
-  offer</b> version, and the <b>menu</b> version.
-Your task in Part Five is to indicate how much more or less you value each version.
-</p>
-<p>
-  We are interested in your relative valuation of the two versions of this experiment for the Sellers: the <b>single
-    offer</b> version, and the <b>menu</b> version.
-  Your task in Part Five is to indicate how much more or less you value each version.
-</p>
-<p>
-  In the table below, you will choose your preferred option between the average Seller payoff from the two different
-  types of sessions. <b>Crucially, the average payoffs shown in the table are exactly the fixed payments derived from
-    your own Seller choices in Part Two and Part Three.</b>
-</p>
-<p>
-  <b>Option A (Left Side)</b> will always give you the average Seller payoff from your choice in the <b>single offer</b>
-  mechanism{{ if single == 1 }} (your choice from Part Two){{ else }} (your choice from Part Three){{ endif }}.
-  This average payment amount is fixed across all rows.
-</p>
-<p>
-  <b>Option B (Right Side)</b> will give you the average Seller payoff from your choice in the <b>menu</b>
-  mechanism{{ if single == 0 }} (your choice from Part Two){{ else }} (your choice from Part Three){{ endif }}.
-  However, you will notice that this amount changes: in each row, we add or subtract additional money from this menu
-  payoff average.
-</p>
-<p>
-  For example, at the top of the table, Option A is "Single offer average + $5".
-  The amount added to Option A decreases with each row until the midpoint.
-  From there, money is instead added to the menu average (Option B) until the last row reaches "Menu offer average +
-  $5."
-</p>
-<p>
-  The computer will randomly draw one of the rows for payment.
-  If you are selected for payment in this round, whichever side of the selected row you chose will be added to your
-  total pay.
-</p>
-<p>
-  Presumably, there is a row where your preferred choice switches between the two options based on the added money.
-  To make your selection easier, you need only select the row where you would switch.
-  The interface will automatically select the options that correspond to your switching point.
-  If you exclusively value the single offer average regardless of the additional money offered on the menu side, simply
-  select the last row of the table: "Always choose the single offer average."
-</p>
-<p>
-  Text at the bottom of the page will automatically update what your choice means in words.
-</p>
 
 <p>
-  Please test the interface and make an example choice now.
+  In Part Five, we are interested in which of the two experiments you would prefer to be paid for, fixing the decisions
+  you made previously to maximize your expected payment within each.
+  For each urn type, your decisions in Parts Three and Four lead to:
+</p>
+<ul>
+  <li>A payoff of <b>$A</b> from your decision to propose a single offer {{ if single == 1 }}(in Part Three){{ else
+    }}(in Part Four){{ endif }}.</li>
+  <li>A payoff of <b>$B</b> from your decision to propose a menu of offers {{ if single == 1 }}(in Part Four){{ else
+    }}(in Part Three){{ endif }}.</li>
+</ul>
+
+<h4>The Choice List</h4>
+<p>
+  In the table below, we ask you to decide which of these two amounts ($A or $B) you would prefer. By adding extra bonus
+  money to one side or the other, we can uncover exactly how strongly you prefer one option over the other.
+</p>
+
+<ul>
+  <li>
+    <b>Option A (Left Side)</b> will always give you the average expected payment from your <b>single offer</b>
+    {{ if single == 1 }} (your choice from Part Three){{ else }} (your choice from Part Four){{ endif }}.
+    In the first five rows, we add extra bonus money this amount.
+  </li>
+  <li>
+    <b>Option B (Right Side)</b> will always give you the average expected payment from your <b>menu of offers</b>
+    {{ if single == 0 }} (your choice from Part Four){{ else }} (your choice from Part Three){{ endif }}.
+    In the last five rows, we add extra bonus money to this amount.
+  </li>
+</ul>
+
+<h4>How to Make Your Choice</h4>
+<p>
+  We want you to make a choice for each row in the table.
+  For example, in the first row, you decide between your single offer outcome plus $5 ($A + $5) or just your menu
+  outcome ($B).
+  As we move down the table, Option A loses its bonus, hits zero, and then Option B begins gaining a bonus.
+  By the last row, you are deciding between just your single offer outcome ($A) or your menu outcome plus $5 ($B + $5).
+</p>
+<p>
+  Because the right-hand column gets better as you move down the table, there is presumably a row where your preference
+  <b>switches</b> from Option A to Option B.
+  To save time, you only need to select the single row where you would switch. The interface will automatically fill out
+  the rest of the table choices based on your switching point.
+</p>
+
+<ul>
+  <li>If you think the <b>menu of offers</b> outcome ($B) is better than the <b>single offer</b> outcome + $5, you
+    should select the very first row (meaning you always take Option B).</li>
+  <li>If you think the <b>single offer</b> outcome ($A) is better than the <b>menu of offers</b> outcome + $5, you
+    should select the very last row (meaning you always take Option A).</li>
+</ul>
+
+<p>
+  Text at the bottom of the page will automatically update to explain exactly what your choice means in words. Please
+  test out the interface and make an example choice below.
+</p>
+<p>
+  <b>Payment:</b> If selected for payment in Part Five, the computer will randomly draw one of the eleven rows.
+  Whichever side of that row you chose will be your payment.
 </p>
 
 <div class="mpl-wrap">
@@ -320,7 +325,7 @@ Your task in Part Five is to indicate how much more or less you value each versi
       <!-- Main MPL rows: X from -5 to +5 -->
       <tr data-x="-5">
         <td class="cell-a">Single offer average <span class="delta">+ $5</span></td>
-        <td class="cell-b">Menu offer average</td>
+        <td class="cell-b">Menu of offers average</td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point_practice" value="-5" />
@@ -331,7 +336,7 @@ Your task in Part Five is to indicate how much more or less you value each versi
 
       <tr data-x="-4">
         <td class="cell-a">Single offer average <span class="delta">+ $4</span></td>
-        <td class="cell-b">Menu offer average</td>
+        <td class="cell-b">Menu of offers average</td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point_practice" value="-4" />
@@ -341,7 +346,7 @@ Your task in Part Five is to indicate how much more or less you value each versi
 
       <tr data-x="-3">
         <td class="cell-a">Single offer average <span class="delta">+ $3</span></td>
-        <td class="cell-b">Menu offer average</td>
+        <td class="cell-b">Menu of offers average</td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point_practice" value="-3" />
@@ -352,7 +357,7 @@ Your task in Part Five is to indicate how much more or less you value each versi
 
       <tr data-x="-2">
         <td class="cell-a">Single offer average <span class="delta">+ $2</span></td>
-        <td class="cell-b">Menu offer average </td>
+        <td class="cell-b">Menu of offers average</td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point_practice" value="-2" />
@@ -362,8 +367,8 @@ Your task in Part Five is to indicate how much more or less you value each versi
       </tr>
 
       <tr data-x="-1">
-        <td class="cell-a">Single offer average <span class="delta">+ $1</span></td>
-        <td class="cell-b">Menu offer average </td>
+        <td class="cell-a">Offer average <span class="delta">+ $1</span></td>
+        <td class="cell-b">Menu average </td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point_practice" value="-1" />
@@ -374,7 +379,7 @@ Your task in Part Five is to indicate how much more or less you value each versi
 
       <tr data-x="0">
         <td class="cell-a">Single offer average</td>
-        <td class="cell-b">Menu offer average</td>
+        <td class="cell-b">Menu of offers average</td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point_practice" value="0" />
@@ -385,7 +390,7 @@ Your task in Part Five is to indicate how much more or less you value each versi
 
       <tr data-x="1">
         <td class="cell-a">Single offer average</td>
-        <td class="cell-b">Menu offer average <span class="delta">+ $1</span></td>
+        <td class="cell-b">Menu of offers average <span class="delta">+ $1</span></td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point_practice" value="1" />
@@ -396,7 +401,7 @@ Your task in Part Five is to indicate how much more or less you value each versi
 
       <tr data-x="2">
         <td class="cell-a">Single offer average</td>
-        <td class="cell-b">Menu offer average<span class="delta">+ $2</span></td>
+        <td class="cell-b">Menu of offers average<span class="delta">+ $2</span></td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point_practice" value="2" />
@@ -407,7 +412,7 @@ Your task in Part Five is to indicate how much more or less you value each versi
 
       <tr data-x="3">
         <td class="cell-a">Single offer average</td>
-        <td class="cell-b">Menu offer average <span class="delta">+ $3</span></td>
+        <td class="cell-b">Menu of offers average <span class="delta">+ $3</span></td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point_practice" value="3" />
@@ -418,7 +423,7 @@ Your task in Part Five is to indicate how much more or less you value each versi
 
       <tr data-x="4">
         <td class="cell-a">Single offer average</td>
-        <td class="cell-b">Menu offer average <span class="delta">+ $4</span></td>
+        <td class="cell-b">Menu of offers average <span class="delta">+ $4</span></td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point_practice" value="4" />
@@ -429,7 +434,7 @@ Your task in Part Five is to indicate how much more or less you value each versi
 
       <tr data-x="5">
         <td class="cell-a">Single offer average</td>
-        <td class="cell-b">Menu offer average <span class="delta">+ $5</span></td>
+        <td class="cell-b">Menu of offers average <span class="delta">+ $5</span></td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point_practice" value="5" />
@@ -488,7 +493,7 @@ Your task in Part Five is to indicate how much more or less you value each versi
 
       if (selectedValue === "ALWAYS_A") {
         explainEl.textContent =
-          "You chose to always select the single offer average (Option A) for every row.";
+          "You chose to always select the single offer outcome (Option A) for every row.";
         return;
       }
 
@@ -496,14 +501,13 @@ Your task in Part Five is to indicate how much more or less you value each versi
 
       if (x === -5) {
         explainEl.textContent =
-          "You chose to always select the menu offer average (Option B) for every row.";
+          "You chose to always select the menu of offers outcome (Option B) for every row.";
         return;
       }
 
-
       if (x === 0) {
         explainEl.textContent =
-          "Your switching point is when we no longer add money to the single offer session: you would choose the menu offer session (Option B) unless we add money to the single session.";
+          "Your switching point is when we no longer add money to the single offer outcome: you would choose the menu of offers outcome (Option B) unless we add money to the single offer outcome.";
         return;
       }
 
@@ -512,23 +516,20 @@ Your task in Part Five is to indicate how much more or less you value each versi
       var addx = Math.abs(x) + 1;
 
       if (x > -5 && x < 0) {
-
         explainEl.textContent =
-          `Your switching point is +$${absx} to the single offer: you would choose the menu offer session (Option B) unless we add at least +$${addx} to the single offer average. `;
+          `Your switching point is +$${absx} to the single offer: you would choose the menu of offers outcome (Option B) unless we add at least +$${addx} to the single offer outcome. `;
         return;
       }
 
       if (x > 0 && x <= 5) {
-
         explainEl.textContent =
-          `Your switching point is ${sign}$${absx} to the menu offer: you would choose the menu offer session (Option B) only if we add at least $${absx} to it. Otherwise, you would choose the single offer average.`;
+          `Your switching point is ${sign}$${absx} to the menu of offers: you would choose the menu of offers outcome (Option B) only if we add at least $${absx} to it. Otherwise, you would choose the single offer outcome.`;
         return;
       }
 
-
       explainEl.textContent =
-        `Your switching point is ${sign}$${absx}: you would choose the single offer session (Option A) for rows below ${sign}$${absx}, ` +
-        `and the menu offer session (Option B) starting at ${sign}$${absx} and for all higher rows.`;
+        `Your switching point is ${sign}$${absx}: you would choose the single offer outcome (Option A) for rows below ${sign}$${absx}, ` +
+        `and the menu of offers outcome (Option B) starting at ${sign}$${absx} and for all higher rows.`;
     }
 
 

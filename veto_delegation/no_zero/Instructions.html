@@ -1,8 +1,6 @@
 {{ block title }}
-Part Two
+Part Two: Overview
 {{ endblock }}
-
-
 
 {{ block content }}
 
@@ -11,79 +9,75 @@ Part Two
 </head>
 
 <p>
-    Part Two will be identical to Part One <b>except that Buyers no longer have the option to walk away</b>.
-</p>
-<p>
-    <b>To begin Part Two you will start as the Seller</b>, choosing {{ if single == 1 }}the number of widgets {{else }}a
-    menu of
-    options (a minimum and maximum number of widgets){{ endif }}
-    to offer to a Buyer participant in the room, just as you did in Part One.
-    However, this Buyer no longer has the option to walk away and must purchase {{ if single == 1 }}the amount of
-    widgets offered to them.{{ else }}an amount of widgets
-    between the minimum and maximum offered to them.{{ endif }}
-    While your payment as Seller will only depend on the amount of widgets {{ if single == 1 }}offered{{ else }}chosen
-    from the menu{{ endif }}, the matched Buyer participant's payment will depend on their ideal number of widgets drawn
-    from the urn just as
-    before.
-</p>
-<p>You will make three choices as the Seller:
-<ul>
-    <li>{{ if single == 1 }}An amount of widgets to offer{{ else }}A menu of
-        widgets to offer{{ endif }} to the Buyer for each
-        of the three types of urn (Low, Middle, and High).</li>
-    <li>For each of your three Seller choices, you will be
-        matched to a different Buyer participant in the room.</li>
-</ul>
+    Part Two is identical to Part One, <b>except that the Buyer no longer has the option to walk away (veto)</b> and
+    purchase zero widgets.
 </p>
 
+<h4>Your Role as a Seller</h4>
 <p>
-    <b>To end Part Two you will be the Buyer.</b>
-    {{ if single == 1 }}As you do not have an option to walk away as the Buyer in Part Two, your only role
-    will be to view your drawn ideal quantity
-    and the number of Widgets the matched Seller offered you.
-    {{ else }} As you do not have an option to walk away as the Buyer in Part Two, your only role will be
-    to view your drawn ideal quantity
-    and to make a choice of Widgets from the menu the matched Seller offered you.{{ endif }}
-    You will view three Buyer {{ if single == 1 }}outcomes{{ else }}menus{{ endif }}:
-<ul>
-    <li>One for each of the three types of urn (Low, Middle, and High).</li>
-    <li>Each Buyer {{ if single == 1 }}outcome{{ else }}menu{{ endif }} you view are from three different
-        Seller participants in the room.</li>
-    <li>Note that the three participants for whom you act as Buyer are distinct from the three participants that are
-        matched to your Seller choices.</li>
-</ul>
+    You will first act as the <b>Seller</b>. You will make three choices, one for each urn type (Low, Middle, and High).
 </p>
+<ul>
+    <li>
+        {{ if single == 1 }}
+        You will choose a Single offer (a specific number of widgets) to propose.
+        {{ else }}
+        You will choose a Menu offer (a minimum and maximum number of widgets) to propose.
+        {{ endif }}
+    </li>
+    <li>
+        The Buyer you are matched with <b>must</b> purchase
+        {{ if single == 1 }}
+        the number of widgets offered.
+        {{ else }}
+        an amount of widgets from the offered menu.
+        {{ endif }}
+        They cannot choose zero.
+    </li>
+    <li>Each of your three Seller choices will be matched to a different Buyer participant in the room.</li>
+</ul>
 
+<h4>Your Role as a Buyer</h4>
 <p>
-    The computer will randomly select one of the three urns and one participant in the room as the Seller for payment in
-    Part Two;
-    whichever other participant was matched as the Buyer for that Seller/urn will then also be selected for payment.
-<ul>
-    {{ if single == 1 }}
-    <li>The additional payment added for the selected Seller participant only depends on the number
-        of widgets offered</li>
-    <li>The additional payment added for the selected Buyer participant depends on both the number of widgets offered
-        and the ideal value drawn from the urn.</li>
-    {{ else }}
-    <li>The additional payment for the Seller participant only depends on the number of widgets chosen from the offered
-        menu</li>
-    <li>The additional payment added for the selected Buyer participant depends on both the number of widgets chosen
-        from the offered menu and the ideal value
-        drawn from the urn.</li>
-    {{ endif }}
-</ul>
+    After acting as the Seller, you will then act as the <b>Buyer</b> for three different participants, one for each urn
+    type.
 </p>
+<ul>
+    <li>
+        Because you cannot walk away, you must
+        {{ if single == 1 }}
+        purchase the number of widgets provided offered by the Seller. You will see your drawn ideal quantity (X) before
+        viewing your outcome.
+        {{ else }}
+        purchase an amount of widgets on the Seller's offered menu. You will see your drawn ideal quantity (X) before
+        making your choice.
+        {{ endif }}
+    </li>
+</ul>
+
+<h4>Payment for Part Two</h4>
+<p>
+    The computer will randomly select one of the three urns and one participant in the room as the Seller for payment.
+    The participant matched as the Buyer for that Seller/urn will also be selected for payment.
+</p>
+<ul>
+    <li>
+        <b>Seller Payment:</b> Depends only on the number of widgets
+        {{ if single == 1 }}
+        offered.
+        {{ else }}
+        chosen from the offered menu.
+        {{ endif }}
+    </li>
+    <li><b>Buyer Payment:</b> Depends on the number of widgets purchased and the ideal quantity (X) drawn from the
+        selected urn.</li>
+</ul>
 
 {{ if test == 1 }}
-
-(Next button for testing purposes.)
-
-<div style="text-align: right;">
-
+<div style="text-align: right; margin-top: 20px;">
+    (Next button for testing purposes.)
     <button class="otree-btn-next btn btn-primary">Next</button>
-
 </div>
-
 {{ endif }}
 
 {{ endblock }}

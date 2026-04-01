@@ -227,9 +227,11 @@ Part Five - {{ urn_name }} Urn
 </head>
 
 <p>
-  Please select your valuation for the two versions of the experiment (single offer and menu) for the <strong>Low Urn</strong>.
-  Use the right column to select your "switch point."
-  The computer will randomly draw one of the rows for payment. If you are selected for payment in this round, whichever side of the selected row you chose will be added to your total pay.
+  Please select your valuation for the two versions of the experiment (single offer and menu of offers) for the
+  <strong>{{ urn_name }} Urn</strong>.
+  Use the right column to select your "switching point."
+  The computer will randomly draw one of the rows for payment. If you are selected for payment in this round, whichever
+  side of the selected row you chose will be added to your total pay.
 </p>
 
 <div class="mpl-wrap">
@@ -257,7 +259,7 @@ Part Five - {{ urn_name }} Urn
       <!-- Main MPL rows: X from -5 to +5 -->
       <tr data-x="-5">
         <td class="cell-a">Single offer average <span class="delta">+ $5</span></td>
-        <td class="cell-b">Menu offer average</td>
+        <td class="cell-b">Menu of offers average</td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point" value="-5" />
@@ -268,7 +270,7 @@ Part Five - {{ urn_name }} Urn
 
       <tr data-x="-4">
         <td class="cell-a">Single offer average <span class="delta">+ $4</span></td>
-        <td class="cell-b">Menu offer average</td>
+        <td class="cell-b">Menu of offers average</td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point" value="-4" />
@@ -278,7 +280,7 @@ Part Five - {{ urn_name }} Urn
 
       <tr data-x="-3">
         <td class="cell-a">Single offer average <span class="delta">+ $3</span></td>
-        <td class="cell-b">Menu offer average</td>
+        <td class="cell-b">Menu of offers average</td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point" value="-3" />
@@ -289,7 +291,7 @@ Part Five - {{ urn_name }} Urn
 
       <tr data-x="-2">
         <td class="cell-a">Single offer average <span class="delta">+ $2</span></td>
-        <td class="cell-b">Menu offer average </td>
+        <td class="cell-b">Menu of offers average </td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point" value="-2" />
@@ -300,7 +302,7 @@ Part Five - {{ urn_name }} Urn
 
       <tr data-x="-1">
         <td class="cell-a">Single offer average <span class="delta">+ $1</span></td>
-        <td class="cell-b">Menu offer average </td>
+        <td class="cell-b">Menu of offers average </td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point" value="-1" />
@@ -311,7 +313,7 @@ Part Five - {{ urn_name }} Urn
 
       <tr data-x="0">
         <td class="cell-a">Single offer average</td>
-        <td class="cell-b">Menu offer average</td>
+        <td class="cell-b">Menu of offers average</td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point" value="0" />
@@ -322,7 +324,7 @@ Part Five - {{ urn_name }} Urn
 
       <tr data-x="1">
         <td class="cell-a">Single offer average</td>
-        <td class="cell-b">Menu offer average <span class="delta">+ $1</span></td>
+        <td class="cell-b">Menu of offers average <span class="delta">+ $1</span></td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point" value="1" />
@@ -333,7 +335,7 @@ Part Five - {{ urn_name }} Urn
 
       <tr data-x="2">
         <td class="cell-a">Single offer average</td>
-        <td class="cell-b">Menu offer average<span class="delta">+ $2</span></td>
+        <td class="cell-b">Menu of offers average<span class="delta">+ $2</span></td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point" value="2" />
@@ -344,7 +346,7 @@ Part Five - {{ urn_name }} Urn
 
       <tr data-x="3">
         <td class="cell-a">Single offer average</td>
-        <td class="cell-b">Menu offer average <span class="delta">+ $3</span></td>
+        <td class="cell-b">Menu of offers average <span class="delta">+ $3</span></td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point" value="3" />
@@ -355,7 +357,7 @@ Part Five - {{ urn_name }} Urn
 
       <tr data-x="4">
         <td class="cell-a">Single offer average</td>
-        <td class="cell-b">Menu offer average <span class="delta">+ $4</span></td>
+        <td class="cell-b">Menu of offers average <span class="delta">+ $4</span></td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point" value="4" />
@@ -366,7 +368,7 @@ Part Five - {{ urn_name }} Urn
 
       <tr data-x="5">
         <td class="cell-a">Single offer average</td>
-        <td class="cell-b">Menu offer average <span class="delta">+ $5</span></td>
+        <td class="cell-b">Menu of offers average <span class="delta">+ $5</span></td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point" value="5" />
@@ -425,7 +427,7 @@ Part Five - {{ urn_name }} Urn
 
       if (selectedValue === "ALWAYS_A") {
         explainEl.textContent =
-          "You chose to always select the single offer average (Option A) for every row.";
+          "You chose to always select the single offer outcome (Option A) for every row.";
         return;
       }
 
@@ -433,14 +435,13 @@ Part Five - {{ urn_name }} Urn
 
       if (x === -5) {
         explainEl.textContent =
-          "You chose to always select the menu offer average (Option B) for every row.";
+          "You chose to always select the menu of offers outcome (Option B) for every row.";
         return;
       }
 
-
       if (x === 0) {
         explainEl.textContent =
-          "Your switching point is when we no longer add money to the single offer session: you would choose the menu offer session (Option B) unless we add money to the single session.";
+          "Your switching point is when we no longer add money to the single offer outcome: you would choose the menu of offers outcome (Option B) unless we add money to the single offer outcome.";
         return;
       }
 
@@ -449,23 +450,20 @@ Part Five - {{ urn_name }} Urn
       var addx = Math.abs(x) + 1;
 
       if (x > -5 && x < 0) {
-
         explainEl.textContent =
-          `Your switching point is +$${absx} to the single offer: you would choose the menu offer session (Option B) unless we add at least +$${addx} to the single offer average. `;
+          `Your switching point is +$${absx} to the single offer: you would choose the menu of offers outcome (Option B) unless we add at least +$${addx} to the single offer outcome. `;
         return;
       }
 
       if (x > 0 && x <= 5) {
-
         explainEl.textContent =
-          `Your switching point is ${sign}$${absx} to the menu offer: you would choose the menu offer session (Option B) only if we add at least $${absx} to it. Otherwise, you would choose the single offer average.`;
+          `Your switching point is ${sign}$${absx} to the menu of offers: you would choose the menu of offers outcome (Option B) only if we add at least $${absx} to it. Otherwise, you would choose the single offer outcome.`;
         return;
       }
 
-
       explainEl.textContent =
-        `Your switching point is ${sign}$${absx}: you would choose the single offer session (Option A) for rows below ${sign}$${absx}, ` +
-        `and the menu offer session (Option B) starting at ${sign}$${absx} and for all higher rows.`;
+        `Your switching point is ${sign}$${absx}: you would choose the single offer outcome (Option A) for rows below ${sign}$${absx}, ` +
+        `and the menu of offers outcome (Option B) starting at ${sign}$${absx} and for all higher rows.`;
     }
 
 
