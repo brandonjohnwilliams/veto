@@ -1,5 +1,5 @@
 {{ block title }}
-Part Two - Buyer choice for {{ player.roundName }} urn
+Part Three - Robot Buyers for {{ roundName }} Urn
 {{ endblock }}
 
 {% block content %}
@@ -8,16 +8,15 @@ Part Two - Buyer choice for {{ player.roundName }} urn
     <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
 </head>
 
-
-<p>
-    You will now respond to a decision made by a Seller participant in the previous rounds.
-</p>
-
-<p>You have <b>ideal value X={{selectedX}}</b> which came from the <b>{{ roundName }}</b> urn.</p>
+<p>The matched Robot Buyers' ideal value (X) will come from the <b>{{ roundName }}</b> urn, which contains these
+    possible ideal quantities:</p>
 
 <div class="canvas-container">
-  <canvas id="ballCanvas2"></canvas>
+    <canvas id="ballCanvas"></canvas>
 </div>
+
+
+<p>Click next when you are ready to make your choice.</p>
 
 
 <p>This page will automatically advance in <span class="otree-timer__time-left">0:20</span>.</p>
