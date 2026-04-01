@@ -9,11 +9,11 @@ Part Two: Overview
 </head>
 
 <p>
-    Part Two is identical to Part One, <b>except that the Buyer no longer has the option to walk away (veto)</b> and
-    purchase zero widgets.
+    Part Two is identical to Part One, <b>except that the Buyer no longer has the option to walk away</b> (purchase zero
+    widgets).
 </p>
 
-<h4>Your Role as a Seller</h4>
+<h4>Your First Role: Seller</h4>
 <p>
     You will first act as the <b>Seller</b>. You will make three choices, one for each urn type (Low, Middle, and High).
 </p>
@@ -28,30 +28,33 @@ Part Two: Overview
     <li>
         The Buyer you are matched with <b>must</b> purchase
         {{ if single == 1 }}
-        the number of widgets offered.
+        the number of widgets offered;
         {{ else }}
-        an amount of widgets from the offered menu.
+        an amount of widgets from the offered menu;
         {{ endif }}
-        They cannot choose zero.
+        they cannot choose to walk away in Part Two (zero widgets).
     </li>
     <li>Each of your three Seller choices will be matched to a different Buyer participant in the room.</li>
 </ul>
 
-<h4>Your Role as a Buyer</h4>
+<h4>Your Second Role: Buyer</h4>
 <p>
-    After acting as the Seller, you will then act as the <b>Buyer</b> for three different participants, one for each urn
+    After making your decisions as the Seller, you will then act as the <b>Buyer</b> for three different Seller
+    participants, one for each urn
     type.
 </p>
 <ul>
     <li>
         Because you cannot walk away, you must
         {{ if single == 1 }}
-        purchase the number of widgets provided offered by the Seller. You will see your drawn ideal quantity (X) before
-        viewing your outcome.
-        {{ else }}
-        purchase an amount of widgets on the Seller's offered menu. You will see your drawn ideal quantity (X) before
-        making your choice.
-        {{ endif }}
+        purchase the number of widgets provided offered by the Seller.
+    <li>You will see your drawn ideal quantity (X) from the given urn before
+        viewing your outcome.</li>
+    {{ else }}
+    purchase an amount of widgets on the Seller's offered menu.
+    <li>You will see your drawn ideal quantity (X) from the given urn before
+        making your choice.</li>
+    {{ endif }}
     </li>
 </ul>
 

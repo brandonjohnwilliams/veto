@@ -101,9 +101,9 @@ Seller Decision - {{roundName}} urn
             <thead>
                 <tr>
                     <th class="tg-c3ow" rowspan="2">Widgets <br>Purchased</th>
-                    <th class="tg-c3ow" rowspan="2">Your Payoff <br> (X=<span id="selectedX">-</span>)</th>
-                    <th class="tg-c3ow" rowspan="2">Your <br> Payoff</th>
-                    <th class="tg-c3ow" colspan="6">Buyer Payoff (by ideal quantity X)</th>
+                    <th class="tg-c3ow" rowspan="2">Your Payoff <br> as Seller<br>(X=<span id="selectedX">-</span>)</th>
+                    <th class="tg-c3ow" rowspan="2">Your <br> Payoff<br> as Seller</th>
+                    <th class="tg-c3ow" colspan="6">Buyer Participant Payoff (by ideal quantity X)</th>
                 </tr>
                 <tr>
                     <th class="tg-0lax">X=1</th>
@@ -118,6 +118,11 @@ Seller Decision - {{roundName}} urn
                 <!-- Table body will be populated dynamically -->
             </tbody>
         </table>
+    </div>
+
+    <br>
+    <div>
+        <p>The only difference in Part Two from Part One is that the Buyer <b>cannot walk away</b>.</p>
     </div>
     <br>
     {{ formfield_errors 'minSlider' }}
