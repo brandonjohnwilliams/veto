@@ -62,8 +62,8 @@ def set_payoffs(player):
     # }
 
     # Convert minSlider and maxSlider to integers
-    min_Slider = str(player.minSlider)
-    max_Slider = str(player.maxSlider)
+    min_Slider = str(player.minSlider if player.minSlider != 0 else 1)
+    max_Slider = str(player.maxSlider if player.maxSlider != 0 else 1)
 
     # Load JSON file
     with open('expected_logit.json', 'r') as f:
@@ -231,7 +231,7 @@ class robot(Page):
         player.participant.vars[f"part3round{player.round_number}"] = player.payoff
 
         if player.session.config['test']:
-            lucky_player = int(player.participant.label_id)
+            lucky_player = int(player.participant.id_in_session)
 
             for round_num in range(1, C.NUM_ROUNDS + 1):
                 winner = round_num + 1
@@ -268,7 +268,7 @@ class robot(Page):
 class WaitPage2(WaitPage):
     @staticmethod
     def is_displayed(player):
-        return player.round_number == C.NUM_ROUNDS & player.session.config['test'] == 0
+        return player.round_number == 3
 
     wait_for_all_groups = True
 
@@ -276,4 +276,4 @@ class WaitPage2(WaitPage):
 
 
 
-page_sequence = [Instructions, Roles, robot, WaitPage2]
+page_sequence = [Intro, Instructions, Roles, robot, WaitPage2]

@@ -1,5 +1,6 @@
 from otree.api import Bot, Submission
 import random
+import time
 from . import *
 
 
@@ -22,3 +23,4 @@ class PlayerBot(Bot):
 
         if self.player.round_number == 3:
             yield Submission(Results, check_html=False)
+

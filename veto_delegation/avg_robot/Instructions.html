@@ -1,5 +1,5 @@
 {{ block title }}
-Part Three: Overview
+Part Three
 {{ endblock }}
 
 {{ block content }}
@@ -8,38 +8,13 @@ Part Three: Overview
     <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
 </head>
 
-<p>
-    In Parts Three to Five we restore the Buyer's option to walk away and purchase zero widgets. However, in all of the
-    subsequent parts of this session
-    you will take on the role of the Seller. Instead of interacting with human Buyer participants in this room, you will
-    be matched with a large number of <b>Robot Buyers</b>
-    trained in previous sessions to act like human participants.
-</p>
-<p>
-    By matching you to many of these robots and taking averages across their actions, we can eliminate randomness and
-    offer you fixed payments for any decision you might make as the Seller.
-</p>
-<p>
-    Your role in Parts Three to Five is to use your experiences from Part One to make decisions that you think will
-    maximize this
-    fixed payment.
-</p>
 
-<h4>Your Role as the Seller in Part Three</h4>
 <p>
     Part Three uses the exact same Buyer-Seller setting as Part One. You will make three separate
     decisions as the Seller, one for each
     urn type (Low, Middle, and High) that the Robot Buyers draw their ideal quantities from.
 </p>
-<ul>
-    <li>
-        {{ if single == 1 }}
-        You will choose an <b>offer</b> (a specific number of widgets) to propose to the Robot Buyers.
-        {{ else }}
-        You will choose a <b>menu</b> (a minimum and maximum number of widgets) to propose to the Robot Buyers.
-        {{ endif }}
-    </li>
-</ul>
+
 
 <h4>Robot Buyers</h4>
 <p>
@@ -50,28 +25,28 @@ Part Three: Overview
 </ul>
 </p>
 <p>
-    In Part Three, the Robot Buyers have been trained using the actual Buyer decisions of {{ if single ==
-    1 }}66{{ else }}64{{ endif }} participants who completed Part One in prior sessions.
+    In Part Three, the Robot Buyers have been trained using the actual Buyer decisions of
+    {{ if single == 1 }}66{{ else }}64{{ endif }} participants who completed Part One in prior sessions.
     For any {{ if single == 1 }} offer {{ else }} menu {{ endif }} you propose, the Robot Buyers' response will average
     across:
 </p>
 <ul>
     <li>The different ideal quantity (X) each Robot Buyer draws from the selected urn.</li>
     <li>The different decisions for how the {{ if single == 1 }}66{{ else }}64{{ endif }} prior participants might
-        respond, {{ if single == 1 }}taking your offer{{ else }}choosing an option from your menu {{ endif }},
+        respond, {{ if single == 1 }}taking your offer, {{ else }}choosing an option from your menu, {{ endif }}
         or walking away.</li>
 
 </ul>
 <p>
-    Each separate Robot Buyer fairly draws an ideal quantity from the given urn and a likely choice from one of the
-    of the {{ if single ==1 }}66{{ else }}64{{ endif }} prior participants.
+    Each separate Robot Buyer fairly draws an ideal quantity from the given urn and a likely choice from one
+    of the {{ if single == 1 }}66{{ else }}64{{ endif }} prior participants.
     By taking averages across a very large number of Robot Buyers, we remove all randomness from the Seller's payoff.
 </p>
 
 <h4>Your Task</h4>
 <p>
-    Using your experience from Part One, your task is to choose the {{ if single == 1 }} offer {{ else }} menu {{ endif
-    }} for each type of urn that you believe will generate the highest <b>average expected payment</b> for the Seller.
+    Using your experience from Part One, your task is to choose the {{ if single == 1 }} offer {{ else }} menu {{ endif }}
+    for each type of urn that you believe will generate the highest <b>average expected payment</b> for the Seller.
     Note that the different urns affect how likely each ideal quantity is for the Robot Buyers, and will therefore
     affect the average payment you receive.
 </p>
@@ -91,7 +66,7 @@ Part Three: Overview
         given urn.
     </li>
 </ul>
-
+<p>You will make your offers to the Robot Buyers now.</p>
 {{ if test == 1 }}
 <div style="text-align: right; margin-top: 20px;">
     (Next button for testing purposes.)

@@ -65,8 +65,8 @@ def set_payoffs(player):
     # }
 
     # Convert minSlider and maxSlider to integers
-    min_Slider = str(player.minSlider)
-    max_Slider = str(player.maxSlider)
+    min_Slider = str(player.minSlider if player.minSlider != 0 else 1)
+    max_Slider = str(player.maxSlider if player.maxSlider != 0 else 1)
 
     # Load JSON file
     with open('expected_logit.json', 'r') as f:
@@ -208,7 +208,7 @@ class SellerWait(WaitPage):
 
     @staticmethod
     def is_displayed(player):
-        return player.round_number == 1 & player.session.config['test'] == 0
+        return player.round_number == 1
 
 class BuyersView(Page):
     form_model = 'player'
@@ -242,7 +242,7 @@ class BuyerWait(WaitPage):
 
     @staticmethod
     def is_displayed(player):
-        return player.round_number == 1 & player.session.config['test'] == 0
+        return player.round_number == 1
 
 class Intermediate(Page):
     @staticmethod
@@ -303,10 +303,10 @@ class robot(Page):
         player.participant.vars[f"part4round{player.round_number}"] = player.payoff
 
         if player.session.config['test']:
-            lucky_player = int(player.participant.label_id)
+            lucky_player = int(player.participant.id_in_session)
 
-            for round_num in range(1, C.NUM_ROUNDS + 4):
-                winner = round_num + 1
+            for round_num in range(1, C.NUM_ROUNDS + 1):
+                winner = round_num + 4
                 if lucky_player == int(winner):
                     lucky_draw = player.in_round(round_num)
                     player.participant.vars['BonusPay'] = lucky_draw.payoff
@@ -339,11 +339,11 @@ class robot(Page):
 class WaitPage2(WaitPage):
     @staticmethod
     def is_displayed(player):
-        return player.round_number == 3 & player.session.config['test'] == 0
+        return player.round_number == 3
 
     wait_for_all_groups = True
 
-    body_text = "Waiting for all participants to complete Part Two."
+    body_text = "Waiting for all participants to complete Part Four."
 
 
 

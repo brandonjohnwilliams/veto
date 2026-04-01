@@ -227,6 +227,49 @@ class Response(Page):
         )
 
 
+
+class NoZeroWait(WaitPage):
+    wait_for_all_groups = True
+
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == 3
+
+    template_name = 'NoZeroResponseWait.html'
+
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        # Draw the pay round once for the session; all other players reuse it
+        if 'PartTwoPayRound' not in player.session.vars:
+            player.session.vars['PartTwoPayRound'] = random.randint(1, 3)
+
+        pay_round = player.session.vars['PartTwoPayRound']
+
+        # --- Responder (Buyer) payoff in the selected round ---
+        responder_player = player.in_round(pay_round)
+        player.participant.PartTwoResponderPayoff = float(responder_player.payoff)
+
+        # --- Proposer (Seller) payoff in the selected round ---
+        received = player.participant.vars.get('received_responses', [])
+        match = next((r for r in received if r['round'] == pay_round), None)
+        player.participant.PartTwoProposerPayoff = float(match['proposer_payoff']) if match else 0.0
+
+        # --- Total part two payoff ---
+        player.participant.PartTwoPayoff = (
+            player.participant.PartTwoResponderPayoff +
+            player.participant.PartTwoProposerPayoff
+        )
+
+        print(
+            f"[Payment] Player {player.participant.label_id} | "
+            f"Pay round: {pay_round} | "
+            f"Proposer payoff: {player.participant.PartTwoProposerPayoff} | "
+            f"Responder payoff: {player.participant.PartTwoResponderPayoff} | "
+            f"Total part two payoff: {player.participant.PartTwoPayoff}"
+        )
+
+
+
 class Results(Page):
     timeout_seconds = 15
 
@@ -282,48 +325,4 @@ class Results(Page):
             role=role_list,
         )
 
-
-
-class NoZeroWait(WaitPage):
-    wait_for_all_groups = True
-
-    @staticmethod
-    def is_displayed(player):
-        test = player.subsession.session.config['test']
-        return player.round_number == 3 and test == 0
-
-    template_name = 'NoZeroWait.html'
-
-    @staticmethod
-    def before_next_page(player, timeout_happened):
-        # Draw the pay round once for the session; all other players reuse it
-        if 'PartTwoPayRound' not in player.session.vars:
-            player.session.vars['PartTwoPayRound'] = random.randint(1, 3)
-
-        pay_round = player.session.vars['PartTwoPayRound']
-
-        # --- Responder (Buyer) payoff in the selected round ---
-        responder_player = player.in_round(pay_round)
-        player.participant.PartTwoResponderPayoff = float(responder_player.payoff)
-
-        # --- Proposer (Seller) payoff in the selected round ---
-        received = player.participant.vars.get('received_responses', [])
-        match = next((r for r in received if r['round'] == pay_round), None)
-        player.participant.PartTwoProposerPayoff = float(match['proposer_payoff']) if match else 0.0
-
-        # --- Total part two payoff ---
-        player.participant.PartTwoPayoff = (
-            player.participant.PartTwoResponderPayoff +
-            player.participant.PartTwoProposerPayoff
-        )
-
-        print(
-            f"[Payment] Player {player.participant.label_id} | "
-            f"Pay round: {pay_round} | "
-            f"Proposer payoff: {player.participant.PartTwoProposerPayoff} | "
-            f"Responder payoff: {player.participant.PartTwoResponderPayoff} | "
-            f"Total part two payoff: {player.participant.PartTwoPayoff}"
-        )
-
-
-page_sequence = [RolesIntro, Roles, Response, Results, NoZeroWait]
+page_sequence = [RolesIntro, Roles, Response, NoZeroWait, Results]
