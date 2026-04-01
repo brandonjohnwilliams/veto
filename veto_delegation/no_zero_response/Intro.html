@@ -2,43 +2,37 @@
 Parts Two, Three and Four
 {{ endblock }}
 
-
-
 {{ block content }}
 
-    <head>
-        <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
-    </head>
-
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ static 'styles.css'}}">
+</head>
 
 <p>That concludes Part One.</p>
+<p>
+    In Parts Two through Five, we will offer you additional opportunities for payment across variations of the task in Part One.
+</p>
+<p>
+    For payment in Parts Two through Five, the computer will randomly select <b>ten different participants</b> in this room:
+</p>
 <ul>
-    <li>
-        In Parts Two, Three, Four, and Five, we will offer you addition opportunities for payment (further payments of $8 to $40).
-    </li>
-    <li>
-        The computer will randomly select <b>ten different participants</b> in this room
-    </li>
-    <ul>
-        <li>Two participants will be selected for payment in Part Two</li>
-        <li>Three participants will be selected for payment in Part Three</li>
-        <li>Three participants will be selected for payment in Part Four</li>
-        <li>Three participants will be selected for payment in Part Five</li>
-    </ul>
+    <li>Two participants will be selected for payment in Part Two</li>
+    <li>Three participants will be selected for payment in Part Three</li>
+    <li>Three participants will be selected for payment in Part Four</li>
+    <li>Three participants will be selected for payment in Part Five</li>
 </ul>
+<p>
+    Because of this, there is a chance of you being selected for payment in one of the tasks in Parts Two through Five. 
+    Your decisions could add an amount from $8 to $40 to your earnings in this session, so you should think carefully about each decision.
+</p>
 
 <p>We will give you instructions for your decisions in each Part in turn.</p>
 
 {{ if test == 1 }}
-
-(Next button for testing purposes.)
-
-<div style="text-align: right;">
-
-        <button class="otree-btn-next btn btn-primary">Next</button>
-
+<div style="text-align: right; margin-top: 20px;">
+    (Next button for testing purposes.)
+    <button class="otree-btn-next btn btn-primary">Next</button>
 </div>
-
 {{ endif }}
 
 {{ endblock }}
