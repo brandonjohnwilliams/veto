@@ -120,11 +120,25 @@ def switch_point_to_text(choice):
         return f"Take the single offer average or take the menu offer average + ${x}."
 # PAGES
 
+class Introduction(Page):
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == 1
 
+    @staticmethod
+    def vars_for_template(player):
+        if player.session.config['test'] == 1:
+            test = 1
+        else:
+            test = 0
+        return dict(
+            single = player.single,
+            test=test,
+        )
 
 class ChoiceInstructions(Page):
-    form_model = 'player'
-    form_fields = ['switch_point_practice']
+    # form_model = 'player'
+    # form_fields = ['switch_point_practice']
 
     @staticmethod
     def is_displayed(player):
@@ -132,11 +146,37 @@ class ChoiceInstructions(Page):
 
     @staticmethod
     def vars_for_template(player):
+        if player.session.config['test'] == 1:
+            test = 1
+        else:
+            test = 0
         return dict(
-            single = player.single
+            single = player.single,
+            urn_type = "Low",
+            test=test,
         )
 
-class InstructionsFeedback(Page):
+class MakeChoice(Page):
+    # form_model = 'player'
+    # form_fields = ['switch_point_practice']
+
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == 1
+
+    @staticmethod
+    def vars_for_template(player):
+        if player.session.config['test'] == 1:
+            test = 1
+        else:
+            test = 0
+        return dict(
+            single = player.single,
+            urn_type = "Low",
+            test=test,
+        )
+
+class Payment(Page):
     @staticmethod
     def is_displayed(player):
         return player.round_number == 1
@@ -148,11 +188,8 @@ class InstructionsFeedback(Page):
         else:
             test = 0
 
-        choice = player.switch_point_practice
-
         return dict(
-            choice=choice,
-            choice_text=switch_point_to_text(choice),
+
             test=test
         )
 
@@ -164,16 +201,14 @@ class Choice(Page):
     def vars_for_template(player):
         return dict(
             single = player.single,
-            urn_name = player.urn_name
+            urn_type = player.urn_name
         )
 
     @staticmethod
     def before_next_page(player, timeout_happened):
 
         # Draw one row per round independently for each player
-        # player.mpl_draw = str(random.choice(MPL_ROWS))
-
-        player.mpl_draw = '-3'
+        player.mpl_draw = str(random.choice(MPL_ROWS))
 
         # Determine this player's choice and payoff for each round
         player.participant.vars['MPLResults'] = []
@@ -218,4 +253,4 @@ class Choice(Page):
             f"Payoff: {payoff}"
         )
 
-page_sequence = [ChoiceInstructions, InstructionsFeedback, Choice]
+page_sequence = [Introduction, ChoiceInstructions, MakeChoice, Payment, Choice]

@@ -1,5 +1,5 @@
 {{ block title }}
-Part Five - {{ urn_name }} Urn
+Part Five - {{ urn_type }} Urn
 {{ endblock }}
 
 {% block content %}
@@ -227,19 +227,14 @@ Part Five - {{ urn_name }} Urn
 </head>
 
 <p>
-  Please select your valuation for the two versions of the experiment (single offer and menu of offers) for the
-  <strong>{{ urn_name }} Urn</strong>.
+  Please make your choice in the list below for the <strong>{{ urn_type }} Urn</strong>.
   Use the right column to select your "switching point."
-  The computer will randomly draw one of the rows for payment. If you are selected for payment in this round, whichever
-  side of the selected row you chose will be added to your total pay.
+  The computer will randomly draw one of the eleven rows for payment; whichever
+  side of the selected row you chose will be added to your total pay if selected for payment in Part Five.
 </p>
 
-<div class="mpl-wrap">
-  <div class="mpl-title">Choice List</div>
-  <p class="mpl-subtitle">
-    Select exactly one row to indicate your switching point. After you select a row, the table highlights
-    the implied choices.
-  </p>
+ <div class="mpl-wrap">
+
 
   <table class="mpl-table" aria-label="Multiple Price List table with radio switching point column">
     <colgroup>
@@ -258,8 +253,8 @@ Part Five - {{ urn_name }} Urn
     <tbody id="mplBody">
       <!-- Main MPL rows: X from -5 to +5 -->
       <tr data-x="-5">
-        <td class="cell-a">Single offer average <span class="delta">+ $5</span></td>
-        <td class="cell-b">Menu of offers average</td>
+        <td class="cell-a">Single offer average for the {{ urn_type }} Urn <span class="delta">+ $5</span> </td>
+        <td class="cell-b">Menu of offers average for the {{ urn_type }} Urn</td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point" value="-5" />
@@ -269,8 +264,8 @@ Part Five - {{ urn_name }} Urn
       </tr>
 
       <tr data-x="-4">
-        <td class="cell-a">Single offer average <span class="delta">+ $4</span></td>
-        <td class="cell-b">Menu of offers average</td>
+        <td class="cell-a">Single offer average for the {{ urn_type }} Urn <span class="delta">+ $4</span></td>
+        <td class="cell-b">Menu of offers average for the {{ urn_type }} Urn</td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point" value="-4" />
@@ -279,8 +274,8 @@ Part Five - {{ urn_name }} Urn
       </tr>
 
       <tr data-x="-3">
-        <td class="cell-a">Single offer average <span class="delta">+ $3</span></td>
-        <td class="cell-b">Menu of offers average</td>
+        <td class="cell-a">Single offer average for the {{ urn_type }} Urn <span class="delta">+ $3</span></td>
+        <td class="cell-b">Menu of offers average for the {{ urn_type }} Urn</td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point" value="-3" />
@@ -290,8 +285,8 @@ Part Five - {{ urn_name }} Urn
       </tr>
 
       <tr data-x="-2">
-        <td class="cell-a">Single offer average <span class="delta">+ $2</span></td>
-        <td class="cell-b">Menu of offers average </td>
+        <td class="cell-a">Single offer average for the {{ urn_type }} Urn <span class="delta">+ $2</span></td>
+        <td class="cell-b">Menu of offers average for the {{ urn_type }} Urn</td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point" value="-2" />
@@ -301,8 +296,8 @@ Part Five - {{ urn_name }} Urn
       </tr>
 
       <tr data-x="-1">
-        <td class="cell-a">Single offer average <span class="delta">+ $1</span></td>
-        <td class="cell-b">Menu of offers average </td>
+        <td class="cell-a">Single offer average for the {{ urn_type }} Urn <span class="delta">+ $1</span></td>
+        <td class="cell-b">Menu of offers average for the {{ urn_type }} Urn </td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point" value="-1" />
@@ -312,8 +307,8 @@ Part Five - {{ urn_name }} Urn
       </tr>
 
       <tr data-x="0">
-        <td class="cell-a">Single offer average</td>
-        <td class="cell-b">Menu of offers average</td>
+        <td class="cell-a">Single offer average for the {{ urn_type }} Urn</td>
+        <td class="cell-b">Menu of offers average for the {{ urn_type }} Urn</td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point" value="0" />
@@ -323,8 +318,8 @@ Part Five - {{ urn_name }} Urn
       </tr>
 
       <tr data-x="1">
-        <td class="cell-a">Single offer average</td>
-        <td class="cell-b">Menu of offers average <span class="delta">+ $1</span></td>
+        <td class="cell-a">Single offer average for the {{ urn_type }} Urn</td>
+        <td class="cell-b">Menu of offers average for the {{ urn_type }} Urn <span class="delta">+ $1</span></td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point" value="1" />
@@ -334,8 +329,8 @@ Part Five - {{ urn_name }} Urn
       </tr>
 
       <tr data-x="2">
-        <td class="cell-a">Single offer average</td>
-        <td class="cell-b">Menu of offers average<span class="delta">+ $2</span></td>
+        <td class="cell-a">Single offer average for the {{ urn_type }} Urn</td>
+        <td class="cell-b">Menu of offers average for the {{ urn_type }} Urn<span class="delta">+ $2</span></td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point" value="2" />
@@ -345,8 +340,8 @@ Part Five - {{ urn_name }} Urn
       </tr>
 
       <tr data-x="3">
-        <td class="cell-a">Single offer average</td>
-        <td class="cell-b">Menu of offers average <span class="delta">+ $3</span></td>
+        <td class="cell-a">Single offer average for the {{ urn_type }} Urn</td>
+        <td class="cell-b">Menu of offers average for the {{ urn_type }} Urn <span class="delta">+ $3</span></td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point" value="3" />
@@ -356,8 +351,8 @@ Part Five - {{ urn_name }} Urn
       </tr>
 
       <tr data-x="4">
-        <td class="cell-a">Single offer average</td>
-        <td class="cell-b">Menu of offers average <span class="delta">+ $4</span></td>
+        <td class="cell-a">Single offer average for the {{ urn_type }} Urn</td>
+        <td class="cell-b">Menu of offers average for the {{ urn_type }} Urn <span class="delta">+ $4</span></td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point" value="4" />
@@ -367,8 +362,8 @@ Part Five - {{ urn_name }} Urn
       </tr>
 
       <tr data-x="5">
-        <td class="cell-a">Single offer average</td>
-        <td class="cell-b">Menu of offers average <span class="delta">+ $5</span></td>
+        <td class="cell-a">Single offer average for the {{ urn_type }} Urn</td>
+        <td class="cell-b">Menu of offers average for the {{ urn_type }} Urn <span class="delta">+ $5</span></td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point" value="5" />
@@ -379,7 +374,7 @@ Part Five - {{ urn_name }} Urn
 
       <!-- Special last row: merged cell across first two columns -->
       <tr class="always-row" data-x="ALWAYS_A">
-        <td colspan="2">Always choose the single offer average</td>
+        <td colspan="2">Always choose the single offer average for the {{ urn_type }} Urn</td>
         <td class="switch-col">
           <label class="radio-wrap">
             <input type="radio" name="switch_point" value="ALWAYS_A" />
@@ -391,10 +386,19 @@ Part Five - {{ urn_name }} Urn
   </table>
 
   <p id="switch-explain" style="margin: 14px 2px 0; font-size: 14px; color: #333;"></p>
-  {{ formfield_errors 'switch_point' }}
+{{ formfield_errors 'switch_point' }}
 </div>
 
-{{ next_button }}
+
+
+
+
+<div style="text-align: right; margin-top: 20px;">
+    (Next button for testing purposes.)
+    <button class="otree-btn-next btn btn-primary">Next</button>
+</div>
+
+
 
 <!-- Include JavaScript file -->
 

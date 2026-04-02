@@ -224,181 +224,30 @@ Part Five
 
 
 
-<h4>The Choice List</h4>
-    <div class="mpl-wrap">
-
-
-  <table class="mpl-table" aria-label="Multiple Price List table with radio switching point column">
-    <colgroup>
-      <col />
-      <col />
-      <col />
-    </colgroup>
-    <thead>
-      <tr>
-        <th scope="col">Option A</th>
-        <th scope="col">Option B</th>
-        <th scope="col" class="switch-col">Switching point</th>
-      </tr>
-    </thead>
-
-    <tbody id="mplBody">
-      <!-- Main MPL rows: X from -5 to +5 -->
-      <tr data-x="-5">
-        <td class="cell-a">Single offer average for the {{ urn_type }} Urn <span class="delta">+ $5</span> </td>
-        <td class="cell-b">Menu of offers average for the {{ urn_type }} Urn</td>
-        <td class="switch-col">
-          <label class="radio-wrap">
-            <input type="radio" name="switch_point_practice" value="-5" />
-
-          </label>
-        </td>
-      </tr>
-
-      <tr data-x="-4">
-        <td class="cell-a">Single offer average for the {{ urn_type }} Urn <span class="delta">+ $4</span></td>
-        <td class="cell-b">Menu of offers average for the {{ urn_type }} Urn</td>
-        <td class="switch-col">
-          <label class="radio-wrap">
-            <input type="radio" name="switch_point_practice" value="-4" />
-          </label>
-        </td>
-      </tr>
-
-      <tr data-x="-3">
-        <td class="cell-a">Single offer average for the {{ urn_type }} Urn <span class="delta">+ $3</span></td>
-        <td class="cell-b">Menu of offers average for the {{ urn_type }} Urn</td>
-        <td class="switch-col">
-          <label class="radio-wrap">
-            <input type="radio" name="switch_point_practice" value="-3" />
-
-          </label>
-        </td>
-      </tr>
-
-      <tr data-x="-2">
-        <td class="cell-a">Single offer average for the {{ urn_type }} Urn <span class="delta">+ $2</span></td>
-        <td class="cell-b">Menu of offers average for the {{ urn_type }} Urn</td>
-        <td class="switch-col">
-          <label class="radio-wrap">
-            <input type="radio" name="switch_point_practice" value="-2" />
-
-          </label>
-        </td>
-      </tr>
-
-      <tr data-x="-1">
-        <td class="cell-a">Single offer average for the {{ urn_type }} Urn <span class="delta">+ $1</span></td>
-        <td class="cell-b">Menu of offers average for the {{ urn_type }} Urn </td>
-        <td class="switch-col">
-          <label class="radio-wrap">
-            <input type="radio" name="switch_point_practice" value="-1" />
-
-          </label>
-        </td>
-      </tr>
-
-      <tr data-x="0">
-        <td class="cell-a">Single offer average for the {{ urn_type }} Urn</td>
-        <td class="cell-b">Menu of offers average for the {{ urn_type }} Urn</td>
-        <td class="switch-col">
-          <label class="radio-wrap">
-            <input type="radio" name="switch_point_practice" value="0" />
-
-          </label>
-        </td>
-      </tr>
-
-      <tr data-x="1">
-        <td class="cell-a">Single offer average for the {{ urn_type }} Urn</td>
-        <td class="cell-b">Menu of offers average for the {{ urn_type }} Urn <span class="delta">+ $1</span></td>
-        <td class="switch-col">
-          <label class="radio-wrap">
-            <input type="radio" name="switch_point_practice" value="1" />
-
-          </label>
-        </td>
-      </tr>
-
-      <tr data-x="2">
-        <td class="cell-a">Single offer average for the {{ urn_type }} Urn</td>
-        <td class="cell-b">Menu of offers average for the {{ urn_type }} Urn<span class="delta">+ $2</span></td>
-        <td class="switch-col">
-          <label class="radio-wrap">
-            <input type="radio" name="switch_point_practice" value="2" />
-
-          </label>
-        </td>
-      </tr>
-
-      <tr data-x="3">
-        <td class="cell-a">Single offer average for the {{ urn_type }} Urn</td>
-        <td class="cell-b">Menu of offers average for the {{ urn_type }} Urn <span class="delta">+ $3</span></td>
-        <td class="switch-col">
-          <label class="radio-wrap">
-            <input type="radio" name="switch_point_practice" value="3" />
-
-          </label>
-        </td>
-      </tr>
-
-      <tr data-x="4">
-        <td class="cell-a">Single offer average for the {{ urn_type }} Urn</td>
-        <td class="cell-b">Menu of offers average for the {{ urn_type }} Urn <span class="delta">+ $4</span></td>
-        <td class="switch-col">
-          <label class="radio-wrap">
-            <input type="radio" name="switch_point_practice" value="4" />
-
-          </label>
-        </td>
-      </tr>
-
-      <tr data-x="5">
-        <td class="cell-a">Single offer average for the {{ urn_type }} Urn</td>
-        <td class="cell-b">Menu of offers average for the {{ urn_type }} Urn <span class="delta">+ $5</span></td>
-        <td class="switch-col">
-          <label class="radio-wrap">
-            <input type="radio" name="switch_point_practice" value="5" />
-
-          </label>
-        </td>
-      </tr>
-
-      <!-- Special last row: merged cell across first two columns -->
-      <tr class="always-row" data-x="ALWAYS_A">
-        <td colspan="2">Always choose the single offer average for the {{ urn_type }} Urn</td>
-        <td class="switch-col">
-          <label class="radio-wrap">
-            <input type="radio" name="switch_point_practice" value="ALWAYS_A" />
-
-          </label>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <p id="switch-explain" style="margin: 14px 2px 0; font-size: 14px; color: #333;"></p>
-
-</div>
+</head>
 <p>
-  In the table above we ask you to decide across two options for a given urn.
+  In the last two parts, you made Seller decisions for each type of urn to maximize your average payment:
 </p>
-
 <ul>
-  <li>
-    Option A (on the left side) gives you the average payment from your <b>single offer</b>.
-  </li>
-    <ul>
-        <li>In the first five rows, we add extra bonus money to make this option better.</li>
-    </ul>
-  <li>
-    Option B (on the right side) gives you the average payment from your <b>menu offer</b>.
-  </li>
-        <ul>
-        <li>In the last five rows, we add extra bonus money to make this option better.</li>
-    </ul>
+  {{ if single == 1 }}
+  <li>Part Three: The experiment where you proposed <b>a single offer</b>.</li>
+  <li>Part Four: The experiment where you proposed <b>a menu of offers</b>.</li>
+  {{ else }}
+  <li>Part Three: The experiment where you proposed <b>a menu of offers</b>.</li>
+  <li>Part Four: The experiment where you proposed <b>a single offer</b>.</li>
+  {{ endif }}
 </ul>
 
+<p>
+  In Part Five, we are interested in which of the two experiments you would prefer to be paid for,
+  fixing your Seller decisions. For each urn type, your decisions in Parts Three and Four lead to:
+</p>
+<ul>
+  <li>A payoff of <b>$A</b> from your decision to propose a single offer {{ if single == 1 }}(in Part Three){{ else }}(in Part Four){{ endif }}.</li>
+  <li>A payoff of <b>$B</b> from your decision to propose a menu of offers {{ if single == 1 }}(in Part Four){{ else }}(in Part Three){{ endif }}.</li>
+</ul>
+<p>Which of these amounts do you think is larger? And by how much?
+To answer these questions we will offer you a choice list.</p>
 
 
 {{ if test == 1 }}

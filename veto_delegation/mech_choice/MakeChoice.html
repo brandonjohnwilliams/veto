@@ -220,11 +220,31 @@ Part Five
     }
   </style>
 
+</head>
 
 
+<h4>How to Make Your Choice</h4>
+<p>
+We want you to make a choice across the two options for each row in the table. For example, in the first row, you are deciding  between:
+    <ul>
+    <li>The average payment from your <b>single offer</b> plus $5</li>
+    <li>The average payment from your <b>menu offer</b></li>
+</ul>
+    As we move down the table rows, the extra bonus money on  Option A decreases, and the extra bonus money on Option B increases. By the last row you are deciding between:
+        <ul>
+    <li>The average payment from your <b>single offer</b></li>
+    <li>The average payment from your <b>menu offer</b> plus $5</li>
+</ul>
+</p>
 
+<p>
+Because the right-hand column gets better as you move down the table, there is presumably a row where your preference switches from Option A to Option B. To save time, you only need to select the single row where you would switch. The interface will automatically fill out the rest of the table choices based on your switching point.
+</p>
 
-<h4>The Choice List</h4>
+<p>
+  The text at the bottom of the choice list will automatically update to explain exactly what your switch point means in words. Please test out the interface and make an example choice below.
+</p>
+
     <div class="mpl-wrap">
 
 
@@ -380,35 +400,11 @@ Part Five
   <p id="switch-explain" style="margin: 14px 2px 0; font-size: 14px; color: #333;"></p>
 
 </div>
-<p>
-  In the table above we ask you to decide across two options for a given urn.
-</p>
 
-<ul>
-  <li>
-    Option A (on the left side) gives you the average payment from your <b>single offer</b>.
-  </li>
-    <ul>
-        <li>In the first five rows, we add extra bonus money to make this option better.</li>
-    </ul>
-  <li>
-    Option B (on the right side) gives you the average payment from your <b>menu offer</b>.
-  </li>
-        <ul>
-        <li>In the last five rows, we add extra bonus money to make this option better.</li>
-    </ul>
-</ul>
-
-
-
-{{ if test == 1 }}
 <div style="text-align: right; margin-top: 20px;">
     (Next button for testing purposes.)
     <button class="otree-btn-next btn btn-primary">Next</button>
 </div>
-{{ else }}
-
-{{ endif }}
 
 <!-- Include JavaScript file -->
 
