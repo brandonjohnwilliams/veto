@@ -238,47 +238,60 @@ class NoZeroWait(WaitPage):
     template_name = 'NoZeroResponseWait.html'
 
     @staticmethod
-    def before_next_page(player, timeout_happened):
-        if 'PartTwoPayRound' not in player.session.vars:
-            player.session.vars['PartTwoPayRound'] = random.randint(1, 3)
+    def after_all_players_arrive(group):
+        subsession = group.subsession
+        players = subsession.get_players()
 
-        pay_round = player.session.vars['PartTwoPayRound']
-        label = player.participant.label_id
+        if 'PartTwoPayRound' not in subsession.session.vars:
+            subsession.session.vars['PartTwoPayRound'] = random.randint(1, 3)
 
-        # --- Proposer (Seller) payoff ---
-        if label == player.session.vars.get('PartTwoPayProposer'):
-            received = player.participant.vars.get('received_responses', [])
+        pay_round = subsession.session.vars['PartTwoPayRound']
+        lucky_proposer_id = subsession.session.vars.get('PartTwoPayProposer')
+
+        # Find the lucky Seller and their matched Buyer for the pay round
+        lucky_proposer = next(
+            (p for p in players if p.participant.label_id == lucky_proposer_id), None
+        )
+
+        lucky_responder_id = None
+        if lucky_proposer:
+            received = lucky_proposer.participant.vars.get('received_responses', [])
             match = next((r for r in received if r['round'] == pay_round), None)
-            player.participant.PartTwoProposerPayoff = float(match['proposer_payoff']) if match else 0.0
-
-            # Record the matched responder so we can pay them too
             if match:
-                player.session.vars['PartTwoPayResponder'] = match['responder_id']
-        else:
-            player.participant.PartTwoProposerPayoff = 0.0
+                lucky_responder_id = match['responder_id']
+                subsession.session.vars['PartTwoPayResponder'] = lucky_responder_id
 
-        # --- Responder (Buyer) payoff ---
-        if label == player.session.vars.get('PartTwoPayResponder'):
-            responder_player = player.in_round(pay_round)
-            player.participant.PartTwoResponderPayoff = float(responder_player.payoff)
-        else:
-            player.participant.PartTwoResponderPayoff = 0.0
+        # Now assign payoffs to all players
+        for player in players:
+            label = player.participant.label_id
 
-        # --- Total part two payoff ---
-        player.participant.PartTwoPayoff = (
-                player.participant.PartTwoResponderPayoff +
-                player.participant.PartTwoProposerPayoff
-        )
+            if label == lucky_proposer_id:
+                received = player.participant.vars.get('received_responses', [])
+                match = next((r for r in received if r['round'] == pay_round), None)
+                player.participant.PartTwoProposerPayoff = float(match['proposer_payoff']) if match else 0.0
+            else:
+                player.participant.PartTwoProposerPayoff = 0.0
 
-        print(
-            f"[Payment] Player {label} | "
-            f"Pay round: {pay_round} | "
-            f"Lucky proposer: {player.session.vars.get('PartTwoPayProposer')} | "
-            f"Lucky responder: {player.session.vars.get('PartTwoPayResponder')} | "
-            f"Proposer payoff: {player.participant.PartTwoProposerPayoff} | "
-            f"Responder payoff: {player.participant.PartTwoResponderPayoff} | "
-            f"Total part two payoff: {player.participant.PartTwoPayoff}"
-        )
+            if label == lucky_responder_id:
+                responder_player = player.in_round(pay_round)
+                player.participant.PartTwoResponderPayoff = float(responder_player.payoff)
+            else:
+                player.participant.PartTwoResponderPayoff = 0.0
+
+            player.participant.PartTwoPayoff = (
+                player.participant.PartTwoProposerPayoff +
+                player.participant.PartTwoResponderPayoff
+            )
+
+            print(
+                f"[Payment] Player {label} | "
+                f"Pay round: {pay_round} | "
+                f"Lucky proposer: {lucky_proposer_id} | "
+                f"Lucky responder: {lucky_responder_id} | "
+                f"Proposer payoff: {player.participant.PartTwoProposerPayoff} | "
+                f"Responder payoff: {player.participant.PartTwoResponderPayoff} | "
+                f"Total part two payoff: {player.participant.PartTwoPayoff}"
+            )
 
 class Results(Page):
     timeout_seconds = 15
