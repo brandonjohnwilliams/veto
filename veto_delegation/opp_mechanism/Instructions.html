@@ -9,39 +9,41 @@ Part Four
 </head>
 
 <p>
-    In Part Four, your payment will again be calculated using the average expected outcome as the Seller across a large
-    number of
-    Robot Buyers, just like in Part Three. However, your decisions in Part Four will be based on <b>an alternate version
+    In Part Four, your payment will again be calculated using the average Seller payment across a large
+    number of Robot Buyers, just like in Part Three. However, your decisions in Part Four will be based on <b>an
+        alternate version
         of this experiment</b>.
 </p>
 
-<h4>Rules in Alternate Experiment </h4>
+<h4>Rules in the Alternate Experiment </h4>
 <p>
     {{ if single == 1 }}
     Where you previously chose a minimum and maximum quantity to offer (a menu), in this alternate version <b>you will
         offer a single, fixed number of widgets</b> to the Buyer.
     {{ else }}
     Where you previously chose a single, fixed amount of widgets to offer, in this alternate version <b>you will offer a
-        minimum and maximum number of widgets</b> to the Buyer (a menu).
+        minimum and maximum number of widgets</b> to the Buyer, a menu of choices.
     {{ endif }}
 </p>
 <ul>
     <li>The Buyer draws an ideal quantity (X) from the given urn exactly as before.</li>
-    <li>Just like in Part One, the Buyer could choose to walk away (purchase zero widgets) regardless of the Seller's
+    <li>Just like in Part One, the Buyer can choose to walk away (purchase zero widgets) regardless of the Seller's
         decision.</li>
     <li>
         {{ if single == 1 }}
-        However, rather than choosing any amount from the offered menu, the Buyer's only options are to buy the single, fixed number of widgets, or walk away.
+        However, rather than choosing any amount from the offered menu, the Buyer's only option is to either buy the
+        single fixed number of widgets or to walk away.
         {{ else }}
-        However, rather than accepting a fixed offer, the Buyer potentially has additional options over walking away,
-        allowing them to choose any amount between the Seller's offered minimum and maximum.
+        However, rather than accepting a single fixed offer, the Buyer potentially has additional options over walking
+        away,
+        allowing them to choose any amount on the offered menu (between the selected minimum and maximum).
         {{ endif }}
     </li>
 </ul>
 
 <p>
-    On the next pages, you will be able to experiment with the interface used by the Sellers and Buyers in this alternate
-    version of the experiment.
+    On the next pages, you will be able to experiment with the interface used by the Sellers and Buyers in this
+    alternate version of the experiment.
 </p>
 
 {{ if test == 1 }}

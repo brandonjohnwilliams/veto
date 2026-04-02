@@ -105,12 +105,11 @@ Example: Buyer's View
 <!-- Text -->
 
 <p>In this example the Buyer has drawn an <b>ideal value X={{selectedX}}</b> which came from the {{ if player.roundType
-    == 1}}
-    Low urn:
+    == 1}}Low urn
     {{ elif player.roundType == 2}}
-    Middle urn:
+    Middle urn
     {{else}}
-    High urn:
+    High urn
     {{endif}}. In this example the Seller chose as you did in the last screen and offered the following {{if
     player.single == 1}}offer{{else}}menu{{endif}}:
 </p>

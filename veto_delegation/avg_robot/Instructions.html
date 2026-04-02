@@ -10,45 +10,56 @@ Part Three
 
 
 <p>
-    Part Three uses the exact same Buyer-Seller setting as Part One. You will make three separate
-    decisions as the Seller, one for each
-    urn type (Low, Middle, and High) that the Robot Buyers draw their ideal quantities from.
+<ul>
+    <li>Part Three uses the same Buyer-Seller setting as Part One.</li>
+    <li>You will make <b>three</b> separate decisions as the Seller, one for each
+        urn type (Low, Middle, and High).</li>
+</ul>
 </p>
 
 
 <h4>Robot Buyers</h4>
 <p>
-    In Part One, there was a degree of randomness in your payoff driven by:
+    In Part One, there was a degree of randomness in the outcome driven by:
 <ul>
-    <li>the specific ideal quantity (X) drawn by the Buyer from the urn.</li>
-    <li>the specific decisions of the participant in the room that you were matched with.</li>
+    <li>Different Buyer ideal quantities (X) drawn from the urn.</li>
+    <li>Different participants in the room you were matched with.</li>
 </ul>
 </p>
 <p>
-    In Part Three, the Robot Buyers have been trained using the actual Buyer decisions of
+    The Robot Buyers in Part Three have been trained using Buyer decisions from
     {{ if single == 1 }}66{{ else }}64{{ endif }} participants who completed Part One in prior sessions.
-    For any {{ if single == 1 }} offer {{ else }} menu {{ endif }} you propose, the Robot Buyers' response will average
-    across:
+    Because of this training, you should think about each Robot Buyer as acting like the Buyer participants you matched
+    with in Part One.
+</p>
+<p>
+    For any {{ if single == 1 }} offer {{ else }} menu {{ endif }} you propose, averaging across the Robot Buyers'
+    response is effectively averaging over:
 </p>
 <ul>
-    <li>The different ideal quantity (X) each Robot Buyer draws from the selected urn.</li>
-    <li>The different decisions for how the {{ if single == 1 }}66{{ else }}64{{ endif }} prior participants might
-        respond, {{ if single == 1 }}taking your offer, {{ else }}choosing an option from your menu, {{ endif }}
-        or walking away.</li>
+    <li>Different Buyer ideal quantities (X) drawn from the given urn.</li>
+    <li>Different decisions made by the {{ if single == 1 }}66{{ else }}64{{ endif }} prior participants given their
+        ideal value
+        <ul>
+            <li>{{ if single == 1 }}Taking your offer, {{ else }}Choosing a particular option from your menu, {{
+                endif}}
+                or walking away.</li>
+        </ul>
 
 </ul>
-<p>
-    Each separate Robot Buyer fairly draws an ideal quantity from the given urn and a likely choice from one
-    of the {{ if single == 1 }}66{{ else }}64{{ endif }} prior participants.
-    By taking averages across a very large number of Robot Buyers, we remove all randomness from the Seller's payoff.
-</p>
 
 <h4>Your Task</h4>
 <p>
-    Using your experience from Part One, your task is to choose the {{ if single == 1 }} offer {{ else }} menu {{ endif }}
-    for each type of urn that you believe will generate the highest <b>average expected payment</b> for the Seller.
-    Note that the different urns affect how likely each ideal quantity is for the Robot Buyers, and will therefore
-    affect the average payment you receive.
+    Using your experience from Part One to guide you, your task is to choose {{ if single == 1 }}the offer{{ else }}the
+    menu{{ endif
+    }} that you believe will generate the <b>highest average Seller payment</b>.
+    Note that:
+<ul>
+    <li>The different urns affect how likely each ideal quantity is for each Robot Buyer, and therefore
+        affect the average payment from any decision.</li>
+    <li>While Robot Buyer's decisions will be affected by the ideal quantities and Buyer payoffs (because of their
+        training), no other participants are affected by your Seller decisions.</li>
+</ul>
 </p>
 
 <h4>Part Three Payment</h4>
@@ -58,15 +69,15 @@ Part Three
 </p>
 <ul>
     <li>
-        <b>Payment Amount:</b> If selected, your payment will be the <b>average expected Seller payment</b>, calculated
-        by providing
-        your
-        {{ if single == 1 }} offer {{ else }} menu {{ endif }} to many Robot Buyers drawing their ideal quantities from
-        the
-        given urn.
+        <b>Payment Amount:</b> If selected, your payment will be the <b>average Seller payment</b>, calculated
+        by providing your
+        {{ if single == 1 }} offer {{ else }} menu {{ endif }} to many Robot Buyers and averaging.
     </li>
+    <li> Because of this, it is in your interests to {{ if single == 1 }}make the offer{{ else }} select the menu{{
+        endif }}
+        that your think will maximize the average Seller payment.
 </ul>
-<p>You will make your offers to the Robot Buyers now.</p>
+<p>You will now make your offers to the Robot Buyers.</p>
 {{ if test == 1 }}
 <div style="text-align: right; margin-top: 20px;">
     (Next button for testing purposes.)
