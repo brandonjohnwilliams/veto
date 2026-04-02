@@ -238,8 +238,7 @@ class NoZeroWait(WaitPage):
     template_name = 'NoZeroResponseWait.html'
 
     @staticmethod
-    def after_all_players_arrive(group):
-        subsession = group.subsession
+    def after_all_players_arrive(subsession):
         players = subsession.get_players()
 
         if 'PartTwoPayRound' not in subsession.session.vars:
@@ -279,8 +278,8 @@ class NoZeroWait(WaitPage):
                 player.participant.PartTwoResponderPayoff = 0.0
 
             player.participant.PartTwoPayoff = (
-                player.participant.PartTwoProposerPayoff +
-                player.participant.PartTwoResponderPayoff
+                    player.participant.PartTwoProposerPayoff +
+                    player.participant.PartTwoResponderPayoff
             )
 
             print(
