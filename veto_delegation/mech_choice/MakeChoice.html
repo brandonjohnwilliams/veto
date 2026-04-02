@@ -225,27 +225,62 @@ Part Five
 
 <h4>How to Make Your Choice</h4>
 <p>
-We want you to make a choice across the two options for each row in the table. For example, in the first row, you are deciding  between:
-    <ul>
-    <li>The average payment from your <b>single offer</b> plus $5</li>
-    <li>The average payment from your <b>menu offer</b></li>
+  We want you to make a choice across the two options for each row in the table. For example, in the first row, you are
+  deciding between:
+<ul>
+  <li>The average payment from your <b>single offer</b> plus $5</li>
+  <li>The average payment from your <b>menu offer</b></li>
 </ul>
-    As we move down the table rows, the extra bonus money on  Option A decreases, and the extra bonus money on Option B increases. By the last row you are deciding between:
-        <ul>
-    <li>The average payment from your <b>single offer</b></li>
-    <li>The average payment from your <b>menu offer</b> plus $5</li>
+As we move down the table rows, the extra bonus money on Option A decreases, and the extra bonus money on Option B
+increases. By the last row you are deciding between:
+<ul>
+  <li>The average payment from your <b>single offer</b></li>
+  <li>The average payment from your <b>menu offer</b> plus $5</li>
 </ul>
 </p>
 
 <p>
-Because the right-hand column gets better as you move down the table, there is presumably a row where your preference switches from Option A to Option B. To save time, you only need to select the single row where you would switch. The interface will automatically fill out the rest of the table choices based on your switching point.
+  Because the right-hand column gets better as you move down the table, there is presumably a row where your preference
+  switches from Option A to Option B. To save time, you only need to select the single row where you would switch.
+  The interface will automatically fill out the rest of the table choices based on your switching point.
 </p>
-
 <p>
-  The text at the bottom of the choice list will automatically update to explain exactly what your switch point means in words. Please test out the interface and make an example choice below.
+  The choice list serves as a simple check for how much more/less you think you would get as the Seller from the
+  {{if single == 1}} single offer {{else}} menu offer {{endif}} over the {{if single == 1}}menu offer{{else}}single
+  offer{{endif}} for each of the three urns.
+  Maximizing your payment in Part Five requires you to have an accurate assessment on the difference between the two
+  average payments. For example, consider the average payments you might receive under the Low urn:
+<ul>
+  {{if single == 1}}
+  <li>If the average payment from your single offer was worth $3.50 more than your menu offer...</li>
+  <ul>
+    <li>...then you should switch to the menu offer (Option B) only when we add $4 it (row 10).</li>
+  </ul>
+  <li>If instead the average payment from your menu offer was worth $2.50 more than your single
+    offer...</li>
+  <ul>
+    <li>...then you would switch away from the single offer (Option A) even when we add $2 to it (row 4).</li>
+  </ul>
+  {{else}}
+  <li>If the average payment from your menu offer was worth $3.50 more than your single offer...</li>
+  <ul>
+    <li>...then you
+      would switch away from the single offer (Option A )even when we add $3 to it (row 3).</li>
+  </ul>
+  <li>If instead the average payment from your single offer was worth $2.50 more than your menu
+    offer...</li>
+  <ul>
+    <li>...then you would only switch to the menu offer (Option B) if we add $3 to it (row 9).</li>
+  </ul>
+  {{endif}}
+</ul>
+</p>
+<p>
+  The text at the bottom of the choice list will automatically update to explain exactly what your switch point means in
+  words. Please test out the interface and make an example choice below.
 </p>
 
-    <div class="mpl-wrap">
+<div class="mpl-wrap">
 
 
   <table class="mpl-table" aria-label="Multiple Price List table with radio switching point column">
@@ -402,8 +437,8 @@ Because the right-hand column gets better as you move down the table, there is p
 </div>
 
 <div style="text-align: right; margin-top: 20px;">
-    (Next button for testing purposes.)
-    <button class="otree-btn-next btn btn-primary">Next</button>
+  (Next button for testing purposes.)
+  <button class="otree-btn-next btn btn-primary">Next</button>
 </div>
 
 <!-- Include JavaScript file -->

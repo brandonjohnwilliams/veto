@@ -222,154 +222,158 @@ Part Five Payment
 
 
 
-<p>
-    Three different participants in the room will be selected for payment in Part Five, one for each of the three different urns.
-<ul><li><b>Payment Amount</b>: If selected for payment in Part Five, the computer will randomly draw one of the eleven rows. Whichever side of that row you chose will be added to your payment.
-</li></ul>
-</p>
-<p>You will make your choice in the list for each of the three urns now.</p>
+  <p>
+    Three different participants in the room will be selected for payment in Part Five, one for each of the three
+    different urns.
+  <ul>
+    <li><b>Payment Amount</b>: If selected for payment in Part Five, the computer will randomly draw one of the eleven
+      rows. Whichever side of that row you chose will be added to your payment.
+    </li>
+  </ul>
+  </p>
+  <p>You will make your choice in the list for each of the three urns now.</p>
 
 
-{{ if test == 1 }}
-<div style="text-align: right; margin-top: 20px;">
+  {{ if test == 1 }}
+  <div style="text-align: right; margin-top: 20px;">
     (Next button for testing purposes.)
     <button class="otree-btn-next btn btn-primary">Next</button>
-</div>
-{{ else }}
+  </div>
+  {{ else }}
 
-{{ endif }}
+  {{ endif }}
 
-<!-- Include JavaScript file -->
-
-
-<script>
-  (function () {
-    const body = document.getElementById("mplBody");
-    const rows = Array.from(body.querySelectorAll("tr"));
-    const radios = Array.from(document.querySelectorAll('input[name="switch_point_practice"]'));
-
-    function clearHighlights() {
-      rows.forEach((row) => {
-        row.classList.remove("row-selected");
-
-        const a = row.querySelector(".cell-a");
-        const b = row.querySelector(".cell-b");
-
-        if (a) a.classList.remove("cell-green");
-        if (b) b.classList.remove("cell-green");
-
-        // If a row doesn't have cell-a/cell-b (e.g., merged row), nothing to clear there.
-      });
-    }
+  <!-- Include JavaScript file -->
 
 
-    const explainEl = document.getElementById("switch-explain");
+  <script>
+    (function () {
+      const body = document.getElementById("mplBody");
+      const rows = Array.from(body.querySelectorAll("tr"));
+      const radios = Array.from(document.querySelectorAll('input[name="switch_point_practice"]'));
 
-    function setExplanation(selectedValue) {
-      if (!explainEl) return;
+      function clearHighlights() {
+        rows.forEach((row) => {
+          row.classList.remove("row-selected");
 
-      if (selectedValue === "ALWAYS_A") {
-        explainEl.textContent =
-          "You chose to always select the single offer outcome (Option A) for every row.";
-        return;
+          const a = row.querySelector(".cell-a");
+          const b = row.querySelector(".cell-b");
+
+          if (a) a.classList.remove("cell-green");
+          if (b) b.classList.remove("cell-green");
+
+          // If a row doesn't have cell-a/cell-b (e.g., merged row), nothing to clear there.
+        });
       }
 
-      const x = Number(selectedValue);
 
-      if (x === -5) {
-        explainEl.textContent =
-          "You chose to always select the menu of offers outcome (Option B) for every row.";
-        return;
-      }
+      const explainEl = document.getElementById("switch-explain");
 
-      if (x === 0) {
-        explainEl.textContent =
-          "Your switching point is when we no longer add money to the single offer outcome: you would choose the menu of offers outcome (Option B) unless we add money to the single offer outcome.";
-        return;
-      }
+      function setExplanation(selectedValue) {
+        if (!explainEl) return;
 
-      var sign = x >= 0 ? "+" : "−";
-      var absx = Math.abs(x);
-      var addx = Math.abs(x) + 1;
-
-      if (x > -5 && x < 0) {
-        explainEl.textContent =
-          `Your switching point is +$${absx} to the single offer: you would choose the menu of offers outcome (Option B) unless we add at least +$${addx} to the single offer outcome. `;
-        return;
-      }
-
-      if (x > 0 && x <= 5) {
-        explainEl.textContent =
-          `Your switching point is ${sign}$${absx} to the menu of offers: you would choose the menu of offers outcome (Option B) only if we add at least $${absx} to it. Otherwise, you would choose the single offer outcome.`;
-        return;
-      }
-
-      explainEl.textContent =
-        `Your switching point is ${sign}$${absx}: you would choose the single offer outcome (Option A) for rows below ${sign}$${absx}, ` +
-        `and the menu of offers outcome (Option B) starting at ${sign}$${absx} and for all higher rows.`;
-    }
-
-
-    function highlightAllA() {
-      clearHighlights();
-      rows.forEach((row) => {
-        const a = row.querySelector(".cell-a");
-        if (a) a.classList.add("cell-green");
-      });
-
-      // Emphasize the ALWAYS row
-      const alwaysRow = rows.find(r => r.dataset.x === "ALWAYS_A");
-      if (alwaysRow) alwaysRow.classList.add("row-selected");
-    }
-
-    function applyHighlights(selectedValue) {
-      if (selectedValue === "ALWAYS_A") {
-        highlightAllA();
-        return;
-      }
-
-      const selectedX = Number(selectedValue);
-      clearHighlights();
-
-      rows.forEach((row) => {
-        const xRaw = row.dataset.x;
-
-        // Skip the ALWAYS row for numeric highlighting
-        if (xRaw === "ALWAYS_A") return;
-
-        const x = Number(xRaw);
-        const a = row.querySelector(".cell-a");
-        const b = row.querySelector(".cell-b");
-
-        // Convention:
-        // - X < selectedX  => Option A highlighted
-        // - X >= selectedX => Option B highlighted
-        if (x < selectedX) {
-          if (a) a.classList.add("cell-green");
-        } else {
-          if (b) b.classList.add("cell-green");
+        if (selectedValue === "ALWAYS_A") {
+          explainEl.textContent =
+            "You chose to always select the single offer outcome (Option A) for every row.";
+          return;
         }
 
-        if (x === selectedX) row.classList.add("row-selected");
+        const x = Number(selectedValue);
+
+        if (x === -5) {
+          explainEl.textContent =
+            "You chose to always select the menu of offers outcome (Option B) for every row.";
+          return;
+        }
+
+        if (x === 0) {
+          explainEl.textContent =
+            "Your switching point is when we no longer add money to the single offer outcome: you would choose the menu of offers outcome (Option B) unless we add money to the single offer outcome.";
+          return;
+        }
+
+        var sign = x >= 0 ? "+" : "−";
+        var absx = Math.abs(x);
+        var addx = Math.abs(x) + 1;
+
+        if (x > -5 && x < 0) {
+          explainEl.textContent =
+            `Your switching point is +$${absx} to the single offer: you would choose the menu of offers outcome (Option B) unless we add at least +$${addx} to the single offer outcome. `;
+          return;
+        }
+
+        if (x > 0 && x <= 5) {
+          explainEl.textContent =
+            `Your switching point is ${sign}$${absx} to the menu of offers: you would choose the menu of offers outcome (Option B) only if we add at least $${absx} to it. Otherwise, you would choose the single offer outcome.`;
+          return;
+        }
+
+        explainEl.textContent =
+          `Your switching point is ${sign}$${absx}: you would choose the single offer outcome (Option A) for rows below ${sign}$${absx}, ` +
+          `and the menu of offers outcome (Option B) starting at ${sign}$${absx} and for all higher rows.`;
+      }
+
+
+      function highlightAllA() {
+        clearHighlights();
+        rows.forEach((row) => {
+          const a = row.querySelector(".cell-a");
+          if (a) a.classList.add("cell-green");
+        });
+
+        // Emphasize the ALWAYS row
+        const alwaysRow = rows.find(r => r.dataset.x === "ALWAYS_A");
+        if (alwaysRow) alwaysRow.classList.add("row-selected");
+      }
+
+      function applyHighlights(selectedValue) {
+        if (selectedValue === "ALWAYS_A") {
+          highlightAllA();
+          return;
+        }
+
+        const selectedX = Number(selectedValue);
+        clearHighlights();
+
+        rows.forEach((row) => {
+          const xRaw = row.dataset.x;
+
+          // Skip the ALWAYS row for numeric highlighting
+          if (xRaw === "ALWAYS_A") return;
+
+          const x = Number(xRaw);
+          const a = row.querySelector(".cell-a");
+          const b = row.querySelector(".cell-b");
+
+          // Convention:
+          // - X < selectedX  => Option A highlighted
+          // - X >= selectedX => Option B highlighted
+          if (x < selectedX) {
+            if (a) a.classList.add("cell-green");
+          } else {
+            if (b) b.classList.add("cell-green");
+          }
+
+          if (x === selectedX) row.classList.add("row-selected");
+        });
+      }
+
+      radios.forEach((r) => {
+
+        r.addEventListener("change", () => {
+          applyHighlights(r.value);
+          setExplanation(r.value);
+        });
+
       });
-    }
 
-    radios.forEach((r) => {
-
-      r.addEventListener("change", () => {
-        applyHighlights(r.value);
-        setExplanation(r.value);
-      });
-
-    });
-
-    // If pre-checked (reload), reflect it
-    const pre = radios.find(r => r.checked);
-    if (pre) applyHighlights(pre.value);
-  })();
-</script>
+      // If pre-checked (reload), reflect it
+      const pre = radios.find(r => r.checked);
+      if (pre) applyHighlights(pre.value);
+    })();
+  </script>
 
 
 
 
-{% endblock %}
+  {% endblock %}
