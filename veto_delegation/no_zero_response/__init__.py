@@ -157,7 +157,7 @@ class Roles(Page):
                 if p.participant.label_id == proposer_id
             )
 
-            print(matched_player.participant.sliders)
+            # print(matched_player.participant.sliders)
 
             i = 2 * (player.round_number - 1)
             player.minSlider = matched_player.participant.sliders[i]
@@ -217,14 +217,14 @@ class Response(Page):
             'proposer_payoff': proposer_payoff,
         })
 
-        print(
-            f"[Round {player.round_number}] "
-            f"Responder {player.participant.label_id} (selectedX={player.selectedX}) → "
-            f"Proposer {proposer_id} | "
-            f"Response: {player.response} | "
-            f"Responder payoff: {player.payoff} | "
-            f"Proposer payoff: {proposer_payoff}"
-        )
+        # print(
+        #     f"[Round {player.round_number}] "
+        #     f"Responder {player.participant.label_id} (selectedX={player.selectedX}) → "
+        #     f"Proposer {proposer_id} | "
+        #     f"Response: {player.response} | "
+        #     f"Responder payoff: {player.payoff} | "
+        #     f"Proposer payoff: {proposer_payoff}"
+        # )
 
 
 
@@ -239,36 +239,46 @@ class NoZeroWait(WaitPage):
 
     @staticmethod
     def before_next_page(player, timeout_happened):
-        # Draw the pay round once for the session; all other players reuse it
         if 'PartTwoPayRound' not in player.session.vars:
             player.session.vars['PartTwoPayRound'] = random.randint(1, 3)
 
         pay_round = player.session.vars['PartTwoPayRound']
+        label = player.participant.label_id
 
-        # --- Responder (Buyer) payoff in the selected round ---
-        responder_player = player.in_round(pay_round)
-        player.participant.PartTwoResponderPayoff = float(responder_player.payoff)
+        # --- Proposer (Seller) payoff ---
+        if label == player.session.vars.get('PartTwoPayProposer'):
+            received = player.participant.vars.get('received_responses', [])
+            match = next((r for r in received if r['round'] == pay_round), None)
+            player.participant.PartTwoProposerPayoff = float(match['proposer_payoff']) if match else 0.0
 
-        # --- Proposer (Seller) payoff in the selected round ---
-        received = player.participant.vars.get('received_responses', [])
-        match = next((r for r in received if r['round'] == pay_round), None)
-        player.participant.PartTwoProposerPayoff = float(match['proposer_payoff']) if match else 0.0
+            # Record the matched responder so we can pay them too
+            if match:
+                player.session.vars['PartTwoPayResponder'] = match['responder_id']
+        else:
+            player.participant.PartTwoProposerPayoff = 0.0
+
+        # --- Responder (Buyer) payoff ---
+        if label == player.session.vars.get('PartTwoPayResponder'):
+            responder_player = player.in_round(pay_round)
+            player.participant.PartTwoResponderPayoff = float(responder_player.payoff)
+        else:
+            player.participant.PartTwoResponderPayoff = 0.0
 
         # --- Total part two payoff ---
         player.participant.PartTwoPayoff = (
-            player.participant.PartTwoResponderPayoff +
-            player.participant.PartTwoProposerPayoff
+                player.participant.PartTwoResponderPayoff +
+                player.participant.PartTwoProposerPayoff
         )
 
         print(
-            f"[Payment] Player {player.participant.label_id} | "
+            f"[Payment] Player {label} | "
             f"Pay round: {pay_round} | "
+            f"Lucky proposer: {player.session.vars.get('PartTwoPayProposer')} | "
+            f"Lucky responder: {player.session.vars.get('PartTwoPayResponder')} | "
             f"Proposer payoff: {player.participant.PartTwoProposerPayoff} | "
             f"Responder payoff: {player.participant.PartTwoResponderPayoff} | "
             f"Total part two payoff: {player.participant.PartTwoPayoff}"
         )
-
-
 
 class Results(Page):
     timeout_seconds = 15

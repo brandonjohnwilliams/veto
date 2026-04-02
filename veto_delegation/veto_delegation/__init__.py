@@ -75,7 +75,7 @@ def creating_session(subsession):
         lucky_participants = random.sample(range(1, subsession.session.num_participants + 1), 11)
 
         subsession.session.vars['PartTwoPayProposer'] = lucky_participants[0]
-        subsession.session.vars['PartTwoPayResponder'] = lucky_participants[1]
+        # subsession.session.vars['PartTwoPayResponder'] = lucky_participants[1]
         subsession.session.vars['PartThreePay1'] = lucky_participants[2]
         subsession.session.vars['PartThreePay2'] = lucky_participants[3]
         subsession.session.vars['PartThreePay3'] = lucky_participants[4]
