@@ -282,6 +282,11 @@ class NoZeroWait(WaitPage):
                     player.participant.PartTwoResponderPayoff
             )
 
+            player.participant.BonusPay = (
+                    player.participant.PartTwoProposerPayoff +
+                    player.participant.PartTwoResponderPayoff
+            )
+
             print(
                 f"[Payment] Player {label} | "
                 f"Pay round: {pay_round} | "

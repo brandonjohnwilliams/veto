@@ -210,29 +210,19 @@ class Choice(Page):
         # Draw one row per round independently for each player
         player.mpl_draw = str(random.choice(MPL_ROWS))
 
-        # Determine this player's choice and payoff for each round
         player.participant.vars['MPLResults'] = []
 
-
-        drawn_row    = player.mpl_draw
+        drawn_row = player.mpl_draw
         switch_point = player.switch_point
 
         choice = mpl_choice(switch_point, drawn_row)
 
-        # Retrieve the base robot payoffs stored from Part Three / Part Four
-        # Option A = single offer, Option B = menu offer
-        # The part order depends on session config: single==1 means single came first (Part Three),
-        # menu came second (Part Four); single==0 reverses this.
         if player.session.config['take_it_or_leave_it']:
-            option_a_payoff = player.participant.vars[f'part3round{player.round_number}']  # single
-            option_b_payoff = player.participant.vars[f'part4round{player.round_number}']  # menu
-            print("Single: ", option_a_payoff, "Menu: ", option_b_payoff)
+            option_a_payoff = player.participant.vars[f'part3round{player.round_number}']
+            option_b_payoff = player.participant.vars[f'part4round{player.round_number}']
         else:
-            option_a_payoff = player.participant.vars[f'part4round{player.round_number}']  # single
-            option_b_payoff = player.participant.vars[f'part3round{player.round_number}']  # menu
-            print("Single: ", option_a_payoff, "Menu: ", option_b_payoff)
-
-
+            option_a_payoff = player.participant.vars[f'part4round{player.round_number}']
+            option_b_payoff = player.participant.vars[f'part3round{player.round_number}']
 
         payoff = mpl_payoff(choice, drawn_row, option_a_payoff, option_b_payoff)
 
@@ -243,14 +233,38 @@ class Choice(Page):
             'choice': choice,
             'payoff': payoff,
         })
+        #
+        # print(
+        #     f"[MPL Round {player.round_number}] "
+        #     f"Player {player.participant.label_id} | "
+        #     f"Switch point: {switch_point} | "
+        #     f"Drawn row: {drawn_row} | "
+        #     f"Choice: {choice} | "
+        #     f"Payoff: {payoff}"
+        # )
 
-        print(
-            f"[MPL Round {player.round_number}] "
-            f"Player {player.participant.label_id} | "
-            f"Switch point: {switch_point} | "
-            f"Drawn row: {drawn_row} | "
-            f"Choice: {choice} | "
-            f"Payoff: {payoff}"
-        )
+        # Determine bonus payment from predetermined winners
+        if player.session.config['test']:
+            lucky_player = int(player.participant.id_in_session)
+            for round_num in range(1, C.NUM_ROUNDS + 1):
+                winner = round_num + 1
+                if lucky_player == int(winner):
+                    lucky_draw = player.in_round(round_num)
+                    player.participant.vars['BonusPay'] = lucky_draw.payoff
+                    print(
+                        f"Part Five Round {round_num}: Paying player {lucky_player} a bonus of {player.participant.vars['BonusPay']}")
+                else:
+                    print(f"Part Five Round {round_num}: Player {lucky_player} is not the winner.")
+        else:
+            lucky_player = int(player.participant.label_id)
+            for round_num in range(1, C.NUM_ROUNDS + 1):
+                winner = player.session.vars.get(f'PartFivePay{round_num}')
+                if lucky_player == int(winner):
+                    lucky_draw = player.in_round(round_num)
+                    player.participant.vars['BonusPay'] = lucky_draw.payoff
+                    print(
+                        f"Part Five Round {round_num}: Paying player {lucky_player} a bonus of {player.participant.vars['BonusPay']}")
+                else:
+                    print(f"Part Five Round {round_num}: Player {lucky_player} is not the winner.")
 
 page_sequence = [Introduction, ChoiceInstructions, MakeChoice, Payment, Choice]

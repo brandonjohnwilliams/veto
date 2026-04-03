@@ -314,7 +314,6 @@ class robot(Page):
                         f"Part Four Round {round_num}: "
                         f"Paying player {lucky_player} a bonus of {player.participant.vars['BonusPay']}"
                     )
-                    break  # a player can only win once, no need to check remaining rounds
                 else:
                     print(f"Part Four Round {round_num}: Player {lucky_player} is not the winner.")
         else:
