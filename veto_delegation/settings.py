@@ -40,7 +40,7 @@ SESSION_CONFIGS = [
         chat=False,
         use_browser_bots=False,
         Session=1,
-        test=1,
+        test=0,
         doc="""Set the session number to the total number in the treatment""",
     ),
     dict(
