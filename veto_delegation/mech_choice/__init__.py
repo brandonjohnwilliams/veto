@@ -255,7 +255,6 @@ class Choice(Page):
                     print(
                         f"Part Five Round {round_num}: Paying player {lucky_player} a bonus of {player.participant.vars['BonusPay']}")
         else:
-            print(f"Part Five Round {round_num}: Player {lucky_player} is not the winner.")
             if player.round_number == C.NUM_ROUNDS:
                 lucky_player = int(player.participant.label_id)
                 for round_num in range(1, C.NUM_ROUNDS + 1):
