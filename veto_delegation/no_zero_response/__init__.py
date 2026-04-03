@@ -260,6 +260,21 @@ class NoZeroWait(WaitPage):
                 lucky_responder_id = match['responder_id']
                 subsession.session.vars['PartTwoPayResponder'] = lucky_responder_id
 
+        # --- NEW: If the responder clashes with another draw, swap it with Spare ---
+        if lucky_responder_id is not None:
+            clashing_keys = [
+                'PartThreePay1', 'PartThreePay2', 'PartThreePay3',
+                'PartFourPay1', 'PartFourPay2', 'PartFourPay3',
+                'PartFivePay1', 'PartFivePay2', 'PartFivePay3',
+            ]
+            spare = subsession.session.vars['Spare']
+            for key in clashing_keys:
+                if subsession.session.vars[key] == lucky_responder_id:
+                    subsession.session.vars[key] = spare
+                    subsession.session.vars['Spare'] = lucky_responder_id
+                    break  # A participant ID can only occupy one slot, so stop here
+        # -------------------------------------------------------------------------
+
         # Now assign payoffs to all players
         for player in players:
             label = player.participant.label_id
