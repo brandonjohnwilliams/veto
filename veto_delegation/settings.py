@@ -30,7 +30,7 @@ SESSION_CONFIGS = [
             'veto_delegation',
             'no_zero',
             'no_zero_response',
-            # 'avg_robot',
+            'avg_robot',
             # 'opp_mechanism',
             # 'mech_choice',
             # 'payment_zero',
