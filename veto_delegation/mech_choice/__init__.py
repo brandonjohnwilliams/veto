@@ -225,6 +225,7 @@ class Choice(Page):
             option_b_payoff = player.participant.vars[f'part3round{player.round_number}']
 
         payoff = mpl_payoff(choice, drawn_row, option_a_payoff, option_b_payoff)
+        player.payoff = payoff
 
         player.participant.vars['MPLResults'].append({
             'round': player.round_number,
@@ -233,15 +234,15 @@ class Choice(Page):
             'choice': choice,
             'payoff': payoff,
         })
-        #
-        # print(
-        #     f"[MPL Round {player.round_number}] "
-        #     f"Player {player.participant.label_id} | "
-        #     f"Switch point: {switch_point} | "
-        #     f"Drawn row: {drawn_row} | "
-        #     f"Choice: {choice} | "
-        #     f"Payoff: {payoff}"
-        # )
+
+        print(
+            f"[MPL Round {player.round_number}] "
+            f"Player {player.participant.label_id} | "
+            f"Switch point: {switch_point} | "
+            f"Drawn row: {drawn_row} | "
+            f"Choice: {choice} | "
+            f"Payoff: {payoff}"
+        )
 
         # Determine bonus payment from predetermined winners
         if player.session.config['test']:
@@ -253,18 +254,19 @@ class Choice(Page):
                     player.participant.vars['BonusPay'] = lucky_draw.payoff
                     print(
                         f"Part Five Round {round_num}: Paying player {lucky_player} a bonus of {player.participant.vars['BonusPay']}")
-                else:
-                    print(f"Part Five Round {round_num}: Player {lucky_player} is not the winner.")
         else:
-            lucky_player = int(player.participant.label_id)
-            for round_num in range(1, C.NUM_ROUNDS + 1):
-                winner = player.session.vars.get(f'PartFivePay{round_num}')
-                if lucky_player == int(winner):
-                    lucky_draw = player.in_round(round_num)
-                    player.participant.vars['BonusPay'] = lucky_draw.payoff
-                    print(
-                        f"Part Five Round {round_num}: Paying player {lucky_player} a bonus of {player.participant.vars['BonusPay']}")
-                else:
-                    print(f"Part Five Round {round_num}: Player {lucky_player} is not the winner.")
+            print(f"Part Five Round {round_num}: Player {lucky_player} is not the winner.")
+            if player.round_number == C.NUM_ROUNDS:
+                lucky_player = int(player.participant.label_id)
+                for round_num in range(1, C.NUM_ROUNDS + 1):
+                    winner = player.session.vars.get(f'PartFivePay{round_num}')
+                    if lucky_player == int(winner):
+                        player.participant.vars['BonusPay'] = player.in_round(round_num).payoff
+                        print(
+                            f"Part Five Round {round_num}: Paying player {lucky_player} a bonus of {player.participant.vars['BonusPay']}")
+                    else:
+                        print(f"Part Five Round {round_num}: Player {lucky_player} is not the winner.")
+
+
 
 page_sequence = [Introduction, ChoiceInstructions, MakeChoice, Payment, Choice]
